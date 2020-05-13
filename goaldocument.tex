@@ -1,0 +1,64 @@
+% Based on template: http://www.maths.lth.se/matematiklth/exjobb/exjobbarresurs/index.html
+
+\documentclass[a4paper]{article}   % TODO: Use IEEEtran instead?
+\usepackage[smartEllipses]{markdown}  % For markdown
+
+% Encoding and languages
+\usepackage[T1]{fontenc}        % För svenska bokstäver
+%\usepackage[swedish]{babel}    %Svenska skrivregler och rubriker
+
+% Graphics
+\usepackage{epsfig}
+%\usepackage[dvips]{graphics}
+
+% References
+\usepackage[backend=biber,style=numeric]{biblatex}
+\addbibresource{sample.bib}
+\addbibresource{zotero.bib}
+
+\title{MSc Thesis proposal -- A study of the relationship between device and brain activity}
+\author{Erik Bjäreholt}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Här skriver jag in mitt abstract.
+\end{abstract}
+
+\pagebreak.\pagebreak
+
+\tableofcontents
+
+\pagebreak.\pagebreak
+
+% In the main body of your document
+
+\markdownInput{goaldocument.md}
+
+\section{Introduction}
+
+This document is an example of BibTeX using in bibliography management. Three items
+are cited: \textit{The \LaTeX\ Companion} book~\cite{latexcompanion}, the Einstein
+journal paper~\cite{einstein}, and the Donald Knuth's website~\cite{knuthwebsite}.
+The \LaTeX\ related items are~\cite{latexcompanion,knuthwebsite}.
+
+\nocite{*}
+
+
+\subsection{Background}
+
+\subsection{Aim of the thesis}
+
+\subsection{Related work}
+
+\section{Methods}
+
+\section{Results}
+
+\section{Conclusions}
+
+\section*{Acknowledgements}
+
+\end{document}

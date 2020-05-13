@@ -1,0 +1,11 @@
+*.toc
+*.dvi
+*.aux
+*.markdown.*
+*.log
+*.blg
+*.bbl
+*.pdf
+*.bcf
+*.xml
+_markdown_*
