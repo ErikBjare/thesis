@@ -11,3 +11,5 @@ thesis.pdf: thesis.tex
 	biber thesis
 	pdflatex --shell-escape thesis.tex
 
+clean:
+	rm -f *.aux *.bbl *.bcf *.cfg  *.blg *.dvi *.log *.pdf *.run.xml *.toc *.in *.markdown.*
