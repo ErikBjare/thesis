@@ -12,10 +12,10 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ruby: ['2.6']
-        python: ['3.7']
+    #strategy:
+    #  matrix:
+    #    ruby: ['2.6']
+    #    python: ['3.7']
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
@@ -28,7 +28,10 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: main.tex
+          root_file: |
+            thesis.tex
+            goaldocument.tex
+          args: -pdf -file-line-error -interaction=nonstopmode -shell-escape
       #- name: Install dependencies
       #  run: |
       #    sudo apt install texlive
@@ -39,7 +42,7 @@ jobs:
       # See this for more info: https://github.community/t5/GitHub-Actions/Github-action-not-triggering-gh-pages-upon-push/td-p/26869/highlight/true/page/3
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@releases/v3
-        if: github.ref == 'refs/heads/develop'
+        if: github.ref == 'refs/heads/master'
         with:
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: dist # The folder the action should deploy.
