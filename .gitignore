@@ -8,4 +8,6 @@
 *.pdf
 *.bcf
 *.xml
+*.out
 _markdown_*
+templates
