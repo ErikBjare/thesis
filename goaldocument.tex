@@ -1,7 +1,9 @@
 % Based on template: http://www.maths.lth.se/matematiklth/exjobb/exjobbarresurs/index.html
 
 \documentclass[a4paper]{article}   % TODO: Use IEEEtran instead?
+
 \usepackage[smartEllipses]{markdown}  % For markdown
+\usepackage{comment}
 
 % Encoding and languages
 \usepackage[T1]{fontenc}        % För svenska bokstäver
@@ -16,49 +18,98 @@
 \addbibresource{sample.bib}
 \addbibresource{zotero.bib}
 
-\title{MSc Thesis proposal -- A study of the relationship between device and brain activity}
-\author{Erik Bjäreholt}
+\title{MSc Thesis proposal --- A study of the relationship between device and brain activity}
+\author{Erik Bjäreholt \\(dat13ebj@student.lu.se, erik@bjareho.lt)}
 \date{\today}
 
 \begin{document}
 \maketitle
 
-\begin{abstract}
-Här skriver jag in mitt abstract.
-\end{abstract}
+\noindent Student: Erik Bjäreholt (dat13ebj@student.lu.se)
 
-\pagebreak.\pagebreak
+\noindent Thesis supervisor: Markus Borg
+
+\noindent Thesis examiner: Elizabeth Bjarnason
+
+\noindent Start date: 10 June (realistic?)
+
+\noindent End date: 30 September (realistic?)
+
+\pagebreak
 
 \tableofcontents
 
-\pagebreak.\pagebreak
+\pagebreak
 
-% In the main body of your document
+\begin{comment}
+\section{Requirements for this document}
 
-\markdownInput{goaldocument.md}
+The process for CS students: http://cs.lth.se/examensarbete/hur-gaar-det-till/
+General CS dep resource: http://cs.lth.se/examensarbete/
+General LTH resource: http://www.student.lth.se/studieinformation/examensarbete/examensarbetsprocessen/
 
-\section{Introduction}
+ - [ ] Arbetstitel, inblandades namn och kontaktuppgifter samt preliminärt start- och slutdatum.
+ - [ ] Bakgrund/kontext och motiv för examensarbetet.
+ - [ ] Övergripande mål och problemställningar/forskningsfrågor.
+ - [ ] Angreppssätt/metodik och metoder.
+ - [ ] Vetenskaplig grund och beprövad erfarenhet som examensarbetet ska bygga vidare på. Detta kan t ex beskrivas i form av ett par nyckelreferenser till artiklar eller annat underlag.
+ - [ ] Hur förväntas examensarbetet bidra till kunskapsutvecklingen?
+ - [ ] Preliminär beskrivning av resurser som krävs för arbetets genomförande, t ex arbetsplats och utrustning, och hur dessa ordnas och finns tillgängliga.
 
-This document is an example of BibTeX using in bibliography management. Three items
-are cited: \textit{The \LaTeX\ Companion} book~\cite{latexcompanion}, the Einstein
-journal paper~\cite{einstein}, and the Donald Knuth's website~\cite{knuthwebsite}.
-The \LaTeX\ related items are~\cite{latexcompanion,knuthwebsite}.
+\end{comment}
 
-\nocite{*}
+\section{Background}
+
+\begin{markdown}
+People spend more time than ever using computing devices (TODO: reference). As services, entertainment, and work, moves online this trend is expected to continue. Studies
+
+Data on how people spend their screen time, and how that varies with demographics, is not publicly available (TODO: reference).
+
+Furthermore, how different computer activities affects the user behaviorally and neurologically is of interest for many areas of research, including:
+
+ - the impact of "screen time" for adolescents (TODO: reference)
+ - attention span among media multitasking adults (TODO: reference)
+ - depression
+
+There are companies (RescueTime, etc.) who offer automated time tracking as a service. These services generally function by having the user install a program on their device which tracks the active application and sends the data to their servers for storage and analysis. The user can then view their data in a dashboard on the service providers website. There services are marketed towards teams and professionals, who generally want to keep track of individual and team productivity.
+
+However, by collecting detailed and non-anonymized behavioral data on the user these services bring significant privacy concerns, especially in cases where the data is shared with a team or an employer.
+
+With the advancement of Brain-Computer Interfaces, the relationship between device and brain activity is becoming even more tightly connected.
+
+Functional brain imaging methods such as EEG, fNIRS, fMRI...
+
+As a starting point for the thesis, the
+\end{markdown}
+
+\section{Problem description, research goals and questions}
+\begin{markdown}
+
+ - What about measuring flow?
+ - What about measuring attention/distractibility?
+
+\end{markdown}
+
+\section{Methodology}
+
+\section{Scientific contributions}
+\begin{markdown}
+
+ - The open source automated time-tracker ActivityWatch.
+ - Relationships between device activity and brain activity, as measured by EEG.
+
+\end{markdown}
+
+\section{Resources}
+\begin{markdown}
+
+ - Data collected with ActivityWatch
+
+\end{markdown}
 
 
-\subsection{Background}
+\section{References}
 
-\subsection{Aim of the thesis}
-
-\subsection{Related work}
-
-\section{Methods}
-
-\section{Results}
-
-\section{Conclusions}
-
-\section*{Acknowledgements}
+\printbibliography{}
 
 \end{document}
