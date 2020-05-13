@@ -3,6 +3,7 @@
 \documentclass[a4paper]{article}   % TODO: Use IEEEtran instead?
 
 \usepackage[smartEllipses]{markdown}  % For markdown
+\usepackage{hyperref}
 \usepackage{comment}
 
 % Encoding and languages
@@ -15,7 +16,7 @@
 
 % References
 \usepackage[backend=biber,style=numeric]{biblatex}
-\addbibresource{sample.bib}
+%\addbibresource{sample.bib}
 \addbibresource{zotero.bib}
 
 \title{MSc Thesis proposal --- A study of the relationship between device and brain activity}
@@ -82,6 +83,8 @@ Functional brain imaging methods such as EEG, fNIRS, fMRI...
 As a starting point for the thesis, the
 \end{markdown}
 
+Something something~\cite{fucci_replication_2019}.
+
 \section{Problem description, research goals and questions}
 \begin{markdown}
 
@@ -110,6 +113,7 @@ As a starting point for the thesis, the
 
 \section{References}
 
+\nocite{*}
 \printbibliography{}
 
 \end{document}
