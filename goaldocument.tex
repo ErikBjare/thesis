@@ -1,10 +1,14 @@
 % Based on template: http://www.maths.lth.se/matematiklth/exjobb/exjobbarresurs/index.html
 
-\documentclass[a4paper]{article}   % TODO: Use IEEEtran instead?
+\documentclass{IEEEtran}
 
 \usepackage[smartEllipses]{markdown}  % For markdown
 \usepackage{hyperref}
 \usepackage{comment}
+
+% Formatting
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
 
 % Encoding and languages
 \usepackage[T1]{fontenc}        % För svenska bokstäver
@@ -19,28 +23,27 @@
 %\addbibresource{sample.bib}
 \addbibresource{zotero.bib}
 
-\title{MSc Thesis proposal --- A study of the relationship between device and brain activity}
+\title{%
+    \large MSc Thesis proposal \\
+    \huge Classifying brain activity using low-cost biosensors and automated time tracking \\
+}
 \author{Erik Bjäreholt \\(dat13ebj@student.lu.se, erik@bjareho.lt)}
 \date{\today}
 
 \begin{document}
 \maketitle
 
-\noindent Student: Erik Bjäreholt (dat13ebj@student.lu.se)
-
-\noindent Thesis supervisor: Markus Borg
-
-\noindent Thesis examiner: Elizabeth Bjarnason
-
-\noindent Start date: 10 June (realistic?)
-
-\noindent End date: 30 September (realistic?)
-
-\pagebreak
+\begin{center}
+\begin{tabular}{ r l }
+ Student & Erik Bjäreholt \\
+ Supervisor & Markus Borg \\
+ Examiner & Elizabeth Bjarnarson \\
+ Start date & 10th June (realistic?) \\
+ End date & 30th September (realistic?) \\
+\end{tabular}
+\end{center}
 
 \tableofcontents
-
-\pagebreak
 
 \begin{comment}
 \section{Requirements for this document}
@@ -61,32 +64,39 @@ General LTH resource: http://www.student.lth.se/studieinformation/examensarbete/
 
 \section{Background}
 
-\begin{markdown}
-People spend more time than ever using computing devices (TODO: reference). As services, entertainment, and work, moves online this trend is expected to continue. Studies
-
-Data on how people spend their screen time, and how that varies with demographics, is not publicly available (TODO: reference).
+People spend more time than ever using computing devices\cite{TODO}. As services, entertainment, and work, moves online this trend is expected to continue. While several studies have been tracking how people spend their screen time, and how that varies with demographics, is not publicly available~\cite{TODO}.
 
 Furthermore, how different computer activities affects the user behaviorally and neurologically is of interest for many areas of research, including:
 
- - the impact of "screen time" for adolescents (TODO: reference)
- - attention span among media multitasking adults (TODO: reference)
- - depression
+\begin{itemize}
+  \item the impact of screen time for adolescents~\cite{TODO}
+  \item attention span among media multitasking adults~\cite{TODO}
+  \item depression
+\end{itemize}
 
 There are companies (RescueTime, etc.) who offer automated time tracking as a service. These services generally function by having the user install a program on their device which tracks the active application and sends the data to their servers for storage and analysis. The user can then view their data in a dashboard on the service providers website. There services are marketed towards teams and professionals, who generally want to keep track of individual and team productivity.
 
 However, by collecting detailed and non-anonymized behavioral data on the user these services bring significant privacy concerns, especially in cases where the data is shared with a team or an employer.
 
-With the advancement of Brain-Computer Interfaces, the relationship between device and brain activity is becoming even more tightly connected.
+%With the advancement of Brain-Computer Interfaces, the relationship between device and brain activity is becoming even more tightly connected.
 
-Functional brain imaging methods such as EEG, fNIRS, fMRI...
+Functional brain imaging methods such as fMRI and fNIRS, have been used to study the relationship between cognitive or physical activity, and brain activity~\cite{floyd_decoding_2017}\cite{hong_classification_2015}. However, the more accurate methods such as fMRI are costly and inflexible. However the recent availability of low-cost biosensors enables studying
 
-As a starting point for the thesis, the
-\end{markdown}
+% As a starting point for the thesis, the
 
-Something something~\cite{fucci_replication_2019}.
+Imaging techniques hold the promise of relating cognition to physical activities and brain structures. As an example it has been shown that it is possible to classify what task a participant is undertaking using fMRI\cite{floyd_decoding_2017}, which has been replicated using EEG and low-cost sensors\cite{fucci_replication_2019}.
+
+% List of functional brain imaging techniques:
+%  - fMRI
+%  - fNIRS
+%  - EEG
+%  - HEG
+
 
 \section{Problem description, research goals and questions}
 \begin{markdown}
+
+The problem we seek to investigate is whether EEG and other low-cost biosensors can be used to accurately classify device activity in a broader context than previous studies.
 
  - What about measuring flow?
  - What about measuring attention/distractibility?
@@ -106,7 +116,9 @@ Something something~\cite{fucci_replication_2019}.
 \section{Resources}
 \begin{markdown}
 
- - Data collected with ActivityWatch
+ - ActivityWatch, an open source automated time tracker (already developed by the author, but never before used in a scientific publication)
+ - OpenBCI Cyton biosensing board (8 channel) and Ultracortex headset
+ - HEGduino
 
 \end{markdown}
 
