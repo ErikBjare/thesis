@@ -19,13 +19,21 @@
 %\usepackage[dvips]{graphics}
 
 % References
-\usepackage[backend=biber, style=numeric]{biblatex}
+\usepackage[backend=biber, style=numeric, refsegment=section, sorting=none]{biblatex}
+\usepackage{cleveref}
 %\addbibresource{sample.bib}
 \addbibresource{zotero.bib}
+\DeclareBibliographyCategory{cited}
+\AtEveryCitekey{\addtocategory{cited}{\thefield{entrykey}}}
+
+\defbibheading{subbibliography}{%
+  \section*{\Cref{refsegment:\therefsection\therefsegment}}}
+
+\defbibheading{notcited}{\section*{Further Reading}}
 
 \title{%
-    \large M.Sc. Thesis proposal \\
-    \huge Classifying brain activity using low-cost biosensors and automated time tracking
+    \large M.Sc. Thesis proposal (DRAFT)\\
+    \huge Classifying brain activity using low-cost biosensors and automated time tracking \\
 }
 \author{Erik Bjäreholt \\(dat13ebj@student.lu.se, erik@bjareho.lt)}
 \date{\today}
@@ -45,50 +53,44 @@
 
 \tableofcontents
 
-\begin{comment}
-\section{Requirements for this document}
-
-The process for CS students: http://cs.lth.se/examensarbete/hur-gaar-det-till/
-General CS dep resource: http://cs.lth.se/examensarbete/
-General LTH resource: http://www.student.lth.se/studieinformation/examensarbete/examensarbetsprocessen/
-
- - [ ] Arbetstitel, inblandades namn och kontaktuppgifter samt preliminärt start- och slutdatum.
- - [ ] Bakgrund/kontext och motiv för examensarbetet.
- - [ ] Övergripande mål och problemställningar/forskningsfrågor.
- - [ ] Angreppssätt/metodik och metoder.
- - [ ] Vetenskaplig grund och beprövad erfarenhet som examensarbetet ska bygga vidare på. Detta kan t ex beskrivas i form av ett par nyckelreferenser till artiklar eller annat underlag.
- - [ ] Hur förväntas examensarbetet bidra till kunskapsutvecklingen?
- - [ ] Preliminär beskrivning av resurser som krävs för arbetets genomförande, t ex arbetsplats och utrustning, och hur dessa ordnas och finns tillgängliga.
-
-\end{comment}
-
 \section{Background}
+
+% TODO: Non-subsection background
 
 \subsection{Device use}
 
-People spend more time than ever using computing devices\cite{TODO}. As services, entertainment, and work, moves online this trend is expected to continue. While several studies have been tracking how people spend their screen time, and how that varies with demographics, is not publicly available~\cite{TODO}.
+People spend more time than ever using computing devices. Work, entertainment, and services, have been steadily moving online over the last few decades, and this trend is expected to continue. While several studies have been tracking how people spend time on their devices a wider study of how people's app usage has changed over time and how it varies with demographics, is not publicly available.
 
-Furthermore, how different computer activities affects the user behaviorally and neurologically is of interest for many areas of research, including:
+Furthermore, how different device activities affect the user behaviorally and neurologically is of interest for many areas of research, including:
 
 \begin{itemize}
-  \item the impact of screen time for adolescents~\cite{TODO}
-  \item attention span among media multitasking adults~\cite{TODO}
-  \item psychological well-being~\cite{huang_time_2017}.
+    \item psychological well-being, such as depression and social anxiety~\cite{selfhout_different_2009}\cite{shah_nonrecursive_2002}, stress~\cite{mark_stress_2014}, self-esteem, life satisfaction, loneliness, and depression~\cite{huang_time_2017}.
+    \item the impact of screen time on children and adolescents~\cite{subrahmanyam_impact_2001}.
+    \item attention span among media multitasking adults~\cite{mark_stress_2014}.
+    \item enhancing personal productivity~\cite{kim_timeaware_2016}.
 \end{itemize}
 
 Companies like RescueTime, HubStaff, etc.\ offer automated time tracking as a service. These services let the user track their screen time by installing a program on their device which tracks the active application and sends the data to their servers for storage and analysis. The user can then view their data in a dashboard on the service's website. There services are marketed towards teams and professionals, who want to keep track of individual and team productivity.
 
 However, by collecting detailed and non-anonymized behavioral data on the user these services bring significant privacy concerns, especially in cases where the data is shared with a team or an employer.
 
+Other limitations of these services, such as low temporal resolution, cause additional issues when paired with timing-sensitive tasks.
+
+As a solution to these privacy and data resolution issues we present the previously
+
 %With the advancement of Brain-Computer Interfaces, the relationship between device and brain activity is becoming even more tightly connected.
 
 \subsection{Low-cost functional brain imaging}
 
-Functional brain imaging methods such as fMRI and fNIRS, have been used to study the relationship between cognitive or physical activity, and brain activity~\cite{floyd_decoding_2017}\cite{hong_classification_2015}. The more accurate methods such as fMRI are costly and inflexible/impractical for many uses. However, the recent availability of low-cost biosensors such as EEG, HEG, and fNIRS, enables studying brain activity during real-life tasks.
+Functional brain imaging methods such as fMRI, fNIRS, and EEG, have been used to study the relationship between cognitive or physical activity, and brain activity~\cite{floyd_decoding_2017}\cite{hong_classification_2015}\cite{fucci_replication_2019}. The more accurate methods such as fMRI are costly and inflexible/impractical for many uses. However, the recent availability of low-cost biosensors such as EEG, HEG, and fNIRS, enables studying brain activity during real-life tasks.
 
 % As a starting point for the thesis, the
 
-Functional brain imaging techniques hold the promise of relating cognition to physical activities and brain structures. As an example it has been shown that it is possible to classify what task a participant is undertaking using fMRI\cite{floyd_decoding_2017}, which has been replicated using EEG and low-cost sensors\cite{fucci_replication_2019}. EEG-based BCIs are not without their limitations~\cite{mcfarland_eeg-based_2017}, yet visual evoked potentials (VEPs) have been shown to be sufficient for high-speed BCI applications~\cite{spuler_high-speed_2017}.
+Functional brain imaging techniques hold the promise of relating cognition to physical activities and brain structures. As an example it has been shown that it is possible to classify what task a participant is undertaking using fMRI\cite{floyd_decoding_2017}, which has been replicated using EEG and low-cost biosensors\cite{fucci_replication_2019}.
+
+Additionally, EEG-based BCIs have... But they are not without their limitations, among them a low signal-to-noise ratio~\cite{mcfarland_eeg-based_2017}, yet visual evoked potentials (VEPs) have been shown to be sufficient for high-speed BCI applications~\cite{spuler_high-speed_2017}.
+
+Convolutional Neural Networks (CNNs) have been successful in classifying time series in general~\cite{zhao_convolutional_2017}, and EEG data in particular~\cite{schirrmeister_deep_2017}. Additionally, Hierarchical Neural Networks (HCNNs) have been used for EEG-based emotion recognition~\cite{li_hierarchical_2018}.
 
 % List of functional brain imaging techniques:
 %  - fMRI
@@ -98,12 +100,35 @@ Functional brain imaging techniques hold the promise of relating cognition to ph
 
 \section{Problem description, research goals and questions}
 
-We want to investigate whether EEG and other low-cost biosensors can be used to accurately classify device activity in a broader context than previous studies.
+We want to investigate whether EEG and other low-cost biosensors can be used to accurately classify device activity in a broader context than previous studies. This could be useful to future BCI applications where a command might be specific to a particular context.
 
-% - What about measuring flow?
-% - What about measuring attention/distractibility?
+\subsection{Goals}
+
+\begin{itemize}
+    \item{TODO}
+\end{itemize}
+
+\subsection{Questions}
+
+Can the OpenBCI system be used to\ldots
+
+\begin{itemize}
+    \item Classify which device activity the user is engaging in?
+   %\item Be used to measure flow?
+   %\item What about measuring attention/distractibility?
+\end{itemize}
+
+\subsection{Challenges}
+
+\begin{itemize}
+    \item EEG data collection (limited time for data collection)
+    \item Scope creep (hopefully resolved by the time this document is finalized)
+    \item TODO
+\end{itemize}
 
 \section{Methodology}
+
+\large TODO
 
 \section{Scientific contributions}
 
@@ -111,6 +136,7 @@ We want to investigate whether EEG and other low-cost biosensors can be used to 
   \item The open source automated time-tracker ActivityWatch.
   \item Relationships between device activity and brain activity, as measured by EEG\@.
 \end{itemize}
+
 
 \section{Resources}
 
@@ -121,8 +147,24 @@ We want to investigate whether EEG and other low-cost biosensors can be used to 
 \end{itemize}
 
 
-\section{References}
+%\section{References}
 
-\printbibliography{}
+%/\printbibliography{}
+
+\endrefsegment
+
+\defbibenvironment{bibnonum}
+  {\list
+     {}
+     {\setlength{\leftmargin}{\bibhang}%
+      \setlength{\itemindent}{-\leftmargin}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}}}
+  {\endlist}
+  {\item}
+\nocite{*}
+\printbibheading{}
+\bibbysegment[heading=subbibliography]
+\printbibliography[notcategory=cited, env=bibnonum, heading=notcited]
 
 \end{document}
