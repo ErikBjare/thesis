@@ -21,13 +21,9 @@
 % References
 \usepackage[backend=biber, style=numeric, refsegment=section, sorting=none]{biblatex}
 \usepackage{cleveref}
-%\addbibresource{sample.bib}
-\addbibresource{zotero.bib}
+\bibliography{zotero}
 \DeclareBibliographyCategory{cited}
 \AtEveryCitekey{\addtocategory{cited}{\thefield{entrykey}}}
-
-\defbibheading{subbibliography}{%
-  \section*{\Cref{refsegment:\therefsection\therefsegment}}}
 
 \defbibheading{notcited}{\section*{Further Reading}}
 
@@ -146,25 +142,20 @@ Can the OpenBCI system be used to\ldots
   \item HEGduino
 \end{itemize}
 
+% References
+\bibbysegment{}
 
-%\section{References}
-
-%/\printbibliography{}
-
-\endrefsegment
-
+% Further reading (uncited)
+\nocite{*}
 \defbibenvironment{bibnonum}
-  {\list
-     {}
+  {\list{}
      {\setlength{\leftmargin}{\bibhang}%
       \setlength{\itemindent}{-\leftmargin}%
       \setlength{\itemsep}{\bibitemsep}%
-      \setlength{\parsep}{\bibparsep}}}
+      \setlength{\parsep}{\bibparsep}}
+  }
   {\endlist}
   {\item}
-\nocite{*}
-\printbibheading{}
-\bibbysegment[heading=subbibliography]
 \printbibliography[notcategory=cited, env=bibnonum, heading=notcited]
 
 \end{document}
