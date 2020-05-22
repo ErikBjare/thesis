@@ -19,13 +19,13 @@
 %\usepackage[dvips]{graphics}
 
 % References
-\usepackage[backend=biber,style=numeric]{biblatex}
+\usepackage[backend=biber, style=numeric]{biblatex}
 %\addbibresource{sample.bib}
 \addbibresource{zotero.bib}
 
 \title{%
-    \large MSc Thesis proposal \\
-    \huge Classifying brain activity using low-cost biosensors and automated time tracking \\
+    \large M.Sc. Thesis proposal \\
+    \huge Classifying brain activity using low-cost biosensors and automated time tracking
 }
 \author{Erik Bjäreholt \\(dat13ebj@student.lu.se, erik@bjareho.lt)}
 \date{\today}
@@ -34,7 +34,7 @@
 \maketitle
 
 \begin{center}
-\begin{tabular}{ r l }
+\begin{tabular}{r l}
  Student & Erik Bjäreholt \\
  Supervisor & Markus Borg \\
  Examiner & Elizabeth Bjarnarson \\
@@ -64,6 +64,8 @@ General LTH resource: http://www.student.lth.se/studieinformation/examensarbete/
 
 \section{Background}
 
+\subsection{Device use}
+
 People spend more time than ever using computing devices\cite{TODO}. As services, entertainment, and work, moves online this trend is expected to continue. While several studies have been tracking how people spend their screen time, and how that varies with demographics, is not publicly available~\cite{TODO}.
 
 Furthermore, how different computer activities affects the user behaviorally and neurologically is of interest for many areas of research, including:
@@ -71,20 +73,22 @@ Furthermore, how different computer activities affects the user behaviorally and
 \begin{itemize}
   \item the impact of screen time for adolescents~\cite{TODO}
   \item attention span among media multitasking adults~\cite{TODO}
-  \item depression
+  \item psychological well-being~\cite{huang_time_2017}.
 \end{itemize}
 
-There are companies (RescueTime, etc.) who offer automated time tracking as a service. These services generally function by having the user install a program on their device which tracks the active application and sends the data to their servers for storage and analysis. The user can then view their data in a dashboard on the service providers website. There services are marketed towards teams and professionals, who generally want to keep track of individual and team productivity.
+Companies like RescueTime, HubStaff, etc.\ offer automated time tracking as a service. These services let the user track their screen time by installing a program on their device which tracks the active application and sends the data to their servers for storage and analysis. The user can then view their data in a dashboard on the service's website. There services are marketed towards teams and professionals, who want to keep track of individual and team productivity.
 
 However, by collecting detailed and non-anonymized behavioral data on the user these services bring significant privacy concerns, especially in cases where the data is shared with a team or an employer.
 
 %With the advancement of Brain-Computer Interfaces, the relationship between device and brain activity is becoming even more tightly connected.
 
-Functional brain imaging methods such as fMRI and fNIRS, have been used to study the relationship between cognitive or physical activity, and brain activity~\cite{floyd_decoding_2017}\cite{hong_classification_2015}. However, the more accurate methods such as fMRI are costly and inflexible. However the recent availability of low-cost biosensors enables studying
+\subsection{Low-cost functional brain imaging}
+
+Functional brain imaging methods such as fMRI and fNIRS, have been used to study the relationship between cognitive or physical activity, and brain activity~\cite{floyd_decoding_2017}\cite{hong_classification_2015}. The more accurate methods such as fMRI are costly and inflexible/impractical for many uses. However, the recent availability of low-cost biosensors such as EEG, HEG, and fNIRS, enables studying brain activity during real-life tasks.
 
 % As a starting point for the thesis, the
 
-Imaging techniques hold the promise of relating cognition to physical activities and brain structures. As an example it has been shown that it is possible to classify what task a participant is undertaking using fMRI\cite{floyd_decoding_2017}, which has been replicated using EEG and low-cost sensors\cite{fucci_replication_2019}.
+Functional brain imaging techniques hold the promise of relating cognition to physical activities and brain structures. As an example it has been shown that it is possible to classify what task a participant is undertaking using fMRI\cite{floyd_decoding_2017}, which has been replicated using EEG and low-cost sensors\cite{fucci_replication_2019}. EEG-based BCIs are not without their limitations~\cite{mcfarland_eeg-based_2017}, yet visual evoked potentials (VEPs) have been shown to be sufficient for high-speed BCI applications~\cite{spuler_high-speed_2017}.
 
 % List of functional brain imaging techniques:
 %  - fMRI
@@ -92,40 +96,33 @@ Imaging techniques hold the promise of relating cognition to physical activities
 %  - EEG
 %  - HEG
 
-
 \section{Problem description, research goals and questions}
-\begin{markdown}
 
-The problem we seek to investigate is whether EEG and other low-cost biosensors can be used to accurately classify device activity in a broader context than previous studies.
+We want to investigate whether EEG and other low-cost biosensors can be used to accurately classify device activity in a broader context than previous studies.
 
- - What about measuring flow?
- - What about measuring attention/distractibility?
-
-\end{markdown}
+% - What about measuring flow?
+% - What about measuring attention/distractibility?
 
 \section{Methodology}
 
 \section{Scientific contributions}
-\begin{markdown}
 
- - The open source automated time-tracker ActivityWatch.
- - Relationships between device activity and brain activity, as measured by EEG.
-
-\end{markdown}
+\begin{itemize}
+  \item The open source automated time-tracker ActivityWatch.
+  \item Relationships between device activity and brain activity, as measured by EEG\@.
+\end{itemize}
 
 \section{Resources}
-\begin{markdown}
 
- - ActivityWatch, an open source automated time tracker (already developed by the author, but never before used in a scientific publication)
- - OpenBCI Cyton biosensing board (8 channel) and Ultracortex headset
- - HEGduino
-
-\end{markdown}
+\begin{itemize}
+  \item ActivityWatch, an open source automated time tracker (already developed by the author, but never before used in a scientific publication)
+  \item OpenBCI Cyton biosensing board (8 channel) and Ultracortex headset
+  \item HEGduino
+\end{itemize}
 
 
 \section{References}
 
-\nocite{*}
 \printbibliography{}
 
 \end{document}
