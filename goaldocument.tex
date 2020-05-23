@@ -5,6 +5,15 @@
 \usepackage[smartEllipses]{markdown}  % For markdown
 \usepackage{hyperref}
 \usepackage{comment}
+\usepackage{xargs}
+\usepackage[colorinlistoftodos, prependcaption, textsize=tiny]{todonotes}
+
+% From: https://tex.stackexchange.com/a/178806/36302
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=red, backgroundcolor=red!25, bordercolor=red, #1]{#2}}
+\newcommandx{\change}[2][1=]{\todo[linecolor=blue, backgroundcolor=blue!25, bordercolor=blue, #1]{#2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen, backgroundcolor=OliveGreen!25, bordercolor=OliveGreen, #1]{#2}}
+\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum, backgroundcolor=Plum!25,bordercolor=Plum, #1]{#2}}
+\newcommandx{\thiswillnotshow}[2][1=]{\todo[disable, #1]{#2}}
 
 % Formatting
 \setlength{\parindent}{0pt}
@@ -29,8 +38,7 @@
 
 \title{%
     \large M.Sc. Thesis proposal (DRAFT)\\
-    \huge Classifying brain activity using low-cost biosensors and automated time tracking \\
-}
+    \huge Classifying brain activity using low-cost biosensors and automated time tracking \\}
 \author{Erik Bjäreholt \\(dat13ebj@student.lu.se, erik@bjareho.lt)}
 \date{\today}
 
@@ -49,11 +57,9 @@
 
 \tableofcontents
 
+\listoftodos[Notes \& TODOs]
+
 \section{Background}
-
-% TODO: Non-subsection background
-
-\subsection{Device use}
 
 People spend more time than ever using computing devices. Work, entertainment, and services, have been steadily moving online over the last few decades, and this trend is expected to continue. While several studies have been tracking how people spend time on their devices a wider study of how people's app usage has changed over time and how it varies with demographics, is not publicly available.
 
@@ -66,13 +72,33 @@ Furthermore, how different device activities affect the user behaviorally and ne
     \item enhancing personal productivity~\cite{kim_timeaware_2016}.
 \end{itemize}
 
-Companies like RescueTime, HubStaff, etc.\ offer automated time tracking as a service. These services let the user track their screen time by installing a program on their device which tracks the active application and sends the data to their servers for storage and analysis. The user can then view their data in a dashboard on the service's website. There services are marketed towards teams and professionals, who want to keep track of individual and team productivity.
+Understanding device use and the underlying cognitive processes are essential when designing for motivation, engagement and wellbeing in digital experiences~\cite{peters_designing_2018}.
 
-However, by collecting detailed and non-anonymized behavioral data on the user these services bring significant privacy concerns, especially in cases where the data is shared with a team or an employer.
+\subsection{Automated time trackers}
 
-Other limitations of these services, such as low temporal resolution, cause additional issues when paired with timing-sensitive tasks.
+Automated time-trackers have been developed for computing devices for various applications such as tracking productivity, managing excessive use of social networking sites (SNSs).
 
-As a solution to these privacy and data resolution issues we present the previously
+\subsubsection{Commercial use}
+
+Companies like RescueTime~\cite{noauthor_rescuetime_nodate}, Hubstaff~\cite{noauthor_hubstaff_nodate}, and others offer automated time tracking as a service. These services let the user track their screen time by installing a program on their device which tracks the active application and sends the data to their servers for storage and analysis. The user can then view their data in a dashboard on the service's website. Some of these services, like RescueTime and Hubstaff, are marketed towards teams and professionals, who want to keep track of individual and team productivity.
+
+However, these services have some issues for use by researchers and individuals alike. Notably, their collection of detailed and non-anonymized behavioral data into a centralized system bring significant privacy concerns, especially in cases where the data is shared with a team or an employer.
+
+Other limitations of these services, such as low temporal resolution and lack of detail, cause additional issues for certain tasks that are timing-sensitive (such as ERPs) or preprocessing steps that can take advantage of high level of detail (like classifying activity).
+
+\subsubsection{Research use}
+
+Previous research has been published which used automated time trackers, such as TimeAware~\cite{kim_timeaware_2016} and ScreenLife~\cite{rooksby_personal_2016}. However, the previous contributions are, like the commercial services, not open source or permissively licensed and therefore not suitable for use by external researchers.
+
+\subsubsection{ActivityWatch}
+
+As a solution to these privacy and data resolution issues we have build ActivityWatch, a free and open source automated time tracker~\cite{bjareholt_activitywatch_nodate}. ActivityWatch remedies issues with previous solutions around source availability/licensing, privacy, and cross-platform support.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=8cm]{img/screenshot-aw-activity.png}
+\caption{ActivityWatch activity dashboard. Showing top applications, window titles, browser domains, and categories.}\label{fig:aw}
+\end{figure}
 
 %With the advancement of Brain-Computer Interfaces, the relationship between device and brain activity is becoming even more tightly connected.
 
@@ -82,9 +108,9 @@ Functional brain imaging methods such as fMRI, fNIRS, and EEG, have been used to
 
 % As a starting point for the thesis, the
 
-Functional brain imaging techniques hold the promise of relating cognition to physical activities and brain structures. As an example it has been shown that it is possible to classify what task a participant is undertaking using fMRI\cite{floyd_decoding_2017}, which has been replicated using EEG and low-cost biosensors\cite{fucci_replication_2019}.
+Functional brain imaging techniques hold the promise of relating cognition to physical activities and brain structures. As an example it has been shown that it is possible to classify what task a participant is undertaking using fMRI~\cite{floyd_decoding_2017}, which has been replicated using EEG and low-cost biosensors~\cite{fucci_replication_2019}.
 
-Additionally, EEG-based BCIs have... But they are not without their limitations, among them a low signal-to-noise ratio~\cite{mcfarland_eeg-based_2017}, yet visual evoked potentials (VEPs) have been shown to be sufficient for high-speed BCI applications~\cite{spuler_high-speed_2017}.
+But they are not without their limitations, among them a low signal-to-noise ratio~\cite{mcfarland_eeg-based_2017}, yet visual evoked potentials (VEPs) have been shown to be sufficient for high-speed BCI applications~\cite{spuler_high-speed_2017}.
 
 Convolutional Neural Networks (CNNs) have been successful in classifying time series in general~\cite{zhao_convolutional_2017}, and EEG data in particular~\cite{schirrmeister_deep_2017}. Additionally, Hierarchical Neural Networks (HCNNs) have been used for EEG-based emotion recognition~\cite{li_hierarchical_2018}.
 
@@ -124,13 +150,14 @@ Can the OpenBCI system be used to\ldots
 
 \section{Methodology}
 
-\large TODO
+We will collect EEG data from subjects while they are using their own computer with ActivityWatch installed. We will then categorize the activity that ActivityWatch recorded and use it to train an EEG classifier on device activity.
 
 \section{Scientific contributions}
 
 \begin{itemize}
   \item The open source automated time-tracker ActivityWatch.
-  \item Relationships between device activity and brain activity, as measured by EEG\@.
+  \item A EEG classifier for device activity.
+  \item Relationships found between device activity and brain activity, as measured by EEG\@.
 \end{itemize}
 
 

@@ -9,5 +9,6 @@
 *.bcf
 *.xml
 *.out
+*.tdo
 _markdown_*
 templates
