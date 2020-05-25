@@ -3,17 +3,25 @@
 \documentclass{IEEEtran}
 
 \usepackage[smartEllipses]{markdown}  % For markdown
+\usepackage[dvipsnames]{xcolor}
 \usepackage{hyperref}
 \usepackage{comment}
 \usepackage{xargs}
 \usepackage[colorinlistoftodos, prependcaption, textsize=tiny]{todonotes}
 
+\usepackage[english]{datetime2}
+\DTMnewdatestyle{dashdate}{%
+  \renewcommand{\DTMdisplaydate}[4]{\number##1-\DTMenglishshortmonthname{##2}-\number##3}%
+  \renewcommand{\DTMDisplaydate}{\DTMdisplaydate}%
+}
+\DTMsetdatestyle{iso}
+
 % From: https://tex.stackexchange.com/a/178806/36302
-\newcommandx{\add}[2][1=]{\todo[linecolor=red, backgroundcolor=red!25, bordercolor=red, inline, #1]{Add: #2}}
-\newcommandx{\unsure}[2][1=]{\todo[linecolor=red, backgroundcolor=red!25, bordercolor=red, #1]{Unsure: #2}}
-\newcommandx{\change}[2][1=]{\todo[linecolor=blue, backgroundcolor=blue!25, bordercolor=blue, #1]{Change: #2}}
-\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen, backgroundcolor=OliveGreen!25, bordercolor=OliveGreen, #1]{Info: #2}}
-\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum, backgroundcolor=Plum!25,bordercolor=Plum, #1]{Improve: #2}}
+\newcommandx{\add}[2][1=]{\todo[linecolor=red, backgroundcolor=red!25, bordercolor=red, inline, #1]{\textbf{Add:} #2}}
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=red, backgroundcolor=red!25, bordercolor=red, #1]{\textbf{Unsure:} #2}}
+\newcommandx{\change}[2][1=]{\todo[linecolor=blue, backgroundcolor=blue!25, bordercolor=blue, #1]{\textbf{Change:} #2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen, backgroundcolor=OliveGreen!25, bordercolor=OliveGreen, #1]{\textbf{Info:} #2}}
+\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum, backgroundcolor=Plum!25,bordercolor=Plum, #1]{\textbf{Improve:} #2}}
 \newcommandx{\thiswillnotshow}[2][1=]{\todo[disable, #1]{#2}}
 
 % Formatting
@@ -28,6 +36,18 @@
 \usepackage{epsfig}
 %\usepackage[dvips]{graphics}
 
+\newcommand\myshade{85}
+\colorlet{mylinkcolor}{violet}
+\colorlet{mycitecolor}{YellowOrange}
+\colorlet{myurlcolor}{Aquamarine}
+
+\hypersetup{
+  linkcolor  = black, %mylinkcolor!\myshade!black,
+  citecolor  = mycitecolor!\myshade!black,
+  urlcolor = myurlcolor!\myshade!black,
+  colorlinks = true,
+}
+
 % References
 \usepackage[backend=biber, style=numeric, refsegment=section, sorting=none]{biblatex}
 \usepackage{cleveref}
@@ -38,9 +58,13 @@
 \defbibheading{notcited}{\section*{Further Reading}}
 
 \title{%
-    \large M.Sc. Thesis proposal (SUPER EARLY DRAFT)\\
-    \huge Classifying brain activity using low-cost biosensors and automated time tracking \\}
-\author{Erik Bjäreholt \\(dat13ebj@student.lu.se, erik@bjareho.lt)}
+    \small DRAFT \today \\
+    \small The latest version is available at \href{https://erik.bjareholt.com/thesis/goaldocument.pdf}{erik.bjareholt.com/thesis/goaldocument.pdf}\\
+    \large --- \\
+    \large \par M.Sc. Thesis proposal\\
+    \huge Classifying brain activity using low-cost biosensors and automated time tracking \\
+}
+\author{Erik Bjäreholt \\(erik@bjareho.lt, dat13ebj@student.lu.se)}
 \date{\today}
 
 \begin{document}
@@ -56,7 +80,9 @@
 \end{tabular}
 \end{center}
 
+\setlength{\parskip}{0em}
 \tableofcontents
+\setlength{\parskip}{1em}
 
 \listoftodos[Notes \& TODOs]
 
@@ -130,17 +156,21 @@ EEG and other low-cost biosensors have been successful in capturing emotional st
 
 \subsection{Goals}
 
-\begin{itemize}
-    \item{TODO}
-\end{itemize}
+\add{Goals}
+
+%\begin{itemize}
+%    \item{}
+%\end{itemize}
 
 \subsection{Questions}
 
-Can low-cost biosensors like EEG be used to\ldots
+Can low-cost biosensors, like EEG, be used to\ldots
 
 \begin{itemize}
     \item Classify which device activity the user is engaging in?
-    \item Capture/track emotional states during device use
+    \item Track emotional states during device use?
+    \item Measure distractibility?
+    \item Predict context switching?
    %\item Be used to measure flow?
    %\item What about measuring attention/distractibility?
 \end{itemize}
@@ -148,9 +178,11 @@ Can low-cost biosensors like EEG be used to\ldots
 \subsection{Challenges}
 
 \begin{itemize}
-    \item EEG data collection (limited time for data collection)
+    \item Low volume of EEG data collected (limited time for data collection)
+    \item Limitations of low-cost EEG equipment (small number of channels)
+    \item Orthogonal stimuli (eye movement/blinking, use of keyboard/mouse) which will contribute significant noise to the EEG readings not relevant for the classification task.
     \item Scope creep (hopefully resolved by the time this document is finalized)
-    \item TODO
+    \item \add{More challenges}
 \end{itemize}
 
 \section{Methodology}
