@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "erb-thesis"
+version = "0.1.0"
+description = ""
+authors = ["Erik Bjäreholt <erik@bjareho.lt>"]
+packages = [
+    { include = "eegwatch", from = "src" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+numpy = "^1.18.5"
+scipy = "^1.4.1"
+matplotlib = "^3.2.1"
+pandas = "^1.0.4"
+mne = "^0.20.5"
+brainflow = "^3.0.3"
+
+[tool.poetry.dev-dependencies]
+black = "^19.10b0"
+mypy = "^0.780"
+pytest = "^5.4.3"
+pylint = "^2.5.3"
+flake8 = "^3.8.2"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

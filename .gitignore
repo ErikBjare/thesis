@@ -1,3 +1,10 @@
+# Docs
+dist
 docs/build
-*.pdf
 templates
+documents
+
+# Python
+.venv
+.*cache
+*.pyc
