@@ -1,16 +1,20 @@
-name: Build
+name: Pages
 
 on:
-  schedule:
-    # * is a special character in YAML so you have to quote this string
-    - cron:  '30 0 * * *'
+  #schedule:
+  #  # * is a special character in YAML so you have to quote this string
+  #  - cron:  '30 0 * * *'
   push:
+    # Build on all branches (except gh-pages)
+    # Deploy will only happen on master
     branches:
       - '**'        # matches all branches
-      - '!gh-pages' # excludes master
+      - '!gh-pages' # excludes gh-pages
+    pull_request:
+      branches: [ master ]
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
