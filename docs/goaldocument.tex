@@ -41,7 +41,7 @@
 \colorlet{mycitecolor}{YellowOrange}
 \colorlet{myurlcolor}{Aquamarine}
 
-\hypersetup{
+\hypersetup{%
   linkcolor  = black, %mylinkcolor!\myshade!black,
   citecolor  = mycitecolor!\myshade!black,
   urlcolor = myurlcolor!\myshade!black,
@@ -116,7 +116,7 @@ Other limitations of these services, such as low temporal resolution and limited
 
 \subsubsection{Research use}
 
-Previous research has been published which used automated time trackers, such as TimeAware~\cite{kim_timeaware_2016} and ScreenLife~\cite{rooksby_personal_2016}. However, these previous contributions are --- like the commercial services --- not open source or permissively licensed and therefore not available for external research use nor further development.
+Previous research has been published which used automated time trackers, such as TimeAware~\cite{kim_timeaware_2016} and ScreenLife~\cite{rooksby_personal_2016}. However, these previous contributions are --- like the commercial services --- not open source nor permissively licensed, and therefore not available for external research use nor further development.
 
 \subsubsection{ActivityWatch}
 
@@ -156,9 +156,9 @@ The aim of this project is to investigate whether EEG and other low-cost biosens
 
 EEG and other low-cost biosensors have been successful in capturing emotional states. Thus combined tracking of device activity and emotional state can be used to to see study associations between emotional state and device activity. % emotional state device activity causes, or is caused by.
 
-\subsection{Goals}
+%\subsection{Goals}
 
-\add{Goals}
+%\add{Goals}
 
 %\begin{itemize}
 %    \item{}
@@ -171,7 +171,7 @@ Can low-cost biosensors, like EEG, be used to\ldots
 \begin{itemize}
     \item Classify which device activity the user is engaging in?
     \item Track emotional states during device use?
-    \item Measure focus/distractibility?  % This seems already answered to some degree
+    \item Measure focus/distractibility during various device activities?
     \item Predict context switching?
    %\item Be used to measure flow?
    %\item What about measuring attention/distractibility?
@@ -189,7 +189,21 @@ Can low-cost biosensors, like EEG, be used to\ldots
 
 \section{Methodology}
 
-We will collect EEG data from subjects during normal device use. Device activity will be recorded and categorized with ActivityWatch. The categorization will be used to train an EEG classifier on device activity.
+\subsection{Data collection}
+
+We will simultaneously collect EEG and device activity data from subjects during normal device use. EEG data will be collected with the 8-channel OpenBCI Cyton biosensing board and Ultracortex headset. Device activity data will be collected with ActivityWatch.
+
+It is as of yet undecided if we will use a single subject or try to gather data from several subjects.
+
+Both approaches have their tradeoffs; for a single-subject study it'd be much easier to collect large amounts of data and have the data be consistent (electrode placement would be consistent). We also have access to a MRI scan of the single subject (me, the experimenter) which can be used to aid in EEG source localization. On the other hand, collecting data from several users ensures that any results we get or classifiers we build are generalizable.
+
+% Device activity will be recorded and categorized with ActivityWatch. The categorization will be used to train an EEG classifier on device activity.
+
+\subsection{Data analysis}
+
+% Use an emotion classifier to try to associate which activities are associated with which emotions.
+
+\add{}
 
 \section{Scientific contributions}
 
@@ -197,7 +211,7 @@ We will collect EEG data from subjects during normal device use. Device activity
   \item A EEG classifier for device activity.
   \item Relationships found between device activity and brain activity, as measured by EEG\@.
   \item An example for how to use the open-source automated time tracker ActivityWatch in research.
-  \item The addition of EEG-derived data to ActivityWatch. \unsure{Maybe out-of-scope, but obvious synergies so might not be extra work.}
+ %\item The addition of EEG-derived data to ActivityWatch. \unsure{Maybe out-of-scope, but obvious synergies so might not be extra work.}
  %\item The open source automated time-tracker ActivityWatch.
 \end{itemize}
 
