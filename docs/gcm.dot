@@ -1,0 +1,67 @@
+digraph graphname {
+    node [shape="box"];
+    node [style=filled,color=white];
+
+    subgraph cluster_phases {
+        label = "Phases";
+        style=filled;
+		color=lightgrey;
+
+        P1[label="Pilot study"];
+        P2[label="Multi-subject study"];
+        P3[label="Analysis"];
+        {rank = same; P1; P2; P3;}
+    }
+
+    // Phase order
+    P1 -> P2 -> P3;
+
+    // Phases to goals
+    P1 -> G1;
+    P3 -> G2;
+
+    subgraph cluster_goals {
+        label = "Goals";
+        style=filled;
+		color=lightgrey;
+
+        G1[label="Understand EEG profile"];
+        G2[label="Develop a classifier"];
+        {rank = same; G1; G2;}
+    }
+
+    // Goals to questions
+    G1 -> Q3;
+    G2 -> Q1;
+    G2 -> Q2;
+    G2 -> Q4;
+
+    subgraph cluster_questions {
+        label = "Questions";
+        style=filled;
+		color=lightgrey;
+
+        Q1[label="What is the baseline power\nspectra of activity in general\nfor a particular user?"];
+        Q2[label="What are the power spectra\nof different activities?\n(like work vs social media use)"];
+        Q3[label="Which activities are the easiest to\ndistinguish based solely on EEG data?"];
+        Q4[label="Is EEG data sufficient for building\nan accurate activity classifier?"];
+    }
+
+    // Questions to metrics
+    Q1 -> M1;
+    Q1 -> M2;
+    Q2 -> M3;
+    Q3 -> M2;
+    Q4 -> M4;
+
+    subgraph cluster_metrics {
+        label = "Metrics";
+        style=filled;
+		color=lightgrey;
+
+        M1[label="Power spectral density"];
+        M2[label="Covariance matrix"];
+        M3[label="PSD aggregated by activity"];
+        M4[label="Classifier performance"];
+    }
+}

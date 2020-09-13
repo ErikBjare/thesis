@@ -3,10 +3,13 @@
 \documentclass{IEEEtran}
 
 \usepackage[smartEllipses]{markdown}  % For markdown
+\def\markdownOptionOutputDir{build}  % Needed, see https://github.com/Witiko/markdown/issues/6#issuecomment-328699108
+
 \usepackage[dvipsnames]{xcolor}
 \usepackage{hyperref}
 \usepackage{comment}
 \usepackage{xargs}
+\usepackage{verbatim}
 \usepackage[colorinlistoftodos, prependcaption, textsize=tiny]{todonotes}
 
 \usepackage[english]{datetime2}
@@ -49,7 +52,7 @@
 }
 
 % References
-\usepackage[backend=biber, style=numeric, refsegment=section, sorting=none]{biblatex}
+\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
 \usepackage{cleveref}
 \bibliography{zotero}
 \DeclareBibliographyCategory{cited}
@@ -75,8 +78,8 @@
  Student & Erik Bjäreholt \\
  Supervisor & Markus Borg \\
  Examiner & Elizabeth Bjarnarson \\
- Start date & 10th June (realistic?) \\
- End date & 30th September (realistic?) \\
+ Start date & 1st September (realistic?) \\
+ End date & 10th December (realistic?) \\
 \end{tabular}
 \end{center}
 
@@ -86,6 +89,7 @@
 
 \listoftodos[Notes \& TODOs]
 
+\begin{refsection}
 \section{Background}
 
 People spend more time than ever using computing devices. Work, entertainment, and services, have been steadily moving online over the last few decades and this trend is expected to continue.
@@ -120,7 +124,7 @@ Previous research has been published which used automated time trackers, such as
 
 \subsubsection{ActivityWatch}
 
-The free and open source automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_nodate} addresses aforementioned issues with other software around source availability/licensing, privacy, temporal resolution, event detail, and cross-platform support.
+The free and open source automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_2020} addresses aforementioned issues with other software around source availability/licensing, privacy, temporal resolution, event detail, and cross-platform support.
 
 \begin{figure}[h]
 \centering
@@ -142,7 +146,7 @@ But they are not without their limitations --- among them a notably low signal-t
 
 Convolutional Neural Networks (CNNs) have been successful in classifying time series in general~\cite{zhao_convolutional_2017}, and EEG data in particular~\cite{schirrmeister_deep_2017}. Additionally, Hierarchical Convolutional Neural Networks (HCNNs) have been used for EEG-based emotion recognition~\cite{li_hierarchical_2018}.
 
-\add[inline]{Summary of EEG datasets/challenges on Kaggle}
+% https://docs.openbci.com/citations
 
 % List of functional brain imaging techniques:
 %  - fMRI
@@ -152,9 +156,83 @@ Convolutional Neural Networks (CNNs) have been successful in classifying time se
 
 \section{Problem description, research goals and questions}
 
-The aim of this project is to investigate whether EEG and other low-cost biosensors can be used to accurately classify device activity in a broader context than previous studies. This will be useful to future BCI applications where a command might be specific to a particular context.
+Since EEG and other low-cost biosensors have been used to classify affective states and comprehension tasks~\cite{fucci_replication_2019} we wish to investigate if they can also be used to classify which device activity the user is engaging in.
 
-EEG and other low-cost biosensors have been successful in capturing emotional states. Thus combined tracking of device activity and emotional state can be used to to see study associations between emotional state and device activity. % emotional state device activity causes, or is caused by.
+The aim of this project is therefore to investigate whether EEG and other low-cost biosensors can be used to study the relationship between device activity and brain activity. This will be done in part by trying to train a device activity classifier from EEG data. % This will be useful to future BCI applications where a command might be specific to a particular context.
+
+We will structure our goals according to the Goal-Question-Metric (GCM) paradigm. The goals are grouped into phases, which are explained in the Methodology section.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=8cm]{gcm.png}
+    \caption{Overview of the goals/phases (with a subset of the questions and metrics), structured according to the Goal-Question-Metric (GCM) paradigm.}\label{fig:gcm}
+\end{figure}
+
+\begin{markdown}
+*Goal:* Understand the EEG profile of different device activities, to inform the design of the multiple-subject experiment.
+
+ - *Question:* Which device activities are the easiest to distinguish from each other based solely on EEG data?
+
+    - *Metrics:* PSD, covariance matrix.
+
+ - *Question:* Roughly how much data is required to characterize the EEG of a particular activity?
+
+    - *Metrics:* Time for aggregated power spectra to converge.
+
+ - *Question:* Which electrode placements (in the 10-20 system) are most suitable for the task?
+
+    - *Metrics:* Covariance matrix.
+
+ - *Question:* What is the baseline power spectra of device activity in general for a particular user?
+
+    - *Metrics:* Power spectra.
+
+ - *Question:* What are the power spectra of different activities (like work vs social media use)?
+
+    - *Metrics:* Power spectra aggregated by device activity,
+
+ - *Question:* Does the same activity consistently yield similar power spectral densities.
+
+    - *Metrics:* Variance of the aggregated power spectra, both per user and across the entire group.
+
+ - *Question:* Are any brain regions more strongly associated with certain activity? (similar to G2-Q3)
+
+    - *Metrics:* Source estimation, covariance matrix.
+\end{markdown}
+
+
+\begin{markdown}
+*Goal:* Develop a classifier for device activity from EEG data.
+
+ - *Question:* Is the EEG data sufficient for building a accurate classifier for device activity?
+
+    - *Metrics:* Classifier performance
+
+ - *Question:* What classifier is suitable for the dataset?
+
+    - *Metrics:* Accuracy, precision, F1 score of different classifiers.
+
+ - *Question:* Which electrode placements/brain regions have the most predictive power?
+
+    - *Metrics:* Source estimation, covariance matrix.
+\end{markdown}
+
+% Goal-Question-Metric
+%
+%   Goal:
+%     Purpose: Measure
+%     Issue: Difficulty of measuring
+%     Object: Affective states
+%     Viewpoint: during device use
+%    - Develop a classifier (object) for device activity (process) and affective states (process)
+%
+%   Questions:
+%    - Can device activity be classified from EEG data?
+%    - Which device activities cause, or are caused by, which affective states?
+%
+%   Metrics:
+%    - Classifier performance
+%    - Statistical significance of relationship between device activity and affective states
 
 %\subsection{Goals}
 
@@ -189,15 +267,41 @@ Can low-cost biosensors, like EEG, be used to\ldots
 
 \section{Methodology}
 
-\subsection{Data collection}
+%\subsection{Data collection}
 
-We will simultaneously collect EEG and device activity data from subjects during normal device use. EEG data will be collected with the 8-channel OpenBCI Cyton biosensing board and Ultracortex headset. Device activity data will be collected with ActivityWatch.
+We will simultaneously collect EEG and device activity data from subjects during device use. EEG data will be collected with the 8-channel OpenBCI Cyton biosensing board and Ultracortex headset. Device activity data will be collected and categorized with ActivityWatch. The activity categories will be used to label the dataset so we can train the classifier.
 
-It is as of yet undecided if we will use a single subject or try to gather data from several subjects.
+Project planning and tasks will be managed using GitHub issues and the Kanban-like board provided by GitHub (GitHub Projects).
 
-Both approaches have their tradeoffs; for a single-subject study it'd be much easier to collect large amounts of data and have the data be consistent (electrode placement would be consistent). We also have access to a MRI scan of the single subject (me, the experimenter) which can be used to aid in EEG source localization. On the other hand, collecting data from several users ensures that any results we get or classifiers we build are generalizable.
+The project can be roughly split into three phases.
 
-% Device activity will be recorded and categorized with ActivityWatch. The categorization will be used to train an EEG classifier on device activity.
+\begin{itemize}
+ \item Run a single-subject pilot study and perform preliminary analysis.
+ \item Design and run a multiple-subject study.
+ \item Develop a classifier for device activity.
+\end{itemize}
+
+\subsection{Pilot study}
+
+The purpose of the first phase is to collect a pilot dataset (using a single subject) to inform the design of the main study.
+
+The main questions we want to answer in this phase are about the study design in phase 2. Such as to identify which activities are the easiest to distinguish using EEG and are thus best suited for further study. (See GCM for more questions to be answered)
+
+\subsection{Multiple-subject study}
+
+The purpose of this phase is to collect data from multiple subjects with a controlled study design (as opposed to during organic use).
+
+\subsection{Develop classifier}
+
+Using the data collected from the previous phase we will develop a classifier that classifies the category of device activity using EEG data.
+
+Additionally, there are numerous available EEG datasets and challenges on Kaggle which will be used to inform the development of the classifier.
+
+
+
+%Both approaches have their tradeoffs; for a single-subject study it'd be much easier to collect large amounts of data and have the data be consistent (electrode placement would be consistent). We also have access to a MRI scan of the single subject (me, the experimenter) which can be used to aid in EEG source localization. On the other hand, collecting data from several users ensures that any results we get or classifiers we build are generalizable.
+
+%
 
 %\subsection{Data analysis}
 
@@ -208,9 +312,9 @@ Both approaches have their tradeoffs; for a single-subject study it'd be much ea
 \section{Scientific contributions}
 
 \begin{itemize}
-  \item A EEG classifier for device activity.
-  \item Relationships found between device activity and brain activity, as measured by EEG\@.
-  \item An example for how to use the open-source automated time tracker ActivityWatch in research.
+  \item Developing a classifier for device activity using low-cost biosensors.
+  \item Identifying relationships between device activity and brain activity, as measured by EEG\@.
+  \item Developing a framework for using ActivityWatch in research.
  %\item The addition of EEG-derived data to ActivityWatch. \unsure{Maybe out-of-scope, but obvious synergies so might not be extra work.}
  %\item The open source automated time-tracker ActivityWatch.
 \end{itemize}
@@ -218,15 +322,23 @@ Both approaches have their tradeoffs; for a single-subject study it'd be much ea
 
 \section{Resources}
 
+I have access to all the resources I need to perform the project, including:
+
 \begin{itemize}
-  \item OpenBCI Cyton biosensing board (8 channel) and Ultracortex headset
-  \item HEGduino \unsure[inline]{Will it be of use?}
-  \item Test subjects \unsure[inline]{Maybe just a single subject for simplicity}
- %\item ActivityWatch, an open source automated time tracker (already developed by the author, but never before used in a scientific publication)
+  \item OpenBCI Ultracortex headset and Cyton biosensing board (8 channels)
+  \item Access to significant CPU \& GPU compute capacity (helpful for machine learning)
+ %\item HEGduino \unsure[inline]{Will it be of use?}
+  \item 3--5 male test subjects who have given informed consent.
+  \item ActivityWatch, an open source automated time tracker (already developed by the author, but never before used in a scientific publication)
+  \item Open source software for EEG research such as MNE-Python~\cite{noauthor_mne-toolsmne-python_2020} and Brainflow~\cite{noauthor_brainflow-devbrainflow_2020}.
+  \item Publicly available EEG datasets on Kaggle.\cite{noauthor_search_nodate}
+  \item Access to researchers who work with EEG at Lund University (at Department of Automatic Control and Department of Psychology)
+  \item Computer
 \end{itemize}
 
 % References
-\bibbysegment{}
+%\bibbysegment{}
+\printbibliography[category=cited]
 
 % Further reading (uncited)
 \nocite{*}
@@ -241,4 +353,5 @@ Both approaches have their tradeoffs; for a single-subject study it'd be much ea
   {\item}
 \printbibliography[notcategory=cited, env=bibnonum, heading=notcited]
 
+\end{refsection}
 \end{document}

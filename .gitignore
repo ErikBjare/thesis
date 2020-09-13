@@ -4,7 +4,11 @@ docs/build
 templates
 documents
 
+# Built by dot
+gcm.png
+
 # Python
 .venv
 .*cache
 *.pyc
+*.egg-info
