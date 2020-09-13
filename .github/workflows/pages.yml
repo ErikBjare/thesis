@@ -21,16 +21,12 @@ jobs:
         uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
         with:
           persist-credentials: false
-      - name: Compile LaTeX document
-        uses: xu-cheng/latex-action@v2
+      - name: Compile LaTeX documents
+        uses: xu-cheng/texlive-action/full@v1
         with:
-          root_file: |
-            docs/thesis.tex
-            docs/goaldocument.tex
-          args: -pdf -cd -file-line-error -output-directory=build -interaction=nonstopmode -shell-escape
-      - name: Build
-        run: |
-          make dist
+          run: |
+            apk add make
+            make dist
       # Might not work due to GitHub being weird about not triggering site rebuilds from workflows.
       # See this for more info: https://github.community/t5/GitHub-Actions/Github-action-not-triggering-gh-pages-upon-push/td-p/26869/highlight/true/page/3
       - name: Deploy 🚀

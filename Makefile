@@ -8,7 +8,7 @@ dist: docs/build/goaldocument.pdf docs/build/thesis.pdf
 	dot -Tpng $< -o $@
 
 docs/build/%.pdf: docs/%.tex docs/*.bib docs/gcm.png
-	latexmk $< -pdf -shell-escape -cd -output-directory=build
+	latexmk $< -pdf -shell-escape -cd -output-directory=build -interaction=nonstopmode -file-line-error
 
 test:
 	poetry run pytest src/eegwatch/*.py
