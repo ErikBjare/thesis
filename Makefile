@@ -1,13 +1,13 @@
 all: dist
 
-dist: docs/build/goaldocument.pdf docs/build/thesis.pdf
+dist: docs/tex/build/goaldocument.pdf docs/tex/build/thesis.pdf
 	mkdir -p dist
 	cp $< dist
 
 %.png: %.dot
 	dot -Tpng $< -o $@
 
-docs/build/%.pdf: docs/%.tex docs/*.bib docs/gcm.png
+docs/tex/build/%.pdf: docs/tex/%.tex docs/tex/*.bib docs/tex/gqm.png
 	latexmk $< -pdf -shell-escape -cd -output-directory=build -interaction=nonstopmode -file-line-error
 
 test:
@@ -15,5 +15,6 @@ test:
 
 clean:
 	rm -r docs/build
+	rm -r docs/tex/build
 	#rm docs/gcm.png
 	#rm -f *.aux *.bbl *.bcf *.cfg  *.blg *.dvi *.log *.pdf *.run.xml *.toc *.in *.markdown.* *.out *.tdo

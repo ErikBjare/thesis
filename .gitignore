@@ -1,11 +1,11 @@
 # Docs
 dist
-docs/build
+build
 templates
 documents
 
 # Built by dot
-gcm.png
+gqm.png
 
 # Python
 .venv
