@@ -106,7 +106,9 @@ Furthermore, how different device activities affect the user behaviorally and ne
 
 Understanding device use and the underlying cognitive processes are essential when designing for motivation, engagement and wellbeing in digital experiences~\cite{peters_designing_2018}.
 
-\add[inline]{Add connection to software developers}
+This becomes especially relevant for knowledge workers, such as software developers, who spend the majority of their working time on computing devices.
+
+%\add[inline]{Add connection to software developers}
 
 \subsection{Automated time trackers}
 
@@ -144,9 +146,7 @@ However, the recent availability of low-cost biosensors such as EEG, HEG, and fN
 
 But they are not without their limitations --- among them a notably low signal-to-noise ratio~\cite{mcfarland_eeg-based_2017} --- yet visual evoked potentials (VEPs) have been shown to be sufficient for high-speed BCI applications~\cite{spuler_high-speed_2017}.
 
-\add[inline]{Paragraph leading into the CNN classifier part, a couple sentences is enough}
-
-Convolutional Neural Networks (CNNs) have been successful in classifying time series in general~\cite{zhao_convolutional_2017}, and EEG data in particular~\cite{schirrmeister_deep_2017}. Additionally, Hierarchical Convolutional Neural Networks (HCNNs) have been used for EEG-based emotion recognition~\cite{li_hierarchical_2018}.
+To combat the low signal-to-noise ratio, machine learning methods have been employed with varying degrees of success. Examples from previous research include Convolutional Neural Networks (CNNs), which have been successful in classifying time series in general~\cite{zhao_convolutional_2017}, and EEG data in particular~\cite{schirrmeister_deep_2017}. As well as Hierarchical Convolutional Neural Networks (HCNNs), which have been used for EEG-based emotion recognition~\cite{li_hierarchical_2018}.
 
 % https://docs.openbci.com/citations
 
@@ -158,11 +158,17 @@ Convolutional Neural Networks (CNNs) have been successful in classifying time se
 
 \section{Problem description, research goals and questions}
 
-\add[inline]{Needs an overarching value-adding goal/vision, relating to software engineering}
+%\add[inline]{Needs an overarching value-adding goal/vision, relating to software engineering}
 
-Since EEG and other low-cost biosensors have been used to classify affective states and comprehension tasks~\cite{fucci_replication_2019} we will investigate if they can also be used to classify which device activity the user is engaging in.
+% Goal: Improve productivity of developers.
 
-The aim of this project is therefore to investigate whether EEG and other low-cost biosensors can be used to study the relationship between device activity and brain activity. This will be done in part by training a device activity classifier from EEG data. % This will be useful to future BCI applications where a command might be specific to a particular context.
+Knowledge workers in general, and software developers in particular, have varying degrees of productivity that is in part mediated by varying degrees of focus (or ``flow''). Physical devices which use device activity as an indicator of flow have been developed to reduce interruptions at work, and subsequently improve productivity~\cite{zuger_reducing_2017}.
+
+%Methods such as biofeedback have been TODO \cite{neurosity}
+
+Since EEG and other low-cost biosensors have been used to classify developers emotions~\cite{girardi_recognizing_2020} and comprehension tasks~\cite{fucci_replication_2019} we will investigate if they can also be used to classify which device activity the user is engaging in.
+
+The goal of this project is therefore to investigate whether EEG and other low-cost biosensors can be used to improve the productivity of developers by studying the relationship between device activity and brain activity. This will be done in part by training a device activity classifier from EEG data. % This will be useful to future BCI applications where a command might be specific to a particular context.
 
 We structure our goals according to the Goal-Question-Metric (GQM) paradigm. The goals are grouped into phases, which are explained in the Methodology section.
 
@@ -248,15 +254,17 @@ We structure our goals according to the Goal-Question-Metric (GQM) paradigm. The
 
 \subsection{Research Questions}
 
-\add[inline]{Needs revision}
+%\add[inline]{Needs revision}
 
 Can low-cost biosensors, like EEG, be used to\ldots
 
 \begin{itemize}
-    \item Classify which device activity the user is engaging in?
-    \item Track emotional states during device use?
-    \item Measure focus/distractibility during various device activities?
-    \item Predict context switching?
+    \item RQ1. Can input from low-cost EEG sensors be used to train a classifier separating software developers' device activities?
+    \item RQ2. How does the number of channels impact the classification accuracy?
+   %\item Classify which device activity the user is engaging in?
+   %\item Track emotional states during device use?
+   %\item Measure focus/distractibility during various device activities?
+   %\item Predict context switching?
    %\item Be used to measure flow?
    %\item What about measuring attention/distractibility?
 \end{itemize}
@@ -295,9 +303,11 @@ The main questions we want to answer in this phase are about the study design in
 
 \subsection{Multiple-subject study}
 
-\add[inline]{Suggestions of study designs from related work, such as Fucci et al}
+%\add[inline]{Suggestions of study designs from related work, such as Fucci et al}
 
 The purpose of this phase is to collect data from controlled experiments with multiple subjects.
+
+The experimental design and protocol will be partially drawn from previous research, including a study on recognizing developers emotions while programming~\cite{girardi_recognizing_2020}, along with a replication study utilizing EEG to classify code comprehension~\cite{fucci_replication_2019}.
 
 \subsection{Develop classifier}
 
