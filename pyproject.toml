@@ -15,6 +15,12 @@ matplotlib = "^3.2.1"
 pandas = "^1.0.4"
 mne = "^0.20.5"
 brainflow = "^3.0.3"
+muselsl = "^2.0.2"
+pygatt = {version = "^4.0.5", extras = ["GATTTOOL"]}
+vispy = "^0.6.5"
+PyQt5 = "^5.15.1"  # required for `muselsl view` to work, due to: https://github.com/alexandrebarachant/muse-lsl/issues/111
+# Takes forever to resolve dependencies
+#psychopy = "^2020.2.4"
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"
