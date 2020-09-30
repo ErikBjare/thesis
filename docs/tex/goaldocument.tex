@@ -90,6 +90,19 @@
 \listoftodos[Notes \& TODOs]
 
 \begin{refsection}
+
+\newcommand{\RQmain}{How well can data from low-cost EEG sensors be used to train a classifier separating software developers' device activities?}
+
+\section{Summary}
+
+This thesis project is about studying the viability of low-cost biosensors, EEG in particular, to determine the focus of software developers' attention. % or "differentiate between different activities that software developers engage in."
+
+The primary research question we will answer is how well these sensors can be used to differentiate between different activities, similarly to how previous research has shown it to be possible to differentiate other tasks, such as prose vs code comprehension~\cite{fucci_replication_2019}.
+
+This will be accomplished by measuring brain activity using EEG while simultaneously tracking what activity the developer is engaging in (such as writing code, reading documentation, or engaging with a non-work application such as social media). This will then be used to train a classifier to differentiate between the activities, in an attempt to determine if the EEG data contains sufficient information to approximate the focus of the developers attention.
+
+%\add{Explanation of how the active application is only an estimation of subject of the developers attention}
+
 \section{Background}
 
 People spend more time than ever using computing devices. Work, entertainment, and services, have been steadily moving online over the last few decades and this trend is expected to continue.
@@ -259,7 +272,7 @@ We structure our goals according to the Goal-Question-Metric (GQM) paradigm. The
 Can low-cost biosensors, like EEG, be used to\ldots
 
 \begin{itemize}
-    \item RQ1. Can input from low-cost EEG sensors be used to train a classifier separating software developers' device activities?
+    \item RQ1. \RQmain
     \item RQ2. How does the number of channels impact the classification accuracy?
    %\item Classify which device activity the user is engaging in?
    %\item Track emotional states during device use?
