@@ -11,7 +11,10 @@ docs/tex/build/%.pdf: docs/tex/%.tex docs/tex/*.bib docs/tex/gqm.png
 	latexmk $< -pdf -shell-escape -cd -output-directory=build -interaction=nonstopmode -file-line-error
 
 test:
-	poetry run pytest src/eegwatch/*.py
+	poetry run pytest
+
+typecheck:
+	poetry run mypy src/eegwatch --ignore-missing-imports
 
 clean:
 	rm -r docs/build
