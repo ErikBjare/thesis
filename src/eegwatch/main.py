@@ -45,8 +45,11 @@ def main():
     "--device", type=click.Choice(["muse2", "openbci"]), help="Which device to use"
 )
 def connect(device: str):
-    from eegnb.devices.eeg import EEG
-    from eegnb import generate_save_fn
+    # from eegnb.devices.eeg import EEG
+    from .devices.eeg import EEG
+
+    # from eegnb import generate_save_fn
+    from .util import generate_save_fn
 
     if device == "muse2":
         # TODO: How can we also get simultaneous HR/HRV tracking?
