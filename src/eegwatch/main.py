@@ -6,14 +6,15 @@ pylsl stuff is based on: https://github.com/labstreaminglayer/liblsl-Python/blob
 """
 
 from typing import List
-from time import sleep
-
+import time
 import logging
+
 import click
+import pylsl
 import pyqtgraph as pg
 from pyqtgraph.Qt import QtCore, QtGui
-import pylsl
 
+from eegwatch.util import print_statusline
 from eegwatch.lslutils import (
     Inlet,
     DataInlet,
@@ -25,7 +26,6 @@ from eegwatch.lslutils import (
 experiment = "test"
 subject = "erik"
 subject_id = 0
-record_duration = 5 * 60  # 5min
 
 # For plotting
 UPDATE_INTERVAL = 60  # ms between screen updates
@@ -42,17 +42,25 @@ def main():
 
 @main.command()
 @click.option(
-    "--device", type=click.Choice(["muse2", "openbci"]), help="Which device to use"
+    "--device",
+    type=click.Choice(["museS", "openbci"]),
+    default="museS",
+    help="Which device to use",
 )
-def connect(device: str):
+@click.option(
+    "--duration", type=int, default=5 * 60, help="Duration to record for",
+)
+@click.option(
+    "--loop/--no-loop", is_flag=True, default=True, help="Wether to loop recording"
+)
+def connect(device: str, duration: float, loop: bool):
     # from eegnb.devices.eeg import EEG
     from .devices.eeg import EEG
 
     # from eegnb import generate_save_fn
     from .util import generate_save_fn
 
-    if device == "muse2":
-        # TODO: How can we also get simultaneous HR/HRV tracking?
+    if device == "museS":
         board_name = "muse2"
     elif device == "openbci":
         board_name = "openbci"
@@ -61,7 +69,8 @@ def connect(device: str):
 
     eeg_device = EEG(device=board_name)
 
-    while True:
+    times_ran = 0
+    while loop or times_ran < 1:
         # Create save file name
         save_fn = generate_save_fn(
             board_name, experiment, subject_id=subject_id, session_nb=1
@@ -69,12 +78,22 @@ def connect(device: str):
 
         logger.info(f"Recording to {save_fn}")
         try:
-            eeg_device.start(record_duration)
+            eeg_device.start(save_fn, duration=duration)
         except IndexError:
             logger.exception("Error while starting recording, trying again in 5s...")
-            sleep(5)
-        sleep(record_duration)
+            time.sleep(5)
+        started = time.time()
+        stop = started + duration
+        print("Starting recording")
+        while time.time() < stop:
+            time.sleep(1)
+            progress = time.time() - started
+            print_statusline(
+                f"Recording #{times_ran + 1}: {round(progress)}/{duration}s"
+            )
+        print("Done!")
         logger.info("Done recording")
+        times_ran += 1
 
 
 @main.command()

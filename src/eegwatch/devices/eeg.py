@@ -19,7 +19,7 @@ import numpy as np
 import pandas as pd
 
 from brainflow import BoardShim, BoardIds, BrainFlowInputParams
-from muselsl import stream, list_muses, record
+import muselsl
 from pylsl import StreamInfo, StreamOutlet
 
 # list of brainflow devices
@@ -87,13 +87,21 @@ class EEG:
     def _start_muse(self, duration: float):
         if sys.platform in ["linux", "linux2", "darwin"]:
             # Look for muses
-            self.muses = list_muses()
+            self.muses = muselsl.list_muses()
+            if not self.muses:
+                raise Exception("No Muses found")
             # self.muse = muses[0]
 
+            def stream():
+                muselsl.stream(
+                    self.muses[0]["address"],
+                    ppg_enabled=True,
+                    # acc_enabled=True,
+                    # gyro_enabled=True,
+                )
+
             # Start streaming process
-            self.stream_process = Process(
-                target=stream, args=(self.muses[0]["address"],)
-            )
+            self.stream_process = Process(target=stream, daemon=True)
             self.stream_process.start()
 
         # Create markers stream outlet
@@ -102,15 +110,26 @@ class EEG:
         )
         self.muse_StreamOutlet = StreamOutlet(self.muse_StreamInfo)
 
+        def record(data_source="EEG"):
+            filename = self.save_fn
+            if data_source != "EEG":
+                # TODO: Put the source identifier earlier in the filename (before .csv)
+                filename += f".{data_source}"
+            muselsl.record(
+                duration=duration, filename=filename, data_source=data_source
+            )
+
         # Start a background process that will stream data from the first available Muse
-        print("starting background recording process")
-        print("will save to file: %s" % self.save_fn)
-        self.recording = Process(target=record, args=(duration, self.save_fn))
-        self.recording.start()
+        sources = ["EEG", "PPG"]
+        for source in sources:
+            print("starting background recording process")
+            print("will save to file: %s" % self.save_fn)
+            self.recording = Process(target=lambda: record(source), daemon=True)
+            self.recording.start()
 
         time.sleep(5)
 
-        self.push_sample(99, timestamp=time.time())
+        self.push_sample([99], timestamp=time.time())
 
     def _stop_muse(self):
         pass
@@ -265,7 +284,7 @@ class EEG:
         elif self.backend == "muselsl":
             self._start_muse(duration)
 
-    def push_sample(self, marker: int, timestamp: float):
+    def push_sample(self, marker: List[int], timestamp: float):
         """ Universal method for pushing a marker and its timestamp to store alongside the EEG data.
         Parameters:
             marker (int): marker number for the stimuli being presented.

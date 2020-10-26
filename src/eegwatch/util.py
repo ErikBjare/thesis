@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 
 DATA_DIR = os.path.join(os.path.expanduser("~/"), ".eegnb", "data")
@@ -38,3 +39,14 @@ def generate_save_fn(
     )
 
     return save_fp
+
+
+def print_statusline(msg: str):
+    """From: https://stackoverflow.com/a/43952192/965332"""
+    last_msg_length = (
+        len(print_statusline.last_msg) if hasattr(print_statusline, "last_msg") else 0  # type: ignore
+    )
+    print(" " * last_msg_length, end="\r")
+    print(msg, end="\r")
+    sys.stdout.flush()  # Some say they needed this, I didn't.
+    print_statusline.last_msg = msg  # type: ignore
