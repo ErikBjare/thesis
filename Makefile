@@ -17,6 +17,9 @@ precommit:
 test:
 	poetry run pytest
 
+format:
+	black src/ tests/
+
 typecheck:
 	poetry run mypy src/eegwatch --ignore-missing-imports
 

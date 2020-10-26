@@ -1,3 +1,6 @@
+# data
+data
+
 # Docs
 dist
 build
@@ -6,6 +9,9 @@ documents
 
 # Built by dot
 gqm.png
+
+# misc
+other
 
 # Python
 .venv

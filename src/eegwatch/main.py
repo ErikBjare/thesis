@@ -1,5 +1,5 @@
 """
-Basic watcher for EEG, with some visualization (soonTM).
+Basic watcher for continuous EEG recording, with some visualization (soonTM).
 
 eegnb stuff is based on: https://neurotechx.github.io/eeg-notebooks/auto_examples/visual_n170/00x__n170_run_experiment.html#sphx-glr-auto-examples-visual-n170-00x-n170-run-experiment-py
 pylsl stuff is based on: https://github.com/labstreaminglayer/liblsl-Python/blob/master/pylsl/examples/ReceiveAndPlot.py
@@ -8,11 +8,11 @@ pylsl stuff is based on: https://github.com/labstreaminglayer/liblsl-Python/blob
 from typing import List
 from time import sleep
 
+import logging
 import click
 import pyqtgraph as pg
 from pyqtgraph.Qt import QtCore, QtGui
 import pylsl
-from eegnb import generate_save_fn
 
 from eegwatch.lslutils import (
     Inlet,
@@ -22,8 +22,6 @@ from eegwatch.lslutils import (
     PLOT_DURATION,
 )
 
-# Define some variables
-board_name = "muse2"
 experiment = "test"
 subject = "erik"
 subject_id = 0
@@ -33,16 +31,30 @@ record_duration = 5 * 60  # 5min
 UPDATE_INTERVAL = 60  # ms between screen updates
 
 
-@click.group()
+logger = logging.getLogger(__name__)
+
+
+@click.group(help="Collect EEG data during device usage")
 def main():
+    logging.basicConfig()
     pass
 
 
 @main.command()
-def connect():
+@click.option(
+    "--device", type=click.Choice(["muse2", "openbci"]), help="Which device to use"
+)
+def connect(device: str):
     from eegnb.devices.eeg import EEG
+    from eegnb import generate_save_fn
 
-    # TODO: How can we also get simultaneous HR/HRV tracking?
+    if device == "muse2":
+        # TODO: How can we also get simultaneous HR/HRV tracking?
+        board_name = "muse2"
+    elif device == "openbci":
+        board_name = "openbci"
+    else:
+        raise ValueError("should be unreachable")
 
     eeg_device = EEG(device=board_name)
 
@@ -52,20 +64,27 @@ def connect():
             board_name, experiment, subject_id=subject_id, session_nb=1
         )
 
-        print(f"Recording to {save_fn}")
-        eeg_device.start(record_duration)
+        logger.info(f"Recording to {save_fn}")
+        try:
+            eeg_device.start(record_duration)
+        except IndexError:
+            logger.exception("Error while starting recording, trying again in 5s...")
+            sleep(5)
         sleep(record_duration)
-        print("Done recording")
+        logger.info("Done recording")
 
 
 @main.command()
 def plot():
     # print(eeg_device)
 
-    # TODO: Get the live data and do basic stuff to check signal quality, such as transforming into the frequency domain.
+    # TODO: Get the live data and do basic stuff to check signal quality, such as:
+    #        - Checking signal variance.
+    #        - Transforming into the frequency domain.
+
     streams = pylsl.resolve_stream()
     for s in streams:
-        print(streams)
+        logger.debug(streams)
 
     inlets: List[Inlet] = []
 
@@ -84,17 +103,17 @@ def plot():
                 info.nominal_srate() != pylsl.IRREGULAR_RATE
                 or info.channel_format() != pylsl.cf_string
             ):
-                print("Invalid marker stream " + info.name())
-            print("Adding marker inlet: " + info.name())
+                logger.warning("Invalid marker stream " + info.name())
+            logger.info("Adding marker inlet: " + info.name())
             inlets.append(MarkerInlet(info))
         elif (
             info.nominal_srate() != pylsl.IRREGULAR_RATE
             and info.channel_format() != pylsl.cf_string
         ):
-            print("Adding data inlet: " + info.name())
+            logger.info("Adding data inlet: " + info.name())
             inlets.append(DataInlet(info, plt))
         else:
-            print("Don't know what to do with stream " + info.name())
+            logger.info("Don't know what to do with stream " + info.name())
 
     def scroll():
         """Move the view so the data appears to scroll"""

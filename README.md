@@ -3,9 +3,21 @@ MSc Thesis
 
 My MSc thesis on "Classifying brain activity using low-cost biosensors and automated time tracking" (working title).
 
+It is very much a work-in-progress. Progress is tracked using the [GitHub Projects board](https://github.com/ErikBjare/thesis/projects/1).
+
 # Usage
 
- - Install dependencies using Poetry: `poetry install`
+Setting it up:
+
+ - Ensure you have Python 3.7+ and `poetry` installed
+ - Install dependencies with `poetry install`
+
+Collecting data:
+
+ - Run `eegwatch --help` for usage instructions
+
+Running classifier:
+
  - TODO
 
 # Writing
