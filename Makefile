@@ -21,7 +21,7 @@ format:
 	black src/ tests/
 
 typecheck:
-	poetry run mypy src/eegwatch --ignore-missing-imports
+	poetry run mypy src/eegwatch tests scripts --ignore-missing-imports
 
 clean:
 	rm -r docs/build
