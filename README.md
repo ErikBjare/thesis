@@ -15,7 +15,8 @@ Setting it up:
 Collecting data:
 
  - Run `eegwatch --help` for usage instructions
- - TODO: Create script to collect categorized data from ActivityWatch
+ - Run [ActivityWatch](https://activitywatch.net) to collect device activity
+   - (WIP) Run `./scripts/query_aw.py` to build labels
 
 Running classifier:
 
