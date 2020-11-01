@@ -82,6 +82,15 @@ def connect(device: str, duration: float, loop: bool):
         except IndexError:
             logger.exception("Error while starting recording, trying again in 5s...")
             time.sleep(5)
+            continue
+        except Exception as e:
+            if "No Muses found" in str(e):
+                logger.warning("No Muses found, trying again in 5s...")
+                time.sleep(5)
+                continue
+            else:
+                raise
+
         started = time.time()
         stop = started + duration
         print("Starting recording")
