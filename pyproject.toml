@@ -30,6 +30,7 @@ pyqtgraph = "^0.11.0"
 #psychopy = {version = "^2020.2.4", optional = true}
 
 # eegnb locks specific versions of dependencies, which makes it difficult to include as a dep
+aw-client = {git = "https://github.com/ActivityWatch/aw-client.git"}
 # eeg-notebooks = {git = "https://github.com/NeuroTechX/eeg-notebooks.git"}
 # mne = "^0.20.0"
 

@@ -15,10 +15,17 @@ Setting it up:
 Collecting data:
 
  - Run `eegwatch --help` for usage instructions
+ - TODO: Create script to collect categorized data from ActivityWatch
 
 Running classifier:
 
  - TODO
+
+# Supported devices
+
+ - Muse S 
+   - PPG support (experimental)
+ - OpenBCI Cyton (WIP)
 
 # Writing
 
@@ -37,5 +44,5 @@ The latest version of the goal document can be downloaded at https://erik.bjareh
    - Invaluable for running experiments.
  - https://github.com/NeuroTechX/eeg-notebooks
    - Have examples with sklearn + riemannian geometry.
- - Muse S
-   - Better comfort than Ultracortex, can even be used for sleep.
+ - Overview of public EEG datasets: https://github.com/meagmohit/EEG-Datasets
+ - [braindecode](https://github.com/braindecode/braindecode): A deep learning toolbox to decode raw time-domain EEG. 
