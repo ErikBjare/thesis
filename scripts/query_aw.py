@@ -12,6 +12,9 @@ import json
 
 import aw_client
 from aw_core import Event
+from timeslot import Timeslot
+
+UNCAT = ["Uncategorized"]
 
 
 def query() -> List[Event]:
@@ -95,7 +98,7 @@ def merge_adjacent_by_category(events) -> List[Event]:
             else:
                 # Event was not within gap to be considered adjacent
                 cat_events.append(e)
-        elif e.data["$category"] == ["Uncategorized"]:
+        elif e.data["$category"] == UNCAT:
             # Event was uncategorized, skip
             # NOTE: Gap allows for uncategorized time to be categorized by being close to another category
             continue
@@ -122,6 +125,24 @@ def main() -> None:
 
     # TODO: If total uncategorized duration over a certain %, show largest uncategorized events
     # pprint(cat_events)
+
+    # Print largest events
+    # These events mark suitable timeperiods to use for the training set
+    print("\nLargest categorized events:")
+    largest_events = sorted(
+        [e for e in cat_events if e.data["$category"] != UNCAT],
+        key=lambda e: -e.duration,
+    )
+    entries = [
+        (Timeslot(e.timestamp, e.timestamp + e.duration), e.data["$category"])
+        for e in largest_events
+    ]
+    pprint(
+        [
+            (t[0].start.isoformat(), t[0].duration.total_seconds(), t[1])
+            for t in entries[:5]
+        ]
+    )
 
 
 if __name__ == "__main__":
