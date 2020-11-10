@@ -25,15 +25,9 @@ pygatt = {version = "^4.0.5", extras = ["GATTTOOL"]}
 vispy = "^0.6.5"
 PyQt5 = "^5.15.1"  # required for `muselsl view` to work, due to: https://github.com/alexandrebarachant/muse-lsl/issues/111
 pyqtgraph = "^0.11.0"
-
-# Comes with a lot of dependencies, better to keep out of the venv
-#psychopy = {version = "^2020.2.4", optional = true}
-
-# eegnb locks specific versions of dependencies, which makes it difficult to include as a dep
+eeg-notebooks = {git = "https://github.com/ErikBjare/eeg-notebooks.git"}
 aw-client = {git = "https://github.com/ActivityWatch/aw-client.git"}
-# eeg-notebooks = {git = "https://github.com/NeuroTechX/eeg-notebooks.git"}
-# mne = "^0.20.0"
-
+timeslot = {git = "https://github.com/ErikBjare/timeslot.git"}
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"
