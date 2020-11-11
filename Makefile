@@ -18,10 +18,10 @@ test:
 	poetry run pytest
 
 format:
-	black src/ tests/
+	black src/ tests/ scripts/
 
 typecheck:
-	poetry run mypy src/* tests scripts --ignore-missing-imports
+	poetry run mypy
 
 clean:
 	rm -r docs/build
