@@ -1,5 +1,6 @@
 import logging
 
+import click
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -11,6 +12,7 @@ from . import load
 logger = logging.getLogger(__name__)
 
 
+@click.group()
 def main():
     logging.basicConfig(level=logging.INFO)
 

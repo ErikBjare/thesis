@@ -14,13 +14,14 @@ Setting it up:
 
 Collecting data:
 
- - Run `eegwatch --help` for usage instructions
- - Run [ActivityWatch](https://activitywatch.net) to collect device activity
-   - (WIP) Run `./scripts/query_aw.py` to build labels
+ - Run `eegwatch --help` for instructions on how to collect EEG data
+ - Run [ActivityWatch](https://activitywatch.net) to collect device activity data
 
 Running classifier:
 
- - TODO
+ - Run `./scripts/query_aw.py` to collect labels from the running ActivityWatch instance
+   - You probably want to adjust the categorization rules embedded in the file
+ - (TODO) Run `eegclassify --help` for instructions on how to train and run the classifier
 
 # Supported devices
 
