@@ -1,6 +1,10 @@
 MSc Thesis
 ==========
 
+[![GitHub Actions badge](https://github.com/ErikBjare/thesis/workflows/Test/badge.svg)](https://github.com/ErikBjare/thesis/actions)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Typechecking: Mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
+
 My MSc thesis on "Classifying brain activity using low-cost biosensors and automated time tracking" (working title).
 
 It is very much a work-in-progress. Progress is tracked using the [GitHub Projects board](https://github.com/ErikBjare/thesis/projects/1).
