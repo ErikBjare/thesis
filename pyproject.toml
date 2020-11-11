@@ -9,6 +9,7 @@ packages = [
 
 [tool.poetry.scripts]
 eegwatch = "eegwatch.main:main"
+eegclassify = "eegclassify.main:main"
 
 [tool.poetry.dependencies]
 python = "^3.7"
@@ -28,6 +29,8 @@ pyqtgraph = "^0.11.0"
 eeg-notebooks = {git = "https://github.com/ErikBjare/eeg-notebooks.git"}
 aw-client = {git = "https://github.com/ActivityWatch/aw-client.git"}
 timeslot = {git = "https://github.com/ErikBjare/timeslot.git"}
+yasa = "^0.4.0"
+entropy = {git = "https://github.com/raphaelvallat/entropy.git"}
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"
@@ -40,7 +43,7 @@ flake8 = "^3.8.2"
 minversion = "6.0"
 #addopts = "-ra"
 testpaths = [
-    "src/eegwatch",
+    "src",
     "tests",
     "scripts"
 ]

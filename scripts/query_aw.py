@@ -6,24 +6,28 @@ Script to extract activity-labels from ActivityWatch to be used when training cl
 
 from copy import deepcopy
 from typing import List, Callable
-from pprint import pprint
 from datetime import datetime, timezone, timedelta
 import json
 
+import pandas as pd
+
 import aw_client
 from aw_core import Event
-from timeslot import Timeslot
+
+from eegwatch import data_dir
 
 UNCAT = ["Uncategorized"]
 
+PATH_AWDATA = data_dir / "aw"
+
 
 def query() -> List[Event]:
-    awc = aw_client.ActivityWatchClient(testing=True)
+    awc = aw_client.ActivityWatchClient(testing=False)
     hostname = "erb-main2-arch"
 
-    now = datetime.now(tz=timezone.utc)
-    stop = now
-    start = stop - timedelta(days=2)
+    # Rough start of first EEG data collection
+    start = datetime(2020, 9, 20, tzinfo=timezone.utc)
+    stop = datetime.now(tz=timezone.utc)
 
     def cat_re(re_str):
         return {"type": "regex", "regex": re_str}
@@ -120,29 +124,36 @@ def main() -> None:
 
     cat_events = merge_adjacent_by_category(events)
 
-    # Print category series
-    # print_events(cat_events, lambda e: e["data"]["$category"])
-
     # TODO: If total uncategorized duration over a certain %, show largest uncategorized events
     # pprint(cat_events)
 
-    # Print largest events
-    # These events mark suitable timeperiods to use for the training set
-    print("\nLargest categorized events:")
-    largest_events = sorted(
-        [e for e in cat_events if e.data["$category"] != UNCAT],
-        key=lambda e: -e.duration,
-    )
-    entries = [
-        (Timeslot(e.timestamp, e.timestamp + e.duration), e.data["$category"])
-        for e in largest_events
-    ]
-    pprint(
+    # Construct dataframe with start, stop, class
+    df = pd.DataFrame(
         [
-            (t[0].start.isoformat(), t[0].duration.total_seconds(), t[1])
-            for t in entries[:5]
-        ]
+            {
+                "start": e.timestamp,
+                "stop": e.timestamp + e.duration,
+                "class": "->".join(e.data["$category"]),
+            }
+            for e in cat_events
+            if e.data["$category"] != UNCAT
+        ],
+        columns=["start", "stop", "class"],
     )
+
+    # Filter away short slots
+    # TODO: What is a good threshold value here?
+    df["duration"] = df["stop"] - df["start"]
+    df = df[df["duration"] > timedelta(seconds=30)]
+
+    # Save to CSV
+    PATH_AWDATA.mkdir(parents=True, exist_ok=True)
+    fn = PATH_AWDATA / "labels.csv"
+    with fn.open("w") as f:
+        df.to_csv(f, index=False)
+
+    print(df)
+    print(f"Saved to {fn}")
 
 
 if __name__ == "__main__":
