@@ -641,6 +641,14 @@ widgetsnbextension = ">=3.5.0,<3.6.0"
 test = ["pytest (>=3.6.0)", "pytest-cov", "mock"]
 
 [[package]]
+name = "iso8601"
+version = "0.1.13"
+description = "Simple module to parse ISO 8601 dates"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "isort"
 version = "5.6.4"
 description = "A Python utility / library to sort Python imports."
@@ -1234,6 +1242,14 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
+name = "peewee"
+version = "3.14.0"
+description = "a little orm"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "persist-queue"
 version = "0.5.1"
 description = "A thread-safe disk based persistent queue in Python."
@@ -1725,6 +1741,14 @@ autocompletion = ["argcomplete (>=1.10.0,<2)"]
 yaml = ["PyYaml (>=5.2)"]
 
 [[package]]
+name = "python-json-logger"
+version = "0.1.11"
+description = "A python library adding a json log formatter"
+category = "main"
+optional = false
+python-versions = ">=2.7"
+
+[[package]]
 name = "pytz"
 version = "2020.4"
 description = "World timezone definitions, modern and historical"
@@ -1966,6 +1990,14 @@ cffi = ">=1.0"
 numpy = ["numpy"]
 
 [[package]]
+name = "strict-rfc3339"
+version = "0.7"
+description = "Strict, simple, lightweight RFC3339 functions"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "tables"
 version = "3.6.1"
 description = "Hierarchical datasets for Python"
@@ -1976,6 +2008,14 @@ python-versions = ">=3.5"
 [package.dependencies]
 numexpr = ">=2.6.2"
 numpy = ">=1.9.3"
+
+[[package]]
+name = "takethetime"
+version = "0.3.1"
+description = "Take The Time, a time-taking library for Python"
+category = "main"
+optional = false
+python-versions = "*"
 
 [[package]]
 name = "tensorpac"
@@ -2613,6 +2653,11 @@ ipywidgets = [
     {file = "ipywidgets-7.5.1-py2.py3-none-any.whl", hash = "sha256:13ffeca438e0c0f91ae583dc22f50379b9d6b28390ac7be8b757140e9a771516"},
     {file = "ipywidgets-7.5.1.tar.gz", hash = "sha256:e945f6e02854a74994c596d9db83444a1850c01648f1574adf144fbbabe05c97"},
 ]
+iso8601 = [
+    {file = "iso8601-0.1.13-py2.py3-none-any.whl", hash = "sha256:694be0743e9f1535ea873bfc7bd6fb62380c62b75822761859428073a17fd39c"},
+    {file = "iso8601-0.1.13-py3-none-any.whl", hash = "sha256:6f02f01dd13320a7f280e58516dc8d1950dfaf77527cc365a398cd9de4d3c692"},
+    {file = "iso8601-0.1.13.tar.gz", hash = "sha256:f7dec22af52025d4526be94cc1303c7d8f5379b746a3f54a8c8446384392eeb1"},
+]
 isort = [
     {file = "isort-5.6.4-py3-none-any.whl", hash = "sha256:dcab1d98b469a12a1a624ead220584391648790275560e1a43e54c5dceae65e7"},
     {file = "isort-5.6.4.tar.gz", hash = "sha256:dcaeec1b5f0eca77faea2a35ab790b4f3680ff75590bfcb7145986905aab2f58"},
@@ -3014,6 +3059,9 @@ pathspec = [
     {file = "pathspec-0.8.1-py2.py3-none-any.whl", hash = "sha256:aa0cb481c4041bf52ffa7b0d8fa6cd3e88a2ca4879c533c9153882ee2556790d"},
     {file = "pathspec-0.8.1.tar.gz", hash = "sha256:86379d6b86d75816baba717e64b1a3a3469deb93bb76d613c9ce79edc5cb68fd"},
 ]
+peewee = [
+    {file = "peewee-3.14.0.tar.gz", hash = "sha256:59c5ef43877029b9133d87001dcc425525de231d1f983cece8828197fb4b84fa"},
+]
 persist-queue = [
     {file = "persist-queue-0.5.1.tar.gz", hash = "sha256:27a44e6376bdaff1375f09ba6e14f633192cd2bdc593b948a752d80edea4d68c"},
     {file = "persist_queue-0.5.1-py2.py3-none-any.whl", hash = "sha256:9e2890660305847609bcbfa814ce38229b3629ea98e6fd8fb858bf9533a98d83"},
@@ -3245,6 +3293,9 @@ python-dateutil = [
 python-gitlab = [
     {file = "python-gitlab-2.5.0.tar.gz", hash = "sha256:68b42aafd4b620ab2534ff78a52584c7f799e4e55d5ac297eab4263066e6f74b"},
     {file = "python_gitlab-2.5.0-py3-none-any.whl", hash = "sha256:61270e1f8ac24fe248f41834c840c6465d2e0b216493d3508d296a02960122c0"},
+]
+python-json-logger = [
+    {file = "python-json-logger-0.1.11.tar.gz", hash = "sha256:b7a31162f2a01965a5efb94453ce69230ed208468b0bbc7fdfc56e6d8df2e281"},
 ]
 pytz = [
     {file = "pytz-2020.4-py2.py3-none-any.whl", hash = "sha256:5c55e189b682d420be27c6995ba6edce0c0a77dd67bfbe2ae6607134d5851ffd"},
@@ -3488,6 +3539,9 @@ soundfile = [
     {file = "SoundFile-0.10.3.post1-py2.py3.cp26.cp27.cp32.cp33.cp34.cp35.cp36.pp27.pp32.pp33-none-win_amd64.whl", hash = "sha256:b361d4ac1519a2e516cabafa6bf7e93492f999f35d7d25350cd87fdc3e5cb27e"},
     {file = "SoundFile-0.10.3.post1.tar.gz", hash = "sha256:490cff42650733d1832728b937fe99fa1802896f5ef4d61bcf78cf7ebecb107b"},
 ]
+strict-rfc3339 = [
+    {file = "strict-rfc3339-0.7.tar.gz", hash = "sha256:5cad17bedfc3af57b399db0fed32771f18fc54bbd917e85546088607ac5e1277"},
+]
 tables = [
     {file = "tables-3.6.1-2-cp36-cp36m-win32.whl", hash = "sha256:db163df08ded7804d596dee14d88397f6c55cdf4671b3992cb885c0b3890a54d"},
     {file = "tables-3.6.1-2-cp36-cp36m-win_amd64.whl", hash = "sha256:fd63c94960f8208cb13d41033a3114c0242e7737cb578f2454c6a087c5d246ec"},
@@ -3511,6 +3565,9 @@ tables = [
     {file = "tables-3.6.1-cp38-cp38-manylinux1_i686.whl", hash = "sha256:7acbf0e2fb7132a40f441ebb53b53c97cee05fb88ce743afdd97c681d1d377d7"},
     {file = "tables-3.6.1-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:94d7ccac04277089e3bb466bf5c8f7038dd53bb8f19ea9679b7fea62c5c3ae8f"},
     {file = "tables-3.6.1.tar.gz", hash = "sha256:49a972b8a7c27a8a173aeb05f67acb45fe608b64cd8e9fa667c0962a60b71b49"},
+]
+takethetime = [
+    {file = "TakeTheTime-0.3.1.tar.gz", hash = "sha256:dbe30453a1b596a38f9e2e3fa8e1adc5af2dbf646ca0837ad5c2059a16fe2ff9"},
 ]
 tensorpac = [
     {file = "tensorpac-0.6.5-py3-none-any.whl", hash = "sha256:579d65a0ba85400886dcf4074d5704d334ec9543bcf2d8cd2a6d9f63f37e57d0"},
