@@ -23,10 +23,10 @@ def raw_to_mne(data: np.array, first_samp=0) -> mne.io.RawArray:
     ch_names = CHANNELS_MUSE
     sfreq = 250  # The Muse S uses 250Hz
 
-    info = mne.create_info(ch_names, sfreq)
+    info = mne.create_info(ch_names, sfreq, ch_types="eeg")
     info["line_freq"] = 50
-    raw = mne.io.RawArray(data.T, info)
-    raw.set_channel_types({ch: "eeg" for ch in ch_names})
+    raw = mne.io.RawArray(data.T, info, verbose=False)
+    # raw.set_channel_types({ch: "eeg" for ch in ch_names})
 
     # print(raw)
     # raw.plot()

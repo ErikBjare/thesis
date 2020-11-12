@@ -9,8 +9,8 @@ Abstraction for the various supported EEG devices.
 # TODO: Merge back upstream once https://github.com/NeuroTechX/eeg-notebooks/issues/19 is resolved
 
 import sys
-
 import time
+import logging
 from time import sleep
 from multiprocessing import Process
 from typing import List, Tuple
@@ -21,6 +21,8 @@ import pandas as pd
 from brainflow import BoardShim, BoardIds, BrainFlowInputParams
 import muselsl
 from pylsl import StreamInfo, StreamOutlet
+
+logger = logging.getLogger(__name__)
 
 # list of brainflow devices
 brainflow_devices = [
@@ -122,8 +124,10 @@ class EEG:
         # Start a background process that will stream data from the first available Muse
         sources = ["EEG", "PPG"]
         for source in sources:
-            print("starting background recording process")
-            print("will save to file: %s" % self.save_fn)
+            logger.info(
+                "Starting background recording process, will save to file: %s"
+                % self.save_fn
+            )
             self.recording = Process(target=lambda: record(source), daemon=True)
             self.recording.start()
 
@@ -159,7 +163,9 @@ class EEG:
                 self.brainflow_params.serial_port = get_openbci_usb()
             # set mac address parameter in case
             if self.mac_address is None:
-                print("No MAC address provided, attempting to connect without one")
+                logger.info(
+                    "No MAC address provided, attempting to connect without one"
+                )
             else:
                 self.brainflow_params.mac_address = self.mac_address
 

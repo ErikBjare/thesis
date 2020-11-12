@@ -33,7 +33,9 @@ def load_labels() -> pd.DataFrame:
         path_labels = path_labels_test
 
     with path_labels.open("r") as f:
-        df = pd.read_csv(f)
+        df = pd.read_csv(f, parse_dates=["start", "stop"])
+
+    df["class"] = df["class"].astype("category")
 
     return df
 
@@ -59,8 +61,6 @@ def load_eeg() -> pd.DataFrame:
     for fn in fns:
         with fn.open("r") as f:
             df = pd.read_csv(f).rename(columns={"timestamps": "timestamp"})
-            # FIXME: Which timezone is used by LSL/muse-lsl?
-            #        We'll assume UTC for now: https://github.com/ErikBjare/thesis/issues/16
             df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s", utc=True)
             dfs.append(df)
 
@@ -73,14 +73,13 @@ def test_load_eeg():
 
 def _label_data(df_eeg: pd.DataFrame, df_labels: pd.DataFrame) -> pd.DataFrame:
     df_eeg["class"] = np.nan
+    df_eeg["class"] = df_eeg["class"].astype("category")
 
     for i, row in df_labels.iterrows():
         idxs = (row["start"] < df_eeg["timestamp"]) & (
             df_eeg["timestamp"] < row["stop"]
         )
         df_eeg.loc[idxs, "class"] = row["class"]
-
-    df_eeg["class"] = df_eeg["class"].astype("category")
 
     return df_eeg
 
@@ -104,7 +103,8 @@ def test_load_labeled_eeg():
     # print(df.dropna(subset=["class"]))
 
 
-# @memory.cache
+# FIXME: This caching isn't automatically invalidated when data or other methods have changed, which can lead to unexpected results
+@memory.cache
 def load_labeled_eeg2() -> pd.DataFrame:
     """
     Similar to load_labeled_eeg, but gives one row per task-epoch, with EEG data as cell-vector.

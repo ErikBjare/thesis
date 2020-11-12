@@ -6,12 +6,14 @@ pylsl stuff is based on: https://github.com/labstreaminglayer/liblsl-Python/blob
 """
 
 from typing import List
+from datetime import datetime, timezone
 import time
 import logging
 
 import click
 import pylsl
 import pyqtgraph as pg
+import coloredlogs
 from pyqtgraph.Qt import QtCore, QtGui
 
 from eegwatch.util import print_statusline
@@ -36,8 +38,9 @@ logger = logging.getLogger(__name__)
 
 @click.group(help="Collect EEG data during device usage")
 def main():
-    logging.basicConfig()
-    pass
+    logging.basicConfig(level=logging.INFO)
+    coloredlogs.install(fmt="%(asctime)s %(levelname)s %(name)s %(message)s")
+    logging.getLogger("pygatt").setLevel(logging.WARNING)
 
 
 @main.command()
@@ -113,7 +116,16 @@ def plot():
     #        - Checking signal variance.
     #        - Transforming into the frequency domain.
 
-    streams = pylsl.resolve_stream()
+    offset = datetime.now(tz=timezone.utc).timestamp() - pylsl.local_clock()
+
+    def local_clock_to_timestamp(local_clock):
+        return local_clock + offset
+
+    streams = pylsl.resolve_stream(10)
+    if not streams:
+        print("No stream could be found")
+        exit(1)
+
     for s in streams:
         logger.debug(streams)
 
@@ -151,12 +163,12 @@ def plot():
         # We show data only up to a timepoint shortly before the current time
         # so new data doesn't suddenly appear in the middle of the plot
         fudge_factor = PULL_INTERVAL * 0.002
-        plot_time = pylsl.local_clock()
+        plot_time = local_clock_to_timestamp(pylsl.local_clock())
         pw.setXRange(plot_time - PLOT_DURATION + fudge_factor, plot_time - fudge_factor)
 
     def update():
         # Read data from the inlet. Use a timeout of 0.0 so we don't block GUI interaction.
-        mintime = pylsl.local_clock() - PLOT_DURATION
+        mintime = local_clock_to_timestamp(pylsl.local_clock()) - PLOT_DURATION
         # call pull_and_plot for each inlet.
         # Special handling of inlet types (markers, continuous data) is done in
         # the different inlet classes.

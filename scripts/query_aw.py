@@ -38,6 +38,8 @@ def query() -> List[Event]:
         [["Reading docs"], cat_re("readthedocs.io")],
         [["Stack Overflow"], cat_re("Stack Overflow")],
         [["Pull request"], cat_re("Pull Request")],
+        [["YouTube"], cat_re("YouTube")],
+        [["Twitter"], cat_re("Twitter")],
     ]
 
     query = """
@@ -145,6 +147,7 @@ def main() -> None:
     # TODO: What is a good threshold value here?
     df["duration"] = df["stop"] - df["start"]
     df = df[df["duration"] > timedelta(seconds=30)]
+    df = df.drop(["duration"], axis=1)
 
     # Save to CSV
     PATH_AWDATA.mkdir(parents=True, exist_ok=True)
