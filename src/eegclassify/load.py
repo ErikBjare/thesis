@@ -73,7 +73,6 @@ def test_load_eeg():
 
 def _label_data(df_eeg: pd.DataFrame, df_labels: pd.DataFrame) -> pd.DataFrame:
     df_eeg["class"] = np.nan
-    df_eeg["class"] = df_eeg["class"].astype("category")
 
     for i, row in df_labels.iterrows():
         idxs = (row["start"] < df_eeg["timestamp"]) & (
@@ -81,13 +80,17 @@ def _label_data(df_eeg: pd.DataFrame, df_labels: pd.DataFrame) -> pd.DataFrame:
         )
         df_eeg.loc[idxs, "class"] = row["class"]
 
+    df_eeg["class"] = df_eeg["class"].astype("category")
     return df_eeg
 
 
 def load_labeled_eeg() -> pd.DataFrame:
+    """Returns a dataframe with columns: timestamp,*channels,class"""
     df_eeg = load_eeg()
     df_labels = load_labels()
-    return _label_data(df_eeg, df_labels)
+    df = _label_data(df_eeg, df_labels)
+    df = df.dropna(subset=["class"])
+    return df
 
 
 def test_load_labeled_eeg():
@@ -98,9 +101,6 @@ def test_load_labeled_eeg():
 
     # Check that data has labels
     assert not df["class"].dropna().empty
-
-    # print(set(df["class"]))
-    # print(df.dropna(subset=["class"]))
 
 
 # FIXME: This caching isn't automatically invalidated when data or other methods have changed, which can lead to unexpected results
