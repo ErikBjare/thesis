@@ -1,6 +1,7 @@
 import os
 import logging
 from pathlib import Path
+from typing import List
 
 import joblib
 import pandas as pd
@@ -12,6 +13,13 @@ srcpath = Path(os.path.realpath(__file__))
 rootdir = srcpath.parent.parent.parent
 datadir = rootdir / "data"
 cachedir = rootdir / ".cache"
+musedir = datadir / "eeg" / "muse"
+
+musesub0dir = musedir / "subject0000" / "session001"
+TEST_EEG_FILES_MUSE = [
+    musesub0dir / "recording_2020-09-30-09.18.34.csv",
+    musesub0dir / "recording_2020-11-01-13.16.04.csv",
+]
 
 memory = joblib.Memory(location=cachedir)
 
@@ -44,31 +52,33 @@ def test_load_labels():
     assert not load_labels().empty
 
 
-def load_eeg() -> pd.DataFrame:
+def load_eeg(files=None) -> pd.DataFrame:
     # TODO: Parametrize for different devices/sources
     # TODO: Parametrize for subject/session?
-    musedir = datadir / "eeg" / "muse"
 
-    # Load all files
-    # TODO: Might be excessive, can be a lot of data which might slow things significantly
-    fns = musedir.glob("subject*/session*/*.csv")
+    if not files:
+        # Load all files
+        files = musedir.glob("subject*/session*/*.csv")
 
-    # Only committed example EEG data (the only file available for tests in CI)
-    # Matches up with labels in aw/labels.test.csv
-    # fns = musedir.glob("subject*/session*/recording_2020-11-01-13.16.04.csv")
+    return _load_eeg(files)
 
+
+@memory.cache
+def _load_eeg(files: List[Path]) -> pd.DataFrame:
     dfs = []
-    for fn in fns:
+    for fn in files:
         with fn.open("r") as f:
             df = pd.read_csv(f).rename(columns={"timestamps": "timestamp"})
             df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s", utc=True)
             dfs.append(df)
 
-    return pd.concat(dfs)
+    df = pd.concat(dfs)
+    df = df.drop(columns=["Marker0", "Right AUX"], errors="ignore")
+    return df
 
 
 def test_load_eeg():
-    assert not load_eeg().empty
+    assert not load_eeg(TEST_EEG_FILES_MUSE).empty
 
 
 def _label_data(df_eeg: pd.DataFrame, df_labels: pd.DataFrame) -> pd.DataFrame:
@@ -84,9 +94,9 @@ def _label_data(df_eeg: pd.DataFrame, df_labels: pd.DataFrame) -> pd.DataFrame:
     return df_eeg
 
 
-def load_labeled_eeg() -> pd.DataFrame:
+def load_labeled_eeg(files=None) -> pd.DataFrame:
     """Returns a dataframe with columns: timestamp,*channels,class"""
-    df_eeg = load_eeg()
+    df_eeg = load_eeg(files)
     df_labels = load_labels()
     df = _label_data(df_eeg, df_labels)
     df = df.dropna(subset=["class"])
@@ -94,7 +104,7 @@ def load_labeled_eeg() -> pd.DataFrame:
 
 
 def test_load_labeled_eeg():
-    df = load_labeled_eeg()
+    df = load_labeled_eeg(TEST_EEG_FILES_MUSE)
 
     # Check that there is data
     assert not df.empty
@@ -102,10 +112,10 @@ def test_load_labeled_eeg():
     # Check that data has labels
     assert not df["class"].dropna().empty
 
+    assert list(df.columns) == ["timestamp", *CHANNELS_MUSE, "class"]
 
-# FIXME: This caching isn't automatically invalidated when data or other methods have changed, which can lead to unexpected results
-@memory.cache
-def load_labeled_eeg2() -> pd.DataFrame:
+
+def load_labeled_eeg2(files=None) -> pd.DataFrame:
     """
     Similar to load_labeled_eeg, but gives one row per task-epoch, with EEG data as cell-vector.
 
@@ -113,7 +123,7 @@ def load_labeled_eeg2() -> pd.DataFrame:
     """
     channels = CHANNELS_MUSE
 
-    df_eeg = load_eeg()
+    df_eeg = load_eeg(files)
     df_labels = load_labels()
     df_labels["raw_data"] = [() for _ in range(len(df_labels))]
 
@@ -131,9 +141,6 @@ def load_labeled_eeg2() -> pd.DataFrame:
         ]
         df_labels.at[i, "raw_data"] = raw_data
 
-    # Not sure where this column is coming from
-    # df_labels = df_labels.drop(columns="Unnamed: 0")
-
     # Drop rows without data
     df_labels = df_labels[df_labels["raw_data"].map(len) > 0]
 
@@ -141,7 +148,10 @@ def load_labeled_eeg2() -> pd.DataFrame:
 
 
 def test_load_labeled_eeg2():
-    df = load_labeled_eeg2()
+    df = load_labeled_eeg2(TEST_EEG_FILES_MUSE)
 
     # Check that there is data
     assert not df.empty
+
+    # Check that columns are correct
+    assert list(df.columns) == ["start", "stop", "class", "raw_data"]

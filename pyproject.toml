@@ -37,13 +37,15 @@ pylsl = "1.10.5"  # required, see: https://github.com/alexandrebarachant/muse-ls
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"
 mypy = "^0.780"
-pytest = "^6.0.0"
 pylint = "^2.5.3"
 flake8 = "^3.8.2"
+pytest = "^6.0.0"
+pytest-cov = "^2.10.1"
+pytest-profiling = "^1.7.0"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-#addopts = "-ra"
+addopts = "--cov=eegclassify --cov=eegwatch --profile"
 testpaths = [
     "src",
     "tests",

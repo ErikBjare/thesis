@@ -13,9 +13,11 @@ gqm.png
 # misc
 other
 vendor
+prof
 
 # Python
 .venv
 .*cache
 *.pyc
 *.egg-info
+.coverage
