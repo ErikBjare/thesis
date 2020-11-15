@@ -2,13 +2,12 @@ import logging
 from typing import Tuple
 
 import click
+import coloredlogs
 import pandas as pd
 import numpy as np
 import sklearn
-from sklearn import svm
 
-from . import load
-from . import features
+from . import load, features, preprocess
 
 logger = logging.getLogger(__name__)
 
@@ -16,23 +15,65 @@ logger = logging.getLogger(__name__)
 @click.group()
 def main():
     logging.basicConfig(level=logging.INFO)
+    coloredlogs.install(fmt="%(asctime)s %(levelname)s %(name)s %(message)s")
 
 
 @main.command()
 def train():
-    df = load.load_labeled_eeg2()
-    print(df)
-    df = features.compute_features(df)
-    print(df.describe(datetime_is_numeric=True))
+    """
+    Train classifier on data.
 
-    df = clean(df)
-    print(df)
+        1. Load data
+        2. Preprocess
+        3. Compute features
+        4. Train
+    """
+
+    logger.info("Loading data...")
+    df = load.load_labeled_eeg2()
+
+    logger.info("Preprocessing...")
+    df = _preprocess(df)
+
+    logger.info("Computing features...")
+    df = features.compute_features(df)
+
+    # print(df.describe(datetime_is_numeric=True))
 
     # Filter out categories of interest
     df = df[(df["class"] == "Programming") | (df["class"] == "Twitter")]
 
     X, y = df_to_vectors(df)
-    cross_val_svm(X, y, 2)
+
+    # Split into train and test
+    X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(
+        X, y, test_size=0.3
+    )
+
+    # clf = sklearn.svm.SVC()
+    clf = sklearn.ensemble.RandomForestClassifier(n_estimators=10)
+    clf.fit(X_train, y_train)
+    logger.info(f"Test score: {clf.score(X_test, y_test)}")
+
+    y_pred = clf.predict(X_test)
+    precision, recall, fbeta, support = sklearn.metrics.precision_recall_fscore_support(
+        y_test, y_pred
+    )
+    logger.info(
+        {"precision": precision, "recall": recall, "fbeta": fbeta, "support": support}
+    )
+
+    print(sklearn.metrics.confusion_matrix(y_test, y_pred))
+
+    cross_val(clf, X, y, 3)
+
+
+def _preprocess(df: pd.DataFrame) -> pd.DataFrame:
+    """Preprocesses dataframe"""
+    min_duration = 20
+    df = preprocess.split_rows(df, min_duration)
+    df = clean(df)
+    return df
 
 
 def clean(df: pd.DataFrame):
@@ -45,7 +86,7 @@ def clean(df: pd.DataFrame):
         seconds = samples / sfreq
         duration = row["stop"] - row["start"]
         if seconds < 0.95 * duration.total_seconds():
-            print(
+            logger.warning(
                 f"Bad row found, only had {seconds}s of data out of {duration.total_seconds()}s"
             )
             bads.append(i)
@@ -67,21 +108,20 @@ def df_to_vectors(df: pd.DataFrame) -> Tuple[np.array, np.array]:
             for row in df["bandpower"].values.tolist()
         ]
     )
-    print(X)
+    # print(X)
 
     # Map of categories to codes
     catmap = dict(enumerate(df["class"].cat.categories))
-    print(catmap)
+    logger.info(f"Classes: {catmap}")
 
     # label vector
     y = np.array(df["class"].cat.codes)
-    print(y)
+    # print(y)
 
     return X, y
 
 
-def cross_val_svm(X, y, n):
-    clf = svm.SVC()
-    print(sklearn.model_selection.cross_val_score(clf, X, y, cv=n))
-    print(sklearn.model_selection.cross_val_predict(clf, X, y, cv=n))
-    print(sklearn.model_selection.cross_validate(clf, X, y, cv=n))
+def cross_val(clf, X, y, n):
+    logger.info(sklearn.model_selection.cross_val_score(clf, X, y, cv=n))
+    logger.info(sklearn.model_selection.cross_val_predict(clf, X, y, cv=n))
+    logger.info(sklearn.model_selection.cross_validate(clf, X, y, cv=n))

@@ -52,13 +52,13 @@ def test_load_labels():
     assert not load_labels().empty
 
 
-def load_eeg(files=None) -> pd.DataFrame:
+def load_eeg(files: List[Path] = None) -> pd.DataFrame:
     # TODO: Parametrize for different devices/sources
     # TODO: Parametrize for subject/session?
 
     if not files:
         # Load all files
-        files = musedir.glob("subject*/session*/*.csv")
+        files = list(musedir.glob("subject*/session*/*.csv"))
 
     return _load_eeg(files)
 
