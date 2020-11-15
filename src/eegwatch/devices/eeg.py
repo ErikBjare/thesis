@@ -122,7 +122,7 @@ class EEG:
             )
 
         # Start a background process that will stream data from the first available Muse
-        sources = ["EEG", "PPG"]
+        sources = ["EEG"]  # + ["PPG"]
         for source in sources:
             logger.info(
                 "Starting background recording process, will save to file: %s"
