@@ -1,4 +1,6 @@
-all: dist/thesis.pdf dist/goaldocument.pdf
+all: dist
+
+dist: dist/thesis.pdf dist/goaldocument.pdf
 
 dist/%.pdf: docs/tex/build/%.pdf
 	mkdir -p dist
