@@ -3,8 +3,33 @@
 \documentclass[a4paper]{article}
 
 \usepackage[smartEllipses]{markdown}  % For markdown
+\def\markdownOptionOutputDir{build}  % Needed, see https://github.com/Witiko/markdown/issues/6#issuecomment-328699108
+
+\usepackage[dvipsnames]{xcolor}
 \usepackage{hyperref}
 \usepackage{comment}
+\usepackage{xargs}
+\usepackage{verbatim}
+\usepackage[colorinlistoftodos, prependcaption, textsize=tiny]{todonotes}
+
+\usepackage[english]{datetime2}
+\DTMnewdatestyle{dashdate}{%
+  \renewcommand{\DTMdisplaydate}[4]{\number##1-\DTMenglishshortmonthname{##2}-\number##3}%
+  \renewcommand{\DTMDisplaydate}{\DTMdisplaydate}%
+}
+\DTMsetdatestyle{iso}
+
+% From: https://tex.stackexchange.com/a/178806/36302
+\newcommandx{\add}[2][1=]{\todo[linecolor=red, backgroundcolor=red!25, bordercolor=red, inline, #1]{\textbf{Add:} #2}}
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=red, backgroundcolor=red!25, bordercolor=red, #1]{\textbf{Unsure:} #2}}
+\newcommandx{\change}[2][1=]{\todo[linecolor=blue, backgroundcolor=blue!25, bordercolor=blue, #1]{\textbf{Change:} #2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen, backgroundcolor=OliveGreen!25, bordercolor=OliveGreen, #1]{\textbf{Info:} #2}}
+\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum, backgroundcolor=Plum!25,bordercolor=Plum, #1]{\textbf{Improve:} #2}}
+\newcommandx{\thiswillnotshow}[2][1=]{\todo[disable, #1]{#2}}
+
+% Formatting
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
 
 % Encoding and languages
 \usepackage[T1]{fontenc}        % För svenska bokstäver
@@ -14,16 +39,36 @@
 \usepackage{epsfig}
 %\usepackage[dvips]{graphics}
 
+\newcommand\myshade{85}
+\colorlet{mylinkcolor}{violet}
+\colorlet{mycitecolor}{YellowOrange}
+\colorlet{myurlcolor}{Aquamarine}
+
+\hypersetup{%
+  linkcolor  = black, %mylinkcolor!\myshade!black,
+  citecolor  = mycitecolor!\myshade!black,
+  urlcolor = myurlcolor!\myshade!black,
+  colorlinks = true,
+}
+
 % References
-\usepackage[backend=biber,style=numeric]{biblatex}
-\addbibresource{zotero.bib}
+\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
+\usepackage{cleveref}
+\bibliography{zotero}
+\DeclareBibliographyCategory{cited}
+\AtEveryCitekey{\addtocategory{cited}{\thefield{entrykey}}}
 
+\defbibheading{notcited}{\section*{Further Reading}}
 
-\title{A study of the relationship between device and brain activity (MSc Thesis)}
-\author{Erik Bjäreholt}
+\title{%
+    \small DRAFT \today \\
+    \small The latest version is available at \href{https://erik.bjareholt.com/thesis/thesis.pdf}{erik.bjareholt.com/thesis/thesis.pdf}\\
+    \large --- \\
+    \large \par M.Sc. Thesis\\
+    \huge Classifying brain activity using low-cost biosensors and automated time tracking \\
+}
+\author{Erik Bjäreholt \\(erik@bjareho.lt, dat13ebj@student.lu.se)}
 \date{\today}
-
-\def\aw{ActivityWatch}
 
 \begin{document}
 \maketitle
@@ -36,6 +81,8 @@ Här skriver jag in mitt abstract.
 
 \tableofcontents
 
+\listoftodos[Notes \& TODOs]
+
 \pagebreak.\pagebreak
 
 \section{Introduction}
@@ -44,9 +91,15 @@ Testing.
 
 \subsection{Background}
 
+\add{Insert stuff from goal document}
+
 \subsection{Aim of the thesis}
 
+\add{Insert stuff from goal document}
+
 \subsection{Related work}
+
+\add{Insert stuff from Fucci et al.}
 
 \section{Methods}
 
@@ -55,6 +108,14 @@ Testing.
 \section{Conclusions}
 
 \section*{Acknowledgements}
+
+\begin{markdown}
+ - My advisor
+
+ - The NeuroTechX crowd
+
+ - My brother Johan Bjäreholt, for working with me on ActivityWatch all these years.
+\end{markdown}
 
 The Oxford English Dictionary defines `thesis' as `a long essay or dissertation involving personal research, written by a candidate for a university degree.', and I can't think of more personal research than research in quantified self with personal data.
 

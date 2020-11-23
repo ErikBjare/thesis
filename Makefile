@@ -1,6 +1,6 @@
-all: dist
+all: dist/thesis.pdf dist/goaldocument.pdf
 
-dist: docs/tex/build/goaldocument.pdf docs/tex/build/thesis.pdf
+dist/%.pdf: docs/tex/build/%.pdf
 	mkdir -p dist
 	cp $< dist
 
