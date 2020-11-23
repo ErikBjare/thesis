@@ -9,6 +9,7 @@ from typing import List
 from datetime import datetime, timezone
 import time
 import logging
+import subprocess
 
 import click
 import pylsl
@@ -34,6 +35,15 @@ UPDATE_INTERVAL = 60  # ms between screen updates
 
 
 logger = logging.getLogger(__name__)
+
+
+def notify(summary: str, body: str, urgency: str = "normal"):
+    """
+    ``urgency`` can be one of ['low', 'normal', 'critical']
+    """
+    subprocess.call(
+        ["notify-send", summary, body, "--app-name", "eegwatch", "--urgency", urgency]
+    )
 
 
 @click.group(help="Collect EEG data during device usage")
@@ -88,7 +98,9 @@ def connect(device: str, duration: float, loop: bool):
             continue
         except Exception as e:
             if "No Muses found" in str(e):
-                logger.warning("No Muses found, trying again in 5s...")
+                msg = "No Muses found, trying again in 5s..."
+                logger.warning(msg)
+                notify("Couldn't connect", msg)
                 time.sleep(5)
                 continue
             else:

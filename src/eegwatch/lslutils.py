@@ -49,11 +49,11 @@ class DataInlet(Inlet):
     def __init__(self, info: pylsl.StreamInfo, plt: pg.PlotItem):
         super().__init__(info)
         # calculate the size for our buffer, i.e. two times the displayed data
-        bufsize = (
+        self.bufsize = (
             2 * math.ceil(info.nominal_srate() * PLOT_DURATION),
             info.channel_count(),
         )
-        self.buffer = np.empty(bufsize, dtype=self.dtypes[info.channel_format()])
+        self.buffer = np.empty(self.bufsize, dtype=self.dtypes[info.channel_format()])
         empty = np.array([])
         # create one curve object for each channel/line that will handle displaying the data
         self.curves = [
@@ -65,9 +65,8 @@ class DataInlet(Inlet):
 
     def pull_and_plot(self, plot_time, plt):
         # pull the data
-        _, ts = self.inlet.pull_chunk(
-            timeout=0.0, max_samples=self.buffer.shape[0], dest_obj=self.buffer
-        )
+        samples, ts = self.inlet.pull_chunk(timeout=0.0, max_samples=self.bufsize[0])
+        self.buffer = np.asarray(samples)
         # ts will be empty if no samples were pulled, a list of timestamps otherwise
         if ts:
             ts = np.asarray(ts)

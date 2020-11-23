@@ -34,7 +34,9 @@ def query() -> List[Event]:
 
     # Basic set of categories to use as labels
     categories = [
-        [["Programming"], cat_re("NVIM")],
+        [["Editing"], cat_re("NVIM")],
+        [["Editing", "Code"], cat_re(r"[.](py|rs|js|ts)")],
+        [["Editing", "Prose"], cat_re(r"[.](tex|md)")],
         [["Reading docs"], cat_re("readthedocs.io")],
         [["Stack Overflow"], cat_re("Stack Overflow")],
         [["Pull request"], cat_re("Pull Request")],

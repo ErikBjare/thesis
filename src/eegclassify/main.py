@@ -35,23 +35,25 @@ def train():
     logger.info("Preprocessing...")
     df = _preprocess(df)
 
+    # Filter out categories of interest
+    df = df[df["class"].isin(["Editing->Code", "Twitter"])]
+
     logger.info("Computing features...")
     df = features.compute_features(df)
-
-    # print(df.describe(datetime_is_numeric=True))
-
-    # Filter out categories of interest
-    df = df[(df["class"] == "Programming") | (df["class"] == "Twitter")]
-
     X, y = df_to_vectors(df)
+    _train(X, y)
 
+
+def _train(X, y):
+    logger.info("Splitting into train and test set")
     # Split into train and test
     X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(
         X, y, test_size=0.3
     )
 
-    # clf = sklearn.svm.SVC()
-    clf = sklearn.ensemble.RandomForestClassifier(n_estimators=10)
+    logger.info("Training...")
+    clf = sklearn.svm.SVC()
+    # clf = sklearn.ensemble.RandomForestClassifier(n_estimators=10)
     clf.fit(X_train, y_train)
     logger.info(f"Test score: {clf.score(X_test, y_test)}")
 
@@ -70,7 +72,7 @@ def train():
 
 def _preprocess(df: pd.DataFrame) -> pd.DataFrame:
     """Preprocesses dataframe"""
-    min_duration = 20
+    min_duration = 5
     df = preprocess.split_rows(df, min_duration)
     df = clean(df)
     return df
