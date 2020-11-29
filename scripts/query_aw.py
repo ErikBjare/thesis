@@ -33,15 +33,20 @@ def query() -> List[Event]:
         return {"type": "regex", "regex": re_str}
 
     # Basic set of categories to use as labels
+    # TODO: Add assert to ensure all categories have matching events
+    # FIXME: For some reason escape sequences don't work, might just be how strings are interpolated into the query.
     categories = [
         [["Editing"], cat_re("NVIM")],
         [["Editing", "Code"], cat_re(r"[.](py|rs|js|ts)")],
         [["Editing", "Prose"], cat_re(r"[.](tex|md)")],
         [["Reading docs"], cat_re("readthedocs.io")],
         [["Stack Overflow"], cat_re("Stack Overflow")],
-        [["Pull request"], cat_re("Pull Request")],
+        [["GitHub", "Pull request"], cat_re(r"Pull Request #[0-9]+")],
+        [["GitHub", "Issues"], cat_re(r"Issue #[0-9]+")],
+        # NOTE: There may be a significant difference between scrolling on the landing page and actually watching videos
         [["YouTube"], cat_re("YouTube")],
         [["Twitter"], cat_re("Twitter")],
+        [["Markets"], cat_re("tradingview.com")],
     ]
 
     query = """

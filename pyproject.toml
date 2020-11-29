@@ -35,6 +35,7 @@ coloredlogs = "^14.0"
 pylsl = "1.10.5"  # required, see: https://github.com/alexandrebarachant/muse-lsl/issues/136
 scikit-learn = "^0.23.2"
 pyriemann = "^0.2.6"
+xgboost = "^1.2.1"
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"
