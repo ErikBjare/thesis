@@ -121,111 +121,20 @@ def connect(device: str, duration: float, loop: bool):
         times_ran += 1
 
 
-@main.command()
-def check():
-    """Checks signal quality"""
-    streams = pylsl.resolve_stream(10)
+def _resolve_streams() -> list:
+    logger.info("Finding stream...")
+    # Get the Muse EEG stream
+    streams = pylsl.resolve_bypred("name='Muse' and type='EEG'", timeout=10)
     if not streams:
-        print("No stream could be found")
+        logger.error("No appropriate stream could be found")
         exit(1)
-
-    offset = datetime.now(tz=timezone.utc).timestamp() - pylsl.local_clock()
-
-    def local_clock_to_timestamp(local_clock):
-        return local_clock + offset
-
-    inlets = []
-
-    # iterate over found streams, creating specialized inlet objects that will
-    # handle plotting the data
-    for info in streams:
-        if (
-            info.nominal_srate() != pylsl.IRREGULAR_RATE
-            and info.channel_format() != pylsl.cf_string
-        ):
-            logger.info("Adding data inlet: " + info.name())
-            inlets.append(DataInlet(info, None))
-        else:
-            logger.info("Don't know what to do with stream " + info.name())
-
-    def update():
-        # Read data from the inlet. Use a timeout of 0.0 so we don't block GUI interaction.
-        mintime = local_clock_to_timestamp(pylsl.local_clock()) - PLOT_DURATION
-        # call pull_and_plot for each inlet.
-        # Special handling of inlet types (markers, continuous data) is done in
-        # the different inlet classes.
-        for inlet in inlets:
-            inlet.pull_and_plot(mintime, None)
-
-    def check_samples(buffer: np.ndarray) -> Dict[str, bool]:
-        # TODO: Better signal quality check
-        # TODO: Merge with signal check filter in eegclassify
-        channels = ["TP9", "AF7", "AF8", "TP10"]
-        chmax = dict(zip(channels, np.max(np.abs(inlet.buffer), axis=0),))
-        return {ch: maxval < 200 for ch, maxval in chmax.items()}
-
-    last_good = False
-    last_check = time()
-    while True:
-        update()
-
-        # Check every 0.5s
-        if time() > last_check + 0.1:
-            # Find the correct inlet
-            # FIXME: Not a very reliable method of detection, but EEG and PPG streams have the same name so I have to find another distinguishing property.
-            _inlets = [
-                inlet
-                for inlet in inlets
-                if inlet.buffer.any() and inlet.buffer.shape[1] > 4
-            ]
-            if not _inlets:
-                continue
-            inlet = _inlets[0]
-
-            # print(inlet.inlet)
-            # print(inlet.buffer)
-            checked = check_samples(inlet.buffer)
-            all_good = all(checked.values())
-            if all_good and not last_good:
-                logger.info("All good!")
-            elif not all_good:
-                logger.warning(
-                    "Warning, bad signal for channels: "
-                    + ", ".join([ch for ch, ok in checked.items() if not ok])
-                )
-            last_good = all(checked.values())
-            last_check = time()
+    return streams
 
 
-@main.command()
-def plot():
-    # print(eeg_device)
-
-    # TODO: Get the live data and do basic stuff to check signal quality, such as:
-    #        - Checking signal variance.
-    #        - Transforming into the frequency domain.
-
-    offset = datetime.now(tz=timezone.utc).timestamp() - pylsl.local_clock()
-
-    def local_clock_to_timestamp(local_clock):
-        return local_clock + offset
-
-    streams = pylsl.resolve_stream(10)
-    if not streams:
-        print("No stream could be found")
-        exit(1)
-
-    for s in streams:
-        logger.debug(streams)
+def _get_inlets(plt=None) -> List[Inlet]:
+    streams = _resolve_streams()
 
     inlets: List[Inlet] = []
-
-    # eeg_device.muse_StreamOutlet
-
-    # Create the pyqtgraph window
-    pw = pg.plot(title="LSL Plot")
-    plt = pw.getPlotItem()
-    plt.enableAutoRange(x=False, y=True)
 
     # iterate over found streams, creating specialized inlet objects that will
     # handle plotting the data
@@ -242,10 +151,102 @@ def plot():
             info.nominal_srate() != pylsl.IRREGULAR_RATE
             and info.channel_format() != pylsl.cf_string
         ):
-            logger.info("Adding data inlet: " + info.name())
+            logger.info(f"Adding data inlet '{info.name()}' of type '{info.type()}'")
             inlets.append(DataInlet(info, plt))
         else:
-            logger.info("Don't know what to do with stream " + info.name())
+            logger.warning(
+                f"Don't know what to do with stream {info.name()} of type {info.type()}"
+            )
+
+    return inlets
+
+
+def _check_samples(buffer: np.ndarray) -> Dict[str, bool]:
+    # TODO: Better signal quality check
+    # TODO: Merge with signal check filter in eegclassify
+    channels = ["TP9", "AF7", "AF8", "TP10"]
+    chmax = dict(zip(channels, np.max(np.abs(buffer), axis=0),))
+    return {ch: maxval < 200 for ch, maxval in chmax.items()}
+
+
+@main.command()
+def check():
+    """Checks signal quality"""
+    inlets = _get_inlets()
+
+    offset = datetime.now(tz=timezone.utc).timestamp() - pylsl.local_clock()
+
+    def local_clock_to_timestamp(local_clock):
+        return local_clock + offset
+
+    def update():
+        # Read data from the inlet. Use a timeout of 0.0 so we don't block GUI interaction.
+        mintime = local_clock_to_timestamp(pylsl.local_clock()) - PLOT_DURATION
+        # call pull_and_plot for each inlet.
+        # Special handling of inlet types (markers, continuous data) is done in
+        # the different inlet classes.
+        for inlet in inlets:
+            inlet.pull_and_plot(mintime, None)
+
+    last_good = False
+    last_check = time()
+    last_bads = []
+    while True:
+        update()
+
+        # Check every 0.5s
+        if time() > last_check + 0.1:
+            # Find the correct inlet
+            _inlets = [inlet for inlet in inlets if inlet.buffer.any()]
+            if not _inlets:
+                continue
+            inlet = _inlets[0]
+
+            # print(inlet.inlet)
+            # print(inlet.buffer)
+            checked = _check_samples(inlet.buffer)
+            all_good = all(checked.values())
+            bads = [ch for ch, ok in checked.items() if not ok]
+            if all_good:
+                if not last_good:
+                    logger.info("All channels good!")
+            else:
+                if bads != last_bads:
+                    logger.warning(
+                        "Warning, bad signal for channels: " + ", ".join(bads)
+                    )
+            last_good = all_good
+            last_check = time()
+            last_bads = bads
+
+
+@main.command()
+def plot():
+    # print(eeg_device)
+
+    # TODO: Get the live data and do basic stuff to check signal quality, such as:
+    #        - Checking signal variance.
+    #        - Transforming into the frequency domain.
+
+    offset = datetime.now(tz=timezone.utc).timestamp() - pylsl.local_clock()
+
+    def local_clock_to_timestamp(local_clock):
+        return local_clock + offset
+
+    streams = pylsl.resolve_bypred("name='Muse' and type='EEG'", timeout=10)
+    if not streams:
+        print("No stream could be found")
+        exit(1)
+
+    for s in streams:
+        logger.debug(streams)
+
+    # Create the pyqtgraph window
+    pw = pg.plot(title="LSL Plot")
+    plt = pw.getPlotItem()
+    plt.enableAutoRange(x=False, y=True)
+
+    inlets = _get_inlets()
 
     def scroll():
         """Move the view so the data appears to scroll"""

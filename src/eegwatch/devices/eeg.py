@@ -87,6 +87,8 @@ class EEG:
         pass
 
     def _start_muse(self, duration: float):
+        sources = ["EEG"]  # + ["PPG", "ACC", "GYRO"]
+
         if sys.platform in ["linux", "linux2", "darwin"]:
             # Look for muses
             self.muses = muselsl.list_muses()
@@ -97,9 +99,9 @@ class EEG:
             def stream():
                 muselsl.stream(
                     self.muses[0]["address"],
-                    ppg_enabled=True,
-                    # acc_enabled=True,
-                    # gyro_enabled=True,
+                    ppg_enabled="PPG" in sources,
+                    acc_enabled="ACC" in sources,
+                    gyro_enabled="GYRO" in sources,
                 )
 
             # Start streaming process
@@ -122,7 +124,6 @@ class EEG:
             )
 
         # Start a background process that will stream data from the first available Muse
-        sources = ["EEG"]  # + ["PPG"]
         for source in sources:
             logger.info(
                 "Starting background recording process, will save to file: %s"

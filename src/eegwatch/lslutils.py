@@ -6,7 +6,7 @@ import pylsl
 import pyqtgraph as pg
 from typing import Optional
 
-PLOT_DURATION = 60  # how many seconds of data to show
+PLOT_DURATION = 5  # how many seconds of data to show
 PULL_INTERVAL = 500  # ms between each pull operation
 
 
