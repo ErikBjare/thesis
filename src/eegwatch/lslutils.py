@@ -4,6 +4,7 @@ import math
 import numpy as np
 import pylsl
 import pyqtgraph as pg
+from typing import Optional
 
 PLOT_DURATION = 60  # how many seconds of data to show
 PULL_INTERVAL = 500  # ms between each pull operation
@@ -46,7 +47,7 @@ class DataInlet(Inlet):
 
     dtypes = [[], np.float32, np.float64, None, np.int32, np.int16, np.int8, np.int64]
 
-    def __init__(self, info: pylsl.StreamInfo, plt: pg.PlotItem):
+    def __init__(self, info: pylsl.StreamInfo, plt: Optional[pg.PlotItem]):
         super().__init__(info)
         # calculate the size for our buffer, i.e. two times the displayed data
         self.bufsize = (
@@ -56,19 +57,21 @@ class DataInlet(Inlet):
         self.buffer = np.empty(self.bufsize, dtype=self.dtypes[info.channel_format()])
         empty = np.array([])
         # create one curve object for each channel/line that will handle displaying the data
-        self.curves = [
-            pg.PlotCurveItem(x=empty, y=empty, autoDownsample=True)
-            for _ in range(self.channel_count)
-        ]
-        for curve in self.curves:
-            plt.addItem(curve)
+        self.curves = []
+        if plt:
+            self.curves = [
+                pg.PlotCurveItem(x=empty, y=empty, autoDownsample=True)
+                for _ in range(self.channel_count)
+            ]
+            for curve in self.curves:
+                plt.addItem(curve)
 
     def pull_and_plot(self, plot_time, plt):
         # pull the data
         samples, ts = self.inlet.pull_chunk(timeout=0.0, max_samples=self.bufsize[0])
         self.buffer = np.asarray(samples)
         # ts will be empty if no samples were pulled, a list of timestamps otherwise
-        if ts:
+        if plt and ts:
             ts = np.asarray(ts)
             y = self.buffer[0 : ts.size, :]
             this_x = None

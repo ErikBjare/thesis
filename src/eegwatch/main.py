@@ -5,9 +5,9 @@ eegnb stuff is based on: https://neurotechx.github.io/eeg-notebooks/auto_example
 pylsl stuff is based on: https://github.com/labstreaminglayer/liblsl-Python/blob/master/pylsl/examples/ReceiveAndPlot.py
 """
 
-from typing import List
+from typing import List, Dict
 from datetime import datetime, timezone
-import time
+from time import time, sleep
 import logging
 import subprocess
 
@@ -15,6 +15,7 @@ import click
 import pylsl
 import pyqtgraph as pg
 import coloredlogs
+import numpy as np
 from pyqtgraph.Qt import QtCore, QtGui
 
 from eegwatch.util import print_statusline
@@ -94,30 +95,106 @@ def connect(device: str, duration: float, loop: bool):
             eeg_device.start(save_fn, duration=duration)
         except IndexError:
             logger.exception("Error while starting recording, trying again in 5s...")
-            time.sleep(5)
+            sleep(5)
             continue
         except Exception as e:
             if "No Muses found" in str(e):
                 msg = "No Muses found, trying again in 5s..."
                 logger.warning(msg)
                 notify("Couldn't connect", msg)
-                time.sleep(5)
+                sleep(5)
                 continue
             else:
                 raise
 
-        started = time.time()
+        started = time()
         stop = started + duration
         print("Starting recording")
-        while time.time() < stop:
-            time.sleep(1)
-            progress = time.time() - started
+        while time() < stop:
+            sleep(1)
+            progress = time() - started
             print_statusline(
                 f"Recording #{times_ran + 1}: {round(progress)}/{duration}s"
             )
         print("Done!")
         logger.info("Done recording")
         times_ran += 1
+
+
+@main.command()
+def check():
+    """Checks signal quality"""
+    streams = pylsl.resolve_stream(10)
+    if not streams:
+        print("No stream could be found")
+        exit(1)
+
+    offset = datetime.now(tz=timezone.utc).timestamp() - pylsl.local_clock()
+
+    def local_clock_to_timestamp(local_clock):
+        return local_clock + offset
+
+    inlets = []
+
+    # iterate over found streams, creating specialized inlet objects that will
+    # handle plotting the data
+    for info in streams:
+        if (
+            info.nominal_srate() != pylsl.IRREGULAR_RATE
+            and info.channel_format() != pylsl.cf_string
+        ):
+            logger.info("Adding data inlet: " + info.name())
+            inlets.append(DataInlet(info, None))
+        else:
+            logger.info("Don't know what to do with stream " + info.name())
+
+    def update():
+        # Read data from the inlet. Use a timeout of 0.0 so we don't block GUI interaction.
+        mintime = local_clock_to_timestamp(pylsl.local_clock()) - PLOT_DURATION
+        # call pull_and_plot for each inlet.
+        # Special handling of inlet types (markers, continuous data) is done in
+        # the different inlet classes.
+        for inlet in inlets:
+            inlet.pull_and_plot(mintime, None)
+
+    def check_samples(buffer: np.ndarray) -> Dict[str, bool]:
+        # TODO: Better signal quality check
+        # TODO: Merge with signal check filter in eegclassify
+        channels = ["TP9", "AF7", "AF8", "TP10"]
+        chmax = dict(zip(channels, np.max(np.abs(inlet.buffer), axis=0),))
+        return {ch: maxval < 200 for ch, maxval in chmax.items()}
+
+    last_good = False
+    last_check = time()
+    while True:
+        update()
+
+        # Check every 0.5s
+        if time() > last_check + 0.1:
+            # Find the correct inlet
+            # FIXME: Not a very reliable method of detection, but EEG and PPG streams have the same name so I have to find another distinguishing property.
+            _inlets = [
+                inlet
+                for inlet in inlets
+                if inlet.buffer.any() and inlet.buffer.shape[1] > 4
+            ]
+            if not _inlets:
+                continue
+            inlet = _inlets[0]
+
+            # print(inlet.inlet)
+            # print(inlet.buffer)
+            checked = check_samples(inlet.buffer)
+            all_good = all(checked.values())
+            if all_good and not last_good:
+                logger.info("All good!")
+            elif not all_good:
+                logger.warning(
+                    "Warning, bad signal for channels: "
+                    + ", ".join([ch for ch, ok in checked.items() if not ok])
+                )
+            last_good = all(checked.values())
+            last_check = time()
 
 
 @main.command()
