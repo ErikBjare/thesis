@@ -83,6 +83,9 @@ def _load(use_cache: bool) -> pd.DataFrame:
     logger.info("Preprocessing...")
     df = _preprocess(df)
 
+    class_count = {k: v for k, v in dict(df["class"].value_counts()).items() if v}
+    logger.info(f"Class count: {class_count}")
+
     return df
 
 

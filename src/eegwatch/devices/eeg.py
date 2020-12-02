@@ -24,6 +24,13 @@ from pylsl import StreamInfo, StreamOutlet
 
 logger = logging.getLogger(__name__)
 
+# list of muse devices
+muse_devices = [
+    "muse2016",
+    "muse2",
+    "museS",
+]
+
 # list of brainflow devices
 brainflow_devices = [
     "ganglion",
@@ -40,6 +47,8 @@ brainflow_devices = [
     "notion2",
 ]
 
+all_devices = muse_devices + brainflow_devices
+
 
 class EEG:
     def __init__(
@@ -50,7 +59,7 @@ class EEG:
         mac_addr=None,
         other=None,
         ip_addr=None,
-    ):
+    ) -> None:
         """ The initialization function takes the name of the EEG device and determines whether or not
         the device belongs to the Muse or Brainflow families and initializes the appropriate backend.
         Parameters:
@@ -75,7 +84,7 @@ class EEG:
     def _get_backend(self, device_name: str):
         if device_name in brainflow_devices:
             return "brainflow"
-        elif device_name in ["muse2016", "muse2", "museS"]:
+        elif device_name in muse_devices:
             return "muselsl"
 
     #####################
@@ -231,8 +240,6 @@ class EEG:
 
     def _start_brainflow(self):
         self.board.start_stream()
-        # wait for signal to settle
-        sleep(5)
 
     def _stop_brainflow(self):
         """This functions kills the brainflow backend and saves the data to a CSV file."""
@@ -245,6 +252,7 @@ class EEG:
 
         # transform data for saving
         data = data.T  # transpose data
+        print(data)
 
         # get the channel names for EEG data
         if self.brainflow_id == BoardIds.GANGLION_BOARD.value:
@@ -269,7 +277,7 @@ class EEG:
         )  # Append the stim array to data.
 
         # Subtract five seconds of settling time from beginning
-        total_data = total_data[5 * self.sfreq :]
+        # total_data = total_data[5 * self.sfreq :]
         data_df = pd.DataFrame(total_data, columns=["timestamps"] + ch_names + ["stim"])
         data_df.to_csv(self.save_fn, index=False)
 
@@ -285,9 +293,20 @@ class EEG:
         if fn:
             self.save_fn = fn
 
+        def record():
+            sleep(duration)
+            self._stop_brainflow()
+
         if self.backend == "brainflow":  # Start brainflow backend
             self._start_brainflow()
             self.markers: List[Tuple[int, float]] = []
+            if duration:
+                logger.info(
+                    "Starting background recording process, will save to file: %s"
+                    % self.save_fn
+                )
+                self.recording = Process(target=lambda: record())
+                self.recording.start()
         elif self.backend == "muselsl":
             self._start_muse(duration)
 

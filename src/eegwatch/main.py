@@ -26,6 +26,7 @@ from eegwatch.lslutils import (
     PULL_INTERVAL,
     PLOT_DURATION,
 )
+from .devices.eeg import EEG, all_devices
 
 experiment = "test"
 subject = "erik"
@@ -57,7 +58,7 @@ def main():
 @main.command()
 @click.option(
     "--device",
-    type=click.Choice(["museS", "openbci"]),
+    type=click.Choice(all_devices),
     default="museS",
     help="Which device to use",
 )
@@ -68,26 +69,16 @@ def main():
     "--loop/--no-loop", is_flag=True, default=True, help="Wether to loop recording"
 )
 def connect(device: str, duration: float, loop: bool):
-    # from eegnb.devices.eeg import EEG
-    from .devices.eeg import EEG
-
     # from eegnb import generate_save_fn
     from .util import generate_save_fn
 
-    if device == "museS":
-        board_name = "muse2"
-    elif device == "openbci":
-        board_name = "openbci"
-    else:
-        raise ValueError("should be unreachable")
-
-    eeg_device = EEG(device=board_name)
+    eeg_device = EEG(device=device)
 
     times_ran = 0
     while loop or times_ran < 1:
         # Create save file name
         save_fn = generate_save_fn(
-            board_name, experiment, subject_id=subject_id, session_nb=1
+            device, experiment, subject_id=subject_id, session_nb=1
         )
 
         logger.info(f"Recording to {save_fn}")
@@ -170,8 +161,16 @@ def _check_samples(buffer: np.ndarray) -> Dict[str, bool]:
 
 
 @main.command()
-def check():
+@click.option(
+    "--device",
+    type=click.Choice(all_devices),
+    default="museS",
+    help="Which device to use",
+)
+def check(device: str):
     """Checks signal quality"""
+    assert device.startswith("muse"), "Only Muse devices supported for now"
+
     inlets = _get_inlets()
 
     offset = datetime.now(tz=timezone.utc).timestamp() - pylsl.local_clock()
@@ -190,21 +189,21 @@ def check():
 
     last_good = False
     last_check = time()
-    last_bads = []
+    last_bads: List[str] = []
     while True:
         update()
 
         # Check every 0.5s
         if time() > last_check + 0.1:
             # Find the correct inlet
-            _inlets = [inlet for inlet in inlets if inlet.buffer.any()]
+            _inlets = [inlet for inlet in inlets if inlet.buffer.any()]  # type: ignore
             if not _inlets:
                 continue
             inlet = _inlets[0]
 
             # print(inlet.inlet)
             # print(inlet.buffer)
-            checked = _check_samples(inlet.buffer)
+            checked = _check_samples(inlet.buffer)  # type: ignore
             all_good = all(checked.values())
             bads = [ch for ch, ok in checked.items() if not ok]
             if all_good:
@@ -221,7 +220,14 @@ def check():
 
 
 @main.command()
-def plot():
+@click.option(
+    "--device",
+    type=click.Choice(all_devices),
+    default="museS",
+    help="Which device to use",
+)
+def plot(device: str):
+    assert device.startswith("muse"), "Only Muse devices supported for now"
     # print(eeg_device)
 
     # TODO: Get the live data and do basic stuff to check signal quality, such as:
