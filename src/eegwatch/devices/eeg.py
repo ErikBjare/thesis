@@ -283,7 +283,7 @@ class EEG:
 
     def _brainflow_push_sample(self, marker):
         last_timestamp = self.board.get_current_board_data(1)[-1][0]
-        self.markers.append([marker, last_timestamp])
+        self.markers.append((marker, last_timestamp))
 
     def start(self, fn: str, duration=None):
         """ Starts the EEG device based on the defined backend.
