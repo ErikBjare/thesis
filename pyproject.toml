@@ -4,7 +4,8 @@ version = "0.1.0"
 description = ""
 authors = ["Erik Bjäreholt <erik@bjareho.lt>"]
 packages = [
-    { include = "eegwatch", from = "src" }
+    { include = "eegwatch", from = "src" },
+    { include = "eegclassify", from = "src" },
 ]
 
 [tool.poetry.scripts]
