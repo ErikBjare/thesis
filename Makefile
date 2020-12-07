@@ -1,6 +1,8 @@
 all: dist
 
-dist: dist/thesis.pdf dist/goaldocument.pdf
+dist: docs
+
+docs: dist/thesis.pdf dist/goaldocument.pdf
 
 dist/%.pdf: docs/tex/build/%.pdf
 	mkdir -p dist
@@ -26,7 +28,6 @@ typecheck:
 	poetry run mypy
 
 clean:
-	rm -r docs/build
 	rm -r docs/tex/build
 	#rm docs/gcm.png
 	#rm -f *.aux *.bbl *.bcf *.cfg  *.blg *.dvi *.log *.pdf *.run.xml *.toc *.in *.markdown.* *.out *.tdo

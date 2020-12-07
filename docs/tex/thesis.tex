@@ -1,6 +1,6 @@
-% Based on template: http://www.maths.lth.se/matematiklth/exjobb/exjobbarresurs/index.html
-
 \documentclass[a4paper]{article}
+
+% Based on template: http://www.maths.lth.se/matematiklth/exjobb/exjobbarresurs/index.html
 
 \usepackage[smartEllipses]{markdown}  % For markdown
 \def\markdownOptionOutputDir{build}  % Needed, see https://github.com/Witiko/markdown/issues/6#issuecomment-328699108
@@ -67,56 +67,177 @@
     \large \par M.Sc. Thesis\\
     \huge Classifying brain activity using low-cost biosensors and automated time tracking \\
 }
-\author{Erik Bjäreholt \\(erik@bjareho.lt, dat13ebj@student.lu.se)}
+\author{Erik Bjäreholt \href{https://orcid.org/0000-0003-1350-9677}{\includegraphics[width=0.7em]{img/orcid-icon.png}} \\(erik@bjareho.lt, dat13ebj@student.lu.se)}
 \date{\today}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Här skriver jag in mitt abstract.
+    \add{Abstract}
 \end{abstract}
 
-\pagebreak.\pagebreak
+\pagebreak %.\pagebreak
 
 \tableofcontents
 
 \listoftodos[Notes \& TODOs]
 
-\pagebreak.\pagebreak
+\pagebreak %.\pagebreak
+
+\begin{refsection}
 
 \section{Introduction}
 
-Testing.
+    \improvement{Needs more}
 
-\subsection{Background}
+\section{Background}
 
-\add{Insert stuff from goal document}
+    People spend more time than ever using computing devices. Work, entertainment, and services, have been steadily moving online over the last few decades and this trend is expected to continue.
+    While several studies have been tracking how people spend time on their devices a wider study of how people's app usage is changing over time and how it varies with demographics, is not publicly available.
+
+    Furthermore, how different device activities affect the user behaviorally and neurologically is of interest for many areas of research, including:
+
+    \begin{itemize}
+        \item psychological well-being, such as depression and social anxiety~\cite{selfhout_different_2009}\cite{shah_nonrecursive_2002}, stress~\cite{mark_stress_2014}, self-esteem, life satisfaction, loneliness, and depression~\cite{huang_time_2017}.
+        \item the impact of screen time on children and adolescents~\cite{subrahmanyam_impact_2001}.
+        \item attention span among media multitasking adults~\cite{mark_stress_2014}.
+        \item enhancing personal productivity~\cite{kim_timeaware_2016}.
+    \end{itemize}
+
+    Understanding device use and the underlying cognitive processes are essential when designing for motivation, engagement and wellbeing in digital experiences~\cite{peters_designing_2018}.
+
+    This becomes especially relevant for knowledge workers, such as software developers, who spend the majority of their working time on computing devices.
+
+    %\add[inline]{Add connection to software developers}
+
+\subsection{Automated time trackers}
+
+    Automated time-trackers have been developed for computing devices, with various applications such as tracking productivity, managing excessive use of social networking sites (SNSs), and studying user behavior.
+
+    \subsubsection{Commercial use}
+
+        Companies like RescueTime~\cite{noauthor_rescuetime_nodate}, Hubstaff~\cite{noauthor_hubstaff_nodate}, and others offer automated time tracking as a service. These services let the user track their screen time by installing a program on their device which tracks the active application and sends the data to their servers for storage and analysis. The user can then view their data in a dashboard on the service's website. Some of these services, like RescueTime and Hubstaff, are marketed towards teams and professionals, who want to keep track of individual and team productivity.
+
+        However, these services have some issues for use by researchers and individuals alike. Notably, their collection of detailed and non-anonymized behavioral data into a centralized system bring significant privacy concerns, especially in cases where the data is shared with a team or an employer.
+
+        Other limitations of these services, such as low temporal resolution and limited event detail, cause additional issues for certain tasks that are timing-sensitive (such as ERPs), or preprocessing steps that can take advantage of high level of detail (like classifying activity).
+
+    \subsubsection{Research use}
+
+        Previous research has been published which used automated time trackers, such as TimeAware~\cite{kim_timeaware_2016} and ScreenLife~\cite{rooksby_personal_2016}. However, these previous contributions are --- like the commercial services --- not open source nor permissively licensed, and therefore not available for external research use nor further development.
+
+    \subsubsection{ActivityWatch}
+
+        The free and open source automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_2020} addresses aforementioned issues with other software around source availability/licensing, privacy, temporal resolution, event detail, and cross-platform support.
+
+        \begin{figure}[h]
+        \centering
+        \includegraphics[width=8cm]{img/screenshot-aw-activity.png}
+        \caption{ActivityWatch activity dashboard. Showing top applications, window titles, browser domains, and categories.}\label{fig:aw}
+        \end{figure}
+
+\subsection{EEG and low-cost biosensors/functional brain imaging}
+
+    Functional brain imaging methods such as fMRI, fNIRS, and EEG, have been used to study the relationship between cognitive or physical activity, and brain activity~\cite{floyd_decoding_2017}\cite{hong_classification_2015}\cite{fucci_replication_2019}. The more accurate methods such as fMRI are costly and inflexible/impractical for many uses.
+
+    However, the recent availability of low-cost biosensors such as EEG, HEG, and fNIRS, enables studying brain activity during real-life tasks. As an example it has been shown that it is possible to classify what task a participant is undertaking using fMRI~\cite{floyd_decoding_2017}, which has been replicated using EEG and low-cost biosensors~\cite{fucci_replication_2019}.
+
+    But they are not without their limitations --- among them a notably low signal-to-noise ratio~\cite{mcfarland_eeg-based_2017} --- yet visual evoked potentials (VEPs) have been shown to be sufficient for high-speed BCI applications~\cite{spuler_high-speed_2017}.
+
+    To combat the low signal-to-noise ratio, machine learning methods have been employed with varying degrees of success. Examples from previous research include Convolutional Neural Networks (CNNs), which have been successful in classifying time series in general~\cite{zhao_convolutional_2017}, and EEG data in particular~\cite{schirrmeister_deep_2017}. As well as Hierarchical Convolutional Neural Networks (HCNNs), which have been used for EEG-based emotion recognition~\cite{li_hierarchical_2018}.
+
+    \add{Applications to software engineers}
+
+    % https://docs.openbci.com/citations
+
+    % List of functional brain imaging techniques:
+    %  - fMRI
+    %  - fNIRS
+    %  - EEG
+    %  - HEG
 
 \subsection{Aim of the thesis}
 
-\add{Insert stuff from goal document}
+    \add{Insert stuff from goal document}
 
 \subsection{Related work}
 
-\add{Insert stuff from Fucci et al.}
+    It has previously been shown that both fMRI\cite{floyd_decoding_2017} and single-channel EEG\cite{fucci_replication_2019} provides enough information to classify wether the subject was reading prose or code. However, accuracy with single-channel EEG was poor, and notably outperformed by a HRV monitor. One of the goals of this thesis was to investigate if better equipment could improve this accuracy, and wether the code vs prode compresension task generalizes across more varied activities, such as organic device use.
+
+    \add{Insert mention of preprint that Fucci mentioned?}
 
 \section{Methods}
 
+    \subsection{Collection of device activity data}
+
+        All device activity is collected using the automated time tracker ActivityWatch\cite{bjareholt_activitywatch_2020-1}.
+
+        \add{Summary of ActivityWatch}
+
+    \subsection{Collection of EEG data}
+
+        EEG data was collected during both organic use and under controlled conditions.
+
+        \todo{actually perform controlled experiments}
+
+        \subsubsection{Devices}
+
+            \begin{itemize}
+                \item Muse S
+                \item OpenBCI Cyton
+                \item Neurosity Notion 1 (soon)
+                \item Neurosity Notion 2 (maybe?)
+            \end{itemize}
+
+    \subsection{Riemannian geometry}
+
+        The state of the art in many EEG classification tasks involves the use of Riemannian geometry.
+
+        \add[inline]{Explanation of riemannian geometry, from \href{https://colab.research.google.com/drive/1y9tq7-lJwusxtVgpB38y-p1pYw7hg0iu}{this tutorial we're working on}}\cite{barachant_classification_2013}
+
 \section{Results}
+
+    Our classifier performance is\ldots
 
 \section{Conclusions}
 
+    Our results show\ldots
+
+\section{Discussion}
+
+    \subsection{Ethical considerations}
+
+        \add{Discussion around ethics of data collection, how it's dealt with in ActivityWatch, and how it should perhaps be dealt with here.}
+
 \section*{Acknowledgements}
 
-\begin{markdown}
- - My advisor
+\begin{itemize}
+ \item My advisor
+ \item The NeuroTechX crowd, specifically Morgan Hough and John Griffiths
+ \item The people at the LTH Department for Automatic Control
+ \item My brother Johan Bjäreholt, for working with me on ActivityWatch all these years.
+\end{itemize}
 
- - The NeuroTechX crowd
+    The Oxford English Dictionary defines `thesis' as ``a long essay or dissertation involving \emph{personal research}, written by a candidate for a university degree''. I can't think of more ``personal research'' than research in quantified self with personal data.
 
- - My brother Johan Bjäreholt, for working with me on ActivityWatch all these years.
-\end{markdown}
 
-The Oxford English Dictionary defines `thesis' as `a long essay or dissertation involving personal research, written by a candidate for a university degree.', and I can't think of more personal research than research in quantified self with personal data.
+% References
+%\bibbysegment{}
+\printbibliography[category=cited]
 
+% Further reading (uncited)
+\nocite{*}
+\defbibenvironment{bibnonum}
+  {\list{}
+     {\setlength{\leftmargin}{\bibhang}%
+      \setlength{\itemindent}{-\leftmargin}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}}
+  }
+  {\endlist}
+  {\item}
+\printbibliography[notcategory=cited, env=bibnonum, heading=notcited]
+
+\end{refsection}
 \end{document}
