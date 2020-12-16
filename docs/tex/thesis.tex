@@ -10,7 +10,12 @@
 \usepackage{comment}
 \usepackage{xargs}
 \usepackage{verbatim}
+\usepackage[bottom]{footmisc}
 \usepackage[colorinlistoftodos, prependcaption, textsize=tiny]{todonotes}
+
+% Code snippets
+\usepackage[outputdir=build]{minted}
+\usemintedstyle{vs}
 
 \usepackage[english]{datetime2}
 \DTMnewdatestyle{dashdate}{%
@@ -39,6 +44,8 @@
 \usepackage{epsfig}
 %\usepackage[dvips]{graphics}
 
+\newcommandx{\orcid}[1]{\href{https://orcid.org/#1}{\includegraphics[width=0.7em]{img/orcid-icon.png}}}
+
 \newcommand\myshade{85}
 \colorlet{mylinkcolor}{violet}
 \colorlet{mycitecolor}{YellowOrange}
@@ -52,9 +59,10 @@
 }
 
 % References
-\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
+\usepackage[backend=biber, style=numeric, sorting=none, defernumbers=true]{biblatex}
 \usepackage{cleveref}
 \bibliography{zotero}
+\bibliography{misc}
 \DeclareBibliographyCategory{cited}
 \AtEveryCitekey{\addtocategory{cited}{\thefield{entrykey}}}
 
@@ -67,7 +75,7 @@
     \large \par M.Sc. Thesis\\
     \huge Classifying brain activity using low-cost biosensors and automated time tracking \\
 }
-\author{Erik Bjäreholt \href{https://orcid.org/0000-0003-1350-9677}{\includegraphics[width=0.7em]{img/orcid-icon.png}} \\(erik@bjareho.lt, dat13ebj@student.lu.se)}
+\author{Erik Bjäreholt \orcid{0000-0003-1350-9677} \\(erik@bjareho.lt, dat13ebj@student.lu.se)}
 \date{\today}
 
 \begin{document}
@@ -89,7 +97,7 @@
 
 \section{Introduction}
 
-    \improvement{Needs more}
+    \add[inline]{Write introduction}
 
 \section{Background}
 
@@ -108,6 +116,8 @@
     Understanding device use and the underlying cognitive processes are essential when designing for motivation, engagement and wellbeing in digital experiences~\cite{peters_designing_2018}.
 
     This becomes especially relevant for knowledge workers, such as software developers, who spend the majority of their working time on computing devices.
+
+    \add[inline]{Mention of Quantified Self movement, and the applicability/usefulness of EEG data to the cause}
 
     %\add[inline]{Add connection to software developers}
 
@@ -159,11 +169,23 @@
 
 \subsection{Aim of the thesis}
 
+    The primary aim of the thesis is to improve upon previous attempts\cite{fucci_replication_2019} to classify wether the user is reading code or prose using EEG data. This is to be achieved by using better EEG equipment and state of the art analysis methods such as Riemannian geometry. A secondary aim of the thesis is to investigate wether the ability of EEG analysis to classify code vs prode comprehension generalizes across more activities, such as the wide variety of tasks engaged in during organic device use.
+
+    Secondary aims of the thesis include:
+
+    \begin{enumerate}
+        \item Implementing a classifier for device activities from EEG data, during organic device use
+        \item Improving open-source tools for EEG analysis
+    \end{enumerate}
+
     \add{Insert stuff from goal document}
 
 \subsection{Related work}
 
-    It has previously been shown that both fMRI\cite{floyd_decoding_2017} and single-channel EEG\cite{fucci_replication_2019} provides enough information to classify wether the subject was reading prose or code. However, accuracy with single-channel EEG was poor, and notably outperformed by a HRV monitor. One of the goals of this thesis was to investigate if better equipment could improve this accuracy, and wether the code vs prode compresension task generalizes across more varied activities, such as organic device use.
+    It has previously been shown that fMRI~\cite{floyd_decoding_2017} and EEG\cite{fucci_replication_2019} provides enough information to classify wether a subject is reading prose or code. However, accuracy with single-channel EEG has been found to be poor, and notably outperformed by a heart rate variability (HRV) monitor.
+
+    % Here, we used functional magnetic resonance imaging to investigate two candidate brain systems: the multiple demand (MD) system, typically recruited during math, logic, problem solving, and executive tasks, and the language system, typically recruited during linguistic processing.
+    Recently, it has been shown that the multiple demand (MD) system is typically recruited for code comprehension tasks, as opposed to the language system that is typically recruited during prose comprehension~\cite{ivanova_comprehension_2020}. This sheds light on the significant differences in how the brain processes code vs prose.
 
     \add{Insert mention of preprint that Fucci mentioned?}
 
@@ -171,15 +193,27 @@
 
     \subsection{Collection of device activity data}
 
-        All device activity is collected using the automated time tracker ActivityWatch\cite{bjareholt_activitywatch_2020-1}.
+        All device activity is collected using the automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_2020-1}. The data from ActivityWatch is processed and categorized such that the resulting data has the 3 columns \mintinline{python}{start, end, category}. The category is determined by a regular expression that matches on window titles and URLs, such as \mintinline{python}{github.com}.
 
-        \add{Summary of ActivityWatch}
+        \add[inline]{Summary of ActivityWatch}
 
     \subsection{Collection of EEG data}
 
-        EEG data was collected during both organic use and under controlled conditions.
+        EEG data was collected during organic device use and under controlled conditions.
 
-        \todo{actually perform controlled experiments}
+        For both conditions, code from the open source eeg-notebooks~\cite{noauthor_neurotechxeeg-notebooks_2020} was used to record the raw EEG stream into a CSV file. For the Muse S, muse-lsl was used as the underlying software to handle the connection (which uses Lab Streaming Layer). For the OpenBCI and Neurosity devices, brainflow~\cite{noauthor_brainflow-devbrainflow_2020} was used to handle the connection.
+
+        \subsubsection{During organic device use}
+
+            For the organic device use conditions, we primarily used the Muse S EEG headband which features 4 channels with electrodes placed at TP9, AF7, AF8, and TP10 (1020-system). Reasons for choosing the Muse S were mainly due to the considerably improved comfort during long recordings, compared to the other dry-electrode headsets available.
+
+        \subsubsection{During code vs prose comprehension task}
+
+            For the controlled condition, the hardware used was \todo{decide on which hardware to use}{\ldots}.
+
+            We \todo{actually implement the task}{implemented the task} in eeg-notebooks~\cite{noauthor_neurotechxeeg-notebooks_2020}, which uses previously mentioned libraries for data collection as well as PsychoPy~\cite{peirce_psychopy2_2019} to provide the experiment stimuli.
+
+            \todo[inline]{actually perform controlled experiments}
 
         \subsubsection{Devices}
 
@@ -190,11 +224,19 @@
                 \item Neurosity Notion 2 (maybe?)
             \end{itemize}
 
-    \subsection{Riemannian geometry}
+    \subsection{Analysis}
 
-        The state of the art in many EEG classification tasks involves the use of Riemannian geometry.
+        For classification and analysis, we used common open source Python libraries like numpy, pandas, scikit-learn~\cite{scikit-learn}. Specifically to EEG data, we also used MNE~\cite{noauthor_mne-toolsmne-python_2020}, pyriemann~\cite{alexandre_barachant_2020_3715511}, YASA~\cite{raphael_vallat_raphaelvallatyasa_2020}.
 
-        \add[inline]{Explanation of riemannian geometry, from \href{https://colab.research.google.com/drive/1y9tq7-lJwusxtVgpB38y-p1pYw7hg0iu}{this tutorial we're working on}}\cite{barachant_classification_2013}
+        \subsubsection{Feature engineering}
+
+            Bandpower features are simple and commonly used in EEG research for basic tasks, we utilized the bankpower function provided by YASA\@.
+
+        \subsubsection{Riemannian geometry}
+
+            The \improvement{according to whom?}{state of the art in many EEG classification tasks} involves the use of Riemannian geometry. For this, we used the open source pyriemann library by Alexandre Barachant\footnote{First author of the original paper to apply Riemannian geometry to EEG~\cite{barachant_classification_2013}}.
+
+            \add[inline]{Explanation of riemannian geometry, from \href{https://colab.research.google.com/drive/1y9tq7-lJwusxtVgpB38y-p1pYw7hg0iu}{this tutorial we're working on}}
 
 \section{Results}
 
@@ -208,14 +250,15 @@
 
     \subsection{Ethical considerations}
 
-        \add{Discussion around ethics of data collection, how it's dealt with in ActivityWatch, and how it should perhaps be dealt with here.}
+        \add[inline]{Discuss ethics/privacy considerations of data collection, how it's dealt with in ActivityWatch, and implications of results on similar concerns apply to EEG data}
 
 \section*{Acknowledgements}
 
 \begin{itemize}
  \item My advisor
- \item The NeuroTechX crowd, specifically Morgan Hough and John Griffiths
- \item The people at the LTH Department for Automatic Control
+ \item The NeuroTechX crowd, specifically Morgan Hough~\orcid{0000-0001-5256-413X} and John Griffiths, for their support and time spent helping me.
+ \item Everyone who's contributed to the open source tools used.
+ \item The people at the LTH Department for Automatic Control, for providing early guidance.
  \item My brother Johan Bjäreholt, for working with me on ActivityWatch all these years.
 \end{itemize}
 

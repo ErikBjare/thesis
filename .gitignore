@@ -6,6 +6,7 @@ dist
 build
 templates
 documents
+_minted*
 
 # Built by dot
 gqm.png

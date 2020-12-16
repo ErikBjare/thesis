@@ -751,7 +751,7 @@ Volume: 16},
 	author = {K, G. Gopan and Sinha, N. and Jayagopi, D. B.},
 	date = {2019-09},
 	note = {{ISSN}: 2076-1465},
-	keywords = {Alcoholic, alcoholic {EEG} analysis, bioelectric potentials, brain region inter-dependencies, brain-altering situations, covariance matrices, electrical signals, Electroencephalographic signals, Electroencephalographic Signals, electroencephalography, medical signal processing, minimum distance to mean classifier with geodesic filtering, neurophysiology, radial basis function kernel, radial basis function networks, resultant tangent vectors, Riemann Geometry, Riemann geometry based classification framework, signal classification, spatial covariance matrices, support vector machine, support vector machines, Tangent Space}
+	keywords = {signal classification, electroencephalography, Electroencephalographic signals, Alcoholic, alcoholic {EEG} analysis, bioelectric potentials, brain region inter-dependencies, brain-altering situations, covariance matrices, electrical signals, Electroencephalographic Signals, medical signal processing, minimum distance to mean classifier with geodesic filtering, neurophysiology, radial basis function kernel, radial basis function networks, resultant tangent vectors, Riemann Geometry, Riemann geometry based classification framework, spatial covariance matrices, support vector machine, support vector machines, Tangent Space}
 }
 
 @article{barachant_classification_2013,
@@ -795,6 +795,67 @@ Volume: 16},
 	date = {2020-11-24},
 	doi = {10.5281/zenodo.3794887},
 	note = {Language: eng},
-	keywords = {attention, open source, productivity, software, time tracker, time tracking},
+	keywords = {productivity, attention, open source, software, time tracker, time tracking, quantified self},
 	file = {Zenodo Snapshot:/home/erb/Zotero/storage/HTF5XTEB/3794887.html:text/html}
+}
+
+@article{ivanova_comprehension_2020,
+	title = {Comprehension of computer code relies primarily on domain-general executive brain regions},
+	volume = {9},
+	issn = {2050-084X},
+	url = {https://doi.org/10.7554/eLife.58906},
+	doi = {10.7554/eLife.58906},
+	abstract = {Computer programming is a novel cognitive tool that has transformed modern society. What cognitive and neural mechanisms support this skill? Here, we used functional magnetic resonance imaging to investigate two candidate brain systems: the multiple demand ({MD}) system, typically recruited during math, logic, problem solving, and executive tasks, and the language system, typically recruited during linguistic processing. We examined {MD} and language system responses to code written in Python, a text-based programming language (Experiment 1) and in {ScratchJr}, a graphical programming language (Experiment 2); for both, we contrasted responses to code problems with responses to content-matched sentence problems. We found that the {MD} system exhibited strong bilateral responses to code in both experiments, whereas the language system responded strongly to sentence problems, but weakly or not at all to code problems. Thus, the {MD} system supports the use of novel cognitive tools even when the input is structurally similar to natural language.},
+	pages = {e58906},
+	journaltitle = {{eLife}},
+	author = {Ivanova, Anna A and Srikant, Shashank and Sueoka, Yotaro and Kean, Hope H and Dhamala, Riva and O'Reilly, Una-May and Bers, Marina U and Fedorenko, Evelina},
+	editor = {Martin, Andrea E and Behrens, Timothy E and Matchin, William and Bornkessel-Schlesewsky, Ina},
+	urldate = {2020-12-16},
+	date = {2020-12-15},
+	note = {Publisher: {eLife} Sciences Publications, Ltd},
+	keywords = {computer code, {fMRI}, language, multiple demand, programming},
+	file = {Full Text PDF:/home/erb/Zotero/storage/93X69TPF/Ivanova et al. - 2020 - Comprehension of computer code relies primarily on.pdf:application/pdf}
+}
+
+@software{raphael_vallat_raphaelvallatyasa_2020,
+	title = {raphaelvallat/yasa: v0.4.0},
+	url = {https://zenodo.org/record/4244889},
+	shorttitle = {raphaelvallat/yasa},
+	abstract = {This is a major release with several new functions, the biggest of which is the addition of an automatic sleep staging module (yasa.{SleepStaging}). This means that {YASA} can now automatically score the sleep stages of your raw {EEG} data. The classifier was trained and validated on more than 3000 nights from the National Sleep Research Resource ({NSRR}) website. Briefly, the algorithm works by calculating a set of features for each 30-sec epochs from a central {EEG} channel (required), as well as an {EOG} channel (optional) and an {EMG} channel (optional). For best performance, users can also specify the age and the sex of the participants. Pre-trained classifiers are already included in {YASA}. The automatic sleep staging algorithm requires the {LightGBM} and entropy package. For more details, please see: https://raphaelvallat.com/yasa/build/html/changelog.html},
+	publisher = {Zenodo},
+	author = {Raphael Vallat and Nikola Jajcay},
+	urldate = {2020-12-16},
+	date = {2020-11-04},
+	doi = {10.5281/zenodo.4244889},
+	file = {Zenodo Snapshot:/home/erb/Zotero/storage/87X55THT/4244889.html:text/html}
+}
+
+@software{noauthor_neurotechxeeg-notebooks_2020-1,
+	title = {{NeuroTechX}/eeg-notebooks},
+	rights = {{BSD}-3-Clause License         ,                 {BSD}-3-Clause License},
+	url = {https://github.com/NeuroTechX/eeg-notebooks},
+	abstract = {A collection of classic {EEG} experiments implemented with Python and Jupyter notebooks},
+	publisher = {{NeuroTechX}},
+	urldate = {2020-12-16},
+	date = {2020-12-15},
+	note = {original-date: 2020-08-11T00:25:01Z}
+}
+
+@article{peirce_psychopy2_2019,
+	title = {{PsychoPy}2: Experiments in behavior made easy},
+	volume = {51},
+	issn = {1554-3528},
+	url = {https://doi.org/10.3758/s13428-018-01193-y},
+	doi = {10.3758/s13428-018-01193-y},
+	shorttitle = {{PsychoPy}2},
+	abstract = {{PsychoPy} is an application for the creation of experiments in behavioral science (psychology, neuroscience, linguistics, etc.) with precise spatial control and timing of stimuli. It now provides a choice of interface; users can write scripts in Python if they choose, while those who prefer to construct experiments graphically can use the new Builder interface. Here we describe the features that have been added over the last 10 years of its development. The most notable addition has been that Builder interface, allowing users to create studies with minimal or no programming, while also allowing the insertion of Python code for maximal flexibility. We also present some of the other new features, including further stimulus options, asynchronous time-stamped hardware polling, and better support for open science and reproducibility. Tens of thousands of users now launch {PsychoPy} every month, and more than 90 people have contributed to the code. We discuss the current state of the project, as well as plans for the future.},
+	pages = {195--203},
+	number = {1},
+	journaltitle = {Behavior Research Methods},
+	shortjournal = {Behav Res},
+	author = {Peirce, Jonathan and Gray, Jeremy R. and Simpson, Sol and {MacAskill}, Michael and Höchenberger, Richard and Sogo, Hiroyuki and Kastman, Erik and Lindeløv, Jonas Kristoffer},
+	urldate = {2020-12-16},
+	date = {2019-02-01},
+	langid = {english},
+	file = {Springer Full Text PDF:/home/erb/Zotero/storage/USBUZ5L2/Peirce et al. - 2019 - PsychoPy2 Experiments in behavior made easy.pdf:application/pdf}
 }

@@ -25,7 +25,7 @@ jobs:
         uses: xu-cheng/texlive-action/full@v1
         with:
           run: |
-            apk add make
+            apk add make py3-pygments
             make dist
       # Might not work due to GitHub being weird about not triggering site rebuilds from workflows.
       # See this for more info: https://github.community/t5/GitHub-Actions/Github-action-not-triggering-gh-pages-upon-push/td-p/26869/highlight/true/page/3

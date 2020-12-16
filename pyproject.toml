@@ -46,6 +46,7 @@ flake8 = "^3.8.2"
 pytest = "^6.0.0"
 pytest-cov = "^2.10.1"
 pytest-profiling = "^1.7.0"
+Pygments = "^2.7.3"  # required to build latex
 
 [tool.pytest.ini_options]
 minversion = "6.0"
