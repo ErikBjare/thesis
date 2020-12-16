@@ -226,11 +226,13 @@
 
     \subsection{Analysis}
 
-        For classification and analysis, we used common open source Python libraries like numpy, pandas, scikit-learn~\cite{scikit-learn}. Specifically to EEG data, we also used MNE~\cite{noauthor_mne-toolsmne-python_2020}, pyriemann~\cite{alexandre_barachant_2020_3715511}, YASA~\cite{raphael_vallat_raphaelvallatyasa_2020}.
+        For classification and analysis, we used common open source Python libraries for data analysis, like numpy~\cite{harris2020array}, pandas~\cite{reback2020pandas}, and scikit-learn~\cite{scikit-learn}. In addition, we used less common libraries tailored specifically for working with EEG data, such as MNE~\cite{noauthor_mne-toolsmne-python_2020}, pyriemann~\cite{alexandre_barachant_2020_3715511}, and YASA~\cite{raphael_vallat_raphaelvallatyasa_2020}.
 
         \subsubsection{Feature engineering}
 
-            Bandpower features are simple and commonly used in EEG research for basic tasks, we utilized the bankpower function provided by YASA\@.
+            Bandpower features are simple and commonly used in EEG research for many tasks, including the paper by Fucci et al we seek to improve upon~\cite{fucci_replication_2019}. As a reference, we implemented classifiers which solely used bandpower features as input, to gain information of how much any improvement from classifier performance is likely due to better EEG equipment versys how much is due to from improved analysis methods.
+
+            To compute this feature, we utilized the bandpower function provided by YASA~\cite{raphael_vallat_raphaelvallatyasa_2020}. The implementation estimates the power spectral density using Welch's method for each channel, and bins them by their associated frequency band.
 
         \subsubsection{Riemannian geometry}
 
