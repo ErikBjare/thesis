@@ -16,11 +16,13 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 
-def _check_samples(buffer: np.ndarray, channels: List[str]) -> Dict[str, bool]:
+def _check_samples(
+    buffer: np.ndarray, channels: List[str], max_uv_abs=200
+) -> Dict[str, bool]:
     # TODO: Better signal quality check
     # TODO: Merge with signal check filter in eegclassify
-    chmax = dict(zip(channels, np.max(np.abs(buffer), axis=0),))
-    return {ch: maxval < 200 for ch, maxval in chmax.items()}
+    chmax = dict(zip(channels, np.max(np.abs(buffer), axis=0)))
+    return {ch: maxval < max_uv_abs for ch, maxval in chmax.items()}
 
 
 class EEGDevice(metaclass=ABCMeta):
@@ -45,6 +47,12 @@ class EEGDevice(metaclass=ABCMeta):
         else:
             raise ValueError(f"Invalid device name: {device_name}")
 
+    def __enter__(self):
+        self.start()
+
+    def __exit__(self, *args):
+        self.stop()
+
     @abstractmethod
     def start(self, filename: str = None, duration=None):
         """
@@ -53,6 +61,10 @@ class EEGDevice(metaclass=ABCMeta):
         Parameters:
             filename (str): name of the file to save the sessions data to.
         """
+        raise NotImplementedError
+
+    @abstractmethod
+    def stop(self):
         raise NotImplementedError
 
     @abstractmethod
@@ -66,8 +78,7 @@ class EEGDevice(metaclass=ABCMeta):
         """
         raise NotImplementedError
 
-    @abstractmethod
-    def stop(self):
+    def get_samples(self):
         raise NotImplementedError
 
     @abstractmethod

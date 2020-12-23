@@ -48,9 +48,8 @@ class BrainflowDevice(EEGDevice):
         self.markers: List[Tuple[List[int], float]] = []
         self._init_brainflow()
 
-    def start(self, fn: str = None, duration=None):
-        if fn:
-            self.save_fn = fn
+    def start(self, filename: str = None, duration=None) -> None:
+        self.save_fn = filename
 
         def record():
             sleep(duration)
@@ -65,23 +64,23 @@ class BrainflowDevice(EEGDevice):
             self.recording = Process(target=lambda: record())
             self.recording.start()
 
-    def stop(self):
+    def stop(self) -> None:
         self._stop_brainflow()
 
     def push_sample(self, marker: List[int], timestamp: float):
         last_timestamp = self.board.get_current_board_data(1)[-1][0]
         self.markers.append((marker, last_timestamp))
 
-    def check(self) -> List[str]:
+    def check(self, max_uv_abs=200) -> List[str]:
         data = self.board.get_board_data()  # will clear board buffer
         # print(data)
-        channels = BoardShim.get_eeg_channels(self.brainflow_id)
+        channel_names = BoardShim.get_eeg_names(self.brainflow_id)
         # FIXME: _check_samples expects different (Muse) inputs
-        checked = _check_samples(data.T, channels)  # type: ignore
+        checked = _check_samples(data.T, channel_names, max_uv_abs=max_uv_abs)  # type: ignore
         bads = [ch for ch, ok in checked.items() if not ok]
         return bads
 
-    def _init_brainflow(self):
+    def _init_brainflow(self) -> None:
         """
         This function initializes the brainflow backend based on the input device name. It calls
         a utility function to determine the appropriate USB port to use based on the current operating system.
@@ -151,8 +150,7 @@ class BrainflowDevice(EEGDevice):
         self.board = BoardShim(self.brainflow_id, self.brainflow_params)
         self.board.prepare_session()
 
-    def _save(self):
-        """Saves the data to a CSV file."""
+    def get_data(self) -> pd.DataFrame:
         from eegnb.devices.utils import create_stim_array
 
         data = self.board.get_board_data()  # will clear board buffer
@@ -185,12 +183,38 @@ class BrainflowDevice(EEGDevice):
 
         # Subtract five seconds of settling time from beginning
         # total_data = total_data[5 * self.sfreq :]
-        data_df = pd.DataFrame(total_data, columns=["timestamps"] + ch_names + ["stim"])
-        data_df.to_csv(self.save_fn, index=False)
+        df = pd.DataFrame(total_data, columns=["timestamps"] + ch_names + ["stim"])
+        return df
 
-    def _stop_brainflow(self):
+    def _save(self) -> None:
+        """Saves the data to a CSV file."""
+        assert self.save_fn
+        df = self.get_data()
+        df.to_csv(self.save_fn, index=False)
+
+    def _stop_brainflow(self) -> None:
         """This functions kills the brainflow backend and saves the data to a CSV file."""
         # Collect session data and kill session
-        self._save()
+        if self.save_fn:
+            self._save()
         self.board.stop_stream()
         self.board.release_session()
+
+
+def test_check():
+    device = BrainflowDevice(device_name="synthetic")
+    with device:
+        sleep(2)  # is 2s really needed?
+        bads = device.check(max_uv_abs=300)
+        assert bads == ["F6", "F8"]
+        # print(bads)
+        # assert not bads
+
+
+def test_get_data():
+    device = BrainflowDevice(device_name="synthetic")
+    with device:
+        sleep(2)
+        df = device.get_data()
+        print(df)
+        assert not df.empty
