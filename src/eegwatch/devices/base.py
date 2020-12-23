@@ -84,3 +84,8 @@ class EEGDevice(metaclass=ABCMeta):
     @abstractmethod
     def check(self):
         raise NotImplementedError
+
+
+def test_create():
+    device = EEGDevice.create("synthetic")
+    assert device
