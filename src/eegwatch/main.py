@@ -5,7 +5,7 @@ eegnb stuff is based on: https://neurotechx.github.io/eeg-notebooks/auto_example
 pylsl stuff is based on: https://github.com/labstreaminglayer/liblsl-Python/blob/master/pylsl/examples/ReceiveAndPlot.py
 """
 
-from typing import List, Dict
+from typing import List
 from datetime import datetime, timezone
 from time import time, sleep
 import logging
@@ -15,18 +15,10 @@ import click
 import pylsl
 import pyqtgraph as pg
 import coloredlogs
-import numpy as np
 from pyqtgraph.Qt import QtCore, QtGui
 
 from eegwatch.util import print_statusline
-from eegwatch.lslutils import (
-    Inlet,
-    DataInlet,
-    MarkerInlet,
-    PULL_INTERVAL,
-    PLOT_DURATION,
-)
-from .devices.eeg import EEG, all_devices
+from .devices import EEGDevice, all_devices
 
 experiment = "test"
 subject = "erik"
@@ -72,7 +64,7 @@ def connect(device: str, duration: float, loop: bool):
     # from eegnb import generate_save_fn
     from .util import generate_save_fn
 
-    eeg_device = EEG(device=device)
+    eeg_device = EEGDevice.create(device_name=device)
 
     times_ran = 0
     while loop or times_ran < 1:
@@ -112,100 +104,27 @@ def connect(device: str, duration: float, loop: bool):
         times_ran += 1
 
 
-def _resolve_streams() -> list:
-    logger.info("Finding stream...")
-    # Get the Muse EEG stream
-    streams = pylsl.resolve_bypred("name='Muse' and type='EEG'", timeout=10)
-    if not streams:
-        logger.error("No appropriate stream could be found")
-        exit(1)
-    return streams
-
-
-def _get_inlets(plt=None) -> List[Inlet]:
-    streams = _resolve_streams()
-
-    inlets: List[Inlet] = []
-
-    # iterate over found streams, creating specialized inlet objects that will
-    # handle plotting the data
-    for info in streams:
-        if info.type() == "Markers":
-            if (
-                info.nominal_srate() != pylsl.IRREGULAR_RATE
-                or info.channel_format() != pylsl.cf_string
-            ):
-                logger.warning("Invalid marker stream " + info.name())
-            logger.info("Adding marker inlet: " + info.name())
-            inlets.append(MarkerInlet(info))
-        elif (
-            info.nominal_srate() != pylsl.IRREGULAR_RATE
-            and info.channel_format() != pylsl.cf_string
-        ):
-            logger.info(f"Adding data inlet '{info.name()}' of type '{info.type()}'")
-            inlets.append(DataInlet(info, plt))
-        else:
-            logger.warning(
-                f"Don't know what to do with stream {info.name()} of type {info.type()}"
-            )
-
-    return inlets
-
-
-def _check_samples(buffer: np.ndarray) -> Dict[str, bool]:
-    # TODO: Better signal quality check
-    # TODO: Merge with signal check filter in eegclassify
-    channels = ["TP9", "AF7", "AF8", "TP10"]
-    chmax = dict(zip(channels, np.max(np.abs(buffer), axis=0),))
-    return {ch: maxval < 200 for ch, maxval in chmax.items()}
-
-
 @main.command()
 @click.option(
     "--device",
+    "device_name",
     type=click.Choice(all_devices),
     default="museS",
     help="Which device to use",
 )
-def check(device: str):
+def check(device_name: str):
     """Checks signal quality"""
-    assert device.startswith("muse"), "Only Muse devices supported for now"
-
-    inlets = _get_inlets()
-
-    offset = datetime.now(tz=timezone.utc).timestamp() - pylsl.local_clock()
-
-    def local_clock_to_timestamp(local_clock):
-        return local_clock + offset
-
-    def update():
-        # Read data from the inlet. Use a timeout of 0.0 so we don't block GUI interaction.
-        mintime = local_clock_to_timestamp(pylsl.local_clock()) - PLOT_DURATION
-        # call pull_and_plot for each inlet.
-        # Special handling of inlet types (markers, continuous data) is done in
-        # the different inlet classes.
-        for inlet in inlets:
-            inlet.pull_and_plot(mintime, None)
+    device = EEGDevice.create(device_name)
+    device.start()
 
     last_good = False
     last_check = time()
     last_bads: List[str] = []
     while True:
-        update()
-
         # Check every 0.5s
-        if time() > last_check + 0.1:
-            # Find the correct inlet
-            _inlets = [inlet for inlet in inlets if inlet.buffer.any()]  # type: ignore
-            if not _inlets:
-                continue
-            inlet = _inlets[0]
-
-            # print(inlet.inlet)
-            # print(inlet.buffer)
-            checked = _check_samples(inlet.buffer)  # type: ignore
-            all_good = all(checked.values())
-            bads = [ch for ch, ok in checked.items() if not ok]
+        if time() > last_check + 0.5:
+            bads = device.check()
+            all_good = len(bads) == 0
             if all_good:
                 if not last_good:
                     logger.info("All channels good!")
@@ -227,6 +146,8 @@ def check(device: str):
     help="Which device to use",
 )
 def plot(device: str):
+    from eegwatch.lslutils import PULL_INTERVAL, PLOT_DURATION, _get_inlets
+
     assert device.startswith("muse"), "Only Muse devices supported for now"
     # print(eeg_device)
 

@@ -1,13 +1,57 @@
 # Based on https://github.com/labstreaminglayer/liblsl-Python/blob/master/pylsl/examples/ReceiveAndPlot.py
 
 import math
+import logging
+from typing import List, Optional
+
 import numpy as np
 import pylsl
 import pyqtgraph as pg
-from typing import Optional
 
 PLOT_DURATION = 5  # how many seconds of data to show
 PULL_INTERVAL = 500  # ms between each pull operation
+
+logger = logging.getLogger(__name__)
+
+
+def _resolve_streams() -> list:
+    logger.info("Finding stream...")
+    # Get the Muse EEG stream
+    streams = pylsl.resolve_bypred("name='Muse' and type='EEG'", timeout=10)
+    if not streams:
+        logger.error("No appropriate stream could be found")
+        exit(1)
+    return streams
+
+
+def _get_inlets(plt=None) -> List["Inlet"]:
+    streams = _resolve_streams()
+
+    inlets: List[Inlet] = []
+
+    # iterate over found streams, creating specialized inlet objects that will
+    # handle plotting the data
+    for info in streams:
+        if info.type() == "Markers":
+            if (
+                info.nominal_srate() != pylsl.IRREGULAR_RATE
+                or info.channel_format() != pylsl.cf_string
+            ):
+                logger.warning("Invalid marker stream " + info.name())
+            logger.info("Adding marker inlet: " + info.name())
+            inlets.append(MarkerInlet(info))
+        elif (
+            info.nominal_srate() != pylsl.IRREGULAR_RATE
+            and info.channel_format() != pylsl.cf_string
+        ):
+            logger.info(f"Adding data inlet '{info.name()}' of type '{info.type()}'")
+            inlets.append(DataInlet(info, plt))
+        else:
+            logger.warning(
+                f"Don't know what to do with stream {info.name()} of type {info.type()}"
+            )
+
+    return inlets
 
 
 class Inlet:
