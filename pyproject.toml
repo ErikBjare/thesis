@@ -47,16 +47,25 @@ pytest = "^6.0.0"
 pytest-cov = "^2.10.1"
 pytest-profiling = "^1.7.0"
 Pygments = "^2.7.3"  # required to build latex
+coverage = {version = "^5.3.1", extras = ["toml"]}
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--cov-report=xml --cov=eegclassify --cov=eegwatch --profile"
+addopts = "--cov-report=term --cov-report=xml --cov-report=html --cov=eegclassify --cov=eegwatch --profile"
 testpaths = [
     "src",
     "tests",
     "scripts"
 ]
 python_files = ["*.py",]
+
+[tool.coverage.report]
+exclude_lines = [
+    # Have to re-enable the standard pragma
+    "pragma: no cover",
+    # Don't complain if tests don't hit defensive assertion code
+    "raise NotImplementedError"
+]
 
 [tool.black]
 #line-length = 88

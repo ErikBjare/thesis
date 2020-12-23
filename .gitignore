@@ -23,3 +23,4 @@ prof
 *.egg-info
 .coverage
 coverage.xml
+htmlcov
