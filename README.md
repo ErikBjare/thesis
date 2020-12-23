@@ -32,7 +32,10 @@ Running classifier:
 
  - Muse S 
    - PPG support (experimental)
+ - Neurosity Notion 1 & 2
+   - Thanks to AJ Keller @ Neurosity for sending me a refurbished DK1 to test with!
  - OpenBCI Cyton (WIP)
+ - In theory: any device supported by Brainflow or muse-lsl
 
 # Writing
 
@@ -43,6 +46,12 @@ The latest version of the thesis can be downloaded at https://erik.bjareholt.com
 ## Goal Document
 
 The latest version of the goal document can be downloaded at https://erik.bjareholt.com/thesis/goaldocument.pdf
+
+# Acknowledgements
+
+See the Acknowledgements section in the [thesis][thesis].
+
+[thesis]: https://erik.bjareholt.com/thesis/thesis.pdf
 
 # Resources
 
