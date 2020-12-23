@@ -22,3 +22,4 @@ prof
 *.pyc
 *.egg-info
 .coverage
+coverage.xml

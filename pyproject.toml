@@ -50,7 +50,7 @@ Pygments = "^2.7.3"  # required to build latex
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--cov=eegclassify --cov=eegwatch --profile"
+addopts = "--cov-report=xml --cov=eegclassify --cov=eegwatch --profile"
 testpaths = [
     "src",
     "tests",
