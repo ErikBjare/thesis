@@ -33,7 +33,7 @@ Running classifier:
  - Muse S 
    - PPG support (experimental)
  - Neurosity Notion 1 & 2
-   - Thanks to AJ Keller @ Neurosity for sending me a refurbished DK1 to test with!
+   - Thanks to [@andrewjaykeller](https://github.com/andrewjaykeller) at [@neurosity](https://github.com/neurosity) for sending me a refurbished DK1 to test with!
  - OpenBCI Cyton (WIP)
  - In theory: any device supported by Brainflow or muse-lsl
 
