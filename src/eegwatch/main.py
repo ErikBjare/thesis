@@ -174,7 +174,7 @@ def plot(device: str):
     plt = pw.getPlotItem()
     plt.enableAutoRange(x=False, y=True)
 
-    inlets = _get_inlets()
+    inlets = _get_inlets(plt=plt)
 
     def scroll():
         """Move the view so the data appears to scroll"""
