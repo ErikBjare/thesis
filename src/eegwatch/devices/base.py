@@ -25,6 +25,13 @@ def _check_samples(
     return {ch: maxval < max_uv_abs for ch, maxval in chmax.items()}
 
 
+def test_check_samples():
+    buffer = np.array([[9.0, 11.0, -5, -13]])
+    assert {"TP9": True, "AF7": False, "AF8": True, "TP10": False} == _check_samples(
+        buffer, channels=["TP9", "AF7", "AF8", "TP10"], max_uv_abs=10
+    )
+
+
 class EEGDevice(metaclass=ABCMeta):
     def __init__(self, device: str) -> None:
         """

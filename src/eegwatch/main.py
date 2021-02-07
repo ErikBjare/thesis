@@ -61,6 +61,7 @@ def main():
     "--loop/--no-loop", is_flag=True, default=True, help="Wether to loop recording"
 )
 def connect(device: str, duration: float, loop: bool):
+    """Connect to device and start streaming & recording"""
     # from eegnb import generate_save_fn
     from .util import generate_save_fn
 
@@ -115,7 +116,6 @@ def connect(device: str, duration: float, loop: bool):
 def check(device_name: str):
     """Checks signal quality"""
     device = EEGDevice.create(device_name)
-    device.start()
 
     last_good = False
     last_check = time()
@@ -146,6 +146,7 @@ def check(device_name: str):
     help="Which device to use",
 )
 def plot(device: str):
+    """Plot existing LSL stream"""
     from eegwatch.lslutils import PULL_INTERVAL, PLOT_DURATION, _get_inlets
 
     assert device.startswith("muse"), "Only Muse devices supported for now"

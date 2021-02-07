@@ -22,7 +22,8 @@ mne = "^0.21.0"
 mne-bids = "^0.5"
 pybv = "^0.3.0"
 brainflow = "^3.0.3"
-muselsl = {git = "https://github.com/ErikBjare/muse-lsl.git"}
+#muselsl = {git = "https://github.com/ErikBjare/muse-lsl.git"}
+muselsl = {path = "./vendor/muse-lsl"}
 pygatt = {version = "^4.0.5", extras = ["GATTTOOL"]}
 vispy = "^0.6.5"
 PyQt5 = "^5.15.1"  # required for `muselsl view` to work, due to: https://github.com/alexandrebarachant/muse-lsl/issues/111
@@ -40,7 +41,7 @@ xgboost = "^1.2.1"
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"
-mypy = "^0.780"
+mypy = "*"
 pylint = "^2.5.3"
 flake8 = "^3.8.2"
 pytest = "^6.0.0"

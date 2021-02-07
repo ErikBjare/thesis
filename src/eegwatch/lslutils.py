@@ -14,8 +14,9 @@ PULL_INTERVAL = 500  # ms between each pull operation
 logger = logging.getLogger(__name__)
 
 
-def _resolve_streams() -> list:
-    logger.info("Finding stream...")
+def _resolve_streams(verbose=True) -> list:
+    if verbose:
+        logger.info("Finding stream...")
     # Get the Muse EEG stream
     streams = pylsl.resolve_bypred("name='Muse' and type='EEG'", timeout=10)
     if not streams:
@@ -24,8 +25,8 @@ def _resolve_streams() -> list:
     return streams
 
 
-def _get_inlets(plt=None) -> List["Inlet"]:
-    streams = _resolve_streams()
+def _get_inlets(plt=None, verbose=True) -> List["Inlet"]:
+    streams = _resolve_streams(verbose=verbose)
 
     inlets: List[Inlet] = []
 
@@ -38,13 +39,15 @@ def _get_inlets(plt=None) -> List["Inlet"]:
                 or info.channel_format() != pylsl.cf_string
             ):
                 logger.warning("Invalid marker stream " + info.name())
-            logger.info("Adding marker inlet: " + info.name())
+            if verbose:
+                logger.info("Adding marker inlet: " + info.name())
             inlets.append(MarkerInlet(info))
         elif (
             info.nominal_srate() != pylsl.IRREGULAR_RATE
             and info.channel_format() != pylsl.cf_string
         ):
-            logger.info(f"Adding data inlet '{info.name()}' of type '{info.type()}'")
+            if verbose:
+                logger.info(f"Adding data inlet '{info.name()}' of type '{info.type()}'")
             inlets.append(DataInlet(info, plt))
         else:
             logger.warning(
@@ -75,6 +78,9 @@ class Inlet:
         # store the name and channel count
         self.name = info.name()
         self.channel_count = info.channel_count()
+
+    def pull(self):
+        pass
 
     def pull_and_plot(self, plot_time: float, plt: pg.PlotItem):
         """Pull data from the inlet and add it to the plot.
@@ -110,10 +116,14 @@ class DataInlet(Inlet):
             for curve in self.curves:
                 plt.addItem(curve)
 
-    def pull_and_plot(self, plot_time, plt):
+    def pull(self, timeout=1.0):
         # pull the data
-        samples, ts = self.inlet.pull_chunk(timeout=0.0, max_samples=self.bufsize[0])
+        samples, ts = self.inlet.pull_chunk(timeout=timeout, max_samples=self.bufsize[0])
         self.buffer = np.asarray(samples)
+        return samples, ts
+
+    def pull_and_plot(self, plot_time, plt):
+        samples, ts = self.pull(timeout=0)
         # ts will be empty if no samples were pulled, a list of timestamps otherwise
         if plt and ts:
             ts = np.asarray(ts)
