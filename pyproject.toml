@@ -13,7 +13,7 @@ eegwatch = "eegwatch.main:main"
 eegclassify = "eegclassify.main:main"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.7, <3.9"  # Less than 3.9 due to numba not having support
 numpy = "^1.18.5"
 scipy = "^1.4.1"
 matplotlib = "^3.2.1"
