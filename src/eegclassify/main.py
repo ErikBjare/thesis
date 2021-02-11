@@ -1,7 +1,7 @@
 import logging
 import pickle
 from pathlib import Path
-from typing import Tuple, Optional
+from typing import Tuple, Optional, Dict
 
 import click
 import coloredlogs
@@ -97,7 +97,7 @@ def _train_raw(df):
     # Fixes non-convergence for binary classification
     dual = set(y) == 2
 
-    clfs = {
+    clfs: Dict[str, Pipeline] = {
         # These four are from https://neurotechx.github.io/eeg-notebooks/auto_examples/visual_ssvep/02r__ssvep_decoding.html
         "CSP + Cov + TS": make_pipeline(
             Covariances(),
@@ -121,7 +121,7 @@ def _train_raw(df):
         _train(X, y, clf)
 
 
-def _train_features(df):
+def _train_features(df: pd.DataFrame):
     """Train a classifier using features"""
     logger.info("Computing features...")
     df = features.compute_features(df)
@@ -144,7 +144,7 @@ def _train_features(df):
         _train(X, y, clf)
 
 
-def signal_ndarray(df) -> np.ndarray:
+def signal_ndarray(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
     """
     Converts the raw data to a matrix of shape (n_trials, n_channels, n_samples),
     which is the format required by pyriemann Covariances etc.
@@ -186,11 +186,11 @@ def signal_ndarray(df) -> np.ndarray:
 
 
 def _remove_rare(
-    df,
+    df: pd.DataFrame,
     col: str,
     threshold_perc: Optional[float] = None,
     threshold_count: Optional[int] = None,
-):
+) -> pd.DataFrame:
     """
     Removes rows with rare categories.
 
@@ -242,6 +242,8 @@ def _train(X, y, clf):
     )
 
     print(sklearn.metrics.confusion_matrix(y_test, y_pred))
+    bac = sklearn.metrics.balanced_accuracy_score(y_test, y_pred)
+    print(f"BAC: {bac}")
 
     cross_val(clf, X, y, 3)
 
@@ -351,7 +353,7 @@ def clear():
     load.memory.clear()
 
 
-def df_to_vectors(df: pd.DataFrame) -> Tuple[np.array, np.array]:
+def df_to_vectors(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
     # feature vector
     X = np.array(
         [
