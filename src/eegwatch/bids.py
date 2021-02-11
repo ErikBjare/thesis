@@ -19,7 +19,7 @@ PATH_TESTFILE = (
 )
 
 
-def raw_to_mne(data: np.array, first_samp=0) -> mne.io.RawArray:
+def raw_to_mne(data: np.ndarray, first_samp=0) -> mne.io.RawArray:
     ch_names = CHANNELS_MUSE
     sfreq = 250  # The Muse S uses 250Hz
 

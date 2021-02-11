@@ -55,7 +55,10 @@ def main():
     help="Which device to use",
 )
 @click.option(
-    "--duration", type=int, default=5 * 60, help="Duration to record for",
+    "--duration",
+    type=int,
+    default=5 * 60,
+    help="Duration to record for",
 )
 @click.option(
     "--loop/--no-loop", is_flag=True, default=True, help="Wether to loop recording"

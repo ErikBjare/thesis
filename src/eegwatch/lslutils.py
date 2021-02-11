@@ -47,7 +47,9 @@ def _get_inlets(plt=None, verbose=True) -> List["Inlet"]:
             and info.channel_format() != pylsl.cf_string
         ):
             if verbose:
-                logger.info(f"Adding data inlet '{info.name()}' of type '{info.type()}'")
+                logger.info(
+                    f"Adding data inlet '{info.name()}' of type '{info.type()}'"
+                )
             inlets.append(DataInlet(info, plt))
         else:
             logger.warning(
@@ -118,7 +120,9 @@ class DataInlet(Inlet):
 
     def pull(self, timeout=1.0):
         # pull the data
-        samples, ts = self.inlet.pull_chunk(timeout=timeout, max_samples=self.bufsize[0])
+        samples, ts = self.inlet.pull_chunk(
+            timeout=timeout, max_samples=self.bufsize[0]
+        )
         self.buffer = np.asarray(samples)
         return samples, ts
 

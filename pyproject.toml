@@ -40,7 +40,7 @@ pyriemann = "^0.2.6"
 xgboost = "^1.2.1"
 
 [tool.poetry.dev-dependencies]
-black = "^19.10b0"
+black = "*"
 mypy = "*"
 pylint = "^2.5.3"
 flake8 = "^3.8.2"
@@ -48,7 +48,7 @@ pytest = "^6.0.0"
 pytest-cov = "^2.10.1"
 pytest-profiling = "^1.7.0"
 Pygments = "^2.7.3"  # required to build latex
-coverage = {version = "^5.3.1", extras = ["toml"]}
+coverage = {version = "*", extras = ["toml"]}
 
 [tool.pytest.ini_options]
 minversion = "6.0"

@@ -58,9 +58,9 @@ class MuseDevice(EEGDevice):
             self.stream_process.start()
 
         # Create markers stream outlet
-        self.marker_outlet = pylsl.StreamOutlet(pylsl.StreamInfo(
-            "Markers", "Markers", 1, 0, "int32", "myuidw43536"
-        ))
+        self.marker_outlet = pylsl.StreamOutlet(
+            pylsl.StreamInfo("Markers", "Markers", 1, 0, "int32", "myuidw43536")
+        )
 
         def record(data_source="EEG"):
             muselsl.record(
@@ -69,9 +69,7 @@ class MuseDevice(EEGDevice):
 
         # Start a background process that will stream data from the first available Muse
         for source in sources:
-            logger.info(
-                "Starting background recording process"
-            )
+            logger.info("Starting background recording process")
             self.rec_process = Process(target=lambda: record(source), daemon=True)
             self.rec_process.start()
 
