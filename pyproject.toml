@@ -22,7 +22,7 @@ mne = "^0.21.0"
 mne-bids = "^0.5"
 pybv = "^0.3.0"
 brainflow = "^3.0.3"
-muselsl = {git = "https://github.com/alexandrebarachant/muse-lsl.git"}
+muselsl = {git = "https://github.com/ErikBjare/muse-lsl.git", branch="dev/bleak"}
 #muselsl = {path = "./vendor/muse-lsl"}
 pygatt = {version = "^4.0.5", extras = ["GATTTOOL"]}
 vispy = "^0.6.5"
@@ -38,6 +38,7 @@ pylsl = "1.10.5"  # required, see: https://github.com/alexandrebarachant/muse-ls
 scikit-learn = "^0.23.2"
 pyriemann = "^0.2.6"
 xgboost = "^1.2.1"
+bitstring = "^3.1.7"  # depended on by muse-lsl, don't know why it isn't installed
 
 [tool.poetry.dev-dependencies]
 black = "*"
