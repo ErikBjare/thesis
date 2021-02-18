@@ -12,17 +12,21 @@ from .base import EEGDevice, _check_samples
 
 logger = logging.getLogger(__name__)
 
-backend = "bleak"
+BACKEND = "bleak"
 
 
 def stream(address, sources):
     muselsl.stream(
         address,
-        backend="bleak",
+        backend=BACKEND,
         ppg_enabled="PPG" in sources,
         acc_enabled="ACC" in sources,
         gyro_enabled="GYRO" in sources,
     )
+
+
+def record(duration, filename, data_source="EEG"):
+    muselsl.record(duration=duration, filename=filename, data_source=data_source)
 
 
 class MuseDevice(EEGDevice):
@@ -51,11 +55,12 @@ class MuseDevice(EEGDevice):
         # Makes it seem like streaming is only supported on *nix?
         if sys.platform in ["linux", "linux2", "darwin"]:
             # Look for muses
-            muses = muselsl.list_muses(backend="bleak")
+            muses = muselsl.list_muses(backend=BACKEND)
             # FIXME: fix upstream
             muses = [m for m in muses if m["name"].startswith("Muse")]
             if not muses:
                 raise Exception("No Muses found")
+
             # self.muse = muses[0]
 
             # Start streaming process
@@ -69,15 +74,12 @@ class MuseDevice(EEGDevice):
             pylsl.StreamInfo("Markers", "Markers", 1, 0, "int32", "myuidw43536")
         )
 
-        def record(data_source="EEG"):
-            muselsl.record(
-                duration=duration, filename=filename, data_source=data_source
-            )
-
         # Start a background process that will stream data from the first available Muse
         for source in sources:
             logger.info("Starting background recording process")
-            self.rec_process = Process(target=lambda: record(source), daemon=True)
+            self.rec_process = Process(
+                target=record, args=(duration, filename, source), daemon=True
+            )
             self.rec_process.start()
 
         # FIXME: What's the purpose of this?
