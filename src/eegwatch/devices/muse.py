@@ -12,6 +12,18 @@ from .base import EEGDevice, _check_samples
 
 logger = logging.getLogger(__name__)
 
+backend = "bleak"
+
+
+def stream(address, sources):
+    muselsl.stream(
+        address,
+        backend="bleak",
+        ppg_enabled="PPG" in sources,
+        acc_enabled="ACC" in sources,
+        gyro_enabled="GYRO" in sources,
+    )
+
 
 class MuseDevice(EEGDevice):
     # list of muse devices
@@ -40,21 +52,16 @@ class MuseDevice(EEGDevice):
         if sys.platform in ["linux", "linux2", "darwin"]:
             # Look for muses
             muses = muselsl.list_muses(backend="bleak")
+            # FIXME: fix upstream
+            muses = [m for m in muses if m["name"].startswith("Muse")]
             if not muses:
                 raise Exception("No Muses found")
             # self.muse = muses[0]
 
-            def stream():
-                muselsl.stream(
-                    muses[0]["address"],
-                    backend="bleak",
-                    ppg_enabled="PPG" in sources,
-                    acc_enabled="ACC" in sources,
-                    gyro_enabled="GYRO" in sources,
-                )
-
             # Start streaming process
-            self.stream_process = Process(target=stream, daemon=True)
+            self.stream_process = Process(
+                target=stream, args=(muses[0]["address"], sources), daemon=True
+            )
             self.stream_process.start()
 
         # Create markers stream outlet
