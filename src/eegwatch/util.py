@@ -1,8 +1,9 @@
 import os
 import sys
 import time
+from pathlib import Path
 
-DATA_DIR = os.path.join(os.path.expanduser("~/"), ".eegnb", "data")
+DATA_DIR = Path.home() / ".eegnb" / "data"
 
 
 def generate_save_fn(
@@ -24,18 +25,16 @@ def generate_save_fn(
     session_str = "session%03.f" % session_nb
 
     # folder structure is /DATA_DIR/experiment/site/subject/session/*.csv
-    recording_dir = os.path.join(
-        data_dir, experiment, "local", board_name, subject_str, session_str
+    recording_dir = (
+        data_dir / experiment / "local" / board_name / subject_str / session_str
     )
 
-    # check if directory exists, if not, make the directory
-    if not os.path.exists(recording_dir):
-        os.makedirs(recording_dir)
+    # create the directory if it doesn't exist
+    recording_dir.mkdir(parents=True, exist_ok=True)
 
     # generate filename based on recording date-and-timestamp and then append to recording_dir
-    save_fp = os.path.join(
-        recording_dir,
-        ("recording_%s" % time.strftime("%Y-%m-%d-%H.%M.%S", time.gmtime()) + ".csv"),
+    save_fp = recording_dir / (
+        "recording_%s" % time.strftime("%Y-%m-%d-%H.%M.%S", time.gmtime()) + ".csv"
     )
 
     return save_fp

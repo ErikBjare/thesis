@@ -477,7 +477,7 @@ wxPython = {version = ">=4.0", markers = "platform_system == \"Linux\""}
 type = "git"
 url = "https://github.com/NeuroTechX/eeg-notebooks.git"
 reference = "master"
-resolved_reference = "e567abdfc452a7910ba846aaf85893a5a7a0790a"
+resolved_reference = "691d8ea4f10d06e36ae5fd902e60f135eb301c68"
 
 [[package]]
 name = "entropy"
@@ -2983,7 +2983,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7, <3.9"  # Less than 3.9 due to numba not having support
-content-hash = "4af87985412219b96ab0fc834c354b0a4698236b022d11131e1e57bc9857c76e"
+content-hash = "044060af4b10b38df5bcdaeba04b1a54f1f6c0b09b887e5977ff42e52ac09869"
 
 [metadata.files]
 alabaster = [

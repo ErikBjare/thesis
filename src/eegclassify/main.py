@@ -1,5 +1,4 @@
 import logging
-import pickle
 from pathlib import Path
 from typing import Tuple, Optional, Dict
 
@@ -9,6 +8,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import joblib
 
 import sklearn
 from sklearn.pipeline import Pipeline, make_pipeline
@@ -66,19 +66,19 @@ def train(use_cache: bool, raw: bool):
 
 
 def _load(use_cache: bool) -> pd.DataFrame:
-    datacache = Path(".cache/datacache.df.pickle")
+    datacache = Path(".cache/datacache.df.joblib")
 
     if use_cache:
         logger.info("Loading data from cache...")
 
         with datacache.open("rb") as f:
-            df = pickle.load(f)
+            df = joblib.load(f)
     else:
         logger.info("Loading data...")
         df = load.load_labeled_eeg2()
 
         with datacache.open("wb") as f:
-            pickle.dump(df, f)
+            joblib.dump(df, f)
 
     logger.info("Preprocessing...")
     df = _preprocess(df)
@@ -230,22 +230,51 @@ def _train(X, y, clf):
     logger.info(f"Test score: {clf.score(X_test, y_test)}")
 
     y_pred = clf.predict(X_test)
+    perf = _performance(y_test, y_pred)
+    logger.info(perf)
+    _save_best_model(clf, perf)
+
+    cross_val(clf, X, y, 3)
+
+
+def _performance(y_test, y_pred) -> dict:
     precision, recall, fbeta, support = sklearn.metrics.precision_recall_fscore_support(
         y_test, y_pred
     )
-    logger.info(
-        {
-            "precision": precision.mean(),
-            "recall": recall.mean(),
-            "fbeta": fbeta.mean(),
-        }  # , "support": support}
-    )
-
-    print(sklearn.metrics.confusion_matrix(y_test, y_pred))
     bac = sklearn.metrics.balanced_accuracy_score(y_test, y_pred)
-    print(f"BAC: {bac}")
+    confusion_matrix = sklearn.metrics.confusion_matrix(y_test, y_pred)
+    return {
+        "precision": precision.mean(),
+        "recall": recall.mean(),
+        "fbeta": fbeta.mean(),
+        "support": support,
+        "bac": bac,
+        "confusion_matrix": confusion_matrix,
+    }
 
-    cross_val(clf, X, y, 3)
+
+MODEL = Path("model.clf")
+MODEL_PERF = Path("model.performance.txt")
+
+
+def _save_best_model(clf, perf):
+    if MODEL_PERF.exists():
+        saved_model_perf = joblib.load(MODEL_PERF)
+        # FIXME: Better criterion
+        if perf["bac"] > saved_model_perf["bac"]:
+            logger.info("Beat best model! Saving.")
+            joblib.dump(clf, MODEL)
+            joblib.dump(perf, MODEL_PERF)
+        else:
+            logger.info("Didn't beat best model, not saving.")
+            return
+    else:
+        joblib.dump(clf, MODEL)
+        joblib.dump(perf, MODEL_PERF)
+
+
+def _load_best_model():
+    return joblib.load(MODEL)
 
 
 def pca(X, y):

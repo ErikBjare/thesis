@@ -2,6 +2,10 @@ import os
 import logging
 from pathlib import Path
 from typing import List
+from multiprocessing import Pool
+from datetime import datetime, timezone
+
+from tqdm import tqdm
 
 import joblib
 import pandas as pd
@@ -58,21 +62,27 @@ def load_eeg(files: List[Path] = None) -> pd.DataFrame:
 
     if not files:
         # Load all files
-        files = list(musedir.glob("subject*/session*/*.csv"))
+        files = sorted(list(musedir.glob("subject*/session*/*.csv")))
+        files = reversed(files)  # type: ignore
 
     return _load_eeg(files)
 
 
+def _read_csv(fn: Path) -> pd.DataFrame:
+    with fn.open("r") as f:
+        df = pd.read_csv(f).rename(columns={"timestamps": "timestamp"})
+        df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s", utc=True)
+    return df
+
+
 @memory.cache
 def _load_eeg(files: List[Path]) -> pd.DataFrame:
-    dfs = []
-    for fn in files:
-        with fn.open("r") as f:
-            df = pd.read_csv(f).rename(columns={"timestamps": "timestamp"})
-            df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s", utc=True)
-            dfs.append(df)
+    with Pool(4) as p:
+        dfs: List[pd.DataFrame] = p.map(_read_csv, files)
 
+    print("Concatenating...")
     df = pd.concat(dfs)
+    print("Concatenated!")
     df = df.drop(columns=["Marker0", "Right AUX"], errors="ignore")
     return df
 
@@ -115,7 +125,7 @@ def test_load_labeled_eeg():
     assert list(df.columns) == ["timestamp", *CHANNELS_MUSE, "class"]
 
 
-def load_labeled_eeg2(files=None) -> pd.DataFrame:
+def load_labeled_eeg2(files=None, since: datetime = None) -> pd.DataFrame:
     """
     Similar to load_labeled_eeg, but gives one row per task-epoch, with EEG data as cell-vector.
 
@@ -127,11 +137,20 @@ def load_labeled_eeg2(files=None) -> pd.DataFrame:
     df_labels = load_labels()
     df_labels["raw_data"] = [() for _ in range(len(df_labels))]
 
-    for i, row in df_labels.iterrows():
+    # since = datetime(2021, 2, 1, tzinfo=timezone.utc)
+    if since:
+        logger.info(f"Truncating all before {since}")
+        df_eeg = df_eeg[df_eeg["timestamp"] > since]
+        df_labels = df_labels[df_labels["stop"] > since]
+
+    logger.info("Transforming...")
+    for i, row in tqdm(df_labels.iterrows(), total=len(df_labels)):
         # Get data within range of label
         idxs = (row["start"] < df_eeg["timestamp"]) & (
             df_eeg["timestamp"] < row["stop"]
         )
+        if idxs.empty:
+            continue
         raw_data = df_eeg.loc[idxs, ["timestamp", *channels]]
 
         # Convert to list of (timestamp, *channels) tuples
@@ -140,6 +159,7 @@ def load_labeled_eeg2(files=None) -> pd.DataFrame:
             for i, r in raw_data.iterrows()
         ]
         df_labels.at[i, "raw_data"] = raw_data
+    logger.info("Transforming done!")
 
     # Drop rows without data
     df_labels = df_labels[df_labels["raw_data"].map(len) > 0]

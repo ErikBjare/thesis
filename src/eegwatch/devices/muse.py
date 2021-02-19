@@ -1,9 +1,8 @@
 import sys
 import logging
-from datetime import datetime, timezone
 from time import time, sleep
 from multiprocessing import Process
-from typing import List
+from typing import List, Optional
 
 import muselsl
 import pylsl
@@ -39,6 +38,13 @@ class MuseDevice(EEGDevice):
 
     def __init__(self, device_name: str):
         EEGDevice.__init__(self, device_name)
+        self.stream_process: Optional[Process] = None
+
+    @property
+    def started(self) -> bool:
+        if self.stream_process:
+            return self.stream_process.exitcode is None
+        return False
 
     def start(self, filename: str = None, duration=None):
         """
@@ -53,7 +59,7 @@ class MuseDevice(EEGDevice):
 
         # Not sure why we only do this on *nix
         # Makes it seem like streaming is only supported on *nix?
-        if sys.platform in ["linux", "linux2", "darwin"]:
+        if not self.started and sys.platform in ["linux", "linux2", "darwin"]:
             # Look for muses
             muses = muselsl.list_muses(backend=BACKEND)
             # FIXME: fix upstream
@@ -64,26 +70,31 @@ class MuseDevice(EEGDevice):
             # self.muse = muses[0]
 
             # Start streaming process
-            self.stream_process = Process(
-                target=stream, args=(muses[0]["address"], sources), daemon=True
+            # daemon=False to ensure orderly shutdown/disconnection
+            stream_process = Process(
+                target=stream, args=(muses[0]["address"], sources), daemon=False
             )
-            self.stream_process.start()
+            stream_process.start()
+            self.stream_process = stream_process
 
         # Create markers stream outlet
         self.marker_outlet = pylsl.StreamOutlet(
             pylsl.StreamInfo("Markers", "Markers", 1, 0, "int32", "myuidw43536")
         )
 
+        self.record(sources, duration, filename)
+
+        # FIXME: What's the purpose of this? (Push sample indicating recording start?)
+        self.push_sample([99], timestamp=time())
+
+    def record(self, sources: List[str], duration, filename):
         # Start a background process that will stream data from the first available Muse
         for source in sources:
             logger.info("Starting background recording process")
-            self.rec_process = Process(
+            rec_process = Process(
                 target=record, args=(duration, filename, source), daemon=True
             )
-            self.rec_process.start()
-
-        # FIXME: What's the purpose of this?
-        self.push_sample([99], timestamp=time())
+            rec_process.start()
 
     def stop(self):
         pass

@@ -5,9 +5,10 @@ eegnb stuff is based on: https://neurotechx.github.io/eeg-notebooks/auto_example
 pylsl stuff is based on: https://github.com/labstreaminglayer/liblsl-Python/blob/master/pylsl/examples/ReceiveAndPlot.py
 """
 
-from typing import List
+from typing import List, Optional
 from datetime import datetime, timezone
 from time import time, sleep
+from pathlib import Path
 import logging
 import subprocess
 
@@ -65,7 +66,6 @@ def main():
 )
 def connect(device: str, duration: float, loop: bool):
     """Connect to device and start streaming & recording"""
-    # from eegnb import generate_save_fn
     from .util import generate_save_fn
 
     eeg_device = EEGDevice.create(device_name=device)
@@ -94,18 +94,35 @@ def connect(device: str, duration: float, loop: bool):
             else:
                 raise
 
+        loud = False
         started = time()
         stop = started + duration
-        print("Starting recording")
+        print("Starting recording for {duration}s")
         while time() < stop:
             sleep(1)
-            progress = time() - started
-            print_statusline(
-                f"Recording #{times_ran + 1}: {round(progress)}/{duration}s"
-            )
+            last_modified = _check_recording_status(save_fn)
+            if last_modified is None:
+                print("Waiting for data to be written to file...")
+            elif last_modified > 5:
+                print("Data was written more than 5s ago, perhaps the stream died?")
+
+            if loud:
+                progress = time() - started
+                print_statusline(
+                    f"Recording #{times_ran + 1}: {round(progress)}/{duration}s"
+                )
         print("Done!")
         logger.info("Done recording")
         times_ran += 1
+
+
+def _check_recording_status(path: Path) -> Optional[float]:
+    """Returns the time since file was written, or None if it doesn't exist."""
+    if path.exists():
+        now = datetime.now()
+        return now.timestamp() - path.stat().st_mtime
+    else:
+        return None
 
 
 @main.command()

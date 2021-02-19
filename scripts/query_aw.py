@@ -68,7 +68,7 @@ def query() -> List[Event]:
     query = query.replace("{categories}", json.dumps(categories))
 
     print("Querying aw-server...")
-    result = awc.query(query, start, stop)
+    result = awc.query(query, [(start, stop)])
 
     # Since we're only querying one timeperiod
     result = result[0]
