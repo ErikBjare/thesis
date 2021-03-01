@@ -97,7 +97,7 @@ def connect(device: str, duration: float, loop: bool):
         loud = False
         started = time()
         stop = started + duration
-        print("Starting recording for {duration}s")
+        print(f"Starting recording for {duration}s")
         while time() < stop:
             sleep(1)
             last_modified = _check_recording_status(save_fn)

@@ -1,6 +1,9 @@
 import logging
+import json
 from pathlib import Path
 from typing import Tuple, Optional, Dict
+from datetime import datetime, timezone
+from pprint import pprint
 
 import click
 import coloredlogs
@@ -42,7 +45,8 @@ def main():
 @main.command()
 @click.option("--use-cache", is_flag=True)
 @click.option("--raw", is_flag=True)
-def train(use_cache: bool, raw: bool):
+@click.option("--since", type=click.DateTime(["%Y-%m-%d"]))
+def train(use_cache: bool, raw: bool, since: datetime):
     """
     Train classifier on data.
 
@@ -51,7 +55,7 @@ def train(use_cache: bool, raw: bool):
         3. Compute features
         4. Train
     """
-    df = _load(use_cache)
+    df = _load(use_cache, since=since.replace(tzinfo=timezone.utc))
 
     # classdistribution(df)
 
@@ -65,7 +69,7 @@ def train(use_cache: bool, raw: bool):
         _train_features(df)
 
 
-def _load(use_cache: bool) -> pd.DataFrame:
+def _load(use_cache: bool, since: datetime = None) -> pd.DataFrame:
     datacache = Path(".cache/datacache.df.joblib")
 
     if use_cache:
@@ -75,7 +79,7 @@ def _load(use_cache: bool) -> pd.DataFrame:
             df = joblib.load(f)
     else:
         logger.info("Loading data...")
-        df = load.load_labeled_eeg2()
+        df = load.load_labeled_eeg2(since=since)
 
         with datacache.open("wb") as f:
             joblib.dump(df, f)
@@ -253,8 +257,8 @@ def _performance(y_test, y_pred) -> dict:
     }
 
 
-MODEL = Path("model.clf")
-MODEL_PERF = Path("model.performance.txt")
+MODEL = load.cachedir / Path("model.clf")
+MODEL_PERF = load.cachedir / Path("model.performance.dict")
 
 
 def _save_best_model(clf, perf):
@@ -263,18 +267,57 @@ def _save_best_model(clf, perf):
         # FIXME: Better criterion
         if perf["bac"] > saved_model_perf["bac"]:
             logger.info("Beat best model! Saving.")
-            joblib.dump(clf, MODEL)
-            joblib.dump(perf, MODEL_PERF)
         else:
             logger.info("Didn't beat best model, not saving.")
             return
     else:
-        joblib.dump(clf, MODEL)
-        joblib.dump(perf, MODEL_PERF)
+        logger.info("No model found, saving.")
+    joblib.dump(clf, MODEL)
+    with MODEL_PERF.open("w") as f:
+        json.dump(perf, f)
 
 
 def _load_best_model():
+    logger.info("Loading model...")
     return joblib.load(MODEL)
+
+
+def _load_or_train():
+    """Will load any found model, if any, otherwise trains a model."""
+    if not MODEL.exists():
+        logger.info("No model found, training...")
+        train(use_cache=False, raw=True)
+    return _load_best_model()
+
+
+@main.command()
+@click.option("--use-cache", is_flag=True)
+def predict(use_cache) -> None:
+    """Predict the class of a EEG signal"""
+    clf = _load_or_train()
+
+    since = datetime(2021, 2, 20, tzinfo=timezone.utc)
+    df = _load(use_cache, since=since)
+    X, y = signal_ndarray(df)
+    print(X.dims)
+
+    # TODO: read sample, predict class
+    y_pred = clf.predict(X)
+    perf = _performance(y, y_pred)
+    pprint(perf)
+
+
+@main.command()
+def predict_realtime() -> None:
+    """Predict in real time from LSL stream"""
+    from eegwatch.devices.base import EEGDevice
+
+    clf = _load_or_train()
+    device = EEGDevice.create(device_name="museS")
+
+    X = device._read_buffer()
+    print(X)
+    print(clf.predict(X))
 
 
 def pca(X, y):

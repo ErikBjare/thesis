@@ -4,6 +4,7 @@ from time import time, sleep
 from multiprocessing import Process
 from typing import List, Optional
 
+import numpy as np
 import muselsl
 import pylsl
 
@@ -102,7 +103,7 @@ class MuseDevice(EEGDevice):
     def push_sample(self, marker: List[int], timestamp: float):
         self.marker_outlet.push_sample(marker, timestamp)
 
-    def check(self) -> List[str]:
+    def _read_buffer(self) -> np.ndarray:
         from eegwatch.lslutils import _get_inlets
 
         inlets = _get_inlets(verbose=False)
@@ -121,6 +122,11 @@ class MuseDevice(EEGDevice):
             raise Exception("No inlets found")
 
         inlet = inlets[0]
-        checked = _check_samples(inlet.buffer, channels=["TP9", "AF7", "AF8", "TP10"])  # type: ignore
+        return inlet.buffer  # type: ignore
+
+    def check(self) -> List[str]:
+        checked = _check_samples(
+            self._read_buffer(), channels=["TP9", "AF7", "AF8", "TP10"]
+        )
         bads = [ch for ch, ok in checked.items() if not ok]
         return bads
