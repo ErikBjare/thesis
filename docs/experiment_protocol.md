@@ -23,9 +23,12 @@ During experiment:
  - Do a signal check
  - Ask them to fixate
  - Run codeprose task
+ - Run arithmetic task
+ - Other tasks?
 
 After experiment (debrief):
 
  - Ask subject how they are feeling again
    - If they answer the same, we'll assume they've been feeling that way for the duration of the test
+ - Ask briefly about their experience
  - ...
