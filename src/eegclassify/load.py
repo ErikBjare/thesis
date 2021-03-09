@@ -4,12 +4,17 @@ from pathlib import Path
 from typing import List
 from multiprocessing import Pool
 from datetime import datetime, timezone
+from pprint import pprint
 
 from tqdm import tqdm
 
+import mne
 import joblib
 import pandas as pd
 import numpy as np
+
+from eegwatch.bids import csv_to_mne
+from eegwatch.devices.muse import CHANNELS_MUSE
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +32,50 @@ TEST_EEG_FILES_MUSE = [
 
 memory = joblib.Memory(location=cachedir)
 
-CHANNELS_MUSE = ["TP9", "AF7", "AF8", "TP10"]
+
+def load_mne(with_annotations: bool = True) -> mne.io.Raw:
+    # check bids.py
+    # TODO: Get Raw object with all EEG data
+    logger.info("Loading EEG data...")
+    raws = []
+    for fp in tqdm(_get_all_recording_files()[:2]):
+        raws.append(csv_to_mne(fp))
+    pprint(raws)
+
+    raw = mne.concatenate_raws(raws)
+    pprint(raw)
+
+    if with_annotations:
+        logger.info("Annotating dataset...")
+        annot = load_mne_labels()
+        raw.set_annotations(annot)
+
+    # necessary?
+    raw = raw.notch_filter(49)
+    return raw
+
+
+def unzip(lst: list):
+    return zip(*lst)
+
+
+def load_mne_labels() -> mne.Annotations:
+    # https://mne.tools/stable/auto_tutorials/raw/plot_30_annotate_raw.html#sphx-glr-auto-tutorials-raw-plot-30-annotate-raw-py
+    df = load_labels()
+    start, stop, description = unzip([[*row] for row in df.to_records(index=False)])
+    duration = [(t1 - t0).total_seconds() for t0, t1 in zip(start, stop)]
+    onset = [t.timestamp() for t in start]
+    return mne.Annotations(onset, duration, description)
+
+
+def test_load_mne():
+    raw = load_mne()
+    print(raw)
+
+
+def test_load_mne_labels():
+    annot = load_mne_labels()
+    print(annot)
 
 
 def load_labels() -> pd.DataFrame:
@@ -56,14 +104,19 @@ def test_load_labels():
     assert not load_labels().empty
 
 
+def _get_all_recording_files() -> List[Path]:
+    files = sorted(list(musedir.glob("subject*/session*/*.csv")))
+    files = list(reversed(files))
+    return files
+
+
 def load_eeg(files: List[Path] = None) -> pd.DataFrame:
     # TODO: Parametrize for different devices/sources
     # TODO: Parametrize for subject/session?
 
     if not files:
         # Load all files
-        files = sorted(list(musedir.glob("subject*/session*/*.csv")))
-        files = reversed(files)  # type: ignore
+        files = _get_all_recording_files()
 
     return _load_eeg(files)
 
@@ -154,11 +207,9 @@ def load_labeled_eeg2(files=None, since: datetime = None) -> pd.DataFrame:
         raw_data = df_eeg.loc[idxs, ["timestamp", *channels]]
 
         # Convert to list of (timestamp, *channels) tuples
-        raw_data = [
-            (r["timestamp"],) + tuple(r[ch] for ch in channels)
-            for i, r in raw_data.iterrows()
+        df_labels.at[i, "raw_data"] = [
+            tuple(x) for x in raw_data.to_records(index=False)
         ]
-        df_labels.at[i, "raw_data"] = raw_data
     logger.info("Transforming done!")
 
     # Drop rows without data

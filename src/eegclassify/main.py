@@ -1,5 +1,4 @@
 import logging
-import json
 from pathlib import Path
 from typing import Tuple, Optional, Dict
 from datetime import datetime, timezone
@@ -32,6 +31,7 @@ from pyriemann.tangentspace import TangentSpace
 from pyriemann.classification import MDM
 
 from . import load, features, preprocess
+from .clean import clean
 
 logger = logging.getLogger(__name__)
 
@@ -55,7 +55,7 @@ def train(use_cache: bool, raw: bool, since: datetime):
         3. Compute features
         4. Train
     """
-    df = _load(use_cache, since=since.replace(tzinfo=timezone.utc))
+    df = _load(use_cache, since=since.replace(tzinfo=timezone.utc) if since else None)
 
     # classdistribution(df)
 
@@ -67,6 +67,11 @@ def train(use_cache: bool, raw: bool, since: datetime):
         _train_raw(df)
     else:
         _train_features(df)
+
+
+def train_mne():
+    """A version that tries to use MNE as much as possible"""
+    load()
 
 
 def _load(use_cache: bool, since: datetime = None) -> pd.DataFrame:
@@ -81,8 +86,9 @@ def _load(use_cache: bool, since: datetime = None) -> pd.DataFrame:
         logger.info("Loading data...")
         df = load.load_labeled_eeg2(since=since)
 
-        with datacache.open("wb") as f:
-            joblib.dump(df, f)
+        # logger.info("Saving to cache...")
+        # with datacache.open("wb") as f:
+        #     joblib.dump(df, f)
 
     logger.info("Preprocessing...")
     df = _preprocess(df)
@@ -161,6 +167,7 @@ def signal_ndarray(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
     y = np.empty((n_trials))
 
     catmap = dict(((cls, i) for i, cls in enumerate(df["class"].cat.categories)))
+    pprint(catmap)
 
     i_t = 0
     for _, trial in df.reindex().iterrows():
@@ -200,6 +207,9 @@ def _remove_rare(
 
     based on: https://stackoverflow.com/a/31502730/965332
     """
+    logger.info(
+        f"Removing rare classes... (perc: {threshold_perc}, count: {threshold_count})"
+    )
     if threshold_count is not None:
         counts = df[col].value_counts()
         print(counts)
@@ -261,20 +271,28 @@ MODEL = load.cachedir / Path("model.clf")
 MODEL_PERF = load.cachedir / Path("model.performance.dict")
 
 
-def _save_best_model(clf, perf):
+def _save_best_model(clf, perf: dict):
+    pprint(clf)
+    pprint(perf)
     if MODEL_PERF.exists():
         saved_model_perf = joblib.load(MODEL_PERF)
+        print("Saved model perf:")
+        pprint(saved_model_perf)
         # FIXME: Better criterion
         if perf["bac"] > saved_model_perf["bac"]:
             logger.info("Beat best model! Saving.")
+        elif perf["support"].size != saved_model_perf["support"].size:
+            logger.info(
+                "Training with different number of classes from best model, saving."
+            )
         else:
             logger.info("Didn't beat best model, not saving.")
             return
     else:
         logger.info("No model found, saving.")
+
     joblib.dump(clf, MODEL)
-    with MODEL_PERF.open("w") as f:
-        json.dump(perf, f)
+    joblib.dump(perf, MODEL_PERF)
 
 
 def _load_best_model():
@@ -294,12 +312,16 @@ def _load_or_train():
 @click.option("--use-cache", is_flag=True)
 def predict(use_cache) -> None:
     """Predict the class of a EEG signal"""
+    # TODO: Support predicting without labels (modify signal_ndarray)
     clf = _load_or_train()
 
     since = datetime(2021, 2, 20, tzinfo=timezone.utc)
     df = _load(use_cache, since=since)
     X, y = signal_ndarray(df)
-    print(X.dims)
+    try:
+        print(X.size)
+    except Exception as e:
+        print(e)
 
     # TODO: read sample, predict class
     y_pred = clf.predict(X)
@@ -316,6 +338,9 @@ def predict_realtime() -> None:
     device = EEGDevice.create(device_name="museS")
 
     X = device._read_buffer()
+    n_channels = 4
+    X = np.zeros((n_trials, n_channels, n_samples))
+
     print(X)
     print(clf.predict(X))
 
@@ -342,80 +367,7 @@ def _preprocess(df: pd.DataFrame) -> pd.DataFrame:
     min_duration = 5
     df = preprocess.split_rows(df, min_duration)
     df = clean(df)
-    df = _remove_rare(df, "class", threshold_perc=0.1)
-    return df
-
-
-def _clean_short(df):
-    sfreq = 250  # NOTE: Will be different for different devices
-    bads = []
-    for i, row in df.iterrows():
-        samples = len(row["raw_data"])
-        seconds = samples / sfreq
-        duration = row["stop"] - row["start"]
-        if seconds < 0.95 * duration.total_seconds():
-            # logger.warning(
-            #     f"Bad row found, only had {seconds}s of data out of {duration.total_seconds()}s"
-            # )
-            bads.append(i)
-
-    logger.warning(f"Dropping {len(bads)} rows due to missing samples")
-    return df.drop(bads)
-
-
-def _clean_duplicate_samples(df: pd.DataFrame) -> pd.DataFrame:
-    bads = []
-    for i, row in df.iterrows():
-        timestamps = [sample[0] for sample in row["raw_data"]]
-
-        # Check for duplicate timestamps
-        if len(timestamps) != len(set(timestamps)):
-            bads.append(i)
-
-    logger.warning(f"Dropping {len(bads)} bad rows due to duplicate samples")
-    return df.drop(bads)
-
-
-def _clean_inconsistent_sampling(df: pd.DataFrame) -> pd.DataFrame:
-    bads = []
-    for i, row in df.iterrows():
-        timestamps = [sample[0] for sample in row["raw_data"]]
-
-        # Check for consistent sampling
-        diffs = np.diff(timestamps)
-        if max(diffs) > 2 * min(diffs):
-            bads.append(i)
-
-    logger.warning(f"Dropping {len(bads)} bad rows due to inconsistent sampling")
-    return df.drop(bads)
-
-
-def _check_row_signal_quality(s: pd.Series) -> bool:
-    # TODO: Improve quality detection
-    thres = 200
-    for sample in s["raw_data"]:
-        ts, *values = sample
-        for v in values:
-            if abs(v) > thres:
-                return False
-    return True
-
-
-def _clean_signal_quality(df: pd.DataFrame) -> pd.DataFrame:
-    bads = []
-    for i, row in df.iterrows():
-        if _check_row_signal_quality(row):
-            bads.append(i)
-
-    logger.warning(f"Dropping {len(bads)} bad rows due to bad signal quality")
-    return df.drop(bads)
-
-
-def clean(df: pd.DataFrame):
-    df = _clean_short(df)
-    df = _clean_duplicate_samples(df)
-    df = _clean_signal_quality(df)
-    df = _clean_inconsistent_sampling(df)
+    df = _remove_rare(df, "class", threshold_perc=0.02)
     return df
 
 

@@ -6,8 +6,7 @@ import mne
 import mne_bids
 
 from eegwatch import data_dir
-
-CHANNELS_MUSE = ["TP9", "AF7", "AF8", "TP10"]
+from eegwatch.devices.muse import CHANNELS_MUSE
 
 PATH_TESTFILE = (
     data_dir
@@ -25,7 +24,7 @@ def raw_to_mne(data: np.ndarray, first_samp=0) -> mne.io.RawArray:
 
     info = mne.create_info(ch_names, sfreq, ch_types="eeg")
     info["line_freq"] = 50
-    raw = mne.io.RawArray(data.T, info, verbose=False)
+    raw = mne.io.RawArray(data.T / 1_000_000, info, verbose=True)
     # raw.set_channel_types({ch: "eeg" for ch in ch_names})
 
     # print(raw)

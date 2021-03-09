@@ -13,6 +13,7 @@ from .base import EEGDevice, _check_samples
 logger = logging.getLogger(__name__)
 
 BACKEND = "bleak"
+CHANNELS_MUSE = ["TP9", "AF7", "AF8", "TP10"]
 
 
 def stream(address, sources):
