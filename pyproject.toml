@@ -40,16 +40,18 @@ pyriemann = "^0.2.6"
 xgboost = "^1.2.1"
 bitstring = "^3.1.7"  # depended on by muse-lsl, don't know why it isn't installed
 tqdm = "^4.57.0"
+wxpython = {url = "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04/wxPython-4.1.1-cp38-cp38-linux_x86_64.whl"}
+ipykernel = "^5.5.0"
 
 [tool.poetry.dev-dependencies]
 black = "*"
 mypy = "*"
-pylint = "^2.5.3"
-flake8 = "^3.8.2"
-pytest = "^6.0.0"
-pytest-cov = "^2.10.1"
-pytest-profiling = "^1.7.0"
-Pygments = "^2.7.3"  # required to build latex
+pylint = "*"
+flake8 = "*"
+pytest = "^6.0"
+pytest-cov = "*"
+pytest-profiling = "*"
+Pygments = "*"  # required to build latex
 coverage = {version = "*", extras = ["toml"]}
 
 [tool.pytest.ini_options]

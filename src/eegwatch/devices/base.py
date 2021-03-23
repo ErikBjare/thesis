@@ -20,7 +20,6 @@ def _check_samples(
     buffer: np.ndarray, channels: List[str], max_uv_abs=200
 ) -> Dict[str, bool]:
     # TODO: Better signal quality check
-    # TODO: Merge with signal check filter in eegclassify
     chmax = dict(zip(channels, np.max(np.abs(buffer), axis=0)))
     return {ch: maxval < max_uv_abs for ch, maxval in chmax.items()}
 

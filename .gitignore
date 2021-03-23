@@ -25,3 +25,7 @@ prof
 .coverage
 coverage.xml
 htmlcov
+
+# notebooks
+.ipynb_checkpoints
+notebooks/output

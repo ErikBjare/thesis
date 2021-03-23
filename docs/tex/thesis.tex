@@ -83,6 +83,10 @@
 
 \begin{abstract}
     \add{Abstract}
+
+    We investigate the ability of EEG to distinguish between different activities users engage in on their devices, building on previous research showing a considerable difference in brain activity when reading/(reasoning about) code vs prose.
+
+    We use the automated time tracker ActivityWatch, previously developed by the author, to track what activities the user is engaging in on their device.
 \end{abstract}
 
 \pagebreak %.\pagebreak
@@ -123,7 +127,7 @@
 
 \subsection{Automated time trackers}
 
-    Automated time-trackers have been developed for computing devices, with various applications such as tracking productivity, managing excessive use of social networking sites (SNSs), and studying user behavior.
+    Automated time-trackers have been developed for computing devices, with various applications such as tracking hours worked, personal productivity, managing excessive use of social networking sites (SNSs), and studying human behavior.
 
     \subsubsection{Commercial use}
 
@@ -141,23 +145,31 @@
 
         The free and open source automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_2020} addresses aforementioned issues with other software around source availability/licensing, privacy, temporal resolution, event detail, and cross-platform support.
 
+        \todo{Update screenshot to v0.11}
+
         \begin{figure}[h]
         \centering
         \includegraphics[width=8cm]{img/screenshot-aw-activity.png}
         \caption{ActivityWatch activity dashboard. Showing top applications, window titles, browser domains, and categories.}\label{fig:aw}
         \end{figure}
 
+        ActivityWatch as a project was started in 2016 by the author of this thesis, with his brother Johan joining development soon after. It has since become a popular open source alternative to other time tracking software. It has received numerous contributions from users \todo{link to contributors page on website} and is approaching 100,000 downloads \todo{link to stats page}.
+
+        \todo{What more could I add about ActivityWatch? There should be relevant stuff in the docs, and in the slides I made way back.}
+
 \subsection{EEG and low-cost biosensors/functional brain imaging}
 
     Functional brain imaging methods such as fMRI, fNIRS, and EEG, have been used to study the relationship between cognitive or physical activity, and brain activity~\cite{floyd_decoding_2017}\cite{hong_classification_2015}\cite{fucci_replication_2019}. The more accurate methods such as fMRI are costly and inflexible/impractical for many uses.
 
-    However, the recent availability of low-cost biosensors such as EEG, HEG, and fNIRS, enables studying brain activity during real-life tasks. As an example it has been shown that it is possible to classify what task a participant is undertaking using fMRI~\cite{floyd_decoding_2017}, which has been replicated using EEG and low-cost biosensors~\cite{fucci_replication_2019}.
+    However, the recent availability of low-cost biosensors such as EEG, HEG, and fNIRS, enables studying brain activity during real-life tasks. As an example it has been shown that it is possible to classify if a participant is reading code or prose using fMRI~\cite{floyd_decoding_2017}, which has been replicated using EEG and low-cost biosensors~\cite{fucci_replication_2019}. The ability to distinguish between these two tasks have been has been explained neurologically by the recruitment of different neural networks \todo{'neural network' might be confusing in the context} for the task. \todo{reference MIT paper}
 
     But they are not without their limitations --- among them a notably low signal-to-noise ratio~\cite{mcfarland_eeg-based_2017} --- yet visual evoked potentials (VEPs) have been shown to be sufficient for high-speed BCI applications~\cite{spuler_high-speed_2017}.
 
     To combat the low signal-to-noise ratio, machine learning methods have been employed with varying degrees of success. Examples from previous research include Convolutional Neural Networks (CNNs), which have been successful in classifying time series in general~\cite{zhao_convolutional_2017}, and EEG data in particular~\cite{schirrmeister_deep_2017}. As well as Hierarchical Convolutional Neural Networks (HCNNs), which have been used for EEG-based emotion recognition~\cite{li_hierarchical_2018}.
 
     \add{Applications to software engineers}
+
+    \add{Seperate sections for applications in BCIs vs neuroscience}
 
     % https://docs.openbci.com/citations
 
@@ -189,7 +201,18 @@
 
     \add{Insert mention of preprint that Fucci mentioned?}
 
-\section{Methods}
+\section{Theory}
+
+    \subsection{Electroencelography (EEG)}
+
+        \add[inline]{Explain theory used, like theory of EEG, Riemannian geometry, etc}
+        \add[inline]{Plots of raw EEG signal, PSD, PCA, etc}
+
+    \subsection{Machine Learning}
+
+        \add[inline]{Formulas}
+
+\section{Method}
 
     \subsection{Collection of device activity data}
 
@@ -201,32 +224,64 @@
 
         EEG data was collected during organic device use and under controlled conditions.
 
-        For both conditions, code from the open source eeg-notebooks~\cite{noauthor_neurotechxeeg-notebooks_2020} was used to record the raw EEG stream into a CSV file. For the Muse S, muse-lsl was used as the underlying software to handle the connection (which uses Lab Streaming Layer). For the OpenBCI and Neurosity devices, brainflow~\cite{noauthor_brainflow-devbrainflow_2020} was used to handle the connection.
+        For both conditions, code from the open source eeg-notebooks~\cite{noauthor_neurotechxeeg-notebooks_2020} was adapted to record the raw EEG stream into a CSV file. For the Muse S, muse-lsl~\cite{muselsl_2020} was used as the underlying software to handle the connection (which uses Lab Streaming Layer). For the OpenBCI and Neurosity devices, brainflow~\cite{noauthor_brainflow-devbrainflow_2020} was used to handle the connection.
 
         \subsubsection{During organic device use}
 
-            For the organic device use conditions, we primarily used the Muse S EEG headband which features 4 channels with electrodes placed at TP9, AF7, AF8, and TP10.\footnote{According to the 1020-system.} The Muse S was chosen mainly due the superior comfort and ease of use compared with the alternatives, making it especially suitable for long recordings.\footnote{A wet electrode cap system was also considered, but ultimately not investigated due to being inconvenient to use.}
+            For the organic device use conditions, we primarily used the Muse S EEG headband which features 4 channels with electrodes placed at TP9, AF7, AF8, and TP10.\footnote{According to the 1020-system.} The Muse S was chosen mainly due the superior comfort and ease of use compared with the alternatives, making it especially suitable for long recordings.\footnote{A wet electrode cap system was also considered, but ultimately not investigated due to being inconvenient to setup.}
 
         \subsubsection{During code vs prose comprehension task}
 
             For the controlled condition, the hardware used was \todo{decide on which hardware to use}{\ldots}.
 
-            We \todo{actually implement the task}{implemented the task} in eeg-notebooks~\cite{noauthor_neurotechxeeg-notebooks_2020}, which uses previously mentioned libraries for data collection as well as PsychoPy~\cite{peirce_psychopy2_2019} to provide the experiment stimuli.
+            We \todo{actually implement the task}{implemented the task} in eeg-notebooks~\cite{noauthor_neurotechxeeg-notebooks_2020}, which uses previously mentioned libraries for data collection as well as PsychoPy~\cite{peirce_psychopy2_2019} to provide the stimuli.
 
             \todo[inline]{actually perform controlled experiments}
 
         \subsubsection{Devices}
 
-            \begin{itemize}
-                \item Muse S
-                \item OpenBCI Cyton (with Ultracortex headset)
-                \item Neurosity Notion DK1
-                \item Neurosity Notion 2 (preordered, arrives in spring)
-            \end{itemize}
+            \todo[inline]{Add images of headsets}
+
+            \begin{center}
+                \begin{tabular}{ c|c|c }
+                 Device & Channels & Sampling rate & Comfort \\
+                 \hline
+                 Muse S
+                    & 4
+                    & 250Hz
+                    & High \\
+                 OpenBCI Cyton + Ultracortex
+                    & 8
+                    & 125Hz?
+                    & Low \\
+                 % generously gifted by Neurosity
+                 Neurosity Notion DK1
+                    & 8
+                    & 250Hz?
+                    & Medium \\
+                  % preordered, arrives in late spring
+                  Neurosity Notion 3 ("Crown")
+                    & 8?
+                    & 250Hz?
+                    & High? \\
+                \end{tabular}
+            \end{center}
 
     \subsection{Analysis}
 
         For classification and analysis, we used common open source Python libraries for data analysis, like numpy~\cite{harris2020array}, pandas~\cite{reback2020pandas}, and scikit-learn~\cite{scikit-learn}. In addition, we used less common libraries tailored specifically for working with EEG data, such as MNE~\cite{noauthor_mne-toolsmne-python_2020}, pyriemann~\cite{alexandre_barachant_2020_3715511}, and YASA~\cite{raphael_vallat_raphaelvallatyasa_2020}.
+
+        \subsubsection{Data cleaning}
+
+            For the uncontrolled condition, we align the raw EEG data with the categories assigned by our ActivityWatch script. We split the series into epochs, and reject samples that either:
+
+            \begin{enumerate}
+                \item Don't have an assigned class
+                \item Have a bad signal quality (as indicated by a high signal variance)
+                \item Are too short (due to missing samples)
+            \end{enumerate}
+
+            \todo{List how many epochs are rejected by each cleaning step}
 
         \subsubsection{Feature engineering}
 
@@ -238,7 +293,7 @@
 
             The \improvement{according to whom?}{state of the art in many EEG classification tasks} involves the use of Riemannian geometry. For this, we used the open source pyriemann library by Alexandre Barachant\footnote{First author of the original paper to apply Riemannian geometry to EEG~\cite{barachant_classification_2013}}.
 
-            \add[inline]{Explanation of riemannian geometry, from \href{https://colab.research.google.com/drive/1y9tq7-lJwusxtVgpB38y-p1pYw7hg0iu}{this tutorial we're working on}}
+            \add[inline]{Explanation of riemannian geometry, from \href{https://colab.research.google.com/drive/1y9tq7-lJwusxtVgpB38y-p1pYw7hg0iu}{this tutorial we're working on}, perhaps it should go in the Background/Theory section though?}
 
 \section{Results}
 
@@ -260,9 +315,21 @@
 
         \add[inline]{Write about democratization efforts, like eeg-notebooks, and how it fits into the larger picture of EEG equipment becoming cheap and widely available.}
 
+        This thesis was made possible due to the efforts of individuals and communities such as NeuroTechX to democratize neuroscience. Indeed, it is the explicit goal of the NeuroTechX eeg-notebooks project to `democratize the neuroscience experiment'. Combined with the rapid cost reduction of research-grade EEG equipment over the last decade it has enabled any programmer to design and perform high-quality neuroscience experiments.
+
+        \todo[inline]{Mention the research process of going from costly fMRI (to reveal mechanisms) to cheaper EEG/fNIRS/etc (to put the research into practice)}
+
+        As development of BCIs advance and the consumer market for EEG devices grow (as evidenced by new devices being released with a regular cadence by InteraXon and Neurosity) we expect to see more uses and applications of these devices.
+
+        Much of this work was made possible due to the efforts of communities such as NeuroTechX to democratize neuroscience \todo[inline]{By doing what?}.
+
     \subsection{Crowdsourcing data}
 
         \add[inline]{Write about crowdsourcing of EEG data, including the potential of transfer learning and privacy considerations.}
+
+\section{Other scientific contributions}
+
+As part of the work on this thesis I've contributed several improvements to the open source projects used, including muse-lsl, moabb, eeg-notebooks, and pyRiemann. \todo[inline]{list with links to PRs?}
 
 \section*{Acknowledgements}
 

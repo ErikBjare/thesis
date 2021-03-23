@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import Tuple, Optional, Dict
+from typing import Tuple, Optional, Dict, List
 from datetime import datetime, timezone
 from pprint import pprint
 
@@ -11,6 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import joblib
+from scipy import stats
 
 import sklearn
 from sklearn.pipeline import Pipeline, make_pipeline
@@ -77,7 +78,7 @@ def train_mne():
 def _load(use_cache: bool, since: datetime = None) -> pd.DataFrame:
     datacache = Path(".cache/datacache.df.joblib")
 
-    if use_cache:
+    if use_cache and datacache.exists():
         logger.info("Loading data from cache...")
 
         with datacache.open("rb") as f:
@@ -86,9 +87,10 @@ def _load(use_cache: bool, since: datetime = None) -> pd.DataFrame:
         logger.info("Loading data...")
         df = load.load_labeled_eeg2(since=since)
 
-        # logger.info("Saving to cache...")
-        # with datacache.open("wb") as f:
-        #     joblib.dump(df, f)
+        if use_cache:
+            logger.info("Saving to cache...")
+            with datacache.open("wb") as f:
+                joblib.dump(df, f)
 
     logger.info("Preprocessing...")
     df = _preprocess(df)
@@ -159,6 +161,7 @@ def signal_ndarray(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
     Converts the raw data to a matrix of shape (n_trials, n_channels, n_samples),
     which is the format required by pyriemann Covariances etc.
     """
+    logger.info("Constructing array...")
     # TODO: Check that array is filled
     n_trials = df.shape[0]
     n_channels = 4
@@ -196,6 +199,24 @@ def signal_ndarray(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
     return X, y
 
 
+def _select_classes(
+    df: pd.DataFrame,
+    col: str,
+    classes: List[str],
+) -> pd.DataFrame:
+    """
+    Removes rows that don't match the selected classes.
+    """
+    return df.loc[df[col].isin(classes), :]
+
+
+def test_select_classes():
+    df = pd.DataFrame({"class": ["a", "a", "b", "c"]})
+    df["class"] = df["class"].astype("category")
+    df = _select_classes(df, "class", ["a", "b"])
+    assert len(df) == 3
+
+
 def _remove_rare(
     df: pd.DataFrame,
     col: str,
@@ -207,19 +228,34 @@ def _remove_rare(
 
     based on: https://stackoverflow.com/a/31502730/965332
     """
+    if threshold_perc is None and threshold_count is None:
+        raise ValueError
+
     logger.info(
         f"Removing rare classes... (perc: {threshold_perc}, count: {threshold_count})"
     )
     if threshold_count is not None:
         counts = df[col].value_counts()
-        print(counts)
-        df = df.loc[df[col].isin(counts[counts > threshold_count].index), :]
-    elif threshold_perc is not None:
+        df = df.loc[df[col].isin(counts[counts >= threshold_count].index), :]
+    if threshold_perc is not None:
         counts = df[col].value_counts(normalize=True)
-        df = df.loc[df[col].isin(counts[counts > threshold_perc].index), :]
-    else:
-        raise ValueError
+        df = df.loc[df[col].isin(counts[counts >= threshold_perc].index), :]
+
     return df
+
+
+def test_remove_rare():
+    df = pd.DataFrame({"class": ["a"] * 10 + ["b"] * 5 + ["c"] * 3 + ["d"] * 2})
+    df["class"] = df["class"].astype("category")
+
+    # Remove single class with percent
+    assert len(_remove_rare(df, "class", threshold_perc=0.15)) == 18
+
+    # Remove single class with count
+    assert len(_remove_rare(df, "class", threshold_count=3)) == 18
+
+    # Remove one class by count and one by percent
+    assert len(_remove_rare(df, "class", threshold_perc=0.2, threshold_count=3)) == 15
 
 
 def classdistribution(df):
@@ -233,9 +269,10 @@ def classdistribution(df):
 
 
 def _train(X, y, clf):
+    # TODO: Add LORO cross validation ("Leave-One-Run-Out")
     # Split into train and test
     X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(
-        X, y, test_size=0.3
+        X, y, test_size=0.3, shuffle=False
     )
 
     logger.info("Training...")
@@ -364,10 +401,14 @@ def pca(X, y):
 
 def _preprocess(df: pd.DataFrame) -> pd.DataFrame:
     """Preprocesses dataframe"""
-    min_duration = 5
-    df = preprocess.split_rows(df, min_duration)
+    df = preprocess.split_rows(df, min_duration=5)
     df = clean(df)
-    df = _remove_rare(df, "class", threshold_perc=0.02)
+    # df = _remove_rare(df, "class", threshold_count=50)
+    df = _select_classes(
+        df,
+        "class",
+        ["Editing->Code", "Editing->Prose", "GitHub->Issues", "GitHub->Pull request"],
+    )
     return df
 
 

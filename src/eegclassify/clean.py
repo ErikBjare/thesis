@@ -66,15 +66,39 @@ def _check_row_signal_quality(s: pd.Series) -> bool:
     # TODO: Improve quality detection
     buffer = np.array([t[1:] for t in s["raw_data"]])  # strip timestamp
     channels = [str(i) for i in range(buffer.size)]
-    thres = 200
+    thres = 500
     return all(_check_samples(buffer, channels, max_uv_abs=thres).values())
+
+
+def _row_stats(s: pd.Series):
+    buffer = np.array([t[1:] for t in s["raw_data"]])  # strip timestamp
+    return {
+        "min": np.min(np.abs(buffer), axis=0),
+        "max": np.max(np.abs(buffer), axis=0),
+        "ok": _check_row_signal_quality(s),
+    }
 
 
 def _clean_signal_quality(df: pd.DataFrame) -> pd.DataFrame:
     bads = []
     for i, row in df.iterrows():
+        # print(_row_stats(row))
         if not _check_row_signal_quality(row):
             bads.append(i)
 
     logger.warning(f"Dropping {len(bads)} bad rows due to bad signal quality")
     return df.drop(bads)
+
+
+def test_clean_signal_quality():
+    df = pd.DataFrame(
+        [
+            {"raw_data": [[1, 100]]},
+            {"raw_data": [[1, 100]]},
+            {"raw_data": [[1, 300]]},
+        ]
+    )
+    df_clean = _clean_signal_quality(df)
+    print(df_clean)
+    assert len(df_clean) == 2
+    assert False
