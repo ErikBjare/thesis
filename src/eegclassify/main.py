@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import Tuple, Optional, Dict, List
+from typing import Tuple, Dict
 from datetime import datetime, timezone
 from pprint import pprint
 
@@ -8,15 +8,12 @@ import click
 import coloredlogs
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
 import joblib
 from scipy import stats
 
 import sklearn
 from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 from sklearn.svm import LinearSVC
@@ -31,8 +28,7 @@ from pyriemann.spatialfilters import CSP
 from pyriemann.tangentspace import TangentSpace
 from pyriemann.classification import MDM
 
-from . import load, features, preprocess
-from .clean import clean
+from . import load, features, preprocess, clean, transform
 
 logger = logging.getLogger(__name__)
 
@@ -103,7 +99,7 @@ def _load(use_cache: bool, since: datetime = None) -> pd.DataFrame:
 
 def _train_raw(df):
     """Train a classifier on raw EEG data"""
-    X, y = signal_ndarray(df)
+    X, y = transform.signal_ndarray(df)
     # print(X, y)
 
     # Fixes non-convergence for binary classification
@@ -154,118 +150,6 @@ def _train_features(df: pd.DataFrame):
     for name, clf in clfs_feat.items():
         logger.info(f"===== Training with {name} =====")
         _train(X, y, clf)
-
-
-def signal_ndarray(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
-    """
-    Converts the raw data to a matrix of shape (n_trials, n_channels, n_samples),
-    which is the format required by pyriemann Covariances etc.
-    """
-    logger.info("Constructing array...")
-    # TODO: Check that array is filled
-    n_trials = df.shape[0]
-    n_channels = 4
-    n_samples = 250 * 5  # sampling freq * min_duration
-    X = np.zeros((n_trials, n_channels, n_samples))
-    y = np.empty((n_trials))
-
-    catmap = dict(((cls, i) for i, cls in enumerate(df["class"].cat.categories)))
-    pprint(catmap)
-
-    i_t = 0
-    for _, trial in df.reindex().iterrows():
-        n_samples_t = len(trial["raw_data"])
-        if n_samples_t > 2 * n_samples:
-            logger.warning(
-                f"sample count ({n_samples_t}) is significantly greater than ndarray size ({n_samples})"
-            )
-        if n_samples_t < n_samples:
-            logger.warning(
-                f"not enough samples ({n_samples_t}) for ndarray size ({n_samples})"
-            )
-            continue
-
-        for i_s, sample in list(enumerate(trial["raw_data"]))[:n_samples]:
-            for i_c, channel in enumerate(sample[1:]):
-                X[i_t, i_c, i_s] = channel
-        y[i_t] = catmap[trial["class"]]
-        i_t += 1
-
-    # Remove skipped trials
-    X, y = X[:i_t, :, :], y[:i_t]
-    # logger.info(X.shape)
-    # logger.info(y.shape)
-
-    return X, y
-
-
-def _select_classes(
-    df: pd.DataFrame,
-    col: str,
-    classes: List[str],
-) -> pd.DataFrame:
-    """
-    Removes rows that don't match the selected classes.
-    """
-    return df.loc[df[col].isin(classes), :]
-
-
-def test_select_classes():
-    df = pd.DataFrame({"class": ["a", "a", "b", "c"]})
-    df["class"] = df["class"].astype("category")
-    df = _select_classes(df, "class", ["a", "b"])
-    assert len(df) == 3
-
-
-def _remove_rare(
-    df: pd.DataFrame,
-    col: str,
-    threshold_perc: Optional[float] = None,
-    threshold_count: Optional[int] = None,
-) -> pd.DataFrame:
-    """
-    Removes rows with rare categories.
-
-    based on: https://stackoverflow.com/a/31502730/965332
-    """
-    if threshold_perc is None and threshold_count is None:
-        raise ValueError
-
-    logger.info(
-        f"Removing rare classes... (perc: {threshold_perc}, count: {threshold_count})"
-    )
-    if threshold_count is not None:
-        counts = df[col].value_counts()
-        df = df.loc[df[col].isin(counts[counts >= threshold_count].index), :]
-    if threshold_perc is not None:
-        counts = df[col].value_counts(normalize=True)
-        df = df.loc[df[col].isin(counts[counts >= threshold_perc].index), :]
-
-    return df
-
-
-def test_remove_rare():
-    df = pd.DataFrame({"class": ["a"] * 10 + ["b"] * 5 + ["c"] * 3 + ["d"] * 2})
-    df["class"] = df["class"].astype("category")
-
-    # Remove single class with percent
-    assert len(_remove_rare(df, "class", threshold_perc=0.15)) == 18
-
-    # Remove single class with count
-    assert len(_remove_rare(df, "class", threshold_count=3)) == 18
-
-    # Remove one class by count and one by percent
-    assert len(_remove_rare(df, "class", threshold_perc=0.2, threshold_count=3)) == 15
-
-
-def classdistribution(df):
-    plt.figure(figsize=(12, 5))
-    sns.countplot(x=df["class"], color="mediumseagreen")
-    plt.title("Class distribution", fontsize=16)
-    plt.ylabel("Class Counts", fontsize=16)
-    plt.xlabel("Class Label", fontsize=16)
-    plt.xticks(rotation="vertical")
-    plt.show()
 
 
 def _train(X, y, clf):
@@ -382,29 +266,12 @@ def predict_realtime() -> None:
     print(clf.predict(X))
 
 
-def pca(X, y):
-    scaler = StandardScaler()
-    scaled_df = scaler.fit_transform(X)
-    pca = PCA(n_components=20)
-    pca_vectors = pca.fit_transform(scaled_df)
-    for index, var in enumerate(pca.explained_variance_ratio_):
-        logger.info(f"Explained Variance ratio by PC {index + 1}: {var}")
-
-    plt.figure(figsize=(25, 8))
-    sns.scatterplot(x=pca_vectors[:, 0], y=pca_vectors[:, 1], hue=y)
-    plt.title("Principal Components vs Class distribution", fontsize=16)
-    plt.ylabel("Principal Component 2", fontsize=16)
-    plt.xlabel("Principal Component 1", fontsize=16)
-    plt.xticks(rotation="vertical")
-    plt.show()
-
-
 def _preprocess(df: pd.DataFrame) -> pd.DataFrame:
     """Preprocesses dataframe"""
     df = preprocess.split_rows(df, min_duration=5)
-    df = clean(df)
+    df = clean.clean(df)
     # df = _remove_rare(df, "class", threshold_count=50)
-    df = _select_classes(
+    df = clean._select_classes(
         df,
         "class",
         ["Editing->Code", "Editing->Prose", "GitHub->Issues", "GitHub->Pull request"],

@@ -102,3 +102,62 @@ def test_clean_signal_quality():
     print(df_clean)
     assert len(df_clean) == 2
     assert False
+
+
+def _select_classes(
+    df: pd.DataFrame,
+    col: str,
+    classes: List[str],
+) -> pd.DataFrame:
+    """
+    Removes rows that don't match the selected classes.
+    """
+    return df.loc[df[col].isin(classes), :]
+
+
+def test_select_classes():
+    df = pd.DataFrame({"class": ["a", "a", "b", "c"]})
+    df["class"] = df["class"].astype("category")
+    df = _select_classes(df, "class", ["a", "b"])
+    assert len(df) == 3
+
+
+def _remove_rare(
+    df: pd.DataFrame,
+    col: str,
+    threshold_perc: Optional[float] = None,
+    threshold_count: Optional[int] = None,
+) -> pd.DataFrame:
+    """
+    Removes rows with rare categories.
+
+    based on: https://stackoverflow.com/a/31502730/965332
+    """
+    if threshold_perc is None and threshold_count is None:
+        raise ValueError
+
+    logger.info(
+        f"Removing rare classes... (perc: {threshold_perc}, count: {threshold_count})"
+    )
+    if threshold_count is not None:
+        counts = df[col].value_counts()
+        df = df.loc[df[col].isin(counts[counts >= threshold_count].index), :]
+    if threshold_perc is not None:
+        counts = df[col].value_counts(normalize=True)
+        df = df.loc[df[col].isin(counts[counts >= threshold_perc].index), :]
+
+    return df
+
+
+def test_remove_rare():
+    df = pd.DataFrame({"class": ["a"] * 10 + ["b"] * 5 + ["c"] * 3 + ["d"] * 2})
+    df["class"] = df["class"].astype("category")
+
+    # Remove single class with percent
+    assert len(_remove_rare(df, "class", threshold_perc=0.15)) == 18
+
+    # Remove single class with count
+    assert len(_remove_rare(df, "class", threshold_count=3)) == 18
+
+    # Remove one class by count and one by percent
+    assert len(_remove_rare(df, "class", threshold_perc=0.2, threshold_count=3)) == 15

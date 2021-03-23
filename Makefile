@@ -32,6 +32,10 @@ clean:
 	#rm docs/gcm.png
 	#rm -f *.aux *.bbl *.bcf *.cfg  *.blg *.dvi *.log *.pdf *.run.xml *.toc *.in *.markdown.* *.out *.tdo
 
+git-config:
+	git config --local filter.notebook.clean "poetry run jupyter nbconvert --ClearOutputPreprocessor.enabled=True --stdin --to=notebook --stdout"
+	git config --local filter.notebook.required true
+
 jupyter:
 	# From: https://stackoverflow.com/a/47296960/965332
 	poetry run pip3 install ipykernel

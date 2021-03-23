@@ -40,8 +40,7 @@ pyriemann = "^0.2.6"
 xgboost = "^1.2.1"
 bitstring = "^3.1.7"  # depended on by muse-lsl, don't know why it isn't installed
 tqdm = "^4.57.0"
-wxpython = {url = "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04/wxPython-4.1.1-cp38-cp38-linux_x86_64.whl"}
-ipykernel = "^5.5.0"
+wxpython = {platform = "linux", url = "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04/wxPython-4.1.1-cp38-cp38-linux_x86_64.whl"}
 
 [tool.poetry.dev-dependencies]
 black = "*"
@@ -53,6 +52,7 @@ pytest-cov = "*"
 pytest-profiling = "*"
 Pygments = "*"  # required to build latex
 coverage = {version = "*", extras = ["toml"]}
+ipykernel = "^5.5.0"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
