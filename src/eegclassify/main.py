@@ -68,7 +68,8 @@ def train(use_cache: bool, raw: bool, since: datetime):
 
 def train_mne():
     """A version that tries to use MNE as much as possible"""
-    load()
+    pass
+    # load()
 
 
 def _load(use_cache: bool, since: datetime = None) -> pd.DataFrame:
@@ -154,9 +155,10 @@ def _train_features(df: pd.DataFrame):
 
 def _train(X, y, clf):
     # TODO: Add LORO cross validation ("Leave-One-Run-Out")
+    # TODO: Use shuffle=False as a substitute for LORO
     # Split into train and test
     X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(
-        X, y, test_size=0.3, shuffle=False
+        X, y, test_size=0.3, shuffle=True
     )
 
     logger.info("Training...")
@@ -233,12 +235,12 @@ def _load_or_train():
 @click.option("--use-cache", is_flag=True)
 def predict(use_cache) -> None:
     """Predict the class of a EEG signal"""
-    # TODO: Support predicting without labels (modify signal_ndarray)
+    # TODO: Support predicting without labels (modify signal_ndarray or use dummy labels)
     clf = _load_or_train()
 
     since = datetime(2021, 2, 20, tzinfo=timezone.utc)
     df = _load(use_cache, since=since)
-    X, y = signal_ndarray(df)
+    X, y = transform.signal_ndarray(df)
     try:
         print(X.size)
     except Exception as e:
@@ -258,9 +260,9 @@ def predict_realtime() -> None:
     clf = _load_or_train()
     device = EEGDevice.create(device_name="museS")
 
-    X = device._read_buffer()
+    X = device._read_buffer()  # type: ignore
     n_channels = 4
-    X = np.zeros((n_trials, n_channels, n_samples))
+    X = np.zeros((n_trials, n_channels, n_samples))  # type: ignore
 
     print(X)
     print(clf.predict(X))

@@ -1,4 +1,5 @@
 import logging
+from typing import List, Optional
 
 import pandas as pd
 import numpy as np
@@ -6,6 +7,9 @@ import numpy as np
 from eegwatch.devices.base import _check_samples
 
 logger = logging.getLogger(__name__)
+
+
+MAX_UV_ABS_DEFAULT = 400
 
 
 def clean(df: pd.DataFrame) -> pd.DataFrame:
@@ -61,13 +65,14 @@ def _clean_inconsistent_sampling(df: pd.DataFrame) -> pd.DataFrame:
     return df.drop(bads)
 
 
-def _check_row_signal_quality(s: pd.Series) -> bool:
+def _check_row_signal_quality(
+    s: pd.Series, max_uv_abs: float = MAX_UV_ABS_DEFAULT
+) -> bool:
     """Takes a single row as input, returns true if good signal quality else false"""
     # TODO: Improve quality detection
     buffer = np.array([t[1:] for t in s["raw_data"]])  # strip timestamp
     channels = [str(i) for i in range(buffer.size)]
-    thres = 500
-    return all(_check_samples(buffer, channels, max_uv_abs=thres).values())
+    return all(_check_samples(buffer, channels, max_uv_abs).values())
 
 
 def _row_stats(s: pd.Series):
@@ -79,11 +84,13 @@ def _row_stats(s: pd.Series):
     }
 
 
-def _clean_signal_quality(df: pd.DataFrame) -> pd.DataFrame:
+def _clean_signal_quality(
+    df: pd.DataFrame, max_uv_abs: float = MAX_UV_ABS_DEFAULT
+) -> pd.DataFrame:
     bads = []
     for i, row in df.iterrows():
         # print(_row_stats(row))
-        if not _check_row_signal_quality(row):
+        if not _check_row_signal_quality(row, max_uv_abs):
             bads.append(i)
 
     logger.warning(f"Dropping {len(bads)} bad rows due to bad signal quality")
@@ -98,10 +105,8 @@ def test_clean_signal_quality():
             {"raw_data": [[1, 300]]},
         ]
     )
-    df_clean = _clean_signal_quality(df)
-    print(df_clean)
+    df_clean = _clean_signal_quality(df, max_uv_abs=200)
     assert len(df_clean) == 2
-    assert False
 
 
 def _select_classes(

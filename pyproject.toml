@@ -53,16 +53,18 @@ pytest-profiling = "*"
 Pygments = "*"  # required to build latex
 coverage = {version = "*", extras = ["toml"]}
 ipykernel = "^5.5.0"
+nbval = "^0.9.6"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--cov-report=term --cov-report=xml --cov-report=html --cov=eegclassify --cov=eegwatch --profile"
+addopts = "--cov-report=term --cov-report=xml --cov-report=html --cov=eegclassify --cov=eegwatch --profile --nbval-lax"
 testpaths = [
     "src",
     "tests",
-    "scripts"
+    "scripts",
+    "notebooks",
 ]
-python_files = ["*.py",]
+python_files = ["*.py", "*.ipynb"]
 
 [tool.coverage.report]
 exclude_lines = [

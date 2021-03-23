@@ -86,9 +86,13 @@ def load_labels() -> pd.DataFrame:
     # Should always exist
     assert path_labels_test.exists()
 
-    if path_labels_prod.exists():
+    if "PYTEST_CURRENT_TEST" in os.environ:
+        # In a test, use testing data
+        path_labels = path_labels_test
+    elif path_labels_prod.exists():
         path_labels = path_labels_prod
     else:
+        # No real data, use testing data
         logger.warning("Using testing data")
         path_labels = path_labels_test
 
@@ -116,7 +120,10 @@ def load_eeg(files: List[Path] = None) -> pd.DataFrame:
 
     if not files:
         # Load all files
-        files = _get_all_recording_files()
+        if "PYTEST_CURRENT_TEST" in os.environ:
+            files = TEST_EEG_FILES_MUSE
+        else:
+            files = _get_all_recording_files()
 
     return _load_eeg(files)
 
@@ -141,7 +148,7 @@ def _load_eeg(files: List[Path]) -> pd.DataFrame:
 
 
 def test_load_eeg():
-    assert not load_eeg(TEST_EEG_FILES_MUSE).empty
+    assert not load_eeg().empty
 
 
 def _label_data(df_eeg: pd.DataFrame, df_labels: pd.DataFrame) -> pd.DataFrame:
@@ -167,7 +174,7 @@ def load_labeled_eeg(files=None) -> pd.DataFrame:
 
 
 def test_load_labeled_eeg():
-    df = load_labeled_eeg(TEST_EEG_FILES_MUSE)
+    df = load_labeled_eeg()
 
     # Check that there is data
     assert not df.empty
@@ -219,7 +226,7 @@ def load_labeled_eeg2(files=None, since: datetime = None) -> pd.DataFrame:
 
 
 def test_load_labeled_eeg2():
-    df = load_labeled_eeg2(TEST_EEG_FILES_MUSE)
+    df = load_labeled_eeg2()
 
     # Check that there is data
     assert not df.empty
