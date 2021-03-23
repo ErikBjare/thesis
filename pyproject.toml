@@ -57,7 +57,7 @@ nbval = "^0.9.6"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--cov-report=term --cov-report=xml --cov-report=html --cov=eegclassify --cov=eegwatch --profile --nbval-lax"
+addopts = "--cov-report=term --cov-report=xml --cov-report=html --cov=eegclassify --cov=eegwatch --profile --nbval-lax --current-env"
 testpaths = [
     "src",
     "tests",
