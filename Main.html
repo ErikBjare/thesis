@@ -14260,11 +14260,6 @@ a.anchor-link {
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="Main-analysis">Main analysis<a class="anchor-link" href="#Main-analysis">&#182;</a></h1><p>The primary analysis for the thesis, where we train a classifier for the code vs prose task.</p>
-<p>Other notebooks that are available:</p>
-<ul>
-<li>Signal - for signal filtering and quality checking</li>
-<li>Activities (TODO) - for classification of device activities (currently the content of this notebook, but it is to be moved)</li>
-</ul>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -14274,7 +14269,12 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Imports</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
 <span class="kn">from</span> <span class="nn">eegclassify</span> <span class="kn">import</span> <span class="n">main</span><span class="p">,</span> <span class="n">load</span><span class="p">,</span> <span class="n">clean</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">preprocess</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="c1"># Set this to True to run on testing data</span>
 <span class="n">simulate_test</span> <span class="o">=</span> <span class="kc">False</span>
@@ -14316,9 +14316,9 @@ a.anchor-link {
 
 
 
-<div id="b47c9e91-14b6-4e45-b051-739d88a96f85" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
+<div id="52f3ece4-404f-413f-b00a-18f313e25a56" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
 <script type="text/javascript">
-var element = document.getElementById('b47c9e91-14b6-4e45-b051-739d88a96f85');
+var element = document.getElementById('52f3ece4-404f-413f-b00a-18f313e25a56');
 document.title='erb-thesis/Main - Jupyter'  // Set the document title to be able to track time spent working on the notebook with ActivityWatch
 
 </script>
@@ -14336,8 +14336,21 @@ document.title='erb-thesis/Main - Jupyter'  // Set the document title to be able
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load data and save into special variable that won&#39;t be overwritten (since loading takes a while)</span>
-<span class="n">df_loaded</span> <span class="o">=</span> <span class="n">load</span><span class="o">.</span><span class="n">load_labeled_eeg2</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load raw EEG data</span>
+<span class="c1"># FIXME: Look for discontinuities in the data</span>
+
+
+<span class="n">data_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;../data&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+
+<span class="c1"># TODO: Load all files from all subjects</span>
+<span class="c1">#recordings_dir = data_dir / &quot;test/local/museS/subject0001/session001/&quot;</span>
+<span class="c1">#files = sorted(list(recordings_dir.glob(&quot;*.csv&quot;)))</span>
+
+<span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">data_dir</span> <span class="o">/</span> <span class="s1">&#39;eeg/muse/subject0000/session001/recording_2021-04-02-14.03.36.csv&#39;</span><span class="p">]</span>
+
+<span class="n">eeg</span> <span class="o">=</span> <span class="n">load</span><span class="o">.</span><span class="n">load_eeg</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+<span class="n">eeg</span> <span class="o">=</span> <span class="n">eeg</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
 </pre></div>
 
      </div>
@@ -14357,47 +14370,13 @@ document.title='erb-thesis/Main - Jupyter'  // Set the document title to be able
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>________________________________________________________________________________
+<pre>/home/runner/work/thesis/thesis/data
+________________________________________________________________________________
 [Memory] Calling eegclassify.load._load_eeg...
-_load_eeg([ PosixPath(&#39;/home/runner/work/thesis/thesis/data/eeg/muse/subject0000/session001/recording_2020-09-30-09.18.34.csv&#39;),
-  PosixPath(&#39;/home/runner/work/thesis/thesis/data/eeg/muse/subject0000/session001/recording_2020-11-01-13.16.04.csv&#39;)])
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre> 43%|████▎     | 44/102 [00:00&lt;00:00, 438.12it/s]</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Concatenating...
+_load_eeg([ PosixPath(&#39;/home/runner/work/thesis/thesis/data/eeg/muse/subject0000/session001/recording_2021-04-02-14.03.36.csv&#39;)])
+Concatenating...
 Concatenated!
-_________________________________________________________load_eeg - 0.7s, 0.0min
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>100%|██████████| 102/102 [00:00&lt;00:00, 252.72it/s]
+_________________________________________________________load_eeg - 3.6s, 0.1min
 </pre>
 </div>
 </div>
@@ -14412,9 +14391,22 @@ _________________________________________________________load_eeg - 0.7s, 0.0min
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Split into sessions (by date) for LORO CV</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load markers</span>
 
-<span class="n">df_loaded</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<span class="c1"># TODO: Extract &#39;relax&#39; sections in between tasks?</span>
+
+<span class="n">marker_file</span> <span class="o">=</span> <span class="n">data_dir</span> <span class="o">/</span> <span class="s1">&#39;tasks/visual-codeprose/subject0000/session000/subject0_session0_behOutput_2021-04-02-14.28.30.csv&#39;</span>
+<span class="c1">#marker_file = Path(&#39;/home/erb/.eegnb/data/visual-codeprose/local/none/session000/subject1_session0_behOutput_2021-03-26-14.31.14.csv&#39;)</span>
+<span class="n">df_markers</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">marker_file</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;t_answered&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;t_presented&#39;</span><span class="p">]</span>
+
+<span class="c1"># Filter away rows where the subject didn&#39;t spend at least 10 seconds with the task</span>
+<span class="n">df_markers</span> <span class="o">=</span> <span class="n">df_markers</span><span class="p">[</span><span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">]</span>
+
+<span class="c1"># Filter away rows where space was clicked (didn&#39;t answer/skipped/unsure?)</span>
+<span class="n">df_markers</span> <span class="o">=</span> <span class="n">df_markers</span><span class="p">[</span><span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;response&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;up&#39;</span><span class="p">,</span> <span class="s1">&#39;down&#39;</span><span class="p">])]</span>
+
+<span class="n">df_markers</span>
 </pre></div>
 
      </div>
@@ -14426,21 +14418,6 @@ _________________________________________________________load_eeg - 0.7s, 0.0min
 
 
 <div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>&lt;ipython-input-1-019c796bfa54&gt;:3: FutureWarning: Treating datetime data as categorical rather than numeric in `.describe` is deprecated and will be removed in a future version of pandas. Specify `datetime_is_numeric=True` to silence this warning and adopt the future behavior now.
-  df_loaded.describe()
-&lt;ipython-input-1-019c796bfa54&gt;:3: FutureWarning: Treating datetime data as categorical rather than numeric in `.describe` is deprecated and will be removed in a future version of pandas. Specify `datetime_is_numeric=True` to silence this warning and adopt the future behavior now.
-  df_loaded.describe()
-</pre>
-</div>
-</div>
 
 <div class="jp-OutputArea-child">
 
@@ -14468,54 +14445,368 @@ _________________________________________________________load_eeg - 0.7s, 0.0min
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>start</th>
-      <th>stop</th>
-      <th>class</th>
-      <th>raw_data</th>
+      <th>type</th>
+      <th>image_path</th>
+      <th>response</th>
+      <th>t_presented</th>
+      <th>t_presented_utc</th>
+      <th>t_answered</th>
+      <th>t_answered_utc</th>
+      <th>duration</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>count</th>
-      <td>2</td>
-      <td>2</td>
-      <td>2</td>
-      <td>2</td>
+      <th>0</th>
+      <td>prose</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>0.016728</td>
+      <td>1.617372e+09</td>
+      <td>17.857363</td>
+      <td>1.617372e+09</td>
+      <td>17.840635</td>
     </tr>
     <tr>
-      <th>unique</th>
-      <td>2</td>
-      <td>2</td>
-      <td>1</td>
-      <td>2</td>
+      <th>1</th>
+      <td>prose</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>22.900167</td>
+      <td>1.617372e+09</td>
+      <td>52.065407</td>
+      <td>1.617372e+09</td>
+      <td>29.165240</td>
     </tr>
     <tr>
-      <th>top</th>
-      <td>2020-11-01 13:19:52.494000+00:00</td>
-      <td>2020-11-01 13:19:21.431000+00:00</td>
-      <td>Programming</td>
-      <td>[(2020-11-01 13:18:47.376000166+00:00, -136.23...</td>
+      <th>2</th>
+      <td>code</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>57.117248</td>
+      <td>1.617372e+09</td>
+      <td>124.968128</td>
+      <td>1.617372e+09</td>
+      <td>67.850880</td>
     </tr>
     <tr>
-      <th>freq</th>
-      <td>1</td>
-      <td>1</td>
-      <td>2</td>
-      <td>1</td>
+      <th>3</th>
+      <td>code</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>down</td>
+      <td>130.017048</td>
+      <td>1.617372e+09</td>
+      <td>186.038527</td>
+      <td>1.617372e+09</td>
+      <td>56.021479</td>
     </tr>
     <tr>
-      <th>first</th>
-      <td>2020-11-01 13:18:47.374000+00:00</td>
-      <td>2020-11-01 13:19:21.431000+00:00</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <th>4</th>
+      <td>prose</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>191.067667</td>
+      <td>1.617372e+09</td>
+      <td>217.853919</td>
+      <td>1.617372e+09</td>
+      <td>26.786252</td>
     </tr>
     <tr>
-      <th>last</th>
-      <td>2020-11-01 13:19:52.494000+00:00</td>
-      <td>2020-11-01 13:20:22.553000+00:00</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <th>5</th>
+      <td>code</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>222.900940</td>
+      <td>1.617372e+09</td>
+      <td>294.557512</td>
+      <td>1.617373e+09</td>
+      <td>71.656572</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>prose</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>299.584561</td>
+      <td>1.617373e+09</td>
+      <td>332.086973</td>
+      <td>1.617373e+09</td>
+      <td>32.502412</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>prose</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>347.651617</td>
+      <td>1.617373e+09</td>
+      <td>371.673237</td>
+      <td>1.617373e+09</td>
+      <td>24.021620</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>prose</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>376.701372</td>
+      <td>1.617373e+09</td>
+      <td>387.319389</td>
+      <td>1.617373e+09</td>
+      <td>10.618017</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>prose</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>392.351522</td>
+      <td>1.617373e+09</td>
+      <td>407.873678</td>
+      <td>1.617373e+09</td>
+      <td>15.522156</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>code</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>412.918631</td>
+      <td>1.617373e+09</td>
+      <td>451.857061</td>
+      <td>1.617373e+09</td>
+      <td>38.938430</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>prose</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>456.901737</td>
+      <td>1.617373e+09</td>
+      <td>502.496599</td>
+      <td>1.617373e+09</td>
+      <td>45.594861</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>code</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>507.551876</td>
+      <td>1.617373e+09</td>
+      <td>555.598818</td>
+      <td>1.617373e+09</td>
+      <td>48.046942</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>code</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>down</td>
+      <td>560.652168</td>
+      <td>1.617373e+09</td>
+      <td>657.136338</td>
+      <td>1.617373e+09</td>
+      <td>96.484170</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>code</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>down</td>
+      <td>677.719622</td>
+      <td>1.617373e+09</td>
+      <td>753.516493</td>
+      <td>1.617373e+09</td>
+      <td>75.796871</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>prose</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>758.552722</td>
+      <td>1.617373e+09</td>
+      <td>782.855626</td>
+      <td>1.617373e+09</td>
+      <td>24.302904</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>code</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>802.869537</td>
+      <td>1.617373e+09</td>
+      <td>833.216120</td>
+      <td>1.617373e+09</td>
+      <td>30.346583</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>prose</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>838.253139</td>
+      <td>1.617373e+09</td>
+      <td>869.096717</td>
+      <td>1.617373e+09</td>
+      <td>30.843578</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>code</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>down</td>
+      <td>874.153032</td>
+      <td>1.617373e+09</td>
+      <td>913.133741</td>
+      <td>1.617373e+09</td>
+      <td>38.980709</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>code</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>918.186377</td>
+      <td>1.617373e+09</td>
+      <td>961.115875</td>
+      <td>1.617373e+09</td>
+      <td>42.929497</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>prose</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>978.486820</td>
+      <td>1.617373e+09</td>
+      <td>991.591108</td>
+      <td>1.617373e+09</td>
+      <td>13.104288</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>code</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>down</td>
+      <td>996.636593</td>
+      <td>1.617373e+09</td>
+      <td>1052.174728</td>
+      <td>1.617373e+09</td>
+      <td>55.538136</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>code</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>down</td>
+      <td>1057.220060</td>
+      <td>1.617373e+09</td>
+      <td>1083.053979</td>
+      <td>1.617373e+09</td>
+      <td>25.833919</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>code</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>1088.103754</td>
+      <td>1.617373e+09</td>
+      <td>1173.029242</td>
+      <td>1.617373e+09</td>
+      <td>84.925488</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>code</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>1186.903760</td>
+      <td>1.617373e+09</td>
+      <td>1203.800613</td>
+      <td>1.617373e+09</td>
+      <td>16.896853</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>code</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>1208.853697</td>
+      <td>1.617373e+09</td>
+      <td>1245.639873</td>
+      <td>1.617373e+09</td>
+      <td>36.786175</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>prose</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>1250.670802</td>
+      <td>1.617373e+09</td>
+      <td>1273.704009</td>
+      <td>1.617374e+09</td>
+      <td>23.033207</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>code</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>1289.970597</td>
+      <td>1.617374e+09</td>
+      <td>1315.736428</td>
+      <td>1.617374e+09</td>
+      <td>25.765831</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>code</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>1320.787213</td>
+      <td>1.617374e+09</td>
+      <td>1357.619840</td>
+      <td>1.617374e+09</td>
+      <td>36.832627</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>prose</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>1362.654090</td>
+      <td>1.617374e+09</td>
+      <td>1382.847879</td>
+      <td>1.617374e+09</td>
+      <td>20.193789</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>prose</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>1387.887526</td>
+      <td>1.617374e+09</td>
+      <td>1414.986243</td>
+      <td>1.617374e+09</td>
+      <td>27.098717</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>code</td>
+      <td>/home/erb/Skola/Exjobb/other/2016-materials/ma...</td>
+      <td>up</td>
+      <td>1420.037432</td>
+      <td>1.617374e+09</td>
+      <td>1460.950606</td>
+      <td>1.617374e+09</td>
+      <td>40.913174</td>
     </tr>
   </tbody>
 </table>
@@ -14528,156 +14819,32 @@ _________________________________________________________load_eeg - 0.7s, 0.0min
 
 </div>
 
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Preprocess</span>
+<span class="c1"># TODO: Split using timestamps from the stimuli markers</span>
+<span class="n">sfreq</span> <span class="o">=</span> <span class="mi">256</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">df_loaded</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">preprocess</span><span class="o">.</span><span class="n">split_rows</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">min_duration</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="c1">#df = clean.clean(df)</span>
-<span class="n">df</span>
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df_markers</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;t_presented_utc&#39;</span><span class="p">],</span> <span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+    <span class="n">stop</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;t_answered_utc&#39;</span><span class="p">],</span> <span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+    <span class="n">epoch</span> <span class="o">=</span> <span class="n">eeg</span><span class="o">.</span><span class="n">truncate</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">)</span>
+    
+    <span class="c1"># Check that sample count aligns with epoch duration</span>
+    <span class="n">expected_samples</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">sfreq</span><span class="p">)</span>
+    <span class="n">actual_samples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">expected_samples</span> <span class="o">-</span> <span class="n">actual_samples</span>
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected </span><span class="si">{</span><span class="n">expected_samples</span><span class="si">}</span><span class="s2"> samples, found </span><span class="si">{</span><span class="n">actual_samples</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 
      </div>
 </div>
 </div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>start</th>
-      <th>stop</th>
-      <th>class</th>
-      <th>raw_data</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>2020-11-01 13:18:47.374000+00:00</td>
-      <td>2020-11-01 13:18:52.374000+00:00</td>
-      <td>Programming</td>
-      <td>[(2020-11-01 13:18:47.376000166+00:00, -136.23...</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2020-11-01 13:19:52.494000+00:00</td>
-      <td>2020-11-01 13:19:57.494000+00:00</td>
-      <td>Programming</td>
-      <td>[(2020-11-01 13:19:52.497999907+00:00, 526.855...</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2020-11-01 13:18:52.374000+00:00</td>
-      <td>2020-11-01 13:18:57.374000+00:00</td>
-      <td>Programming</td>
-      <td>[(2020-11-01 13:18:52.376000166+00:00, -866.21...</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>2020-11-01 13:19:57.494000+00:00</td>
-      <td>2020-11-01 13:20:02.494000+00:00</td>
-      <td>Programming</td>
-      <td>[(2020-11-01 13:19:57.497999907+00:00, -1000.0...</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>2020-11-01 13:18:57.374000+00:00</td>
-      <td>2020-11-01 13:19:02.374000+00:00</td>
-      <td>Programming</td>
-      <td>[(2020-11-01 13:18:57.376000166+00:00, -443.84...</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>2020-11-01 13:20:02.494000+00:00</td>
-      <td>2020-11-01 13:20:07.494000+00:00</td>
-      <td>Programming</td>
-      <td>[(2020-11-01 13:20:02.497999907+00:00, -114.74...</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>2020-11-01 13:19:02.374000+00:00</td>
-      <td>2020-11-01 13:19:07.374000+00:00</td>
-      <td>Programming</td>
-      <td>[(2020-11-01 13:19:02.376000166+00:00, -1000.0...</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>2020-11-01 13:20:07.494000+00:00</td>
-      <td>2020-11-01 13:20:12.494000+00:00</td>
-      <td>Programming</td>
-      <td>[(2020-11-01 13:20:07.497999907+00:00, -998.53...</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>2020-11-01 13:19:07.374000+00:00</td>
-      <td>2020-11-01 13:19:12.374000+00:00</td>
-      <td>Programming</td>
-      <td>[(2020-11-01 13:19:07.376000166+00:00, -1000.0...</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>2020-11-01 13:19:12.374000+00:00</td>
-      <td>2020-11-01 13:19:21.431000+00:00</td>
-      <td>Programming</td>
-      <td>[(2020-11-01 13:19:12.376000166+00:00, 817.383...</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>2020-11-01 13:20:12.494000+00:00</td>
-      <td>2020-11-01 13:20:17.494000+00:00</td>
-      <td>Programming</td>
-      <td>[(2020-11-01 13:20:12.497999907+00:00, -1000.0...</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>2020-11-01 13:20:17.494000+00:00</td>
-      <td>2020-11-01 13:20:22.553000+00:00</td>
-      <td>Programming</td>
-      <td>[(2020-11-01 13:20:17.497999907+00:00, 130.859...</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-
 </div>
 
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -14686,122 +14853,7 @@ _________________________________________________________load_eeg - 0.7s, 0.0min
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#X, y = main.df_to_vectors(df)</span>
-<span class="c1">#main.pca(X, y)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># df = _remove_rare(df, &quot;class&quot;, threshold_count=50)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">clean</span><span class="o">.</span><span class="n">_select_classes</span><span class="p">(</span>
-    <span class="n">df</span><span class="p">,</span>
-    <span class="s2">&quot;class&quot;</span><span class="p">,</span>
-    <span class="p">[</span><span class="s2">&quot;Editing-&gt;Code&quot;</span><span class="p">,</span> <span class="s2">&quot;Editing-&gt;Prose&quot;</span><span class="p">]</span> <span class="c1">#, &quot;GitHub-&gt;Issues&quot;, &quot;GitHub-&gt;Pull request&quot;],</span>
-<span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Train</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">main</span><span class="o">.</span><span class="n">_train_raw</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="c1"># TODO: Fix testing data such that it doesn&#39;t err</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error while training&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>{&#39;Programming&#39;: 0}
-Error while training With n_samples=0, test_size=0.3 and train_size=None, the resulting train set will be empty. Adjust any of the aforementioned parameters.
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
-    <span class="n">main</span><span class="o">.</span><span class="n">_train_features</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="c1"># TODO: Fix testing data such that it doesn&#39;t err</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error while training&quot;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Error while training With n_samples=0, test_size=0.3 and train_size=None, the resulting train set will be empty. Adjust any of the aforementioned parameters.
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># TODO: Split into sessions (by date) for LORO CV</span>
 </pre></div>
 
      </div>
