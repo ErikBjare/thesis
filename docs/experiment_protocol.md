@@ -10,6 +10,7 @@ Protocol for running EEG experiments with subject.
    - Which? 
      - Muse S?
      - Cyton + Ultracortex?
+
  - ActivityWatch
    - `aw-watcher-web` to collect browser data
    - `aw-watcher-input` to collect detailed input data
@@ -34,13 +35,17 @@ Protocol for running EEG experiments with subject.
 
 ## During
 
+ - (optional, if Muse) optionally have a dummy meditation session using the Muse app
  - Put on the EEG device
- - (if Muse) optionally have a dummy meditation session using the Muse app
+ - Start eegwatch
+   - Set `--duration` to a high value to prevent recording restarting
+   - Set `--subject` to the subject ID
  - Do a signal check
- - Ask them to fixate
+   - Use `muselsl view -b Qt5Agg`
+   - Use `eegwatch check`
  - Run codeprose task
- - Run arithmetic task
- - Other tasks?
+ - (optional) Run arithmetic task
+ - (optional) Other tasks?
    - 10min Twitter or 10min YouTube?
    - 10min of working through email? (include input watcher)
    - 10min of programming? (include input watcher)
