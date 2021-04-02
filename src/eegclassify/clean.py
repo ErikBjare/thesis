@@ -3,6 +3,8 @@ from typing import List, Optional
 
 import pandas as pd
 import numpy as np
+from mne.filter import create_filter
+from scipy.signal import lfilter, lfilter_zi
 
 from eegwatch.devices.base import _check_samples
 
@@ -19,6 +21,28 @@ def clean(df: pd.DataFrame) -> pd.DataFrame:
     df = _clean_signal_quality(df)
     df = _clean_inconsistent_sampling(df)
     return df
+
+
+def filter(
+    X: np.ndarray,
+    sfreq: float = 250,
+    n_chans: int = 4,
+    low: float = 3,
+    high: float = 40,
+) -> np.ndarray:
+    """Inspired by viewer_v2.py in muse-lsl"""
+    window = 10
+    n_samples = int(sfreq * window)
+    data_f = np.zeros((n_samples, n_chans))
+
+    af = [1.0]
+    bf = create_filter(data_f.T, sfreq, low, high, method="fir")
+
+    zi = lfilter_zi(bf, af)
+    filt_state = np.tile(zi, (n_chans, 1)).transpose()
+    filt_samples, filt_state = lfilter(bf, af, X, axis=0, zi=filt_state)
+
+    return filt_samples
 
 
 def _clean_short(df: pd.DataFrame) -> pd.DataFrame:
