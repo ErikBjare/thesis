@@ -22,7 +22,7 @@ test:
 	poetry run pytest
 
 format:
-	black src/ tests/ scripts/
+	poetry run black src/ tests/ scripts/
 
 typecheck:
 	poetry run mypy
