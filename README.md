@@ -37,21 +37,34 @@ Running classifier:
  - OpenBCI Cyton (WIP)
  - In theory: any device supported by Brainflow or muse-lsl
 
+# Notebooks
+
+Code notebooks are built in CI and available at:
+
+ - [Main][nbmain] - primary notebook for the thesis, where we train a classifier for the code vs prose comprehension task.
+ - [Signal][nbsignal] - for signal filtering and quality checking.
+ - [Activity][nbactivity] - for classification of device activities.
+
+[nbmain]:       https://erik.bjareholt.com/thesis/Main.html
+[nbsignal]:     https://erik.bjareholt.com/thesis/Signal.html
+[nbactivity]:   https://erik.bjareholt.com/thesis/Activity.html
+
 # Writing
 
 ## Thesis
 
-The latest version of the thesis can be downloaded at https://erik.bjareholt.com/thesis/thesis.pdf
+The latest version of the thesis can be downloaded at [erik.bjareholt.com/thesis/thesis.pdf][thesis]
 
 ## Goal Document
 
-The latest version of the goal document can be downloaded at https://erik.bjareholt.com/thesis/goaldocument.pdf
+The latest version of the goal document can be downloaded at [erik.bjareholt.com/thesis/goaldocument.pdf][goaldoc]
 
 # Acknowledgements
 
 See the Acknowledgements section in the [thesis][thesis].
 
 [thesis]: https://erik.bjareholt.com/thesis/thesis.pdf
+[goaldoc]: https://erik.bjareholt.com/thesis/goaldocument.pdf
 
 # Resources
 
