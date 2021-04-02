@@ -107,8 +107,8 @@ def connect(device: str, duration: float, subject_id: int, loop: bool):
             last_modified = _check_recording_status(save_fn)
             if last_modified is None:
                 print("Waiting for data to be written to file...")
-            elif last_modified > 5:
-                print("Data was written more than 5s ago, perhaps the stream died?")
+            elif last_modified > 10:
+                print("Data was written more than 10s ago, perhaps the stream died?")
 
             if loud:
                 progress = time() - started
