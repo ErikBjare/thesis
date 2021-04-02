@@ -1,8 +1,12 @@
 all: dist
 
-dist: docs
+dist: docs notebooks
 
 docs: dist/thesis.pdf dist/goaldocument.pdf
+
+.PHONY: notebooks
+notebooks:
+	cd notebooks && make
 
 dist/%.pdf: docs/tex/build/%.pdf
 	mkdir -p dist
