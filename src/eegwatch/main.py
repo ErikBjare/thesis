@@ -22,8 +22,6 @@ from eegwatch.util import print_statusline
 from .devices import EEGDevice, all_devices
 
 experiment = "test"
-subject = "erik"
-subject_id = 0
 
 # For plotting
 UPDATE_INTERVAL = 60  # ms between screen updates
@@ -62,9 +60,15 @@ def main():
     help="Duration to record for",
 )
 @click.option(
+    "--subject-id",
+    type=int,
+    default=0,
+    help="Subject ID to store recording as",
+)
+@click.option(
     "--loop/--no-loop", is_flag=True, default=True, help="Wether to loop recording"
 )
-def connect(device: str, duration: float, loop: bool):
+def connect(device: str, duration: float, subject_id: int, loop: bool):
     """Connect to device and start streaming & recording"""
     from .util import generate_save_fn
 

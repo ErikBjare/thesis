@@ -28,12 +28,13 @@ typecheck:
 	poetry run mypy
 
 clean:
-	rm -r docs/tex/build
+	rm -rfv docs/tex/build
 	#rm docs/gcm.png
-	#rm -f *.aux *.bbl *.bcf *.cfg  *.blg *.dvi *.log *.pdf *.run.xml *.toc *.in *.markdown.* *.out *.tdo
+	cd docs/tex && rm -fv *.aux *.bbl *.bcf *.cfg  *.blg *.dvi *.log *.pdf *.run.xml *.toc *.in *.markdown.* *.out *.tdo
 
 git-config:
 	git config --local filter.notebook.clean "poetry run jupyter nbconvert --ClearOutputPreprocessor.enabled=True --stdin --to=notebook --stdout"
+	git config --local filter.notebook.smudge "poetry run jupyter nbconvert --ClearOutputPreprocessor.enabled=True --stdin --to=notebook --stdout"
 	git config --local filter.notebook.required true
 
 jupyter:

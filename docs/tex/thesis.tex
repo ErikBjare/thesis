@@ -10,6 +10,7 @@
 \usepackage{comment}
 \usepackage{xargs}
 \usepackage{verbatim}
+\usepackage{subfig}
 \usepackage[bottom]{footmisc}
 \usepackage[colorinlistoftodos, prependcaption, textsize=tiny]{todonotes}
 
@@ -149,11 +150,11 @@
 
         \begin{figure}[h]
         \centering
-        \includegraphics[width=8cm]{img/screenshot-aw-activity.png}
+        \includegraphics[width=12cm]{img/screenshot-aw-activity.png}
         \caption{ActivityWatch activity dashboard. Showing top applications, window titles, browser domains, and categories.}\label{fig:aw}
         \end{figure}
 
-        ActivityWatch as a project was started in 2016 by the author of this thesis, with his brother Johan joining development soon after. It has since become a popular open source alternative to other time tracking software. It has received numerous contributions from users \todo[inline]{link to contributors page on website} and is approaching 100,000 downloads \todo[inline]{link to stats page}.
+        ActivityWatch as a project was started in 2016 by the author of this thesis, with his brother Johan joining development soon after. It has since become a popular open source alternative to other time tracking software. It has received numerous contributions from users\footnote{Contributor statistics available at \href{https://activitywatch.net/contributors/}{activitywatch.net/contributors/}} and is approaching 100,000 downloads\footnote{Download statistics available at \href{https://activitywatch.net/stats/}{activitywatch.net/stats/}}.
 
         \todo[inline]{What more could I add about ActivityWatch? There should be relevant stuff in the docs, and in the slides I made way back.}
 
@@ -169,7 +170,7 @@
 
     \add[inline]{Applications to software engineers}
 
-    \add[inline]{Seperate sections for applications in BCIs vs neuroscience}
+    \add[inline]{Separate sections for applications in BCIs vs neuroscience}
 
     % https://docs.openbci.com/citations
 
@@ -181,7 +182,7 @@
 
 \subsection{Aim of the thesis}
 
-    The primary aim of the thesis is to improve upon previous attempts\cite{fucci_replication_2019} to classify wether the user is reading code or prose using EEG data. This is to be achieved by using better EEG equipment and state of the art analysis methods such as Riemannian geometry. A secondary aim of the thesis is to investigate wether the ability of EEG analysis to classify code vs prode comprehension generalizes across more activities, such as the wide variety of tasks engaged in during organic device use.
+    The primary aim of the thesis is to improve upon previous attempts\cite{fucci_replication_2019} to classify whether the user is reading code or prose using EEG data. This is to be achieved by using better EEG equipment and state of the art analysis methods such as Riemannian geometry. A secondary aim of the thesis is to investigate whether the ability of EEG analysis to classify code vs prose comprehension generalizes across more activities, such as the wide variety of tasks engaged in during organic device use.
 
     Secondary aims of the thesis include:
 
@@ -194,7 +195,7 @@
 
 \subsection{Related work}
 
-    It has previously been shown that fMRI~\cite{floyd_decoding_2017} and EEG\cite{fucci_replication_2019} provides enough information to classify wether a subject is reading prose or code. However, accuracy with single-channel EEG has been found to be poor, and notably outperformed by a heart rate variability (HRV) monitor.
+    It has previously been shown that fMRI~\cite{floyd_decoding_2017} and EEG\cite{fucci_replication_2019} provides enough information to classify whether a subject is reading prose or code. However, accuracy with single-channel EEG has been found to be poor, and notably outperformed by a heart rate variability (HRV) monitor.
 
     % Here, we used functional magnetic resonance imaging to investigate two candidate brain systems: the multiple demand (MD) system, typically recruited during math, logic, problem solving, and executive tasks, and the language system, typically recruited during linguistic processing.
     Recently, it has been shown that the multiple demand (MD) system is typically recruited for code comprehension tasks, as opposed to the language system that is typically recruited during prose comprehension~\cite{ivanova_comprehension_2020}. This sheds light on the significant differences in how the brain processes code vs prose.
@@ -203,7 +204,7 @@
 
 \section{Theory}
 
-    \subsection{Electroencelography (EEG)}
+    \subsection{Electroencephalography (EEG)}
 
         \add[inline]{Explain theory used, like theory of EEG, Riemannian geometry, etc}
         \add[inline]{Plots of raw EEG signal, PSD, PCA, etc}
@@ -216,9 +217,18 @@
 
     \subsection{Collection of device activity data}
 
-        All device activity is collected using the automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_2020-1}. The data from ActivityWatch is processed and categorized such that the resulting data has the 3 columns \mintinline{python}{start, end, category}. The category is determined by a regular expression that matches on window titles and URLs, such as \mintinline{python}{github.com}.
+        All device activity is collected using the automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_2020-1}.
 
-        \add[inline]{Summary of ActivityWatch}
+        ActivityWatch collects data through modules called watchers which report to the ActivityWatch server. It comes with two watchers by default:
+
+        \begin{itemize}
+            \item aw-watcher-window, tracks the active window and its title
+            \item aw-watcher-afk, tracks if the user is active or not by observing input device activity
+        \end{itemize}
+
+        A limitation that we have to consider is that the window watcher uses a polling method to track the active window, with a default poll time of 1 second. This means that we can't rely on the timestamps to mark the exact time the window became active/inactive.
+
+        The data from ActivityWatch is processed and categorized such that the resulting data has the 3 columns \mintinline{python}{start, end, category}. The category is determined by a regular expression that matches on window titles and URLs, such as \mintinline{python}{github.com}.
 
     \subsection{Collection of EEG data}
 
@@ -243,27 +253,59 @@
             \todo[inline]{Add images of headsets}
 
             \begin{center}
-                \begin{tabular}{cccc}
-                 Device & Channels & Sampling rate & Comfort \\
-                 Muse S
+                \begin{table}
+                \begin{tabular}{llccc}
+                    Manufacturer
+                    & Device
+                    & Channels
+                    & Sampling rate
+                    & Comfort
+                    \\
+                    InteraXon
+                    & Muse S
                     & 4
                     & 250Hz
                     & High \\
-                 OpenBCI Cyton + Ultracortex
+                 OpenBCI
+                    & Cyton (with Ultracortex)
                     & 8
                     & 125Hz?
                     & Low \\
                  % generously gifted by Neurosity
-                 Neurosity Notion DK1
+                 Neurosity
+                    & Notion DK1
                     & 8
                     & 250Hz?
                     & Medium \\
                   % preordered, arrives in late spring
-                  Neurosity Crown
+                  Neurosity
+                    & Crown
                     & 8?
                     & 250Hz?
                     & High? \\
                 \end{tabular}
+                \caption{Devices used}
+                \end{table}
+            \end{center}
+
+            \begin{center}
+            \begin{figure}
+                \begin{tabular}{cc}
+                    img1 %\includegraphics[width=65mm]{it}
+                    & img2 %\includegraphics[width=65mm]{it}
+                    \\
+                    (a) Muse S
+                    & (b) OpenBCI Cyton with Ultracortex
+                    \\[6pt]
+                    img3 %\includegraphics[width=65mm]{it}
+                    & img4 %\includegraphics[width=65mm]{it}
+                    \\
+                    (c) Notion DK1
+                    & (d) Notion Crown
+                    \\[6pt]
+                \end{tabular}
+                \caption{Photos of devices used}
+            \end{figure}
             \end{center}
 
     \subsection{Analysis}
@@ -284,7 +326,7 @@
 
         \subsubsection{Feature engineering}
 
-            Bandpower features are simple and commonly used in EEG research for many tasks, including the paper by Fucci et al we seek to improve upon~\cite{fucci_replication_2019}. As a reference, we implemented classifiers which solely used bandpower features as input, to gain information of how much any improvement from classifier performance is likely due to better EEG equipment versys how much is due to from improved analysis methods.
+            Bandpower features are simple and commonly used in EEG research for many tasks, including the paper by Fucci et al we seek to improve upon~\cite{fucci_replication_2019}. As a reference, we implemented classifiers which solely used bandpower features as input, to gain information of how much any improvement from classifier performance is likely due to better EEG equipment versus how much is due to from improved analysis methods.
 
             To compute this feature, we utilized the bandpower function provided by YASA~\cite{raphael_vallat_raphaelvallatyasa_2020}. The implementation estimates the power spectral density using Welch's method for each channel, and bins them by their associated frequency band.
 
@@ -292,7 +334,7 @@
 
             The \improvement{according to whom?}{state of the art in many EEG classification tasks} involves the use of Riemannian geometry. For this, we used the open source pyriemann library by Alexandre Barachant\footnote{First author of the original paper to apply Riemannian geometry to EEG~\cite{barachant_classification_2013}}.
 
-            \add[inline]{Explanation of riemannian geometry, from \href{https://colab.research.google.com/drive/1y9tq7-lJwusxtVgpB38y-p1pYw7hg0iu}{this tutorial we're working on}, perhaps it should go in the Background/Theory section though?}
+            \add[inline]{Explanation of Riemannian geometry, from \href{https://colab.research.google.com/drive/1y9tq7-lJwusxtVgpB38y-p1pYw7hg0iu}{this tutorial we're working on}, perhaps it should go in the Background/Theory section though?}
 
 \section{Results}
 
@@ -326,9 +368,18 @@
 
         \add[inline]{Write about crowdsourcing of EEG data, including the potential of transfer learning and privacy considerations.}
 
-\section{Other scientific contributions}
+\section{Other contributions}
 
-As part of the work on this thesis I've contributed several improvements to the open source projects used, including muse-lsl, moabb, eeg-notebooks, and pyRiemann. \todo[inline]{list with links to PRs?}
+    As part of the work on this thesis I've contributed several improvements to the open source projects used, including muse-lsl, moabb, eeg-notebooks, and pyRiemann.
+
+    \begin{itemize}
+        \item \href{%
+                https://github.com/search?q=org%3ANeuroTechX+is%3Apr+sort%3Aupdated-desc+author%3AErikBjare
+            }{PRs to NeuroTechX repos (eeg-notebooks, moabb)}
+        \item \href{%
+                https://github.com/search?q=org%3Aalexandrebarachant+is%3Apr+sort%3Aupdated-desc+author%3AErikBjare
+            }{PRs to Alexandre Barachant repos (muse-lsl, pyRiemann)}
+    \end{itemize}
 
 \section*{Acknowledgements}
 

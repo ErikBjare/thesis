@@ -26,7 +26,7 @@ Protocol for running EEG experiments with subject.
    - gender?
    - device?
    - age?
-   - software dev experience?
+   - software dev experience, specifically C/C++
  - Ask subject how they are feeling
    - Any standardized way?
    - States to ask about: tired, calm, focused, happy, sad
@@ -34,7 +34,8 @@ Protocol for running EEG experiments with subject.
 
 ## During
 
- - Put in the EEG device
+ - Put on the EEG device
+ - (if Muse) optionally have a dummy meditation session using the Muse app
  - Do a signal check
  - Ask them to fixate
  - Run codeprose task

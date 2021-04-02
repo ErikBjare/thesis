@@ -9,6 +9,12 @@ logger = logging.getLogger(__name__)
 
 
 def split_rows(df: pd.DataFrame, min_duration: int) -> pd.DataFrame:
+    """
+    Splits long-duration rows into shorter segments no shorter than ``min_duration``.
+
+    Note that this might not be suitable for all types of analysis, especially not
+    those with a distinct start of stimuli (as opposed to continuous stimuli), like controlled experiments.
+    """
     df_orig = df
     while True:
         df_new = _split_rows(df, min_duration)
