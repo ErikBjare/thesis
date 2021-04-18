@@ -1272,6 +1272,22 @@ fast = ["fastjsonschema"]
 test = ["check-manifest", "fastjsonschema", "testpath", "pytest", "pytest-cov"]
 
 [[package]]
+name = "nbqa"
+version = "0.6.1"
+description = "Run any standard Python code quality tool on a Jupyter Notebook"
+category = "dev"
+optional = false
+python-versions = ">=3.6.1"
+
+[package.dependencies]
+importlib-metadata = {version = "*", markers = "python_version < \"3.8\""}
+ipython = ">=7.8.0"
+toml = "*"
+
+[package.extras]
+toolchain = ["black", "flake8", "isort", "mypy", "pylint", "pyupgrade"]
+
+[[package]]
 name = "nbval"
 version = "0.9.6"
 description = "A py.test plugin to validate Jupyter notebooks"
@@ -2958,7 +2974,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7, <3.9"  # Less than 3.9 due to numba not having support
-content-hash = "84515d9d2f581f236e917d936f0b04970e94df99c0a3701eeb90e38be6929f75"
+content-hash = "26b45329d826d1e0906932aec0e7ffb3d1e1937497c39335ecb0e8e27d8ba983"
 
 [metadata.files]
 alabaster = [
@@ -3735,6 +3751,10 @@ nbconvert = [
 nbformat = [
     {file = "nbformat-5.1.3-py3-none-any.whl", hash = "sha256:eb8447edd7127d043361bc17f2f5a807626bc8e878c7709a1c647abda28a9171"},
     {file = "nbformat-5.1.3.tar.gz", hash = "sha256:b516788ad70771c6250977c1374fcca6edebe6126fd2adb5a69aa5c2356fd1c8"},
+]
+nbqa = [
+    {file = "nbqa-0.6.1-py3-none-any.whl", hash = "sha256:1b74cf247ec6c892b3f8b9edab00e99c54705d11b5a3a43c5384f2fe04b57cb0"},
+    {file = "nbqa-0.6.1.tar.gz", hash = "sha256:2c63d9d1d56e53537efb42f019dac0c04938e9f940409920eb11780c458c9275"},
 ]
 nbval = [
     {file = "nbval-0.9.6-py2.py3-none-any.whl", hash = "sha256:4f9b780997d8942408853513f2c5ee6c1863de193559fc3f95e1c1cde8110439"},

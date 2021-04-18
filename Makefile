@@ -27,9 +27,11 @@ test:
 
 format:
 	poetry run black src/ tests/ scripts/
+	bash -c 'nbqa black notebooks/*.ipynb --nbqa-mutate'
 
 typecheck:
 	poetry run mypy
+	bash -c 'poetry run nbqa mypy notebooks/*.ipynb'
 
 clean:
 	rm -rfv docs/tex/build
