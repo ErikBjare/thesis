@@ -12,7 +12,7 @@ from sklearn.preprocessing import StandardScaler
 logger = logging.getLogger(__name__)
 
 
-def classdistribution(df: pd.DataFrame):
+def classdistribution(df: pd.DataFrame) -> None:
     plt.figure(figsize=(12, 5))
     sns.countplot(x=df["class"], color="mediumseagreen")
     plt.title("Class distribution", fontsize=16)
@@ -22,7 +22,7 @@ def classdistribution(df: pd.DataFrame):
     plt.show()
 
 
-def pca(X: np.ndarray, y: np.ndarray):
+def pca(X: np.ndarray, y: np.ndarray) -> None:
     scaler = StandardScaler()
     scaled_df = scaler.fit_transform(X)
     pca = PCA(n_components=20)

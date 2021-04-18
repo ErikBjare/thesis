@@ -135,7 +135,7 @@ def _read_csv(fn: Path) -> pd.DataFrame:
     return df
 
 
-@memory.cache
+# @memory.cache
 def _load_eeg(files: List[Path]) -> pd.DataFrame:
     with Pool(4) as p:
         dfs: List[pd.DataFrame] = p.map(_read_csv, files)
