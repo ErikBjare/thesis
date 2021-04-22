@@ -14,6 +14,15 @@
 \usepackage[bottom]{footmisc}
 \usepackage[colorinlistoftodos, prependcaption, textsize=tiny]{todonotes}
 
+% Add subsubsubsection
+% As per https://tex.stackexchange.com/a/60212/36302
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
 % Code snippets
 \usepackage[outputdir=build]{minted}
 \usemintedstyle{vs}
@@ -83,11 +92,12 @@
 \maketitle
 
 \begin{abstract}
-    \add[inline]{Abstract}
 
-    We investigate the ability of EEG to distinguish between different activities users engage in on their devices, building on previous research showing a considerable difference in brain activity when reading/(reasoning about) code vs prose.
+    We investigate the ability of EEG to distinguish between different activities users engage in on their devices, building on previous research which showed a considerable difference in brain activity when reading/(reasoning about) code vs prose.
 
-    We use the automated time tracker ActivityWatch, previously developed by the author, to track what activities the user is engaging in on their device.
+    We also use the automated time tracker ActivityWatch, previously developed by the author, to track what activities the user is engaging in on their device while wearing an EEG device.
+
+    \improvement[inline]{improve abstract}
 \end{abstract}
 
 \pagebreak %.\pagebreak
@@ -164,6 +174,8 @@
 
     However, the recent availability of low-cost biosensors such as EEG, HEG, and fNIRS, enables studying brain activity during real-life tasks. As an example it has been shown that it is possible to classify if a participant is reading code or prose using fMRI~\cite{floyd_decoding_2017}, which has been replicated using EEG and low-cost biosensors~\cite{fucci_replication_2019}. The ability to distinguish between these two tasks have been has been explained neurologically by the recruitment of different neural networks \todo[inline]{`neural network' might be confusing in the context} for the task. \todo[inline]{reference MIT paper}
 
+    The code vs prose comprehension task has also been modified into a writing task studied under fMRI, to further shed light to the underlying brain activity. In one study it was found that code and prose writing are significantly dissimilar tasks for the brain, where prose writing engages brain regions associated with language in the left hemisphere while while code writing engages brain regions associated with attention, working memory, planning, and spatial cognition in the right hemisphere\cite{noauthor_neurological_nodate}.
+
     But they are not without their limitations --- among them a notably low signal-to-noise ratio~\cite{mcfarland_eeg-based_2017} --- yet visual evoked potentials (VEPs) have been shown to be sufficient for high-speed BCI applications~\cite{spuler_high-speed_2017}.
 
     To combat the low signal-to-noise ratio, machine learning methods have been employed with varying degrees of success. Examples from previous research include Convolutional Neural Networks (CNNs), which have been successful in classifying time series in general~\cite{zhao_convolutional_2017}, and EEG data in particular~\cite{schirrmeister_deep_2017}. As well as Hierarchical Convolutional Neural Networks (HCNNs), which have been used for EEG-based emotion recognition~\cite{li_hierarchical_2018}.
@@ -182,7 +194,7 @@
 
 \subsection{Aim of the thesis}
 
-    The primary aim of the thesis is to improve upon previous attempts\cite{fucci_replication_2019} to classify whether the user is reading code or prose using EEG data. This is to be achieved by using better EEG equipment and state of the art analysis methods such as Riemannian geometry. A secondary aim of the thesis is to investigate whether the ability of EEG analysis to classify code vs prose comprehension generalizes across more activities, such as the wide variety of tasks engaged in during organic device use.
+    The primary aim of the thesis is to improve upon previous attempts~\cite{fucci_replication_2019} to classify whether the user is reading code or prose using EEG data. This is to be achieved by using better EEG equipment and state of the art analysis methods such as Riemannian geometry. A secondary aim of the thesis is to investigate whether the ability of EEG analysis to classify code vs prose comprehension generalizes across more activities, such as the wide variety of tasks engaged in during organic device use.
 
     Secondary aims of the thesis include:
 
@@ -200,22 +212,52 @@
     % Here, we used functional magnetic resonance imaging to investigate two candidate brain systems: the multiple demand (MD) system, typically recruited during math, logic, problem solving, and executive tasks, and the language system, typically recruited during linguistic processing.
     Recently, it has been shown that the multiple demand (MD) system is typically recruited for code comprehension tasks, as opposed to the language system that is typically recruited during prose comprehension~\cite{ivanova_comprehension_2020}. This sheds light on the significant differences in how the brain processes code vs prose.
 
+    In addition to purely studying comprehension (reading) code and prose, an 2020 fMRI study showed that there are indeed significant neurological differences between \emph{writing} code and prose as well.
+
+    In software engineerig, low-cost biosensors such as wristbands that measure electrodermal activity and heart-related metrics have been used for emotional detection, as a tool in studying developer productivity.
+
     \add[inline]{Insert mention of preprint that Fucci mentioned?}
 
 \section{Theory}
 
     \subsection{Electroencephalography (EEG)}
 
+        Electroencephalography is a method used to measure the activity of neurons in the brain by recording the electrical activity on the scalp.
+
+        As a non-invasive method it is widely used in medicine to diagnose and study a wide range of conditions, from epilepsy to sleep disorders.
+
+        In research it has also found use in studying ``Event Related Potentials'', or ERPs, which are stereotypes responses to a stimulus. Common ERPs include N170, which 
+
         \add[inline]{Explain theory used, like theory of EEG, Riemannian geometry, etc}
         \add[inline]{Plots of raw EEG signal, PSD, PCA, etc}
 
+        As measurements are taken on the scalp, neural activity of surface-level neurons can be expected to dominate the signal, which makes it difficult to use when studying systems deeper in the brain, such as the hippocampus. As an example of this, eye blinks are easily identifieable in the signal when electrodes are placed on the frontal cortex.
+
+        \add[inline]{Plot of signal during eye blink}
+
     \subsection{Machine Learning}
+
+        Machine learning on EEG data utilizes several domain-specific methods (which?) often similar to other methods seen applied to general time-series data.
+
+        Among these we find methods like bandpass filtering, windowing, spectral density estimation, and the computation of covariance matrices to find interdependencies between channels.
+
+        Common methods used in analysis and classification of EEG data include Linear Discriminant Analysis (LDA), Common Spatial Pattern (CSP) filters.
+
+        With the use of these methods, we can compute features to use when training our classifiers.
+
+        The underlying ML algorithms themselves are often off-the-shelf linear , with some domain adaptations found in more complex models like neural networks.
 
         \add[inline]{Formulas}
 
+        \subsubsection{Riemannian geometry}
+
+            \add[inline]{Explanation of Riemannian geometry, from \href{https://colab.research.google.com/drive/1y9tq7-lJwusxtVgpB38y-p1pYw7hg0iu}{this tutorial we're working on}, perhaps it should go in the Background/Theory section though?}
+
 \section{Method}
 
-    \subsection{Collection of device activity data}
+    \subsection{Collection}
+
+    \subsubsection{Collection of device activity data}
 
         All device activity is collected using the automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_2020-1}.
 
@@ -230,17 +272,17 @@
 
         The data from ActivityWatch is processed and categorized such that the resulting data has the 3 columns \mintinline{python}{start, end, category}. The category is determined by a regular expression that matches on window titles and URLs, such as \mintinline{python}{github.com}.
 
-    \subsection{Collection of EEG data}
+    \subsubsection{Collection of EEG data}
 
         EEG data was collected during organic device use and under controlled conditions.
 
         For both conditions, code from the open source eeg-notebooks~\cite{noauthor_neurotechxeeg-notebooks_2020} was adapted to record the raw EEG stream into a CSV file. For the Muse S, muse-lsl~\cite{muse-lsl} was used as the underlying software to handle the connection (which uses Lab Streaming Layer). For the OpenBCI and Neurosity devices, brainflow~\cite{noauthor_brainflow-devbrainflow_2020} was used to handle the connection.
 
-        \subsubsection{During organic device use}
+        \paragraph{During organic device use}
 
             For the organic device use conditions, we primarily used the Muse S EEG headband which features 4 channels with electrodes placed at TP9, AF7, AF8, and TP10.\footnote{According to the 1020-system.} The Muse S was chosen mainly due the superior comfort and ease of use compared with the alternatives, making it especially suitable for long recordings.\footnote{A wet electrode cap system was also considered, but ultimately not investigated due to being inconvenient to setup.}
 
-        \subsubsection{During code vs prose comprehension task}
+        \paragraph{During code vs prose comprehension task}
 
             For the controlled condition, the hardware used was \todo[inline]{decide on which hardware to use}{\ldots}.
 
@@ -248,7 +290,9 @@
 
             \todo[inline]{actually perform controlled experiments}
 
-        \subsubsection{Devices}
+        \paragraph{Devices}
+
+            The Muse S is a 4-channel EEG headband with electrodes at TP9, AF7, AF8, and TP10, with the reference electrode at Fpz~\cite{krigolson_choosing_2017}.
 
             \todo[inline]{Add images of headsets}
 
@@ -326,27 +370,60 @@
 
         \subsubsection{Feature engineering}
 
-            Bandpower features are simple and commonly used in EEG research for many tasks, including the paper by Fucci et al we seek to improve upon~\cite{fucci_replication_2019}. As a reference, we implemented classifiers which solely used bandpower features as input, to gain information of how much any improvement from classifier performance is likely due to better EEG equipment versus how much is due to from improved analysis methods.
+            \paragraph{Bandpower}
 
-            To compute this feature, we utilized the bandpower function provided by YASA~\cite{raphael_vallat_raphaelvallatyasa_2020}. The implementation estimates the power spectral density using Welch's method for each channel, and bins them by their associated frequency band.
+                Bandpower features are simple and commonly used in EEG research for many tasks, including the paper by Fucci et al we seek to improve upon~\cite{fucci_replication_2019}. As a reference, we implemented classifiers which solely used bandpower features as input, to gain information of how much any improvement from classifier performance is likely due to better EEG equipment versus how much is due to from improved analysis methods.
 
-        \subsubsection{Riemannian geometry}
+                To compute this feature, we utilized the bandpower function provided by YASA~\cite{raphael_vallat_raphaelvallatyasa_2020}. The implementation estimates the power spectral density using Welch's method for each channel, and bins them by their associated frequency band.
 
-            The \improvement{according to whom?}{state of the art in many EEG classification tasks} involves the use of Riemannian geometry. For this, we used the open source pyriemann library by Alexandre Barachant\footnote{First author of the original paper to apply Riemannian geometry to EEG~\cite{barachant_classification_2013}}.
+            \subsubsection{Riemannian geometry}
 
-            \add[inline]{Explanation of Riemannian geometry, from \href{https://colab.research.google.com/drive/1y9tq7-lJwusxtVgpB38y-p1pYw7hg0iu}{this tutorial we're working on}, perhaps it should go in the Background/Theory section though?}
+                The \improvement{according to whom?}{state of the art in many EEG classification tasks} involves the use of Riemannian geometry. For this, we used the open source pyriemann library by Alexandre Barachant\footnote{First author of the original paper to apply Riemannian geometry to EEG~\cite{barachant_classification_2013}}.
+
+        \subsubsection{Neural Networks}
+
+            One of the classifiers we want to train is a neural network. We use braindecode~\cite{schirrmeister_deep_2017}\cite{noauthor_braindecodebraindecode_2021}, a neural network toolbox for EEG data that uses PyTorch and integrates it with scikit-learn through skorch.
+
+            The networks provided by braindecode are\ldots
+
+        \subsubsection{Cross Validation}
+
+            We use LORO (``Leave-One-Run-Out'') cross-validation, a variation of LOGO (``Leave-One-Group-Out''), in order to ensure the samples used in validation are using subjects or tasks that are unseen in training.
+
+            We attempt both out-of-subject validation and out-of-task validation in order to estimate the ability of the classifiers to generalize across subjects and tasks.
+
+
 
 \section{Results}
 
-    Our classifier performance is\ldots
+    \subsection{Code vs prose task}
+
+        Our top-performing classifier yields a LORO-CV score of\ldots.
+
+        Our classifier performance is\ldots
+
+    \subsection{Naturalistic device activity}
+
+        Our classifier performance is\ldots
 
 \section{Conclusions}
 
-    Our results show\ldots
+    Our results show that it is possible to distinguish between reading code and prose, and improves upon the state of the art in this regard.
+
+    Furthermore, our naturalistic experiments indicate it is possible to distinguish many other device activities from each other using consumer-grade EEG devices. Among these some data seems to suggest that EEG is sufficient to not only pick up differences in code vs prose \emph{comprehension} but also \emph{writing}.
 
 \section{Discussion}
 
     \subsection{Ethical considerations}
+
+        When studying EEG data a range of ethical considerations arise. 
+
+        \begin{itemize}
+            \item Could the data be considered personally identifiable information (PII)? 
+            \item How privacy sensitive are EEG recordings? Could they contain something the subject would rather keep private? (could have medical implications)
+        \end{itemize}
+
+        Companies such as Neurosity have taken an approach with their products where all the processing happens on-device, and only aggregates and classifier outputs are sent to the cloud for storage and presentation to the user.
 
         \add[inline]{Discuss ethics/privacy considerations of data collection, how it's dealt with in ActivityWatch, and implications of results on similar concerns apply to EEG data}
 
@@ -362,9 +439,13 @@
 
         As development of BCIs advance and the consumer market for EEG devices grow (as evidenced by new devices being released with a regular cadence by InteraXon and Neurosity) we expect to see more uses and applications of these devices.
 
-        Much of this work was made possible due to the efforts of communities such as NeuroTechX to democratize neuroscience \todo[inline]{By doing what?}.
+        Much of this work was made possible due to the efforts of communities such as NeuroTechX to democratize neuroscience by publishing tools and code for running experiments.
 
     \subsection{Crowdsourcing data}
+
+        Collecting data is a significant time sink for researchers, and efforts to crowdsource data from the general public are difficult for EEG as it still requires access to the equipment, the knowledge to operate it, as well as considerations like signal quality, electrode placement, and other factors that might invalidate the data.
+
+        As part of the thesis work I've contributed to an effort in crowdsourcing EEG data collected from the experiments built in eeg-notebooks using consumer EEG devices like the Muse and OpenBCI\@. The effort, called the \href{https://neurotech-challenge.com/}{NeuroTech Challenge Series} (NTCS), is lead by John Griffiths at the University of Toronto.
 
         \add[inline]{Write about crowdsourcing of EEG data, including the potential of transfer learning and privacy considerations.}
 
@@ -375,10 +456,13 @@
     \begin{itemize}
         \item \href{%
                 https://github.com/search?q=org%3ANeuroTechX+is%3Apr+sort%3Aupdated-desc+author%3AErikBjare
-            }{PRs to NeuroTechX repos (eeg-notebooks, moabb)}
+            }{PRs to NeuroTechX repos (eeg-notebooks, moabb) (22)}
         \item \href{%
                 https://github.com/search?q=org%3Aalexandrebarachant+is%3Apr+sort%3Aupdated-desc+author%3AErikBjare
-            }{PRs to Alexandre Barachant repos (muse-lsl, pyRiemann)}
+            }{PRs to Alexandre Barachant repos (muse-lsl, pyRiemann) (4)}
+        \item \href{%
+                https://github.com/search?q=org%3Abraindecode+is%3Apr+sort%3Aupdated-desc+author%3AErikBjare
+            }{PRs to the braindecode repo (1)}
     \end{itemize}
 
 \section*{Acknowledgements}
