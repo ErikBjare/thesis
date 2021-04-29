@@ -11,6 +11,8 @@
 \usepackage{xargs}
 \usepackage{verbatim}
 \usepackage{subfig}
+\usepackage{booktabs}
+\usepackage{changepage}
 \usepackage[bottom]{footmisc}
 \usepackage[colorinlistoftodos, prependcaption, textsize=tiny]{todonotes}
 
@@ -22,6 +24,9 @@
 {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
 \titlespacing*{\paragraph}
 {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+% Ensures floats stay in their section
+\usepackage[section]{placeins}
 
 % Code snippets
 \usepackage[outputdir=build]{minted}
@@ -67,6 +72,13 @@
   urlcolor = myurlcolor!\myshade!black,
   colorlinks = true,
 }
+
+% wide page for side by side figures, tables, etc
+\newlength{\offsetpage}
+\setlength{\offsetpage}{1.0cm}
+\newenvironment{widepage}{\begin{adjustwidth}{-\offsetpage}{-\offsetpage}%
+    \addtolength{\textwidth}{2\offsetpage}}%
+{\end{adjustwidth}}
 
 % References
 \usepackage[backend=biber, style=numeric, sorting=none, defernumbers=true]{biblatex}
@@ -172,7 +184,7 @@
 
     Functional brain imaging methods such as fMRI, fNIRS, and EEG, have been used to study the relationship between cognitive or physical activity, and brain activity~\cite{floyd_decoding_2017}\cite{hong_classification_2015}\cite{fucci_replication_2019}. The more accurate methods such as fMRI are costly and inflexible/impractical for many uses.
 
-    However, the recent availability of low-cost biosensors such as EEG, HEG, and fNIRS, enables studying brain activity during real-life tasks. As an example it has been shown that it is possible to classify if a participant is reading code or prose using fMRI~\cite{floyd_decoding_2017}, which has been replicated using EEG and low-cost biosensors~\cite{fucci_replication_2019}. The ability to distinguish between these two tasks have been has been explained neurologically by the recruitment of different neural networks \todo[inline]{`neural network' might be confusing in the context} for the task. \todo[inline]{reference MIT paper}
+    However, the recent availability of low-cost biosensors such as EEG, HEG, and fNIRS, enables studying brain activity during real-life tasks. As an example it has been shown that it is possible to classify if a participant is reading code or prose using fMRI~\cite{floyd_decoding_2017}, which has been replicated using EEG and low-cost biosensors~\cite{fucci_replication_2019}. The ability to distinguish between these two tasks have been has been explained neurologically by the recruitment of different neural networks \todo[inline]{`neural network' might be confusing in the context} for the task~\cite{ivanova_comprehension_2020}.
 
     The code vs prose comprehension task has also been modified into a writing task studied under fMRI, to further shed light to the underlying brain activity. In one study it was found that code and prose writing are significantly dissimilar tasks for the brain, where prose writing engages brain regions associated with language in the left hemisphere while while code writing engages brain regions associated with attention, working memory, planning, and spatial cognition in the right hemisphere\cite{noauthor_neurological_nodate}.
 
@@ -212,9 +224,9 @@
     % Here, we used functional magnetic resonance imaging to investigate two candidate brain systems: the multiple demand (MD) system, typically recruited during math, logic, problem solving, and executive tasks, and the language system, typically recruited during linguistic processing.
     Recently, it has been shown that the multiple demand (MD) system is typically recruited for code comprehension tasks, as opposed to the language system that is typically recruited during prose comprehension~\cite{ivanova_comprehension_2020}. This sheds light on the significant differences in how the brain processes code vs prose.
 
-    In addition to purely studying comprehension (reading) code and prose, an 2020 fMRI study showed that there are indeed significant neurological differences between \emph{writing} code and prose as well.
+    In addition to purely studying comprehension (reading) code and prose, an 2020 fMRI study showed that there are indeed significant neurological differences between \emph{writing} code and prose as well~\cite{noauthor_neurological_nodate}.
 
-    In software engineerig, low-cost biosensors such as wristbands that measure electrodermal activity and heart-related metrics have been used for emotional detection, as a tool in studying developer productivity.
+    In software engineerig research, low-cost biosensors such as wristbands that measure electrodermal activity and heart-related metrics have been used for emotion detection, as a tool in studying developer productivity.
 
     \add[inline]{Insert mention of preprint that Fucci mentioned?}
 
@@ -226,14 +238,41 @@
 
         As a non-invasive method it is widely used in medicine to diagnose and study a wide range of conditions, from epilepsy to sleep disorders.
 
-        In research it has also found use in studying ``Event Related Potentials'', or ERPs, which are stereotypes responses to a stimulus. Common ERPs include N170, which 
+        In research it has also found use in studying ``Event Related Potentials'', or ERPs, which are stereotypes responses to a stimulus. Common ERPs can be seen in Table~\ref{table:erps}.
+
+        \begin{table}
+            \begin{tabular}{ll}
+                \toprule
+                ERP & Description
+                \\
+                \midrule
+                N170 & Elicited by processing of faces, familiar objects or words.
+                \\
+                P600 & Elicited by hearing or reading grammatical errors and other syntactic anomalies.
+                \\
+                \bottomrule
+            \end{tabular}
+            \caption{Common ERPs}\label{table:erps}
+        \end{table}
+
+        Electrodes can be placed at different locations on the scalp, targeting different regions of the brain. The system used to position the electrodes is called the 10–20 system, and is the standard way to label electrode placements.
+
+        \begin{figure}
+            \begin{center}
+                \includegraphics[width=10cm]{img/1020 system.png}
+            \end{center}
+            \caption{The 10–20 system}\label{fig:1020}
+        \end{figure}
 
         \add[inline]{Explain theory used, like theory of EEG, Riemannian geometry, etc}
         \add[inline]{Plots of raw EEG signal, PSD, PCA, etc}
 
         As measurements are taken on the scalp, neural activity of surface-level neurons can be expected to dominate the signal, which makes it difficult to use when studying systems deeper in the brain, such as the hippocampus. As an example of this, eye blinks are easily identifieable in the signal when electrodes are placed on the frontal cortex.
 
+        \add[inline]{Mention need for bandpass filtering to get rid of powerline noise}
+
         \add[inline]{Plot of signal during eye blink}
+        \add[inline]{Discuss some of the review articles on EEG/BCI/ML}
 
     \subsection{Machine Learning}
 
@@ -280,31 +319,53 @@
 
         \paragraph{During organic device use}
 
-            For the organic device use conditions, we primarily used the Muse S EEG headband which features 4 channels with electrodes placed at TP9, AF7, AF8, and TP10.\footnote{According to the 1020-system.} The Muse S was chosen mainly due the superior comfort and ease of use compared with the alternatives, making it especially suitable for long recordings.\footnote{A wet electrode cap system was also considered, but ultimately not investigated due to being inconvenient to setup.}
+            For the organic device use conditions, we primarily used the Muse S due the superior comfort and ease of use compared with the alternatives, making it especially suitable for long recordings.\footnote{A wet electrode cap system was also considered, but ultimately not investigated due to being inconvenient to setup.}
+
+            The subject was then simply asked to go about their usual device activities, often consisting of a mix of work (email, writing prose, writing code) and leisure (watching YouTube, reading Twitter).
 
         \paragraph{During code vs prose comprehension task}
 
-            For the controlled condition, the hardware used was \todo[inline]{decide on which hardware to use}{\ldots}.
+            For the controlled condition, we ended up using the Muse S as well due to the comfort and ease of setup.
 
-            We \todo{actually implement the task}{implemented the task} in eeg-notebooks~\cite{noauthor_neurotechxeeg-notebooks_2020}, which uses previously mentioned libraries for data collection as well as PsychoPy~\cite{peirce_psychopy2_2019} to provide the stimuli.
+            We implemented the task in eeg-notebooks~\cite{noauthor_neurotechxeeg-notebooks_2020}, which uses previously mentioned libraries for data collection as well as PsychoPy~\cite{peirce_psychopy2_2019} to provide the stimuli.
 
-            \todo[inline]{actually perform controlled experiments}
+            The experiment consists of presenting images with code or prose comprehension tasks, as seen in Figure~\ref{fig:codetask} and~\ref{fig:prosetask}.
+
+            \begin{figure}
+                \begin{center}
+                    \includegraphics[trim=0 120 0 0,clip,width=100mm]{img/final-1-1.png}
+                \end{center}
+                \caption{Sample of the code comprehension task}\label{fig:codetask}
+            \end{figure}
+
+            \begin{figure}
+                \begin{center}
+                    \includegraphics[width=100mm]{img/bugs_1.PNG}
+                \end{center}
+                \caption{Sample of the prose review task}\label{fig:prosetask}
+            \end{figure}
+
+            Before each run, the subject was asked about their gender, age, and software development experience (specifically experience with C/C++). For good measure, we also asked if the subject had consumed caffeine the hours prior to the experiment.
+
+            After these questions we put the devices on and ensure we get good signal by inspecting it in real time with the viewer provided by muse-lsl. The viewer itself does simple bandpass filtering between 3--40Hz, and the signal quality is indicated by the standard deviation of the filtered signal.
 
         \paragraph{Devices}
 
-            The Muse S is a 4-channel EEG headband with electrodes at TP9, AF7, AF8, and TP10, with the reference electrode at Fpz~\cite{krigolson_choosing_2017}.
+            We experimented with several devices but eventually settled on the Muse S. The motivation for choosing the Muse S was mainly due to comfort and ease of use. The other devices considered included the OpenBCI Cyton (with Ultracortex headset) and the Neurosity Notion DK1.
 
-            \todo[inline]{Add images of headsets}
+            The Muse S is a 4-channel EEG headband with electrodes at TP9, AF7, AF8, and TP10, with the reference electrode at Fpz~\cite{krigolson_choosing_2017}.\footnote{According to the 10--20 system.}
 
-            \begin{center}
-                \begin{table}
+            \begin{widepage}
+            \begin{table}
                 \begin{tabular}{llccc}
+                    \toprule
                     Manufacturer
                     & Device
                     & Channels
                     & Sampling rate
                     & Comfort
-                    \\
+                    \\ 
+                    \midrule
                     InteraXon
                     & Muse S
                     & 4
@@ -313,42 +374,45 @@
                  OpenBCI
                     & Cyton (with Ultracortex)
                     & 8
-                    & 125Hz?
+                    & 125--250Hz
                     & Low \\
                  % generously gifted by Neurosity
                  Neurosity
                     & Notion DK1
                     & 8
-                    & 250Hz?
+                    & 250Hz
                     & Medium \\
                   % preordered, arrives in late spring
                   Neurosity
                     & Crown
-                    & 8?
-                    & 250Hz?
+                    & 8
+                    & 250Hz
                     & High? \\
+                    \bottomrule
                 \end{tabular}
-                \caption{Devices used}
-                \end{table}
-            \end{center}
+                \caption{Devices used}\label{table:devices}
+            \end{table}
+            \end{widepage}
 
             \begin{center}
             \begin{figure}
+                \begin{widepage}
                 \begin{tabular}{cc}
-                    img1 %\includegraphics[width=65mm]{it}
-                    & img2 %\includegraphics[width=65mm]{it}
+                    \includegraphics[width=65mm]{img/Muse-S.jpg}
+                    & \includegraphics[width=65mm]{img/openbci-cyton.jpg}
                     \\
                     (a) Muse S
                     & (b) OpenBCI Cyton with Ultracortex
                     \\[6pt]
-                    img3 %\includegraphics[width=65mm]{it}
-                    & img4 %\includegraphics[width=65mm]{it}
+                    \includegraphics[width=65mm]{img/neurosity-notion.png}
+                    & \includegraphics[width=65mm]{img/neurosity-crown.jpg}
                     \\
-                    (c) Notion DK1
-                    & (d) Notion Crown
+                    (c) Neurosity Notion DK1
+                    & (d) Neurosity Crown
                     \\[6pt]
                 \end{tabular}
                 \caption{Photos of devices used}
+                \end{widepage}
             \end{figure}
             \end{center}
 
@@ -375,6 +439,8 @@
                 Bandpower features are simple and commonly used in EEG research for many tasks, including the paper by Fucci et al we seek to improve upon~\cite{fucci_replication_2019}. As a reference, we implemented classifiers which solely used bandpower features as input, to gain information of how much any improvement from classifier performance is likely due to better EEG equipment versus how much is due to from improved analysis methods.
 
                 To compute this feature, we utilized the bandpower function provided by YASA~\cite{raphael_vallat_raphaelvallatyasa_2020}. The implementation estimates the power spectral density using Welch's method for each channel, and bins them by their associated frequency band.
+
+                To further enrich our feature vector, we can use ratios between two frequency bands.
 
             \subsubsection{Riemannian geometry}
 
