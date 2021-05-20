@@ -21,6 +21,7 @@ Collecting data:
 
  - Run `eegwatch --help` for instructions on how to collect EEG data
  - Run [ActivityWatch](https://activitywatch.net) to collect device activity data
+ - Run the codeprose task in [eeg-notebooks][eegnb] to collect data for the code vs prose task
 
 Running classifier:
 
@@ -71,7 +72,9 @@ See the Acknowledgements section in the [thesis][thesis].
  - MNE: https://mne.tools/
  - PsychoPy: https://www.psychopy.org/
    - Invaluable for running experiments.
- - https://github.com/NeuroTechX/eeg-notebooks
+ - [eeg-notebooks][eegnb]
    - Have examples with sklearn + riemannian geometry.
  - Overview of public EEG datasets: https://github.com/meagmohit/EEG-Datasets
  - [braindecode](https://github.com/braindecode/braindecode): A deep learning toolbox to decode raw time-domain EEG. 
+
+[eegnb]: https://github.com/NeuroTechX/eeg-notebooks
