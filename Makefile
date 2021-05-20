@@ -1,8 +1,12 @@
 all: dist
 
-dist: docs notebooks
+dist: docs tex notebooks
 
-docs: dist/thesis.pdf dist/goaldocument.pdf
+.PHONY: docs
+docs:
+	cd docs/sphinx && make html
+
+tex: dist/thesis.pdf dist/goaldocument.pdf
 
 .PHONY: notebooks
 notebooks:
