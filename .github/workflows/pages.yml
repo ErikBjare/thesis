@@ -116,7 +116,8 @@ jobs:
 
       - name: Build notebooks
         run: |
-            env PYTEST_CURRENT_TEST=true make notebooks
+            poetry run pip install 'nbconvert>=6.0'
+            env PYTEST_CURRENT_TEST=true poetry run make notebooks
       - name: Upload notebooks
         uses: actions/upload-artifact@v2
         with:
