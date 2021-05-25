@@ -8,5 +8,8 @@ output/%.html: %.ipynb
 precommit:
 	poetry run jupyter nbconvert --ClearOutputPreprocessor.enabled=True --inplace *.ipynb
 
+set-kernel:
+	sed -i 's/"name": "erb-thesis"/"name": "python3"/g' *.ipynb
+
 clean:
 	rm -r output

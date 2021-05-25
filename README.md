@@ -22,6 +22,8 @@ Collecting data:
  - Run `eegwatch --help` for instructions on how to collect EEG data
  - Run [ActivityWatch](https://activitywatch.net) to collect device activity data
  - Run the codeprose task in [eeg-notebooks][eegnb] to collect data for the code vs prose task
+     - Install eeg-notebooks with `pip install git+`
+     - Run the codeprose task with `eegnb runexp -ex visual-codeprose -subject X`
 
 Running classifier:
 

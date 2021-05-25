@@ -1,12 +1,16 @@
 all: dist
 
-dist: docs notebooks
+dist: docs tex notebooks
 
-docs: dist/thesis.pdf dist/goaldocument.pdf
+.PHONY: docs
+docs:
+	cd docs/sphinx && poetry run make html
+
+tex: dist/thesis.pdf dist/goaldocument.pdf
 
 .PHONY: notebooks
 notebooks:
-	cd notebooks && make
+	cd notebooks && poetry run make
 
 dist/%.pdf: docs/tex/build/%.pdf
 	mkdir -p dist

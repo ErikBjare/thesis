@@ -105,11 +105,12 @@
 
 \begin{abstract}
 
-    We investigate the ability of EEG to distinguish between different activities users engage in on their devices, building on previous research which showed a considerable difference in brain activity when reading/(reasoning about) code vs prose.
+    We investigate the ability of EEG to distinguish between different activities users engage in on their devices, building on previous research which showed a considerable difference in brain activity between code- and prose-comprehension, as well as differences during the synthesis. We explore multiple classification approaches, including using bandpass features, Riemannian geometry, and deep learning.
 
-    We also use the automated time tracker ActivityWatch, previously developed by the author, to track what activities the user is engaging in on their device while wearing an EEG device.
+    We also use the automated time tracker ActivityWatch to track what device activities the user is engaging in. This lets us label EEG data with naturalistic device activity, which we then use to train classifiers of device activity.
 
-    \improvement[inline]{improve abstract}
+    Code and a sample dataset is available at \href{https://github.com/ErikBjare/thesis}{github.com/ErikBjare/thesis}.
+
 \end{abstract}
 
 \pagebreak %.\pagebreak
@@ -184,17 +185,25 @@
 
     Functional brain imaging methods such as fMRI, fNIRS, and EEG, have been used to study the relationship between cognitive or physical activity, and brain activity~\cite{floyd_decoding_2017}\cite{hong_classification_2015}\cite{fucci_replication_2019}. The more accurate methods such as fMRI are costly and inflexible/impractical for many uses.
 
-    However, the recent availability of low-cost biosensors such as EEG, HEG, and fNIRS, enables studying brain activity during real-life tasks. As an example it has been shown that it is possible to classify if a participant is reading code or prose using fMRI~\cite{floyd_decoding_2017}, which has been replicated using EEG and low-cost biosensors~\cite{fucci_replication_2019}. The ability to distinguish between these two tasks have been has been explained neurologically by the recruitment of different neural networks \todo[inline]{`neural network' might be confusing in the context} for the task~\cite{ivanova_comprehension_2020}.
+    However, the recent availability of low-cost biosensors such as EEG, HEG, and fNIRS, enables studying brain activity during real-life tasks.
 
-    The code vs prose comprehension task has also been modified into a writing task studied under fMRI, to further shed light to the underlying brain activity. In one study it was found that code and prose writing are significantly dissimilar tasks for the brain, where prose writing engages brain regions associated with language in the left hemisphere while while code writing engages brain regions associated with attention, working memory, planning, and spatial cognition in the right hemisphere\cite{noauthor_neurological_nodate}.
-
-    But they are not without their limitations --- among them a notably low signal-to-noise ratio~\cite{mcfarland_eeg-based_2017} --- yet visual evoked potentials (VEPs) have been shown to be sufficient for high-speed BCI applications~\cite{spuler_high-speed_2017}.
+    But EEG is not without its limitations --- among them a notably low signal-to-noise ratio~\cite{mcfarland_eeg-based_2017}, as well as being difficult to use for discerning activity deeper in the brain~\cite{fahimi_hnazaee_localization_2020} --- yet these limitations have been overcome for many applications, like ERP experiments, and has even turned out prove sufficient for high-speed BCI applications through detecting visual evoked potentials (VEPs)~\cite{spuler_high-speed_2017}.
 
     To combat the low signal-to-noise ratio, machine learning methods have been employed with varying degrees of success. Examples from previous research include Convolutional Neural Networks (CNNs), which have been successful in classifying time series in general~\cite{zhao_convolutional_2017}, and EEG data in particular~\cite{schirrmeister_deep_2017}. As well as Hierarchical Convolutional Neural Networks (HCNNs), which have been used for EEG-based emotion recognition~\cite{li_hierarchical_2018}.
 
-    \add[inline]{Applications to software engineers}
-
     \add[inline]{Separate sections for applications in BCIs vs neuroscience}
+
+    \subsubsection{Applications in neurolinguistics}
+
+        EEG has found many applications in neurolinguistics, both to understand how the brain processes natural languages as well as programming languages~\cite{prat_relating_2020}.
+
+         As an example it has been shown that it is possible to classify if a participant is reading code or prose using fMRI~\cite{floyd_decoding_2017}, which has been replicated using EEG and low-cost biosensors~\cite{fucci_replication_2019}. The ability to distinguish between these two tasks have been has been explained neurologically by the recruitment of different neural networks in the brain~\cite{ivanova_comprehension_2020}. 
+
+        The code vs prose comprehension task has also been modified into a writing task studied under fMRI, to further shed light to the underlying brain activity. In one study it was found that code and prose writing are significantly dissimilar tasks for the brain, where prose writing engages brain regions associated with language in the left hemisphere while while code writing engages brain regions associated with attention, working memory, planning, and spatial cognition in the right hemisphere\cite{noauthor_neurological_nodate}.
+
+    \subsubsection{Applications in software engineering}
+
+        \add[inline]{Applications to software engineers}
 
     % https://docs.openbci.com/citations
 
@@ -247,6 +256,8 @@
                 \\
                 \midrule
                 N170 & Elicited by processing of faces, familiar objects or words.
+                \\
+                N400 & Elicited by words and other stimuli.
                 \\
                 P600 & Elicited by hearing or reading grammatical errors and other syntactic anomalies.
                 \\
@@ -306,6 +317,8 @@
             \item aw-watcher-window, tracks the active window and its title
             \item aw-watcher-afk, tracks if the user is active or not by observing input device activity
         \end{itemize}
+
+        We've also built a custom watcher, aw-watcher-input, to track metrics of mouse and keyboard activity. It tracks by listening to mouse and keyboard events and records the distance\footnote{in pixels} the mouse moves and number of clicks (but not which key was clicked). Every second this is bundled into an event, the values are reset, and then it continues with the next event. It was inspired by similar functionality in Andrej Karpathy's ulogme~\cite{ulogme}.
 
         A limitation that we have to consider is that the window watcher uses a polling method to track the active window, with a default poll time of 1 second. This means that we can't rely on the timestamps to mark the exact time the window became active/inactive.
 
