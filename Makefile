@@ -4,13 +4,13 @@ dist: docs tex notebooks
 
 .PHONY: docs
 docs:
-	cd docs/sphinx && make html
+	cd docs/sphinx && poetry run make html
 
 tex: dist/thesis.pdf dist/goaldocument.pdf
 
 .PHONY: notebooks
 notebooks:
-	cd notebooks && make
+	cd notebooks && poetry run make
 
 dist/%.pdf: docs/tex/build/%.pdf
 	mkdir -p dist
