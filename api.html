@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Reference &#8212; thesis  documentation</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="MSc Thesis" href="README.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      <h1 class="site-logo" id="site-title">thesis  documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <p class="caption">
+ <span class="caption-text">
+  Contents
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Intro
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="notebooks.html">
+   Notebooks
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="notebooks/Main.html">
+     Main analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="notebooks/Signal.html">
+     Signal
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="notebooks/Activity.html">
+     Activity classification
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Developer
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="readme.html">
+   README
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="README.html">
+     MSc Thesis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   API Reference
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/api.rst.txt"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.rst</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-eegwatch">
+   eegwatch
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#module-eegclassify">
+   eegclassify
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-eegwatch">
+<span id="eegwatch"></span><h2>eegwatch<a class="headerlink" href="#module-eegwatch" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="eegwatch.devices.EEGDevice">
+<em class="property">class </em><code class="sig-prename descclassname">eegwatch.devices.</code><code class="sig-name descname">EEGDevice</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">device</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#eegwatch.devices.EEGDevice" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="eegwatch.devices.EEGDevice.push_sample">
+<em class="property">abstract </em><code class="sig-name descname">push_sample</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">marker</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">timestamp</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span><a class="headerlink" href="#eegwatch.devices.EEGDevice.push_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Push a marker and its timestamp to store alongside the EEG data.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>marker (int): marker number for the stimuli being presented.
+timestamp (float): timestamp of stimulus onset from time.time() function.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="eegwatch.devices.EEGDevice.start">
+<em class="property">abstract </em><code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">duration</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#eegwatch.devices.EEGDevice.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the EEG device based on the defined backend.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>filename (str): name of the file to save the sessions data to.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="eegwatch.devices.MuseDevice">
+<em class="property">class </em><code class="sig-prename descclassname">eegwatch.devices.</code><code class="sig-name descname">MuseDevice</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">device_name</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#eegwatch.devices.MuseDevice" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="eegwatch.devices.MuseDevice.push_sample">
+<code class="sig-name descname">push_sample</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">marker</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">timestamp</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span><a class="headerlink" href="#eegwatch.devices.MuseDevice.push_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Push a marker and its timestamp to store alongside the EEG data.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>marker (int): marker number for the stimuli being presented.
+timestamp (float): timestamp of stimulus onset from time.time() function.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="eegwatch.devices.MuseDevice.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">duration</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#eegwatch.devices.MuseDevice.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the EEG device.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>filename (str): name of the file to save the sessions data to.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="eegwatch.devices.BrainflowDevice">
+<em class="property">class </em><code class="sig-prename descclassname">eegwatch.devices.</code><code class="sig-name descname">BrainflowDevice</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">device_name</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">serial_num</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">serial_port</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">mac_addr</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">other</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ip_addr</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#eegwatch.devices.BrainflowDevice" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="eegwatch.devices.BrainflowDevice.push_sample">
+<code class="sig-name descname">push_sample</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">marker</span><span class="p">:</span> <span class="n">List<span class="p">[</span>int<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">timestamp</span><span class="p">:</span> <span class="n">float</span></em><span class="sig-paren">)</span><a class="headerlink" href="#eegwatch.devices.BrainflowDevice.push_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Push a marker and its timestamp to store alongside the EEG data.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>marker (int): marker number for the stimuli being presented.
+timestamp (float): timestamp of stimulus onset from time.time() function.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="eegwatch.devices.BrainflowDevice.start">
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">duration</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#eegwatch.devices.BrainflowDevice.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the EEG device based on the defined backend.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>filename (str): name of the file to save the sessions data to.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-eegclassify">
+<span id="eegclassify"></span><h2>eegclassify<a class="headerlink" href="#module-eegclassify" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-eegclassify.load"></span><dl class="py function">
+<dt id="eegclassify.load.load_labeled_eeg">
+<code class="sig-prename descclassname">eegclassify.load.</code><code class="sig-name descname">load_labeled_eeg</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">files</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="headerlink" href="#eegclassify.load.load_labeled_eeg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a dataframe with columns: timestamp,*channels,class</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="eegclassify.load.load_labeled_eeg2">
+<code class="sig-prename descclassname">eegclassify.load.</code><code class="sig-name descname">load_labeled_eeg2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">files</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">since</span><span class="p">:</span> <span class="n">datetime.datetime</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="headerlink" href="#eegclassify.load.load_labeled_eeg2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Similar to load_labeled_eeg, but gives one row per task-epoch, with EEG data as cell-vector.</p>
+<p>This is similarly structured to datasets like the Berkeley Synchronized Brainwave Dataset.</p>
+</dd></dl>
+
+<span class="target" id="module-eegclassify.clean"></span><dl class="py function">
+<dt id="eegclassify.clean.filter">
+<code class="sig-prename descclassname">eegclassify.clean.</code><code class="sig-name descname">filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">sfreq</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">250</span></em>, <em class="sig-param"><span class="n">n_chans</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">4</span></em>, <em class="sig-param"><span class="n">low</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">3</span></em>, <em class="sig-param"><span class="n">high</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">40</span></em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#eegclassify.clean.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inspired by viewer_v2.py in muse-lsl</p>
+</dd></dl>
+
+<span class="target" id="module-eegclassify.features"></span><span class="target" id="module-eegclassify.plot"></span><span class="target" id="module-eegclassify.preprocess"></span><dl class="py function">
+<dt id="eegclassify.preprocess.split_rows">
+<code class="sig-prename descclassname">eegclassify.preprocess.</code><code class="sig-name descname">split_rows</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">min_duration</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="headerlink" href="#eegclassify.preprocess.split_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits long-duration rows into shorter segments no shorter than <code class="docutils literal notranslate"><span class="pre">min_duration</span></code>.</p>
+<p>Note that this might not be suitable for all types of analysis, especially not
+those with a distinct start of stimuli (as opposed to continuous stimuli), like controlled experiments.</p>
+</dd></dl>
+
+<span class="target" id="module-eegclassify.transform"></span><dl class="py function">
+<dt id="eegclassify.transform.signal_ndarray">
+<code class="sig-prename descclassname">eegclassify.transform.</code><code class="sig-name descname">signal_ndarray</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numpy.ndarray<span class="p">, </span>numpy.ndarray<span class="p">]</span><a class="headerlink" href="#eegclassify.transform.signal_ndarray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the raw data to a matrix of shape (n_trials, n_channels, n_samples),
+which is the format required by pyriemann Covariances etc.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="README.html" title="previous page">MSc Thesis</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Erik Bjäreholt<br/>
+        
+            &copy; Copyright 2021, Erik Bjäreholt.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

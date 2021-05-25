@@ -1,0 +1,1478 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main analysis &#8212; thesis  documentation</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet" />
+  <link href="../_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Signal" href="Signal.html" />
+    <link rel="prev" title="Notebooks" href="../notebooks.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      <h1 class="site-logo" id="site-title">thesis  documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <div class="bd-toc-item active">
+        <p class="caption">
+ <span class="caption-text">
+  Contents
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Intro
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../notebooks.html">
+   Notebooks
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Main analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Signal.html">
+     Signal
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Activity.html">
+     Activity classification
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Developer
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../readme.html">
+   README
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../README.html">
+     MSc Thesis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../api.html">
+   API Reference
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/notebooks/Main.ipynb.txt"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Main analysis
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#table-of-contents">
+     Table of Contents
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#setup">
+     Setup
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#configuration">
+       Configuration
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#misc-setup">
+       Misc setup
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#loading">
+     Loading
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#loading-eeg">
+       Loading EEG
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#loading-markers">
+       Loading markers
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#preprocessing">
+     Preprocessing
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#filter-short-trials">
+       Filter short trials
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#filter-no-answer-trials">
+       Filter no answer trials
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#exponential-moving-standardize">
+       Exponential moving standardize
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#bandpass-filtering">
+       Bandpass filtering
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#constructing-epochs">
+       Constructing epochs
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#epochs-to-windows">
+         Epochs to windows
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#constructing-our-x-and-y">
+       Constructing our
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         X
+        </span>
+       </code>
+       and
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         y
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#training">
+     Training
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#learning-curves">
+       Learning curves
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#braindecode-stuff">
+   Braindecode stuff
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="main-analysis">
+<h1>Main analysis<a class="headerlink" href="#main-analysis" title="Permalink to this headline">¶</a></h1>
+<p>The primary analysis for the thesis, where we train a classifier for the code vs prose task.</p>
+<hr class="docutils" />
+<div class="section" id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="#Setup">Setup</a></p>
+<ul>
+<li><p>Imports</p></li>
+<li><p>Configuration</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#Loading">Loading</a></p>
+<ul>
+<li><p>Loading EEG data</p></li>
+<li><p>Loading markers</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#Preprocessing">Preprocessing</a></p>
+<ul>
+<li><p>Filter short trials</p></li>
+<li><p>Filter no answer trials</p></li>
+<li><p>Bandpass filtering</p></li>
+<li><p>Constructing epochs</p></li>
+<li><p>Epochs to windows</p></li>
+<li><p>Constructing our <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code></p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="#Training">Training</a></p>
+<ul>
+<li><p>Learning curves</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>NOTE:</strong> This TOC is manually built and may not be up to date.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Imports</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">mne</span>
+
+<span class="kn">from</span> <span class="nn">eegclassify</span> <span class="kn">import</span> <span class="n">main</span><span class="p">,</span> <span class="n">load</span><span class="p">,</span> <span class="n">clean</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">preprocess</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="configuration">
+<h3>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
+<p>This cell contains all the configuration options available for the analysis.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Configuration</span>
+<span class="n">use_bandpass_filter</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">classify_breaks</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">single_subject</span> <span class="o">=</span> <span class="kc">None</span>    <span class="c1"># set to subject number, or False</span>
+<span class="n">balance_dataset</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">min_task_duration</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">standardize</span> <span class="o">=</span> <span class="kc">False</span>
+    
+<span class="c1"># Constants</span>
+<span class="n">sfreq</span> <span class="o">=</span> <span class="mi">256</span>  <span class="c1"># sampling frequency of the Muse S</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="misc-setup">
+<h3>Misc setup<a class="headerlink" href="#misc-setup" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%(levelname)s</span><span class="s2">: </span><span class="si">%(msg)s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">mne</span><span class="o">.</span><span class="n">set_log_level</span><span class="p">(</span><span class="s1">&#39;WARNING&#39;</span><span class="p">)</span>
+
+<span class="c1"># Set this to True to run on testing data</span>
+<span class="n">simulate_test</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="k">if</span> <span class="n">simulate_test</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;PYTEST_CURRENT_TEST&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%javascript</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">title</span><span class="o">=</span><span class="s1">&#39;erb-thesis/Main - Jupyter&#39;</span>  <span class="c1">// Set the document title to be able to track time spent working on the notebook with ActivityWatch</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/javascript">document.title='erb-thesis/Main - Jupyter'  // Set the document title to be able to track time spent working on the notebook with ActivityWatch
+</script></div>
+</div>
+</div>
+</div>
+<div class="section" id="loading">
+<h2>Loading<a class="headerlink" href="#loading" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="loading-eeg">
+<h3>Loading EEG<a class="headerlink" href="#loading-eeg" title="Permalink to this headline">¶</a></h3>
+<p>First we need to load the EEG data used during the experiments.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;../data&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    
+<span class="n">files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span>
+    <span class="n">data_dir</span> <span class="o">/</span> <span class="s2">&quot;eeg/muse/subject0000/session001/recording_2021-04-02-14.03.36.csv&quot;</span><span class="p">,</span>
+    <span class="o">*</span><span class="nb">list</span><span class="p">((</span><span class="n">data_dir</span> <span class="o">/</span> <span class="s2">&quot;eeg/muse/subject0001/session001/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.csv&quot;</span><span class="p">)),</span>
+<span class="p">])</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+
+<span class="n">eeg</span> <span class="o">=</span> <span class="n">load</span><span class="o">.</span><span class="n">load_eeg</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+<span class="n">eeg</span> <span class="o">=</span> <span class="n">eeg</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;timestamp&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[PosixPath(&#39;/home/runner/work/thesis/thesis/data/eeg/muse/subject0000/session001/recording_2021-04-02-14.03.36.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/eeg/muse/subject0001/session001/recording_2021-03-26-14.09.25.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/eeg/muse/subject0001/session001/recording_2021-03-26-14.14.36.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/eeg/muse/subject0001/session001/recording_2021-03-26-14.19.36.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/eeg/muse/subject0001/session001/recording_2021-03-26-14.24.36.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/eeg/muse/subject0001/session001/recording_2021-03-26-14.29.37.csv&#39;)]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Concatenating...
+Concatenated!
+(760248, 4)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Lets have a look at the loaded data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_eeg</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">window</span><span class="p">,</span> <span class="n">span</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">offset</span> <span class="p">:</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">window</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">window</span><span class="p">);</span>
+    <span class="k">if</span> <span class="n">span</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">span</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="n">span</span><span class="p">,</span> <span class="n">span</span><span class="p">);</span>
+
+<span class="n">plot_eeg</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">offset</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">window</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">sfreq</span><span class="p">)</span>
+<span class="n">plot_eeg</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">offset</span> <span class="o">=</span> <span class="mi">20000</span><span class="p">,</span> <span class="n">window</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">sfreq</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Main_12_0.png" src="../_images/Main_12_0.png" />
+<img alt="../_images/Main_12_1.png" src="../_images/Main_12_1.png" />
+</div>
+</div>
+<p>We see that some channels are bad some of the time, we will deal with that later.</p>
+</div>
+<div class="section" id="loading-markers">
+<h3>Loading markers<a class="headerlink" href="#loading-markers" title="Permalink to this headline">¶</a></h3>
+<p>Now we need to load the markers produced during each trial of the experiment, so we can annotate the EEG data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">marker_files</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">data_dir</span> <span class="o">/</span> <span class="s1">&#39;tasks/visual-codeprose/subject0000/session000/subject0_session0_behOutput_2021-04-02-14.28.30.csv&#39;</span><span class="p">,</span>
+    <span class="n">data_dir</span> <span class="o">/</span> <span class="s1">&#39;tasks/visual-codeprose/subject0001/session000/subject1_session0_behOutput_2021-03-26-14.31.14.csv&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">_build_breaks</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="n">starts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_answered&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">()</span>
+    <span class="n">starts_utc</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_answered_utc&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">()</span>
+    <span class="n">stops</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_presented&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">stops_utc</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_presented_utc&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    
+    <span class="n">breaks</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+        <span class="s2">&quot;t_presented&quot;</span><span class="p">:</span> <span class="n">starts</span><span class="p">,</span> 
+        <span class="s2">&quot;t_answered&quot;</span><span class="p">:</span> <span class="n">stops</span><span class="p">,</span> 
+        <span class="s2">&quot;t_presented_utc&quot;</span><span class="p">:</span> <span class="n">starts_utc</span><span class="p">,</span> 
+        <span class="s2">&quot;t_answered_utc&quot;</span><span class="p">:</span> <span class="n">stops_utc</span><span class="p">,</span> 
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;relax&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;duration&quot;</span><span class="p">:</span> <span class="n">stops</span> <span class="o">-</span> <span class="n">starts</span><span class="p">,</span> 
+        <span class="s1">&#39;subject&#39;</span><span class="p">:</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;subject&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;image_path&#39;</span><span class="p">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;response&#39;</span><span class="p">:</span> <span class="s1">&#39;up&#39;</span><span class="p">,</span>  <span class="c1"># as placeholder</span>
+    <span class="p">})</span>
+    <span class="k">return</span> <span class="n">breaks</span>
+
+<span class="n">dfs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">marker_files</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_answered&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_presented&#39;</span><span class="p">]</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;subject(\d+)&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">file</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">match</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;subject&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+    
+    <span class="k">if</span> <span class="n">classify_breaks</span><span class="p">:</span>
+        <span class="n">breaks</span> <span class="o">=</span> <span class="n">_build_breaks</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">breaks</span><span class="p">)</span>
+    <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">df_markers</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;subject&#39;</span><span class="p">,</span> <span class="s1">&#39;t_presented&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: NumExpr defaulting to 2 threads.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Lets take a look at some of the marker rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;img&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;image_path&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">((</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">df_markers</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;image_path&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>type</th>
+      <th>response</th>
+      <th>t_presented</th>
+      <th>t_presented_utc</th>
+      <th>t_answered</th>
+      <th>t_answered_utc</th>
+      <th>duration</th>
+      <th>subject</th>
+      <th>img</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>prose</td>
+      <td>up</td>
+      <td>0.016728</td>
+      <td>1.617372e+09</td>
+      <td>17.857363</td>
+      <td>1.617372e+09</td>
+      <td>17.840635</td>
+      <td>0</td>
+      <td>bugs_1.PNG</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>prose</td>
+      <td>up</td>
+      <td>22.900167</td>
+      <td>1.617372e+09</td>
+      <td>52.065407</td>
+      <td>1.617372e+09</td>
+      <td>29.165240</td>
+      <td>0</td>
+      <td>bugs_15.PNG</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>code</td>
+      <td>up</td>
+      <td>57.117248</td>
+      <td>1.617372e+09</td>
+      <td>124.968128</td>
+      <td>1.617372e+09</td>
+      <td>67.850880</td>
+      <td>0</td>
+      <td>final-12-2.png</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>code</td>
+      <td>down</td>
+      <td>130.017048</td>
+      <td>1.617372e+09</td>
+      <td>186.038527</td>
+      <td>1.617372e+09</td>
+      <td>56.021479</td>
+      <td>0</td>
+      <td>final-4-1.png</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>prose</td>
+      <td>up</td>
+      <td>191.067667</td>
+      <td>1.617372e+09</td>
+      <td>217.853919</td>
+      <td>1.617372e+09</td>
+      <td>26.786252</td>
+      <td>0</td>
+      <td>bugs_2.PNG</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>code</td>
+      <td>up</td>
+      <td>222.900940</td>
+      <td>1.617372e+09</td>
+      <td>294.557512</td>
+      <td>1.617373e+09</td>
+      <td>71.656572</td>
+      <td>0</td>
+      <td>final-8-1.png</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>prose</td>
+      <td>up</td>
+      <td>299.584561</td>
+      <td>1.617373e+09</td>
+      <td>332.086973</td>
+      <td>1.617373e+09</td>
+      <td>32.502412</td>
+      <td>0</td>
+      <td>bugs_4.PNG</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>code</td>
+      <td>space</td>
+      <td>337.134531</td>
+      <td>1.617373e+09</td>
+      <td>342.611160</td>
+      <td>1.617373e+09</td>
+      <td>5.476629</td>
+      <td>0</td>
+      <td>final-2-2.png</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>prose</td>
+      <td>up</td>
+      <td>347.651617</td>
+      <td>1.617373e+09</td>
+      <td>371.673237</td>
+      <td>1.617373e+09</td>
+      <td>24.021620</td>
+      <td>0</td>
+      <td>bugs_12.PNG</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>prose</td>
+      <td>up</td>
+      <td>376.701372</td>
+      <td>1.617373e+09</td>
+      <td>387.319389</td>
+      <td>1.617373e+09</td>
+      <td>10.618017</td>
+      <td>0</td>
+      <td>bugs_6.PNG</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="preprocessing">
+<h2>Preprocessing<a class="headerlink" href="#preprocessing" title="Permalink to this headline">¶</a></h2>
+<p>Now we need to preprocess the data a bit, gathering the EEG data for each trial in the experiment.</p>
+<ul class="simple">
+<li><p>[ ] Better cleaning/rejection of bad epochs/windows/samples</p></li>
+</ul>
+<div class="section" id="filter-short-trials">
+<h3>Filter short trials<a class="headerlink" href="#filter-short-trials" title="Permalink to this headline">¶</a></h3>
+<p>We filter away rows where the subject didn’t spend at least <code class="docutils literal notranslate"><span class="pre">min_task_duration</span></code> seconds with the task.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_prev</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_markers</span><span class="p">)</span>
+<span class="n">df_markers</span> <span class="o">=</span> <span class="n">df_markers</span><span class="p">[</span><span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">min_task_duration</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Filtered away </span><span class="si">{</span><span class="n">n_prev</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_markers</span><span class="p">)</span><span class="si">}</span><span class="s2"> epochs due to short duration&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Filtered away 17 epochs due to short duration
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="filter-no-answer-trials">
+<h3>Filter no answer trials<a class="headerlink" href="#filter-no-answer-trials" title="Permalink to this headline">¶</a></h3>
+<p>We filter away rows where space was clicked (didn’t answer/skipped/unsure?)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_prev</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_markers</span><span class="p">)</span>
+<span class="n">df_markers</span> <span class="o">=</span> <span class="n">df_markers</span><span class="p">[</span><span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;response&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;up&#39;</span><span class="p">,</span> <span class="s1">&#39;down&#39;</span><span class="p">])]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Filtered away </span><span class="si">{</span><span class="n">n_prev</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_markers</span><span class="p">)</span><span class="si">}</span><span class="s2"> epochs due skipped by subject&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Filtered away 5 epochs due skipped by subject
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">single_subject</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Selecting subject </span><span class="si">{</span><span class="n">single_subject</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">n_prev</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_markers</span><span class="p">)</span>
+    <span class="n">new_markers</span> <span class="o">=</span> <span class="n">df_markers</span><span class="p">[</span><span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;subject&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">single_subject</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">new_markers</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+        <span class="n">df_markers</span> <span class="o">=</span> <span class="n">new_markers</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;old size: </span><span class="si">{</span><span class="n">n_prev</span><span class="si">}</span><span class="s2">, new size: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_markers</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Using all subjects&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Using all subjects
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="exponential-moving-standardize">
+<h3>Exponential moving standardize<a class="headerlink" href="#exponential-moving-standardize" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">standardize</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">braindecode.datautil</span> <span class="kn">import</span> <span class="n">exponential_moving_standardize</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">exponential_moving_standardize</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">ch_idx</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+        <span class="n">eeg</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span><span class="p">[:,</span> <span class="n">ch_idx</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Skipping exponential standardize&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Skipping exponential standardize
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="bandpass-filtering">
+<h3>Bandpass filtering<a class="headerlink" href="#bandpass-filtering" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>[ ] FIXME: Why is the signal shifted after filtering? Should this be accounted for somehow?</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Bandpass-filter the signal</span>
+<span class="k">if</span> <span class="n">use_bandpass_filter</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Bandpass-filtering the signal&quot;</span><span class="p">)</span>
+    <span class="n">plot_eeg</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="mi">20000</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">sfreq</span><span class="p">)</span>
+    
+    <span class="n">eeg_clean</span> <span class="o">=</span> <span class="n">clean</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">eeg</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ch_idx</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+        <span class="n">eeg</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">eeg_clean</span><span class="p">[:,</span> <span class="n">ch_idx</span><span class="p">]</span>
+        
+    <span class="c1"># plot the new result</span>
+    <span class="n">plot_eeg</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="mi">20000</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">sfreq</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Skipping bandpass filtering&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Bandpass-filtering the signal
+</pre></div>
+</div>
+<img alt="../_images/Main_27_1.png" src="../_images/Main_27_1.png" />
+<img alt="../_images/Main_27_2.png" src="../_images/Main_27_2.png" />
+</div>
+</div>
+</div>
+<div class="section" id="constructing-epochs">
+<h3>Constructing epochs<a class="headerlink" href="#constructing-epochs" title="Permalink to this headline">¶</a></h3>
+<p>Now we match up the EEG data with the markers to create our epochs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epochs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df_markers</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;t_presented_utc&#39;</span><span class="p">],</span> <span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+    <span class="n">stop</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;t_answered_utc&#39;</span><span class="p">],</span> <span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+    <span class="n">epoch</span> <span class="o">=</span> <span class="n">eeg</span><span class="o">.</span><span class="n">truncate</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">)</span>
+    
+    <span class="c1"># Check that sample count aligns with epoch duration</span>
+    <span class="n">expected_samples</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">sfreq</span><span class="p">)</span>
+    <span class="n">actual_samples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">expected_samples</span> <span class="o">-</span> <span class="n">actual_samples</span>
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected </span><span class="si">{</span><span class="n">expected_samples</span><span class="si">}</span><span class="s2"> samples, found </span><span class="si">{</span><span class="n">actual_samples</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+    <span class="n">epochs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">epoch</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;subject&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;img&#39;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;epochs: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">epochs</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Expected 15613 samples, found 14653
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Expected 14755 samples, found 13651
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Expected 6682 samples, found 5578
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>epochs: 54
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="epochs-to-windows">
+<h4>Epochs to windows<a class="headerlink" href="#epochs-to-windows" title="Permalink to this headline">¶</a></h4>
+<p>Now we split up the epochs into windows of a fixed size.</p>
+<ul class="simple">
+<li><p>[ ] TODO: Use a sliding window approach, similar to the one in braindecode (needs care with CV)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Split epochs into windows</span>
+<span class="n">WINDOW_SIZE</span> <span class="o">=</span> <span class="mi">512</span>
+
+<span class="n">windows</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">epoch</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">epoch</span><span class="p">),</span> <span class="n">WINDOW_SIZE</span><span class="p">):</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="n">epoch</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">WINDOW_SIZE</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">window</span><span class="p">)</span> <span class="o">==</span> <span class="n">WINDOW_SIZE</span><span class="p">:</span>
+            <span class="n">windows</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">window</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">img</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;epoch too small (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">window</span><span class="p">)</span><span class="si">}</span><span class="s1">), skipping&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;windows: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">windows</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>windows: 1071
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="constructing-our-x-and-y">
+<h3>Constructing our <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code><a class="headerlink" href="#constructing-our-x-and-y" title="Permalink to this headline">¶</a></h3>
+<p>Now to actually construct matrices that we can feed into the classifier.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">img</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">windows</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1071, 4, 512)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Lets take a look at the signal in a few of the windows to make sure it looks ok</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">axs</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axs</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">40</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">WINDOW_SIZE</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span><span class="o">.</span><span class="n">T</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Main_34_0.png" src="../_images/Main_34_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1071,)
+Counter({&#39;code&#39;: 749, &#39;prose&#39;: 322})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">subj</span><span class="p">)</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">shuffle</span>
+
+<span class="k">if</span> <span class="n">balance_dataset</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;only supports two classes&#39;</span>
+    
+    <span class="n">c_y</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">c_smallest</span><span class="p">,</span> <span class="n">min_count</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">c_y</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Smallest class: </span><span class="si">{</span><span class="n">c_smallest</span><span class="si">}</span><span class="s2"> with </span><span class="si">{</span><span class="n">min_count</span><span class="si">}</span><span class="s2"> samples&quot;</span><span class="p">)</span>
+    
+    <span class="n">large_class_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">y</span> <span class="o">!=</span> <span class="n">c_smallest</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">other_class_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">c_smallest</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    
+    <span class="c1"># Randomly undersample the largest class</span>
+    <span class="n">shuffle</span><span class="p">(</span><span class="n">large_class_samples</span><span class="p">)</span>
+    <span class="n">subsample</span> <span class="o">=</span> <span class="n">large_class_samples</span><span class="p">[:</span><span class="n">min_count</span><span class="p">]</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">subsample</span><span class="p">,</span> <span class="n">other_class_samples</span><span class="p">])</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">img</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">subj</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">img</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total samples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Doesn&#39;t work as fit_resample expects X to be a 2D matrix</span>
+    <span class="c1">#from imblearn.under_sampling import RandomUnderSampler</span>
+    <span class="c1">#rus = RandomUnderSampler(random_state=0)</span>
+    <span class="c1">#X_resampled, y_resampled = rus.fit_resample(X, y)</span>
+    <span class="c1">#print(sorted(Counter(y_resampled).items()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Smallest class: prose with 322 samples
+Total samples: 644
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="training">
+<h2>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h2>
+<p>Here we train our model using pyRiemann.</p>
+<ul class="simple">
+<li><p>[ ] Much of this code is from eegclassify/main.py, code should probably be reused better</p></li>
+</ul>
+<p>First we set up the different classifiers we want to train:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sklearn</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">LeaveOneGroupOut</span><span class="p">,</span> <span class="n">learning_curve</span>
+<span class="kn">from</span> <span class="nn">sklearn.discriminant_analysis</span> <span class="kn">import</span> <span class="n">LinearDiscriminantAnalysis</span> <span class="k">as</span> <span class="n">LDA</span>
+
+<span class="kn">from</span> <span class="nn">pyriemann.estimation</span> <span class="kn">import</span> <span class="n">Covariances</span><span class="p">,</span> <span class="n">ERPCovariances</span><span class="p">,</span> <span class="n">XdawnCovariances</span>
+<span class="kn">from</span> <span class="nn">pyriemann.spatialfilters</span> <span class="kn">import</span> <span class="n">CSP</span>
+<span class="kn">from</span> <span class="nn">pyriemann.tangentspace</span> <span class="kn">import</span> <span class="n">TangentSpace</span>
+
+
+<span class="c1"># Fixes non-convergence for binary classification</span>
+<span class="n">dual</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+
+<span class="n">clfs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Pipeline</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># These four are from https://neurotechx.github.io/eeg-notebooks/auto_examples/visual_ssvep/02r__ssvep_decoding.html</span>
+    <span class="s2">&quot;CSP + Cov + TS&quot;</span><span class="p">:</span> <span class="n">make_pipeline</span><span class="p">(</span>
+        <span class="n">Covariances</span><span class="p">(),</span>
+        <span class="n">CSP</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+        <span class="n">TangentSpace</span><span class="p">(),</span>
+        <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">dual</span><span class="o">=</span><span class="n">dual</span><span class="p">),</span>
+    <span class="p">),</span>
+    <span class="s2">&quot;Cov + TS&quot;</span><span class="p">:</span> <span class="n">make_pipeline</span><span class="p">(</span>
+        <span class="n">Covariances</span><span class="p">(),</span> <span class="n">TangentSpace</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">dual</span><span class="o">=</span><span class="n">dual</span><span class="p">)</span>
+    <span class="p">),</span>
+    <span class="s2">&quot;Xdawn + TS&quot;</span><span class="p">:</span> <span class="n">make_pipeline</span><span class="p">(</span>
+        <span class="n">XdawnCovariances</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+        <span class="n">TangentSpace</span><span class="p">(</span><span class="n">metric</span><span class="o">=</span><span class="s1">&#39;riemann&#39;</span><span class="p">),</span>
+        <span class="n">LogisticRegression</span><span class="p">()</span>
+    <span class="p">),</span>
+    <span class="c1"># Performs meh</span>
+    <span class="c1">#&quot;CSP + RegLDA&quot;: make_pipeline(</span>
+    <span class="c1">#    Covariances(), CSP(4), LDA(shrinkage=&quot;auto&quot;, solver=&quot;eigen&quot;)</span>
+    <span class="c1">#),</span>
+    <span class="c1"># Performs badly</span>
+    <span class="c1"># &quot;Cov + MDM&quot;: make_pipeline(Covariances(), MDM()),</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And then we train each classifier and plot their respective confusion matrices:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">plot_confusion_matrix</span>
+<span class="kn">from</span> <span class="nn">eegclassify.util</span> <span class="kn">import</span> <span class="n">unison_shuffled_copies</span>
+<span class="kn">from</span> <span class="nn">eegclassify.main</span> <span class="kn">import</span> <span class="n">_performance</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">clf</span> <span class="ow">in</span> <span class="n">clfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;===== Training with </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> =====&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Shuffled split</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">model_selection</span><span class="o">.</span><span class="n">train_test_split</span><span class="p">(</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Training...&quot;</span><span class="p">)</span>
+    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test score: </span><span class="si">{</span><span class="n">clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="n">perf</span> <span class="o">=</span> <span class="n">_performance</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">perf</span><span class="p">)</span>
+    
+    <span class="n">disp</span> <span class="o">=</span> <span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span>
+                                 <span class="n">display_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">,</span> <span class="s1">&#39;prose&#39;</span><span class="p">],</span>
+                                 <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Blues</span><span class="p">,</span>
+                                 <span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with CSP + Cov + TS =====
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Training...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Test score: 0.7680412371134021
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: {&#39;precision&#39;: 0.7687107420419461, &#39;recall&#39;: 0.7682823129251701, &#39;fbeta&#39;: 0.767985754910038, &#39;support&#39;: array([98, 96]), &#39;bac&#39;: 0.7682823129251701, &#39;confusion_matrix&#39;: array([[73, 25],
+       [20, 76]])}
+</pre></div>
+</div>
+<img alt="../_images/Main_42_4.png" src="../_images/Main_42_4.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with Cov + TS =====
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Training...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Test score: 0.7525773195876289
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: {&#39;precision&#39;: 0.7590933621154884, &#39;recall&#39;: 0.7555626530394975, &#39;fbeta&#39;: 0.7521558607473651, &#39;support&#39;: array([101,  93]), &#39;bac&#39;: 0.7555626530394975, &#39;confusion_matrix&#39;: array([[69, 32],
+       [16, 77]])}
+</pre></div>
+</div>
+<img alt="../_images/Main_42_9.png" src="../_images/Main_42_9.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with Xdawn + TS =====
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Training...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Test score: 0.7216494845360825
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: {&#39;precision&#39;: 0.7223404255319148, &#39;recall&#39;: 0.7223404255319148, &#39;fbeta&#39;: 0.7216494845360825, &#39;support&#39;: array([ 94, 100]), &#39;bac&#39;: 0.7223404255319148, &#39;confusion_matrix&#39;: array([[70, 24],
+       [30, 70]])}
+</pre></div>
+</div>
+<img alt="../_images/Main_42_14.png" src="../_images/Main_42_14.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># LORO/LOGO split</span>
+<span class="c1"># TODO: Is LOGO the same as LORO?</span>
+<span class="n">logo</span> <span class="o">=</span> <span class="n">LeaveOneGroupOut</span><span class="p">()</span>
+<span class="n">groups</span> <span class="o">=</span> <span class="n">img</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">clf</span> <span class="ow">in</span> <span class="n">clfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;===== Training with </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> =====&quot;</span><span class="p">)</span>
+    
+    <span class="n">score</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">model_selection</span><span class="o">.</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CV score (shuffled):   </span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># LORO</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">model_selection</span><span class="o">.</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">logo</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CV score (LORO):       </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">score</span><span class="p">)</span> <span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (mean), </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">score</span><span class="p">)</span> <span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (std)&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># FIXME: This shouldn&#39;t run on the entire sample</span>
+    <span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+                          <span class="n">display_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">,</span> <span class="s1">&#39;prose&#39;</span><span class="p">],</span>
+                          <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Blues</span><span class="p">,</span>
+                          <span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with CSP + Cov + TS =====
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (shuffled):   [0.65581395 0.75813953 0.81308411]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (LORO):       0.712 (mean), 0.164 (std)
+</pre></div>
+</div>
+<img alt="../_images/Main_43_3.png" src="../_images/Main_43_3.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with Cov + TS =====
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (shuffled):   [0.65581395 0.75813953 0.81308411]
+</pre></div>
+</div>
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">23</span><span class="o">-</span><span class="mi">8306</span><span class="n">bc54119e</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> 
+<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="c1"># LORO</span>
+<span class="ne">---&gt; </span><span class="mi">13</span>     <span class="n">score</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">model_selection</span><span class="o">.</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">logo</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CV score (LORO):       </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">score</span><span class="p">)</span> <span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (mean), </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">score</span><span class="p">)</span> <span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (std)&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> 
+
+<span class="nn">~/work/thesis/thesis/.venv/lib/python3.8/site-packages/sklearn/utils/validation.py</span> in <span class="ni">inner_f</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">70</span>                           <span class="ne">FutureWarning</span><span class="p">)</span>
+<span class="nn">     71         kwargs.update({k: arg for k, arg</span> in <span class="ni">zip</span><span class="nt">(sig.parameters, args)})</span>
+<span class="ne">---&gt; </span><span class="mi">72</span>         <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">73</span>     <span class="k">return</span> <span class="n">inner_f</span>
+<span class="g g-Whitespace">     </span><span class="mi">74</span> 
+
+<span class="nn">~/work/thesis/thesis/.venv/lib/python3.8/site-packages/sklearn/model_selection/_validation.py</span> in <span class="ni">cross_val_score</span><span class="nt">(estimator, X, y, groups, scoring, cv, n_jobs, verbose, fit_params, pre_dispatch, error_score)</span>
+<span class="g g-Whitespace">    </span><span class="mi">399</span>     <span class="n">scorer</span> <span class="o">=</span> <span class="n">check_scoring</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">scoring</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">400</span> 
+<span class="ne">--&gt; </span><span class="mi">401</span>     <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">402</span>                                 <span class="n">scoring</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="n">scorer</span><span class="p">},</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">403</span>                                 <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+
+<span class="nn">~/work/thesis/thesis/.venv/lib/python3.8/site-packages/sklearn/utils/validation.py</span> in <span class="ni">inner_f</span><span class="nt">(*args, **kwargs)</span>
+<span class="g g-Whitespace">     </span><span class="mi">70</span>                           <span class="ne">FutureWarning</span><span class="p">)</span>
+<span class="nn">     71         kwargs.update({k: arg for k, arg</span> in <span class="ni">zip</span><span class="nt">(sig.parameters, args)})</span>
+<span class="ne">---&gt; </span><span class="mi">72</span>         <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">73</span>     <span class="k">return</span> <span class="n">inner_f</span>
+<span class="g g-Whitespace">     </span><span class="mi">74</span> 
+
+<span class="nn">~/work/thesis/thesis/.venv/lib/python3.8/site-packages/sklearn/model_selection/_validation.py</span> in <span class="ni">cross_validate</span><span class="nt">(estimator, X, y, groups, scoring, cv, n_jobs, verbose, fit_params, pre_dispatch, return_train_score, return_estimator, error_score)</span>
+<span class="g g-Whitespace">    </span><span class="mi">240</span>     <span class="n">parallel</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">241</span>                         <span class="n">pre_dispatch</span><span class="o">=</span><span class="n">pre_dispatch</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">242</span>     <span class="n">scores</span> <span class="o">=</span> <span class="n">parallel</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">243</span>         <span class="n">delayed</span><span class="p">(</span><span class="n">_fit_and_score</span><span class="p">)(</span>
+<span class="g g-Whitespace">    </span><span class="mi">244</span>             <span class="n">clone</span><span class="p">(</span><span class="n">estimator</span><span class="p">),</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">scorers</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>
+
+<span class="nn">~/work/thesis/thesis/.venv/lib/python3.8/site-packages/joblib/parallel.py</span> in <span class="ni">__call__</span><span class="nt">(self, iterable)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1052</span> 
+<span class="g g-Whitespace">   </span><span class="mi">1053</span>             <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="o">.</span><span class="n">retrieval_context</span><span class="p">():</span>
+<span class="ne">-&gt; </span><span class="mi">1054</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">retrieve</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">1055</span>             <span class="c1"># Make sure that we get a last message telling us we are done</span>
+<span class="g g-Whitespace">   </span><span class="mi">1056</span>             <span class="n">elapsed_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span>
+
+<span class="nn">~/work/thesis/thesis/.venv/lib/python3.8/site-packages/joblib/parallel.py</span> in <span class="ni">retrieve</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">931</span>             <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">932</span>                 <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_backend</span><span class="p">,</span> <span class="s1">&#39;supports_timeout&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">933</span>                     <span class="bp">self</span><span class="o">.</span><span class="n">_output</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">))</span>
+<span class="g g-Whitespace">    </span><span class="mi">934</span>                 <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">935</span>                     <span class="bp">self</span><span class="o">.</span><span class="n">_output</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+
+<span class="nn">~/work/thesis/thesis/.venv/lib/python3.8/site-packages/joblib/_parallel_backends.py</span> in <span class="ni">wrap_future_result</span><span class="nt">(future, timeout)</span>
+<span class="g g-Whitespace">    </span><span class="mi">540</span>         <span class="n">AsyncResults</span><span class="o">.</span><span class="n">get</span> <span class="kn">from</span> <span class="nn">multiprocessing.</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">541</span><span class="s2">         try:</span>
+<span class="ne">--&gt; </span><span class="mi">542</span><span class="s2">             return future.result(timeout=timeout)</span>
+<span class="g g-Whitespace">    </span><span class="mi">543</span><span class="s2">         except CfTimeoutError as e:</span>
+<span class="g g-Whitespace">    </span><span class="mi">544</span><span class="s2">             raise TimeoutError from e</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.10/x64/lib/python3.8/concurrent/futures/_base.py</span> in <span class="ni">result</span><span class="nt">(self, timeout)</span>
+<span class="g g-Whitespace">    </span><span class="mi">437</span><span class="s2">                     return self.__get_result()</span>
+<span class="g g-Whitespace">    </span><span class="mi">438</span><span class="s2"> </span>
+<span class="ne">--&gt; </span><span class="mi">439</span><span class="s2">                 self._condition.wait(timeout)</span>
+<span class="g g-Whitespace">    </span><span class="mi">440</span><span class="s2"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">441</span><span class="s2">                 if self._state in [CANCELLED, CANCELLED_AND_NOTIFIED]:</span>
+
+<span class="nn">/opt/hostedtoolcache/Python/3.8.10/x64/lib/python3.8/threading.py</span> in <span class="ni">wait</span><span class="nt">(self, timeout)</span>
+<span class="g g-Whitespace">    </span><span class="mi">300</span><span class="s2">         try:    # restore state no matter what (e.g., KeyboardInterrupt)</span>
+<span class="g g-Whitespace">    </span><span class="mi">301</span><span class="s2">             if timeout is None:</span>
+<span class="ne">--&gt; </span><span class="mi">302</span><span class="s2">                 waiter.acquire()</span>
+<span class="g g-Whitespace">    </span><span class="mi">303</span><span class="s2">                 gotit = True</span>
+<span class="g g-Whitespace">    </span><span class="mi">304</span><span class="s2">             else:</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="learning-curves">
+<h3>Learning curves<a class="headerlink" href="#learning-curves" title="Permalink to this headline">¶</a></h3>
+<p>Now to check the learning curves and see if the train and validation scores converge.</p>
+<p><strong>Note:</strong> Performance is currently terrible as there isn’t enough data for the model to learn to generalize across subjects (easily seen by changing to shuffled CV).</p>
+<p>A great example of how to plot learning curves is available here: https://scikit-learn.org/stable/auto_examples/model_selection/plot_learning_curve.html</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">eegclassify.util</span> <span class="kn">import</span> <span class="n">powspace</span>
+
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">clf</span> <span class="ow">in</span> <span class="n">clfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;===== Training with </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> =====&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># We create shuffled versions of the dataset to ensure that all stimuli of the same type aren&#39;t in sequence</span>
+    <span class="c1"># (as is the case for subject 1 which didn&#39;t have shuffled stimuli)</span>
+    <span class="n">x_l</span><span class="p">,</span> <span class="n">y_l</span><span class="p">,</span> <span class="n">groups_l</span> <span class="o">=</span> <span class="n">unison_shuffled_copies</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">groups</span><span class="p">)</span>
+    <span class="c1">#x_l, y_l, groups_l = X, y, groups</span>
+    
+    <span class="c1"># We build a train_sizes to train across several sample sizes</span>
+    <span class="n">groups_c</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">groups_l</span><span class="p">)</span>
+    <span class="n">largest_group</span><span class="p">,</span> <span class="n">largest_group_count</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">groups_c</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">g</span><span class="p">:</span> <span class="n">g</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">largest_loro_train</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">-</span> <span class="n">largest_group_count</span>
+    <span class="n">smallest_train</span> <span class="o">=</span> <span class="mi">10</span>
+    
+    <span class="n">train_sizes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">powspace</span><span class="p">(</span><span class="n">smallest_train</span><span class="p">,</span> <span class="n">largest_loro_train</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span> <span class="o">/</span> <span class="n">largest_loro_train</span>
+    <span class="c1"># print(train_sizes)</span>
+    
+    <span class="c1"># Compute the learning curve</span>
+    <span class="n">train_sizes</span><span class="p">,</span> <span class="n">train_scores</span><span class="p">,</span> <span class="n">valid_scores</span> <span class="o">=</span> <span class="n">learning_curve</span><span class="p">(</span>
+        <span class="n">clf</span><span class="p">,</span> <span class="n">x_l</span><span class="p">,</span> <span class="n">y_l</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups_l</span><span class="p">,</span> 
+        <span class="n">train_sizes</span><span class="o">=</span><span class="n">train_sizes</span><span class="p">,</span> 
+        <span class="n">cv</span><span class="o">=</span><span class="n">logo</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span>
+    <span class="p">)</span>
+    
+    <span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">train_scores</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">train_scores</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_sizes</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;training score&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">train_sizes</span><span class="p">,</span> <span class="n">m</span><span class="o">-</span><span class="n">std</span><span class="p">,</span> <span class="n">m</span><span class="o">+</span><span class="n">std</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+    
+    <span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">valid_scores</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">valid_scores</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_sizes</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;validation score&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">train_sizes</span><span class="p">,</span> <span class="n">m</span><span class="o">-</span><span class="n">std</span><span class="p">,</span> <span class="n">m</span><span class="o">+</span><span class="n">std</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">train_sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">train_sizes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="braindecode-stuff">
+<h1>Braindecode stuff<a class="headerlink" href="#braindecode-stuff" title="Permalink to this headline">¶</a></h1>
+<p>Here we’ll experiment with braindecode (convnets) to compare performance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># To use braindecode we need to transform our data to the braindecode format</span>
+
+<span class="kn">from</span> <span class="nn">braindecode.datautil</span> <span class="kn">import</span> <span class="n">create_from_X_y</span>
+
+<span class="c1"># This wants X to be in the shape (x_trials, n_channels, n_samples)</span>
+<span class="n">Xb</span><span class="p">,</span> <span class="n">yb</span><span class="p">,</span> <span class="n">subjb</span><span class="p">,</span> <span class="n">imgb</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">epochs</span><span class="p">)</span>
+<span class="n">Xb</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">Xb</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Xb</span><span class="p">),</span> <span class="n">Xb</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">yb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span> <span class="k">if</span> <span class="n">yy</span> <span class="o">==</span> <span class="s1">&#39;code&#39;</span> <span class="k">else</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">yy</span> <span class="ow">in</span> <span class="n">y</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">yb</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">windows_dataset</span> <span class="o">=</span> <span class="n">create_from_X_y</span><span class="p">(</span>
+    <span class="n">Xb</span><span class="p">,</span> <span class="n">yb</span><span class="p">,</span> <span class="n">drop_last_window</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sfreq</span><span class="o">=</span><span class="n">sfreq</span><span class="p">,</span> <span class="n">ch_names</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span>
+    <span class="n">window_stride_samples</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">window_size_samples</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">windows_dataset</span><span class="o">.</span><span class="n">description</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">imgb</span>
+<span class="n">windows_dataset</span><span class="o">.</span><span class="n">description</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Homegrown LORO</span>
+<span class="n">splitted</span> <span class="o">=</span> <span class="n">windows_dataset</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">)</span>
+<span class="n">train_sets</span> <span class="o">=</span> <span class="p">[</span><span class="n">splitted</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">splitted</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">1</span><span class="p">:]]</span>
+<span class="n">train_set</span> <span class="o">=</span> <span class="n">train_sets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">train_sets</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+    <span class="n">train_sets</span> <span class="o">+=</span> <span class="n">ts</span>
+<span class="n">valid_set</span> <span class="o">=</span> <span class="n">splitted</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">splitted</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">braindecode.util</span> <span class="kn">import</span> <span class="n">set_random_seeds</span>
+<span class="kn">from</span> <span class="nn">braindecode.models</span> <span class="kn">import</span> <span class="n">ShallowFBCSPNet</span>
+
+<span class="n">cuda</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span>  <span class="c1"># check if GPU is available, if True chooses to use it</span>
+<span class="k">if</span> <span class="n">cuda</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CUDA available!&quot;</span><span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="kc">True</span>
+    
+<span class="c1"># Set random seed to be able to reproduce results</span>
+<span class="n">seed</span> <span class="o">=</span> <span class="mi">20200220</span>
+<span class="n">set_random_seeds</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">cuda</span><span class="o">=</span><span class="n">cuda</span><span class="p">)</span>
+
+<span class="c1"># Extract number of chans and time steps from dataset</span>
+<span class="n">n_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+<span class="n">n_chans</span> <span class="o">=</span> <span class="n">train_set</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">input_window_samples</span> <span class="o">=</span> <span class="n">train_set</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;classes:   </span><span class="si">{</span><span class="n">n_classes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;channels:  </span><span class="si">{</span><span class="n">n_chans</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;samples per window:  </span><span class="si">{</span><span class="n">input_window_samples</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">ShallowFBCSPNet</span><span class="p">(</span>
+    <span class="n">n_chans</span><span class="p">,</span>
+    <span class="n">n_classes</span><span class="p">,</span>
+    <span class="n">input_window_samples</span><span class="o">=</span><span class="n">input_window_samples</span><span class="p">,</span>
+    <span class="n">final_conv_length</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Send model to GPU</span>
+<span class="k">if</span> <span class="n">cuda</span><span class="p">:</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">train_set</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">train_set</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skorch.callbacks</span> <span class="kn">import</span> <span class="n">LRScheduler</span>
+<span class="kn">from</span> <span class="nn">skorch.helper</span> <span class="kn">import</span> <span class="n">predefined_split</span>
+
+<span class="kn">from</span> <span class="nn">braindecode</span> <span class="kn">import</span> <span class="n">EEGClassifier</span>
+
+<span class="c1"># These values we found good for shallow network:</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">0.0625</span> <span class="o">*</span> <span class="mf">0.01</span>
+<span class="n">weight_decay</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># For deep4 they should be:</span>
+<span class="c1"># lr = 1 * 0.01</span>
+<span class="c1"># weight_decay = 0.5 * 0.001</span>
+
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">EEGClassifier</span><span class="p">(</span>
+    <span class="n">model</span><span class="p">,</span>
+    <span class="n">criterion</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">NLLLoss</span><span class="p">,</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">AdamW</span><span class="p">,</span>
+    <span class="n">train_split</span><span class="o">=</span><span class="n">predefined_split</span><span class="p">(</span><span class="n">valid_set</span><span class="p">),</span>  <span class="c1"># using valid_set for validation</span>
+    <span class="n">optimizer__lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+    <span class="n">optimizer__weight_decay</span><span class="o">=</span><span class="n">weight_decay</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">&quot;accuracy&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;lr_scheduler&quot;</span><span class="p">,</span> <span class="n">LRScheduler</span><span class="p">(</span><span class="s1">&#39;CosineAnnealingLR&#39;</span><span class="p">,</span> <span class="n">T_max</span><span class="o">=</span><span class="n">n_epochs</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)),</span>
+    <span class="p">],</span>
+    <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda&#39;</span> <span class="k">if</span> <span class="n">cuda</span> <span class="k">else</span> <span class="s1">&#39;cpu&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Model training for a specified number of epochs. `y` is None as it is already supplied in the dataset.</span>
+<span class="c1"># FIXME: Remove try/except when error is resolved</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_set</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">n_epochs</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="../notebooks.html" title="previous page">Notebooks</a>
+    <a class='right-next' id="next-link" href="Signal.html" title="next page">Signal</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Erik Bjäreholt<br/>
+        
+            &copy; Copyright 2021, Erik Bjäreholt.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
