@@ -69,7 +69,9 @@ jobs:
           poetry install
 
       - name: Build docs
+        shell: bash
         run: |
+            source .venv/bin/activate
             make docs
       - name: Upload
         uses: actions/upload-artifact@v2
