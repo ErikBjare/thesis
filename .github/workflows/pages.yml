@@ -71,7 +71,7 @@ jobs:
       - name: Build docs
         shell: bash
         run: |
-            source .venv/bin/activate
+            pushd notebooks; make set-kernel; popd
             make docs
       - name: Upload
         uses: actions/upload-artifact@v2
