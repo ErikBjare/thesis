@@ -226,7 +226,7 @@
 <span class="kn">from</span> <span class="nn">eegwatch.devices.muse</span> <span class="kn">import</span> <span class="n">CHANNELS_MUSE</span>
 
 <span class="o">%</span><span class="k">matplotlib</span> inline
-<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 
 <span class="n">N_SAMPLES_PLOT</span> <span class="o">=</span> <span class="mi">400</span>
 </pre></div>
@@ -380,10 +380,15 @@ maxabs	 [503.54905413  14.8455845   18.4988983  492.59582391]
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot signal quality as timeline plot</span>
+<span class="kn">from</span> <span class="nn">eegclassify.plot</span> <span class="kn">import</span> <span class="n">TimelineFigure</span>
+
+<span class="n">tl</span> <span class="o">=</span> <span class="n">TimelineFigure</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Signal quality&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 
 <span class="n">cmap</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;RdYlGn&#39;</span><span class="p">)</span>
 <span class="n">chunk_len</span> <span class="o">=</span> <span class="mi">250</span>
+
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">channel</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">CHANNELS_MUSE</span><span class="p">):</span>
+    <span class="n">events</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">si</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">chunk_len</span><span class="p">,</span> <span class="n">X_f</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">chunk_len</span><span class="p">):</span>
         <span class="n">begin</span> <span class="o">=</span> <span class="n">si</span> <span class="o">-</span> <span class="n">chunk_len</span>
         <span class="n">end</span> <span class="o">=</span> <span class="n">si</span>
@@ -391,11 +396,11 @@ maxabs	 [503.54905413  14.8455845   18.4988983  492.59582391]
         <span class="n">quality</span> <span class="o">=</span> <span class="n">score</span><span class="p">(</span><span class="n">check</span><span class="p">(</span><span class="n">segment</span><span class="p">))</span>
         <span class="c1"># Channels should be listed in top-down order, as in the muse-lsl viewer</span>
         <span class="n">chidx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">CHANNELS_MUSE</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">i</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">chidx</span><span class="p">,</span> <span class="n">end</span><span class="o">-</span><span class="n">begin</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">begin</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cmap</span><span class="p">(</span><span class="n">quality</span><span class="p">))</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">begin</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">cmap</span><span class="p">(</span><span class="n">quality</span><span class="p">)))</span>
+        
+    <span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">(</span><span class="n">events</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Signal quality&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">CHANNELS_MUSE</span><span class="p">)),</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">CHANNELS_MUSE</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">tl</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
