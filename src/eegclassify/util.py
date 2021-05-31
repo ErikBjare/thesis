@@ -14,6 +14,8 @@ def test_unison_shuffled_copies():
     c = np.array(range(2, 12))
     sa, sb, sc = unison_shuffled_copies(a, b, c)
     assert all([v1 == v2 - 1 == v3 - 2 for v1, v2, v3 in zip(sa, sb, sc)])
+    assert all(a == np.array(range(10))), "input array was mutated"
+    assert all(c == np.array(range(2, 12))), "input array was mutated"
 
 
 def powspace(start, stop, power, num):

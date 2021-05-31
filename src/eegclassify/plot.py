@@ -1,5 +1,6 @@
 import logging
-from typing import List, Optional
+from typing import List, Optional, Tuple
+from datetime import datetime
 
 import numpy as np
 import pandas as pd
@@ -37,3 +38,27 @@ def pca(X: np.ndarray, y: np.ndarray) -> None:
     plt.xlabel("Principal Component 1", fontsize=16)
     plt.xticks(rotation="vertical")
     plt.show()
+
+
+class TimelineFigure:
+    def __init__(self, title=None, **kwargs):
+        self.fig = plt.figure(**kwargs)
+        self.ax = plt.gca()
+        if title:
+            self.ax.set_title(title)
+        self.bars = []
+
+    def plot(self):
+        for bar_idx, bar in enumerate(self.bars):
+            for event in bar["events"]:
+                start, end, color = event
+                plt.barh(-bar_idx, end - start, left=start, color=color)
+
+        tick_idxs = list(range(0, -len(self.bars), -1))
+        self.ax.set_yticks(tick_idxs)
+        self.ax.set_yticklabels([bar["title"] for bar in self.bars])
+
+        plt.show()
+
+    def add_bar(self, events: Tuple[datetime, datetime, str], title: str):
+        self.bars.append({"events": events, "title": title})
