@@ -28,12 +28,12 @@ Traceback (most recent call last):
     await self._async_handle_timeout(timeout, cell)
   File "/home/runner/work/thesis/thesis/.venv/lib/python3.8/site-packages/nbclient/client.py", line 696, in _async_handle_timeout
     raise CellTimeoutError.error_from_timeout_and_cell(
-nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
+nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 180 seconds.
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-['from eegclassify.util import powspace', '', 'for name, clf in clfs.items():', '    logger.info(f"===== Training with {name} =====")', '    clf = clone(clf)']
+['# Model training for a specified number of epochs. `y` is None as it is already supplied in the dataset.', 'for clf in nn_clfs:', '    logger.info(f"==== Training {clf.module.__class__.__name__} ====")', '    ', '    # Send model to GPU']
 ...
-['    plt.ylim(0, 1)', '    plt.xlim(train_sizes[0], train_sizes[-1])', '        ', '    plt.legend()', '    plt.show()']
+['    # FIXME: Remove try/except when error is resolved', '    try:', '        clf.fit(train_set, y=None, epochs=n_epochs)', '    except Exception as e:', '        logger.exception(e)']
 -------------------
 
