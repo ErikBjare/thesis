@@ -37,6 +37,9 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = []
 
+# Timeout for cells in notebooks built by myst_nb
+execution_timeout = 180
+
 
 # -- Options for HTML output -------------------------------------------------
 
