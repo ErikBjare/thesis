@@ -248,6 +248,11 @@
        Loading markers
       </a>
      </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#inspect-the-markers">
+       Inspect the markers
+      </a>
+     </li>
     </ul>
    </li>
    <li class="toc-h2 nav-item toc-entry">
@@ -256,8 +261,8 @@
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#filter-short-trials">
-       Filter short trials
+      <a class="reference internal nav-link" href="#select-subjects">
+       Select subjects
       </a>
      </li>
      <li class="toc-h3 nav-item toc-entry">
@@ -266,8 +271,8 @@
       </a>
      </li>
      <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#exponential-moving-standardize">
-       Exponential moving standardize
+      <a class="reference internal nav-link" href="#filter-short-trials">
+       Filter short trials
       </a>
      </li>
      <li class="toc-h3 nav-item toc-entry">
@@ -276,8 +281,18 @@
       </a>
      </li>
      <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#exponential-moving-standardize">
+       Exponential moving standardize
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
       <a class="reference internal nav-link" href="#constructing-epochs">
        Constructing epochs
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#inspecting-epochs">
+       Inspecting epochs
       </a>
       <ul class="nav section-nav flex-column">
        <li class="toc-h4 nav-item toc-entry">
@@ -286,6 +301,11 @@
         </a>
        </li>
       </ul>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#filter-away-windows-with-bad-signal">
+       Filter away windows with bad signal
+      </a>
      </li>
      <li class="toc-h3 nav-item toc-entry">
       <a class="reference internal nav-link" href="#constructing-our-x-and-y">
@@ -301,6 +321,16 @@
          y
         </span>
        </code>
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#balance-the-dataset">
+       Balance the dataset
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#inspect-the-dataset">
+       Inspect the dataset
       </a>
      </li>
     </ul>
@@ -381,15 +411,17 @@
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timezone</span><span class="p">,</span> <span class="n">timedelta</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
 <span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">mne</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">clone</span>
 
 <span class="kn">from</span> <span class="nn">eegclassify</span> <span class="kn">import</span> <span class="n">main</span><span class="p">,</span> <span class="n">load</span><span class="p">,</span> <span class="n">clean</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">preprocess</span>
 </pre></div>
@@ -408,9 +440,14 @@
 <span class="n">balance_dataset</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">min_task_duration</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">standardize</span> <span class="o">=</span> <span class="kc">False</span>
-    
+<span class="n">sliding_windows</span> <span class="o">=</span> <span class="kc">True</span>
+
 <span class="c1"># Constants</span>
 <span class="n">sfreq</span> <span class="o">=</span> <span class="mi">256</span>  <span class="c1"># sampling frequency of the Muse S</span>
+
+<span class="c1"># Color maps</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;RdYlGn&#39;</span><span class="p">)</span>
+<span class="n">cmap_discrete</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;Paired&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -457,8 +494,11 @@
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;../data&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
     
 <span class="n">files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span>
-    <span class="n">data_dir</span> <span class="o">/</span> <span class="s2">&quot;eeg/muse/subject0000/session001/recording_2021-04-02-14.03.36.csv&quot;</span><span class="p">,</span>
-    <span class="o">*</span><span class="nb">list</span><span class="p">((</span><span class="n">data_dir</span> <span class="o">/</span> <span class="s2">&quot;eeg/muse/subject0001/session001/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.csv&quot;</span><span class="p">)),</span>
+    <span class="o">*</span><span class="nb">list</span><span class="p">((</span><span class="n">data_dir</span> <span class="o">/</span> <span class="s2">&quot;tasks/visual-codeprose/subject0000/session000/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;recording_*.csv&quot;</span><span class="p">)),</span>
+    <span class="o">*</span><span class="nb">list</span><span class="p">((</span><span class="n">data_dir</span> <span class="o">/</span> <span class="s2">&quot;tasks/visual-codeprose/subject0001/session000/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;recording_*.csv&quot;</span><span class="p">)),</span>
+    <span class="o">*</span><span class="nb">list</span><span class="p">((</span><span class="n">data_dir</span> <span class="o">/</span> <span class="s2">&quot;tasks/visual-codeprose/subject0003/session000/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;recording_*.csv&quot;</span><span class="p">)),</span>
+    <span class="o">*</span><span class="nb">list</span><span class="p">((</span><span class="n">data_dir</span> <span class="o">/</span> <span class="s2">&quot;tasks/visual-codeprose/subject0004/session000/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;recording_*.csv&quot;</span><span class="p">)),</span>
+    <span class="o">*</span><span class="nb">list</span><span class="p">((</span><span class="n">data_dir</span> <span class="o">/</span> <span class="s2">&quot;tasks/visual-codeprose/subject0005/session000/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;recording_*.csv&quot;</span><span class="p">)),</span>
 <span class="p">])</span>
 <span class="n">pprint</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
 
@@ -469,17 +509,22 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[PosixPath(&#39;/home/runner/work/thesis/thesis/data/eeg/muse/subject0000/session001/recording_2021-04-02-14.03.36.csv&#39;),
- PosixPath(&#39;/home/runner/work/thesis/thesis/data/eeg/muse/subject0001/session001/recording_2021-03-26-14.09.25.csv&#39;),
- PosixPath(&#39;/home/runner/work/thesis/thesis/data/eeg/muse/subject0001/session001/recording_2021-03-26-14.14.36.csv&#39;),
- PosixPath(&#39;/home/runner/work/thesis/thesis/data/eeg/muse/subject0001/session001/recording_2021-03-26-14.19.36.csv&#39;),
- PosixPath(&#39;/home/runner/work/thesis/thesis/data/eeg/muse/subject0001/session001/recording_2021-03-26-14.24.36.csv&#39;),
- PosixPath(&#39;/home/runner/work/thesis/thesis/data/eeg/muse/subject0001/session001/recording_2021-03-26-14.29.37.csv&#39;)]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0000/session000/recording_2021-04-02-14.03.36.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0001/session000/recording_2021-03-26-14.09.25.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0001/session000/recording_2021-03-26-14.14.36.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0001/session000/recording_2021-03-26-14.19.36.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0001/session000/recording_2021-03-26-14.24.36.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0001/session000/recording_2021-03-26-14.29.37.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0003/session000/recording_2021-05-28-19.04.07.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0004/session000/recording_2021-05-28-19.34.08.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0005/session000/recording_2021-05-28-20.10.24.csv&#39;)]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Concatenating...
 Concatenated!
-(760248, 4)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1822260, 4)
 </pre></div>
 </div>
 </div>
@@ -516,6 +561,9 @@ Concatenated!
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">marker_files</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">data_dir</span> <span class="o">/</span> <span class="s1">&#39;tasks/visual-codeprose/subject0000/session000/subject0_session0_behOutput_2021-04-02-14.28.30.csv&#39;</span><span class="p">,</span>
     <span class="n">data_dir</span> <span class="o">/</span> <span class="s1">&#39;tasks/visual-codeprose/subject0001/session000/subject1_session0_behOutput_2021-03-26-14.31.14.csv&#39;</span><span class="p">,</span>
+    <span class="n">data_dir</span> <span class="o">/</span> <span class="s1">&#39;tasks/visual-codeprose/subject0003/session000/subject3_session0_behOutput_2021-05-28-19.21.35.csv&#39;</span><span class="p">,</span>
+    <span class="n">data_dir</span> <span class="o">/</span> <span class="s1">&#39;tasks/visual-codeprose/subject0004/session000/subject4_session0_behOutput_2021-05-28-19.54.14.csv&#39;</span><span class="p">,</span>
+    <span class="n">data_dir</span> <span class="o">/</span> <span class="s1">&#39;tasks/visual-codeprose/subject0005/session000/subject5_session0_behOutput_2021-05-28-20.36.34.csv&#39;</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="k">def</span> <span class="nf">_build_breaks</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
@@ -563,7 +611,7 @@ Concatenated!
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;img&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;image_path&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">((</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
-<span class="n">df_markers</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;image_path&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">df_markers</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;image_path&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -659,68 +707,100 @@ Concatenated!
       <td>bugs_2.PNG</td>
     </tr>
     <tr>
-      <th>5</th>
-      <td>code</td>
-      <td>up</td>
-      <td>222.900940</td>
-      <td>1.617372e+09</td>
-      <td>294.557512</td>
-      <td>1.617373e+09</td>
-      <td>71.656572</td>
-      <td>0</td>
-      <td>final-8-1.png</td>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>6</th>
+      <th>33</th>
       <td>prose</td>
-      <td>up</td>
-      <td>299.584561</td>
-      <td>1.617373e+09</td>
-      <td>332.086973</td>
-      <td>1.617373e+09</td>
-      <td>32.502412</td>
-      <td>0</td>
-      <td>bugs_4.PNG</td>
+      <td>space</td>
+      <td>1278.203505</td>
+      <td>1.622234e+09</td>
+      <td>1278.348148</td>
+      <td>1.622234e+09</td>
+      <td>0.144643</td>
+      <td>5</td>
+      <td>bugs_9.PNG</td>
     </tr>
     <tr>
-      <th>7</th>
+      <th>34</th>
       <td>code</td>
       <td>space</td>
-      <td>337.134531</td>
-      <td>1.617373e+09</td>
-      <td>342.611160</td>
-      <td>1.617373e+09</td>
-      <td>5.476629</td>
-      <td>0</td>
-      <td>final-2-2.png</td>
+      <td>1278.540643</td>
+      <td>1.622234e+09</td>
+      <td>1278.646399</td>
+      <td>1.622234e+09</td>
+      <td>0.105756</td>
+      <td>5</td>
+      <td>final-4-1.png</td>
     </tr>
     <tr>
-      <th>8</th>
+      <th>35</th>
       <td>prose</td>
-      <td>up</td>
-      <td>347.651617</td>
-      <td>1.617373e+09</td>
-      <td>371.673237</td>
-      <td>1.617373e+09</td>
-      <td>24.021620</td>
-      <td>0</td>
-      <td>bugs_12.PNG</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>prose</td>
-      <td>up</td>
-      <td>376.701372</td>
-      <td>1.617373e+09</td>
-      <td>387.319389</td>
-      <td>1.617373e+09</td>
-      <td>10.618017</td>
-      <td>0</td>
+      <td>space</td>
+      <td>1278.836710</td>
+      <td>1.622234e+09</td>
+      <td>1278.991293</td>
+      <td>1.622234e+09</td>
+      <td>0.154583</td>
+      <td>5</td>
       <td>bugs_6.PNG</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>prose</td>
+      <td>space</td>
+      <td>1279.186634</td>
+      <td>1.622234e+09</td>
+      <td>1279.339957</td>
+      <td>1.622234e+09</td>
+      <td>0.153322</td>
+      <td>5</td>
+      <td>bugs_3.PNG</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>prose</td>
+      <td>space</td>
+      <td>1279.536524</td>
+      <td>1.622234e+09</td>
+      <td>1279.646598</td>
+      <td>1.622234e+09</td>
+      <td>0.110074</td>
+      <td>5</td>
+      <td>bugs_1.PNG</td>
     </tr>
   </tbody>
 </table>
+<p>190 rows × 9 columns</p>
 </div></div></div>
+</div>
+</div>
+<div class="section" id="inspect-the-markers">
+<h3>Inspect the markers<a class="headerlink" href="#inspect-the-markers" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;subject&#39;</span><span class="p">])),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">subject</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;subject&#39;</span><span class="p">]),</span> <span class="n">axs</span><span class="p">):</span>
+    <span class="c1">#plt.figure()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Subject </span><span class="si">{</span><span class="n">subject</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">_df</span> <span class="o">=</span> <span class="n">df_markers</span><span class="p">[</span><span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;subject&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">subject</span><span class="p">]</span>
+    <span class="n">_df</span> <span class="o">=</span> <span class="n">_df</span><span class="p">[</span><span class="n">_df</span><span class="p">[</span><span class="s2">&quot;response&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;space&quot;</span><span class="p">]</span>
+    <span class="n">_df</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Main_19_0.png" src="../_images/Main_19_0.png" />
+</div>
 </div>
 </div>
 </div>
@@ -730,41 +810,8 @@ Concatenated!
 <ul class="simple">
 <li><p>[ ] Better cleaning/rejection of bad epochs/windows/samples</p></li>
 </ul>
-<div class="section" id="filter-short-trials">
-<h3>Filter short trials<a class="headerlink" href="#filter-short-trials" title="Permalink to this headline">¶</a></h3>
-<p>We filter away rows where the subject didn’t spend at least <code class="docutils literal notranslate"><span class="pre">min_task_duration</span></code> seconds with the task.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_prev</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_markers</span><span class="p">)</span>
-<span class="n">df_markers</span> <span class="o">=</span> <span class="n">df_markers</span><span class="p">[</span><span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">min_task_duration</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Filtered away </span><span class="si">{</span><span class="n">n_prev</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_markers</span><span class="p">)</span><span class="si">}</span><span class="s2"> epochs due to short duration&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Filtered away 17 epochs due to short duration
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="filter-no-answer-trials">
-<h3>Filter no answer trials<a class="headerlink" href="#filter-no-answer-trials" title="Permalink to this headline">¶</a></h3>
-<p>We filter away rows where space was clicked (didn’t answer/skipped/unsure?)</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_prev</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_markers</span><span class="p">)</span>
-<span class="n">df_markers</span> <span class="o">=</span> <span class="n">df_markers</span><span class="p">[</span><span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;response&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;up&#39;</span><span class="p">,</span> <span class="s1">&#39;down&#39;</span><span class="p">])]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Filtered away </span><span class="si">{</span><span class="n">n_prev</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_markers</span><span class="p">)</span><span class="si">}</span><span class="s2"> epochs due skipped by subject&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Filtered away 5 epochs due skipped by subject
-</pre></div>
-</div>
-</div>
-</div>
+<div class="section" id="select-subjects">
+<h3>Select subjects<a class="headerlink" href="#select-subjects" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">single_subject</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -786,18 +833,93 @@ Concatenated!
 </div>
 </div>
 </div>
+<div class="section" id="filter-no-answer-trials">
+<h3>Filter no answer trials<a class="headerlink" href="#filter-no-answer-trials" title="Permalink to this headline">¶</a></h3>
+<p>We filter away rows where space was clicked (didn’t answer/skipped/unsure?)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_prev</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_markers</span><span class="p">)</span>
+<span class="n">df_markers</span> <span class="o">=</span> <span class="n">df_markers</span><span class="p">[</span><span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;response&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;up&#39;</span><span class="p">,</span> <span class="s1">&#39;down&#39;</span><span class="p">])]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Filtered away </span><span class="si">{</span><span class="n">n_prev</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_markers</span><span class="p">)</span><span class="si">}</span><span class="s2"> epochs due skipped by subject&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Filtered away 72 epochs due skipped by subject
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="filter-short-trials">
+<h3>Filter short trials<a class="headerlink" href="#filter-short-trials" title="Permalink to this headline">¶</a></h3>
+<p>We filter away rows where the subject didn’t spend at least <code class="docutils literal notranslate"><span class="pre">min_task_duration</span></code> seconds with the task.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_prev</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_markers</span><span class="p">)</span>
+<span class="n">df_markers</span> <span class="o">=</span> <span class="n">df_markers</span><span class="p">[</span><span class="n">df_markers</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">min_task_duration</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Filtered away </span><span class="si">{</span><span class="n">n_prev</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_markers</span><span class="p">)</span><span class="si">}</span><span class="s2"> epochs due to short duration&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Filtered away 0 epochs due to short duration
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="bandpass-filtering">
+<h3>Bandpass filtering<a class="headerlink" href="#bandpass-filtering" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>[x] FIXME: Why is the signal shifted after filtering? Should this be accounted for somehow?</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: Should this maybe be done per epoch/window to avoid discontinuities? (although discontinuities should be rare...)</span>
+
+<span class="c1"># Bandpass-filter the signal</span>
+<span class="n">plot_offset</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">filter_shift</span> <span class="o">=</span> <span class="n">sfreq</span> <span class="o">-</span> <span class="mi">50</span>
+
+<span class="k">if</span> <span class="n">use_bandpass_filter</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Bandpass-filtering the signal&quot;</span><span class="p">)</span>
+    <span class="n">plot_eeg</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">plot_offset</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">sfreq</span><span class="p">)</span>
+    
+    <span class="n">eeg_clean</span> <span class="o">=</span> <span class="n">clean</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">eeg</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">ch_idx</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+        <span class="n">eeg</span><span class="p">[</span><span class="n">col</span><span class="p">][:</span><span class="o">-</span><span class="n">filter_shift</span><span class="p">]</span> <span class="o">=</span> <span class="n">eeg_clean</span><span class="p">[</span><span class="n">filter_shift</span><span class="p">:,</span> <span class="n">ch_idx</span><span class="p">]</span>
+        
+    <span class="c1"># plot the new result</span>
+    <span class="n">plot_eeg</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">plot_offset</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">sfreq</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Skipping bandpass filtering&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Bandpass-filtering the signal
+</pre></div>
+</div>
+<img alt="../_images/Main_28_1.png" src="../_images/Main_28_1.png" />
+<img alt="../_images/Main_28_2.png" src="../_images/Main_28_2.png" />
+</div>
+</div>
+</div>
 <div class="section" id="exponential-moving-standardize">
 <h3>Exponential moving standardize<a class="headerlink" href="#exponential-moving-standardize" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">standardize</span><span class="p">:</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: This should be done per epoch/window to avoid discontinuities</span>
+<span class="c1"># NOTE: This is needed for the neural nets to behave</span>
+
+<span class="k">if</span> <span class="n">standardize</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">braindecode.datautil</span> <span class="kn">import</span> <span class="n">exponential_moving_standardize</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="n">exponential_moving_standardize</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">exponential_moving_standardize</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
     
     <span class="k">for</span> <span class="n">ch_idx</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
-        <span class="n">eeg</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span><span class="p">[:,</span> <span class="n">ch_idx</span><span class="p">]</span>
+        <span class="n">eeg</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">T</span><span class="p">[:,</span> <span class="n">ch_idx</span><span class="p">]</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Skipping exponential standardize&quot;</span><span class="p">)</span>
 </pre></div>
@@ -809,36 +931,14 @@ Concatenated!
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="bandpass-filtering">
-<h3>Bandpass filtering<a class="headerlink" href="#bandpass-filtering" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>[ ] FIXME: Why is the signal shifted after filtering? Should this be accounted for somehow?</p></li>
-</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Bandpass-filter the signal</span>
-<span class="k">if</span> <span class="n">use_bandpass_filter</span><span class="p">:</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Bandpass-filtering the signal&quot;</span><span class="p">)</span>
-    <span class="n">plot_eeg</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="mi">20000</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">sfreq</span><span class="p">)</span>
-    
-    <span class="n">eeg_clean</span> <span class="o">=</span> <span class="n">clean</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">eeg</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">ch_idx</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
-        <span class="n">eeg</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">eeg_clean</span><span class="p">[:,</span> <span class="n">ch_idx</span><span class="p">]</span>
-        
-    <span class="c1"># plot the new result</span>
-    <span class="n">plot_eeg</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="mi">20000</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">sfreq</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Skipping bandpass filtering&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_eeg</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">sfreq</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Bandpass-filtering the signal
-</pre></div>
-</div>
-<img alt="../_images/Main_27_1.png" src="../_images/Main_27_1.png" />
-<img alt="../_images/Main_27_2.png" src="../_images/Main_27_2.png" />
+<img alt="../_images/Main_31_0.png" src="../_images/Main_31_0.png" />
 </div>
 </div>
 </div>
@@ -848,37 +948,159 @@ Concatenated!
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epochs</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">skip_first_s</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># skip first 1 second</span>
+<span class="n">skip_last_s</span> <span class="o">=</span> <span class="mi">1</span>   <span class="c1"># skip last 1 second</span>
+
 <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df_markers</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-    <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;t_presented_utc&#39;</span><span class="p">],</span> <span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
-    <span class="n">stop</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;t_answered_utc&#39;</span><span class="p">],</span> <span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;t_presented_utc&#39;</span><span class="p">],</span> <span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">skip_first_s</span><span class="p">)</span>
+    <span class="n">stop</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;t_answered_utc&#39;</span><span class="p">],</span> <span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">skip_last_s</span><span class="p">)</span>
     <span class="n">epoch</span> <span class="o">=</span> <span class="n">eeg</span><span class="o">.</span><span class="n">truncate</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">)</span>
     
     <span class="c1"># Check that sample count aligns with epoch duration</span>
-    <span class="n">expected_samples</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">sfreq</span><span class="p">)</span>
+    <span class="n">data_duration</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">skip_first_s</span> <span class="o">-</span> <span class="n">skip_last_s</span>
+    <span class="n">expected_samples</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">data_duration</span> <span class="o">*</span> <span class="n">sfreq</span><span class="p">)</span>
     <span class="n">actual_samples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span>
     <span class="n">diff</span> <span class="o">=</span> <span class="n">expected_samples</span> <span class="o">-</span> <span class="n">actual_samples</span>
     <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected </span><span class="si">{</span><span class="n">expected_samples</span><span class="si">}</span><span class="s2"> samples, found </span><span class="si">{</span><span class="n">actual_samples</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         
-    <span class="n">epochs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">epoch</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;subject&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;img&#39;</span><span class="p">]))</span>
+    <span class="n">epochs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">epoch</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;subject&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;img&#39;</span><span class="p">],</span> <span class="n">start</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;epochs: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">epochs</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Expected 15613 samples, found 14653
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Expected 15101 samples, found 14141
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Expected 14755 samples, found 13651
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Expected 14243 samples, found 13139
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Expected 6682 samples, found 5578
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Expected 6170 samples, found 5066
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>epochs: 54
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>epochs: 118
 </pre></div>
 </div>
 </div>
+</div>
+</div>
+<div class="section" id="inspecting-epochs">
+<h3>Inspecting epochs<a class="headerlink" href="#inspecting-epochs" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span> <span class="k">for</span> <span class="n">epoch</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>TP9</th>
+      <th>AF7</th>
+      <th>AF8</th>
+      <th>TP10</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>9.921022</td>
+      <td>7.226445</td>
+      <td>5.727254</td>
+      <td>9.057458</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>12.803513</td>
+      <td>7.496672</td>
+      <td>5.763509</td>
+      <td>11.359627</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>17.099052</td>
+      <td>11.001394</td>
+      <td>6.104204</td>
+      <td>16.914192</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>15.059678</td>
+      <td>8.607113</td>
+      <td>5.370929</td>
+      <td>14.374948</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>12.645058</td>
+      <td>8.410845</td>
+      <td>5.784551</td>
+      <td>11.658275</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>113</th>
+      <td>10.390034</td>
+      <td>10.069702</td>
+      <td>5.627033</td>
+      <td>9.331395</td>
+    </tr>
+    <tr>
+      <th>114</th>
+      <td>11.125515</td>
+      <td>9.020453</td>
+      <td>5.490925</td>
+      <td>9.953391</td>
+    </tr>
+    <tr>
+      <th>115</th>
+      <td>11.026527</td>
+      <td>8.612242</td>
+      <td>5.202042</td>
+      <td>10.223738</td>
+    </tr>
+    <tr>
+      <th>116</th>
+      <td>9.162438</td>
+      <td>6.831691</td>
+      <td>5.478145</td>
+      <td>8.065448</td>
+    </tr>
+    <tr>
+      <th>117</th>
+      <td>9.401461</td>
+      <td>8.168330</td>
+      <td>5.361028</td>
+      <td>8.489102</td>
+    </tr>
+  </tbody>
+</table>
+<p>118 rows × 4 columns</p>
+</div></div></div>
 </div>
 <div class="section" id="epochs-to-windows">
 <h4>Epochs to windows<a class="headerlink" href="#epochs-to-windows" title="Permalink to this headline">¶</a></h4>
@@ -889,24 +1111,50 @@ Concatenated!
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Split epochs into windows</span>
-<span class="n">WINDOW_SIZE</span> <span class="o">=</span> <span class="mi">512</span>
+<span class="n">WINDOW_SIZE</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">min_task_duration</span> <span class="o">*</span> <span class="n">sfreq</span><span class="p">)</span>
+<span class="n">WINDOW_STEP</span> <span class="o">=</span> <span class="mi">256</span>
+
+<span class="k">if</span> <span class="n">sliding_windows</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Using sliding window to generate windows&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Not using sliding window to generate windows&quot;</span><span class="p">)</span>
+    <span class="n">WINDOW_STEP</span> <span class="o">=</span> <span class="n">WINDOW_SIZE</span>
 
 <span class="n">windows</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">epoch</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">epoch</span><span class="p">),</span> <span class="n">WINDOW_SIZE</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">epoch</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">timestamp</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">epoch</span><span class="p">),</span> <span class="n">WINDOW_STEP</span><span class="p">):</span>
+        <span class="c1">#print(i, i+WINDOW_SIZE)</span>
         <span class="n">window</span> <span class="o">=</span> <span class="n">epoch</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">WINDOW_SIZE</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">window</span><span class="p">)</span> <span class="o">==</span> <span class="n">WINDOW_SIZE</span><span class="p">:</span>
-            <span class="n">windows</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">window</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">img</span><span class="p">))</span>
+            <span class="n">windows</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">window</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;epoch too small (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">window</span><span class="p">)</span><span class="si">}</span><span class="s1">), skipping&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;epoch too small (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">window</span><span class="p">)</span><span class="si">}</span><span class="s1">), skipping&#39;</span><span class="p">)</span>    
+
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;windows: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">windows</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>windows: 1071
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using sliding window to generate windows
 </pre></div>
 </div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>windows: 4299
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="filter-away-windows-with-bad-signal">
+<h3>Filter away windows with bad signal<a class="headerlink" href="#filter-away-windows-with-bad-signal" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filter_bad_signal</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">if</span> <span class="n">filter_bad_signal</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">window</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="ow">in</span> <span class="n">windows</span><span class="p">:</span>
+        <span class="c1"># print(np.std(window))</span>
+        <span class="k">pass</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -916,14 +1164,14 @@ Concatenated!
 <p>Now to actually construct matrices that we can feed into the classifier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">img</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">windows</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">subjs</span><span class="p">,</span> <span class="n">imgs</span><span class="p">,</span> <span class="n">ts</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">windows</span><span class="p">)</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1071, 4, 512)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4299, 4, 1280)
 </pre></div>
 </div>
 </div>
@@ -941,7 +1189,7 @@ Concatenated!
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Main_34_0.png" src="../_images/Main_34_0.png" />
+<img alt="../_images/Main_42_0.png" src="../_images/Main_42_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -953,20 +1201,37 @@ Concatenated!
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1071,)
-Counter({&#39;code&#39;: 749, &#39;prose&#39;: 322})
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4299,)
+Counter({&#39;code&#39;: 3053, &#39;prose&#39;: 1246})
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">subj</span><span class="p">)</span>
-<span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subjs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">subjs</span><span class="p">)</span>
+<span class="n">imgs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">imgs</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">subjs</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">imgs</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Counter({0: 1024, 5: 1023, 1: 819, 3: 730, 4: 703})
+Counter({&#39;final-3-1.png&#39;: 357, &#39;final-11-1.png&#39;: 283, &#39;final-8-1.png&#39;: 250, &#39;final-7-1.png&#39;: 231, &#39;final-15-1.png&#39;: 225, &#39;final-4-1.png&#39;: 200, &#39;final-5-1.png&#39;: 173, &#39;final-5-3.png&#39;: 164, &#39;final-5-2.png&#39;: 147, &#39;bugs_11.PNG&#39;: 145, &#39;final-2-1.png&#39;: 138, &#39;final-10-2.png&#39;: 137, &#39;final-9-1.png&#39;: 133, &#39;final-14-1.png&#39;: 125, &#39;bugs_10.PNG&#39;: 119, &#39;final-1-1.png&#39;: 114, &#39;final-10-1.png&#39;: 112, &#39;bugs_4.PNG&#39;: 106, &#39;bugs_20.PNG&#39;: 104, &#39;bugs_5.PNG&#39;: 97, &#39;bugs_19.PNG&#39;: 93, &#39;bugs_12.PNG&#39;: 89, &#39;final-2-2.png&#39;: 89, &#39;final-13-1.png&#39;: 76, &#39;bugs_2.PNG&#39;: 73, &#39;bugs_15.PNG&#39;: 71, &#39;bugs_18.PNG&#39;: 62, &#39;final-12-2.png&#39;: 61, &#39;bugs_8.PNG&#39;: 58, &#39;bugs_1.PNG&#39;: 43, &#39;final-12-1.png&#39;: 38, &#39;bugs_13.PNG&#39;: 35, &#39;bugs_3.PNG&#39;: 33, &#39;bugs_14.PNG&#39;: 27, &#39;bugs_6.PNG&#39;: 24, &#39;bugs_16.PNG&#39;: 24, &#39;bugs_9.PNG&#39;: 23, &#39;bugs_17.PNG&#39;: 20})
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="balance-the-dataset">
+<h3>Balance the dataset<a class="headerlink" href="#balance-the-dataset" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numpy.random</span> <span class="kn">import</span> <span class="n">shuffle</span>
@@ -984,8 +1249,8 @@ Counter({&#39;code&#39;: 749, &#39;prose&#39;: 322})
     <span class="c1"># Randomly undersample the largest class</span>
     <span class="n">shuffle</span><span class="p">(</span><span class="n">large_class_samples</span><span class="p">)</span>
     <span class="n">subsample</span> <span class="o">=</span> <span class="n">large_class_samples</span><span class="p">[:</span><span class="n">min_count</span><span class="p">]</span>
-    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">subsample</span><span class="p">,</span> <span class="n">other_class_samples</span><span class="p">])</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">img</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">subj</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">img</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">subsample</span><span class="p">,</span> <span class="n">other_class_samples</span><span class="p">])))</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">subjs</span><span class="p">,</span> <span class="n">imgs</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">subjs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">imgs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total samples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     
     <span class="c1"># Doesn&#39;t work as fit_resample expects X to be a 2D matrix</span>
@@ -997,10 +1262,41 @@ Counter({&#39;code&#39;: 749, &#39;prose&#39;: 322})
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Smallest class: prose with 322 samples
-Total samples: 644
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Smallest class: prose with 1246 samples
+Total samples: 2492
 </pre></div>
 </div>
+</div>
+</div>
+</div>
+<div class="section" id="inspect-the-dataset">
+<h3>Inspect the dataset<a class="headerlink" href="#inspect-the-dataset" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">label_colors</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;prose&quot;</span><span class="p">:</span> <span class="s2">&quot;b&quot;</span><span class="p">}</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">ss</span><span class="p">,</span> <span class="n">im</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">subjs</span><span class="p">,</span> <span class="n">imgs</span><span class="p">)):</span>
+    <span class="c1"># Label</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cmap_discrete</span><span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">yy</span> <span class="o">==</span> <span class="s1">&#39;code&#39;</span> <span class="k">else</span> <span class="mi">0</span><span class="p">))</span>
+    
+    <span class="c1"># Subject</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cmap_discrete</span><span class="p">(</span><span class="n">ss</span><span class="p">))</span>
+    
+    <span class="c1"># Stdev</span>
+    <span class="n">thres</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">bad</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">quality</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="n">thres</span><span class="p">,</span> <span class="n">bad</span><span class="p">)</span> <span class="o">-</span> <span class="n">thres</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">bad</span> <span class="o">-</span> <span class="n">thres</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cmap</span><span class="p">(</span><span class="n">quality</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span> <span class="k">if</span>  <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="k">else</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Classification&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;subj&quot;</span><span class="p">,</span> <span class="s2">&quot;std&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Main_49_0.png" src="../_images/Main_49_0.png" />
 </div>
 </div>
 </div>
@@ -1064,13 +1360,13 @@ Total samples: 644
 
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">clf</span> <span class="ow">in</span> <span class="n">clfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;===== Training with </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> =====&quot;</span><span class="p">)</span>
+    <span class="n">clf</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="n">clf</span><span class="p">)</span>
 
     <span class="c1"># Shuffled split</span>
     <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">model_selection</span><span class="o">.</span><span class="n">train_test_split</span><span class="p">(</span>
-        <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">)</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Training...&quot;</span><span class="p">)</span>
     <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test score: </span><span class="si">{</span><span class="n">clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
@@ -1090,66 +1386,50 @@ Total samples: 644
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with CSP + Cov + TS =====
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Training...
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Test score: 0.6308186195826645
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Test score: 0.7680412371134021
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: {&#39;precision&#39;: 0.6331817709415921, &#39;recall&#39;: 0.6321653259075908, &#39;fbeta&#39;: 0.630437754204612, &#39;support&#39;: array([640, 606]), &#39;bac&#39;: 0.6321653259075908, &#39;confusion_matrix&#39;: array([[373, 267],
+       [193, 413]])}
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: {&#39;precision&#39;: 0.7681105302464526, &#39;recall&#39;: 0.767340425531915, &#39;fbeta&#39;: 0.767540939954733, &#39;support&#39;: array([100,  94]), &#39;bac&#39;: 0.767340425531915, &#39;confusion_matrix&#39;: array([[79, 21],
-       [24, 70]])}
-</pre></div>
-</div>
-<img alt="../_images/Main_42_4.png" src="../_images/Main_42_4.png" />
+<img alt="../_images/Main_54_3.png" src="../_images/Main_54_3.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with Cov + TS =====
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Training...
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Test score: 0.6308186195826645
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Test score: 0.7628865979381443
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: {&#39;precision&#39;: 0.6331817709415921, &#39;recall&#39;: 0.6321653259075908, &#39;fbeta&#39;: 0.630437754204612, &#39;support&#39;: array([640, 606]), &#39;bac&#39;: 0.6321653259075908, &#39;confusion_matrix&#39;: array([[373, 267],
+       [193, 413]])}
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: {&#39;precision&#39;: 0.7650377941019908, &#39;recall&#39;: 0.7663991439272337, &#39;fbeta&#39;: 0.7627857522594365, &#39;support&#39;: array([ 89, 105]), &#39;bac&#39;: 0.7663991439272337, &#39;confusion_matrix&#39;: array([[72, 17],
-       [29, 76]])}
-</pre></div>
-</div>
-<img alt="../_images/Main_42_9.png" src="../_images/Main_42_9.png" />
+<img alt="../_images/Main_54_7.png" src="../_images/Main_54_7.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with Xdawn + TS =====
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Training...
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Test score: 0.6436597110754414
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Test score: 0.7989690721649485
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: {&#39;precision&#39;: 0.6439454856600895, &#39;recall&#39;: 0.6440078382838283, &#39;fbeta&#39;: 0.6436514480057713, &#39;support&#39;: array([640, 606]), &#39;bac&#39;: 0.6440078382838283, &#39;confusion_matrix&#39;: array([[404, 236],
+       [208, 398]])}
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: {&#39;precision&#39;: 0.7989690721649485, &#39;recall&#39;: 0.7997655583972719, &#39;fbeta&#39;: 0.7988354470766531, &#39;support&#39;: array([ 92, 102]), &#39;bac&#39;: 0.7997655583972719, &#39;confusion_matrix&#39;: array([[75, 17],
-       [22, 80]])}
-</pre></div>
-</div>
-<img alt="../_images/Main_42_14.png" src="../_images/Main_42_14.png" />
+<img alt="../_images/Main_54_11.png" src="../_images/Main_54_11.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># LORO/LOGO split</span>
-<span class="c1"># TODO: Is LOGO the same as LORO?</span>
-<span class="n">logo</span> <span class="o">=</span> <span class="n">LeaveOneGroupOut</span><span class="p">()</span>
-<span class="n">groups</span> <span class="o">=</span> <span class="n">img</span>
-
-<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">clf</span> <span class="ow">in</span> <span class="n">clfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">clf</span> <span class="ow">in</span> <span class="n">clfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;===== Training with </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> =====&quot;</span><span class="p">)</span>
+    <span class="n">clf</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="n">clf</span><span class="p">)</span>
     
-    <span class="n">score</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">model_selection</span><span class="o">.</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CV score (shuffled):   </span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">model_selection</span><span class="o">.</span><span class="n">cross_validate</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CV score (shuffled):   </span><span class="si">{</span><span class="n">ret</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     
-    <span class="c1"># LORO</span>
-    <span class="n">score</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">model_selection</span><span class="o">.</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">logo</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CV score (LORO):       </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">score</span><span class="p">)</span> <span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (mean), </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">score</span><span class="p">)</span> <span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (std)&quot;</span><span class="p">)</span>
+    <span class="n">clf_trained</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
     
-    <span class="c1"># FIXME: This shouldn&#39;t run on the entire sample</span>
-    <span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+    <span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">clf_trained</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
                           <span class="n">display_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">,</span> <span class="s1">&#39;prose&#39;</span><span class="p">],</span>
                           <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Blues</span><span class="p">,</span>
                           <span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">)</span>
@@ -1161,41 +1441,28 @@ Total samples: 644
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with CSP + Cov + TS =====
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (shuffled):   [0.67906977 0.73488372 0.80841121]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (shuffled):   [0.59118236 0.72144289 0.58634538 0.56425703 0.562249  ]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (LORO):       0.707 (mean), 0.200 (std)
-</pre></div>
-</div>
-<img alt="../_images/Main_43_3.png" src="../_images/Main_43_3.png" />
+<img alt="../_images/Main_55_2.png" src="../_images/Main_55_2.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with Cov + TS =====
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (shuffled):   [0.67906977 0.73488372 0.80841121]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (shuffled):   [0.59118236 0.72144289 0.58634538 0.56425703 0.562249  ]
+</pre></div>
+</div>
+<img alt="../_images/Main_55_5.png" src="../_images/Main_55_5.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with Xdawn + TS =====
 </pre></div>
 </div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">23</span><span class="o">-</span><span class="mi">8306</span><span class="n">bc54119e</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> 
-<span class="g g-Whitespace">     </span><span class="mi">12</span>     <span class="c1"># LORO</span>
-<span class="ne">---&gt; </span><span class="mi">13</span>     <span class="n">score</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">model_selection</span><span class="o">.</span><span class="n">cross_val_score</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">logo</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CV score (LORO):       </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">score</span><span class="p">)</span> <span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (mean), </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">score</span><span class="p">)</span> <span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (std)&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span> 
-
-<span class="nn">~/work/thesis/thesis/.venv/lib/python3.8/site-packages/sklearn/utils/validation.py</span> in <span class="ni">inner_f</span><span class="nt">(*args, **kwargs)</span>
-<span class="g g-Whitespace">     </span><span class="mi">70</span>                           <span class="ne">FutureWarning</span><span class="p">)</span>
-<span class="nn">     71         kwargs.update({k: arg for k, arg</span> in <span class="ni">zip</span><span class="nt">(sig.parameters, args)})</span>
-<span class="ne">---&gt; </span><span class="mi">72</span>         <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">73</span>     <span class="k">return</span> <span class="n">inner_f</span>
-<span class="g g-Whitespace">     </span><span class="mi">74</span> 
-
-<span class="nn">~/work/thesis/thesis/.venv/lib/python3.8/site-packages/sklearn/model_selection/_validation.py</span> in <span class="ni">cross_val_score</span><span class="nt">(estimator, X, y, groups, scoring, cv, n_jobs, verbose, fit_params, pre_dispatch, error_score)</span>
-<span class="g g-Whitespace">    </span><span class="mi">399</span>     <span class="n">scorer</span> <span class="o">=</span> <span class="n">check_scoring</span><span class="p">(</span><span class="n">estimator</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">scoring</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">400</span> 
-<span class="ne">--&gt; </span><span class="mi">401</span>     <span class="n">cv_results</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">estimator</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">402</span>                                 <span class="n">scoring</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;score&#39;</span><span class="p">:</span> <span class="n">scorer</span><span class="p">},</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">403</span>                                 <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">29</span><span class="o">-</span><span class="mi">17</span><span class="n">af813ab629</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="n">clf</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="n">clf</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> 
+<span class="ne">----&gt; </span><span class="mi">5</span>     <span class="n">ret</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">model_selection</span><span class="o">.</span><span class="n">cross_validate</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CV score (shuffled):   </span><span class="si">{</span><span class="n">ret</span><span class="p">[</span><span class="s1">&#39;test_score&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span> 
 
 <span class="nn">~/work/thesis/thesis/.venv/lib/python3.8/site-packages/sklearn/utils/validation.py</span> in <span class="ni">inner_f</span><span class="nt">(*args, **kwargs)</span>
 <span class="g g-Whitespace">     </span><span class="mi">70</span>                           <span class="ne">FutureWarning</span><span class="p">)</span>
@@ -1251,6 +1518,34 @@ Total samples: 644
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># LORO/LOGO split, where we leave out one subject for each fold</span>
+<span class="n">logo</span> <span class="o">=</span> <span class="n">LeaveOneGroupOut</span><span class="p">()</span>
+<span class="n">groups</span> <span class="o">=</span> <span class="n">subjs</span>
+
+<span class="c1"># LORO</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">clf</span> <span class="ow">in</span> <span class="n">clfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">clf</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="n">clf</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;===== Training with </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> =====&quot;</span><span class="p">)</span>
+    
+    <span class="n">res</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">model_selection</span><span class="o">.</span><span class="n">cross_validate</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">logo</span><span class="p">,</span> <span class="n">groups</span><span class="o">=</span><span class="n">groups</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">return_estimator</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CV score (LORO):   </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">score</span><span class="p">)</span> <span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (mean), </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">score</span><span class="p">)</span> <span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (std)&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;                   </span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="n">clf_trained</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
+    
+    <span class="c1"># FIXME: This shouldn&#39;t run on the entire sample</span>
+    <span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">clf_trained</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+                          <span class="n">display_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">,</span> <span class="s1">&#39;prose&#39;</span><span class="p">],</span>
+                          <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Blues</span><span class="p">,</span>
+                          <span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="learning-curves">
 <h3>Learning curves<a class="headerlink" href="#learning-curves" title="Permalink to this headline">¶</a></h3>
 <p>Now to check the learning curves and see if the train and validation scores converge.</p>
@@ -1262,6 +1557,7 @@ Total samples: 644
 
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">clf</span> <span class="ow">in</span> <span class="n">clfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;===== Training with </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> =====&quot;</span><span class="p">)</span>
+    <span class="n">clf</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="n">clf</span><span class="p">)</span>
     
     <span class="c1"># We create shuffled versions of the dataset to ensure that all stimuli of the same type aren&#39;t in sequence</span>
     <span class="c1"># (as is the case for subject 1 which didn&#39;t have shuffled stimuli)</span>
@@ -1304,6 +1600,61 @@ Total samples: 644
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use a specific subject for validation</span>
+<span class="n">subj_val</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">idx_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">subjs</span> <span class="o">!=</span> <span class="n">subj_val</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">idx_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">subjs</span> <span class="o">==</span> <span class="n">subj_val</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">idx_train</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">idx_train</span><span class="p">]</span>
+<span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">idx_test</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">idx_test</span><span class="p">]</span>
+
+<span class="c1"># Fit the first classifier on the training set</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">clfs</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">predicted</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="n">label_colors</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;prose&quot;</span><span class="p">:</span> <span class="s2">&quot;b&quot;</span><span class="p">}</span>
+<span class="n">img_to_id</span> <span class="o">=</span> <span class="p">{</span><span class="n">img</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">imgs</span><span class="p">)))}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">subjs</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">pred</span><span class="p">,</span> <span class="n">subj</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">predicted</span><span class="p">,</span> <span class="n">subjs</span><span class="p">,</span> <span class="n">imgs</span><span class="p">)):</span>
+    <span class="c1"># Label</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">label_colors</span><span class="p">[</span><span class="n">yy</span><span class="p">])</span>
+    
+    <span class="c1"># Predicted</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">label_colors</span><span class="p">[</span><span class="n">pred</span><span class="p">])</span>
+    
+    <span class="c1"># Correct?</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span> <span class="k">if</span> <span class="n">pred</span> <span class="o">==</span> <span class="n">yy</span> <span class="k">else</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Subject</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cmap_discrete</span><span class="p">(</span><span class="n">subj</span><span class="p">))</span>
+    
+    <span class="c1"># Stim</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cmap_discrete</span><span class="p">(</span><span class="n">img_to_id</span><span class="p">[</span><span class="n">img</span><span class="p">]</span> <span class="o">%</span> <span class="mi">10</span><span class="p">))</span>
+    
+    <span class="c1"># Testset member</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">idx_test</span> <span class="k">else</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Stdev</span>
+    <span class="n">thres</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">bad</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">quality</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="n">thres</span><span class="p">,</span> <span class="n">bad</span><span class="p">)</span> <span class="o">-</span> <span class="n">thres</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">bad</span> <span class="o">-</span> <span class="n">thres</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">cmap</span><span class="p">(</span><span class="n">quality</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span> <span class="k">if</span>  <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="k">else</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Classification&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="s2">&quot;predicted&quot;</span><span class="p">,</span> <span class="s2">&quot;correct&quot;</span><span class="p">,</span> <span class="s2">&quot;subj&quot;</span><span class="p">,</span> <span class="s2">&quot;img&quot;</span><span class="p">,</span> <span class="s2">&quot;testset&quot;</span><span class="p">,</span> <span class="s2">&quot;quality (stdev)&quot;</span><span class="p">,</span> <span class="s2">&quot;quality (thres)&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1317,15 +1668,15 @@ Total samples: 644
 <span class="kn">from</span> <span class="nn">braindecode.datautil</span> <span class="kn">import</span> <span class="n">create_from_X_y</span>
 
 <span class="c1"># This wants X to be in the shape (x_trials, n_channels, n_samples)</span>
-<span class="n">Xb</span><span class="p">,</span> <span class="n">yb</span><span class="p">,</span> <span class="n">subjb</span><span class="p">,</span> <span class="n">imgb</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">epochs</span><span class="p">)</span>
+<span class="n">Xb</span><span class="p">,</span> <span class="n">yb</span><span class="p">,</span> <span class="n">subjb</span><span class="p">,</span> <span class="n">imgb</span><span class="p">,</span> <span class="n">tsb</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">epochs</span><span class="p">)</span>
 <span class="n">Xb</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">Xb</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Xb</span><span class="p">),</span> <span class="n">Xb</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="n">yb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span> <span class="k">if</span> <span class="n">yy</span> <span class="o">==</span> <span class="s1">&#39;code&#39;</span> <span class="k">else</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">yy</span> <span class="ow">in</span> <span class="n">y</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">yb</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="n">windows_dataset</span> <span class="o">=</span> <span class="n">create_from_X_y</span><span class="p">(</span>
     <span class="n">Xb</span><span class="p">,</span> <span class="n">yb</span><span class="p">,</span> <span class="n">drop_last_window</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sfreq</span><span class="o">=</span><span class="n">sfreq</span><span class="p">,</span> <span class="n">ch_names</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">eeg</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span>
-    <span class="n">window_stride_samples</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-    <span class="n">window_size_samples</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">window_stride_samples</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+    <span class="n">window_size_samples</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1333,8 +1684,8 @@ Total samples: 644
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">windows_dataset</span><span class="o">.</span><span class="n">description</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">imgb</span>
-<span class="n">windows_dataset</span><span class="o">.</span><span class="n">description</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">windows_dataset</span><span class="o">.</span><span class="n">description</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subjb</span>
+<span class="n">windows_dataset</span><span class="o">.</span><span class="n">description</span>
 </pre></div>
 </div>
 </div>
@@ -1343,11 +1694,17 @@ Total samples: 644
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Homegrown LORO</span>
 <span class="n">splitted</span> <span class="o">=</span> <span class="n">windows_dataset</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">)</span>
-<span class="n">train_sets</span> <span class="o">=</span> <span class="p">[</span><span class="n">splitted</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">splitted</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">1</span><span class="p">:]]</span>
+
+<span class="c1"># Subject to use for validation</span>
+<span class="n">subj_val</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="n">train_sets</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">splitted</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">(</span><span class="n">subj_val</span><span class="p">)]</span>
+
 <span class="n">train_set</span> <span class="o">=</span> <span class="n">train_sets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="k">for</span> <span class="n">ts</span> <span class="ow">in</span> <span class="n">train_sets</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-    <span class="n">train_sets</span> <span class="o">+=</span> <span class="n">ts</span>
-<span class="n">valid_set</span> <span class="o">=</span> <span class="n">splitted</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">splitted</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">train_set</span> <span class="o">+=</span> <span class="n">ts</span>
+    
+<span class="n">valid_set</span> <span class="o">=</span> <span class="n">splitted</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">subj_val</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
@@ -1356,7 +1713,7 @@ Total samples: 644
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">braindecode.util</span> <span class="kn">import</span> <span class="n">set_random_seeds</span>
-<span class="kn">from</span> <span class="nn">braindecode.models</span> <span class="kn">import</span> <span class="n">ShallowFBCSPNet</span>
+<span class="kn">from</span> <span class="nn">braindecode.models</span> <span class="kn">import</span> <span class="n">ShallowFBCSPNet</span><span class="p">,</span> <span class="n">Deep4Net</span>
 
 <span class="n">cuda</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span>  <span class="c1"># check if GPU is available, if True chooses to use it</span>
 <span class="k">if</span> <span class="n">cuda</span><span class="p">:</span>
@@ -1376,16 +1733,26 @@ Total samples: 644
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;channels:  </span><span class="si">{</span><span class="n">n_chans</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;samples per window:  </span><span class="si">{</span><span class="n">input_window_samples</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="n">model</span> <span class="o">=</span> <span class="n">ShallowFBCSPNet</span><span class="p">(</span>
-    <span class="n">n_chans</span><span class="p">,</span>
-    <span class="n">n_classes</span><span class="p">,</span>
-    <span class="n">input_window_samples</span><span class="o">=</span><span class="n">input_window_samples</span><span class="p">,</span>
-    <span class="n">final_conv_length</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="c1"># Send model to GPU</span>
-<span class="k">if</span> <span class="n">cuda</span><span class="p">:</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+<span class="n">models</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span>
+        <span class="n">ShallowFBCSPNet</span><span class="p">(</span>
+            <span class="n">n_chans</span><span class="p">,</span>
+            <span class="n">n_classes</span><span class="p">,</span>
+            <span class="n">input_window_samples</span><span class="o">=</span><span class="n">input_window_samples</span><span class="p">,</span>
+            <span class="n">final_conv_length</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+        <span class="p">),</span> 
+        <span class="p">{</span><span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mf">0.0625</span> <span class="o">*</span> <span class="mf">0.01</span><span class="p">,</span> <span class="s2">&quot;weight_decay&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+    <span class="p">),</span>
+    <span class="p">(</span>
+        <span class="n">Deep4Net</span><span class="p">(</span>
+            <span class="n">n_chans</span><span class="p">,</span> 
+            <span class="n">n_classes</span><span class="p">,</span> 
+            <span class="n">input_window_samples</span><span class="o">=</span><span class="n">input_window_samples</span><span class="p">,</span>
+            <span class="n">final_conv_length</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span>
+        <span class="p">),</span> 
+        <span class="p">{</span><span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mi">1</span> <span class="o">*</span> <span class="mf">0.01</span><span class="p">,</span> <span class="s2">&quot;weight_decay&quot;</span><span class="p">:</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="mf">0.001</span><span class="p">}</span>
+    <span class="p">)</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1405,37 +1772,44 @@ Total samples: 644
 
 <span class="kn">from</span> <span class="nn">braindecode</span> <span class="kn">import</span> <span class="n">EEGClassifier</span>
 
-<span class="c1"># These values we found good for shallow network:</span>
-<span class="n">lr</span> <span class="o">=</span> <span class="mf">0.0625</span> <span class="o">*</span> <span class="mf">0.01</span>
-<span class="n">weight_decay</span> <span class="o">=</span> <span class="mi">0</span>
-
-<span class="c1"># For deep4 they should be:</span>
-<span class="c1"># lr = 1 * 0.01</span>
-<span class="c1"># weight_decay = 0.5 * 0.001</span>
-
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span>
 <span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">10</span>
 
-<span class="n">clf</span> <span class="o">=</span> <span class="n">EEGClassifier</span><span class="p">(</span>
-    <span class="n">model</span><span class="p">,</span>
-    <span class="n">criterion</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">NLLLoss</span><span class="p">,</span>
-    <span class="n">optimizer</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">AdamW</span><span class="p">,</span>
-    <span class="n">train_split</span><span class="o">=</span><span class="n">predefined_split</span><span class="p">(</span><span class="n">valid_set</span><span class="p">),</span>  <span class="c1"># using valid_set for validation</span>
-    <span class="n">optimizer__lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
-    <span class="n">optimizer__weight_decay</span><span class="o">=</span><span class="n">weight_decay</span><span class="p">,</span>
-    <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
-    <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
-        <span class="s2">&quot;accuracy&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;lr_scheduler&quot;</span><span class="p">,</span> <span class="n">LRScheduler</span><span class="p">(</span><span class="s1">&#39;CosineAnnealingLR&#39;</span><span class="p">,</span> <span class="n">T_max</span><span class="o">=</span><span class="n">n_epochs</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)),</span>
-    <span class="p">],</span>
-    <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda&#39;</span> <span class="k">if</span> <span class="n">cuda</span> <span class="k">else</span> <span class="s1">&#39;cpu&#39;</span><span class="p">,</span>
-<span class="p">)</span>
-
-<span class="c1"># Model training for a specified number of epochs. `y` is None as it is already supplied in the dataset.</span>
-<span class="c1"># FIXME: Remove try/except when error is resolved</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_set</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">n_epochs</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="n">nn_clfs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">model</span><span class="p">,</span> <span class="n">params</span> <span class="ow">in</span> <span class="n">models</span><span class="p">:</span>
+    <span class="n">clf</span> <span class="o">=</span> <span class="n">EEGClassifier</span><span class="p">(</span>
+        <span class="n">model</span><span class="p">,</span>
+        <span class="n">criterion</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">NLLLoss</span><span class="p">,</span>
+        <span class="n">optimizer</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">AdamW</span><span class="p">,</span>
+        <span class="n">train_split</span><span class="o">=</span><span class="n">predefined_split</span><span class="p">(</span><span class="n">valid_set</span><span class="p">),</span>  <span class="c1"># using valid_set for validation</span>
+        <span class="n">optimizer__lr</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;lr&quot;</span><span class="p">],</span>
+        <span class="n">optimizer__weight_decay</span><span class="o">=</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;weight_decay&quot;</span><span class="p">],</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+        <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">&quot;accuracy&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;lr_scheduler&quot;</span><span class="p">,</span> <span class="n">LRScheduler</span><span class="p">(</span><span class="s1">&#39;CosineAnnealingLR&#39;</span><span class="p">,</span> <span class="n">T_max</span><span class="o">=</span><span class="n">n_epochs</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)),</span>
+        <span class="p">],</span>
+        <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cuda&#39;</span> <span class="k">if</span> <span class="n">cuda</span> <span class="k">else</span> <span class="s1">&#39;cpu&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">nn_clfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Model training for a specified number of epochs. `y` is None as it is already supplied in the dataset.</span>
+<span class="k">for</span> <span class="n">clf</span> <span class="ow">in</span> <span class="n">nn_clfs</span><span class="p">:</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;==== Training </span><span class="si">{</span><span class="n">clf</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> ====&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Send model to GPU</span>
+    <span class="k">if</span> <span class="n">cuda</span><span class="p">:</span>
+        <span class="n">clf</span><span class="o">.</span><span class="n">module</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+        
+    <span class="c1"># FIXME: Remove try/except when error is resolved</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_set</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">n_epochs</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
