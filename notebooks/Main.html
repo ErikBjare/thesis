@@ -448,7 +448,7 @@
 
 <span class="c1"># Color maps</span>
 <span class="n">cmap</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;RdYlGn&#39;</span><span class="p">)</span>
-<span class="n">cmap_discrete</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;Paired&#39;</span><span class="p">)</span>
+<span class="n">cmap_discrete</span> <span class="o">=</span> <span class="n">matplotlib</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;tab10&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -496,6 +496,7 @@
     
 <span class="n">files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span>
     <span class="o">*</span><span class="nb">list</span><span class="p">((</span><span class="n">data_dir</span> <span class="o">/</span> <span class="s2">&quot;tasks/visual-codeprose/subject0000/session000/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;recording_*.csv&quot;</span><span class="p">)),</span>
+    <span class="o">*</span><span class="nb">list</span><span class="p">((</span><span class="n">data_dir</span> <span class="o">/</span> <span class="s2">&quot;tasks/visual-codeprose/subject0000/session001/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;recording_*.csv&quot;</span><span class="p">)),</span>
     <span class="o">*</span><span class="nb">list</span><span class="p">((</span><span class="n">data_dir</span> <span class="o">/</span> <span class="s2">&quot;tasks/visual-codeprose/subject0001/session000/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;recording_*.csv&quot;</span><span class="p">)),</span>
     <span class="o">*</span><span class="nb">list</span><span class="p">((</span><span class="n">data_dir</span> <span class="o">/</span> <span class="s2">&quot;tasks/visual-codeprose/subject0003/session000/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;recording_*.csv&quot;</span><span class="p">)),</span>
     <span class="o">*</span><span class="nb">list</span><span class="p">((</span><span class="n">data_dir</span> <span class="o">/</span> <span class="s2">&quot;tasks/visual-codeprose/subject0004/session000/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;recording_*.csv&quot;</span><span class="p">)),</span>
@@ -511,6 +512,13 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0000/session000/recording_2021-04-02-14.03.36.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0000/session001/recording_2021-06-03-09.29.20.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0000/session001/recording_2021-06-03-09.34.31.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0000/session001/recording_2021-06-03-09.39.32.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0000/session001/recording_2021-06-03-09.44.32.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0000/session001/recording_2021-06-03-09.49.32.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0000/session001/recording_2021-06-03-09.54.32.csv&#39;),
+ PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0000/session001/recording_2021-06-03-09.59.33.csv&#39;),
  PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0001/session000/recording_2021-03-26-14.09.25.csv&#39;),
  PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0001/session000/recording_2021-03-26-14.14.36.csv&#39;),
  PosixPath(&#39;/home/runner/work/thesis/thesis/data/tasks/visual-codeprose/subject0001/session000/recording_2021-03-26-14.19.36.csv&#39;),
@@ -525,7 +533,7 @@
 Concatenated!
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1822260, 4)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(2279484, 4)
 </pre></div>
 </div>
 </div>
@@ -565,6 +573,7 @@ Concatenated!
     <span class="n">data_dir</span> <span class="o">/</span> <span class="s1">&#39;tasks/visual-codeprose/subject0003/session000/subject3_session0_behOutput_2021-05-28-19.21.35.csv&#39;</span><span class="p">,</span>
     <span class="n">data_dir</span> <span class="o">/</span> <span class="s1">&#39;tasks/visual-codeprose/subject0004/session000/subject4_session0_behOutput_2021-05-28-19.54.14.csv&#39;</span><span class="p">,</span>
     <span class="n">data_dir</span> <span class="o">/</span> <span class="s1">&#39;tasks/visual-codeprose/subject0005/session000/subject5_session0_behOutput_2021-05-28-20.36.34.csv&#39;</span><span class="p">,</span>
+    <span class="n">data_dir</span> <span class="o">/</span> <span class="s1">&#39;tasks/visual-codeprose/subject0000/session001/subject0_session1_behOutput_2021-06-03-09.59.17.csv&#39;</span><span class="p">,</span>
 <span class="p">]</span>
 
 <span class="k">def</span> <span class="nf">_build_breaks</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
@@ -590,15 +599,20 @@ Concatenated!
 <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">marker_files</span><span class="p">:</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;duration&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_answered&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;t_presented&#39;</span><span class="p">]</span>
+    
     <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;subject(\d+)&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">file</span><span class="p">))</span>
     <span class="k">assert</span> <span class="n">match</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;subject&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+    
+    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;session(\d+)&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">file</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">match</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;session&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
     
     <span class="k">if</span> <span class="n">classify_breaks</span><span class="p">:</span>
         <span class="n">breaks</span> <span class="o">=</span> <span class="n">_build_breaks</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">breaks</span><span class="p">)</span>
     <span class="n">dfs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-<span class="n">df_markers</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;subject&#39;</span><span class="p">,</span> <span class="s1">&#39;t_presented&#39;</span><span class="p">])</span>
+<span class="n">df_markers</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;t_presented_utc&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -643,69 +657,75 @@ Concatenated!
       <th>t_answered_utc</th>
       <th>duration</th>
       <th>subject</th>
+      <th>session</th>
       <th>img</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>prose</td>
+      <td>code</td>
       <td>up</td>
-      <td>0.016728</td>
-      <td>1.617372e+09</td>
-      <td>17.857363</td>
-      <td>1.617372e+09</td>
-      <td>17.840635</td>
+      <td>0.048869</td>
+      <td>1.616768e+09</td>
+      <td>41.687711</td>
+      <td>1.616768e+09</td>
+      <td>41.638842</td>
+      <td>1</td>
       <td>0</td>
-      <td>bugs_1.PNG</td>
+      <td>final-9-1.png</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>prose</td>
+      <td>code</td>
       <td>up</td>
-      <td>22.900167</td>
-      <td>1.617372e+09</td>
-      <td>52.065407</td>
-      <td>1.617372e+09</td>
-      <td>29.165240</td>
+      <td>46.757057</td>
+      <td>1.616768e+09</td>
+      <td>107.743816</td>
+      <td>1.616768e+09</td>
+      <td>60.986759</td>
+      <td>1</td>
       <td>0</td>
-      <td>bugs_15.PNG</td>
+      <td>final-14-1.png</td>
     </tr>
     <tr>
       <th>2</th>
       <td>code</td>
       <td>up</td>
-      <td>57.117248</td>
-      <td>1.617372e+09</td>
-      <td>124.968128</td>
-      <td>1.617372e+09</td>
-      <td>67.850880</td>
+      <td>112.792900</td>
+      <td>1.616768e+09</td>
+      <td>173.725393</td>
+      <td>1.616768e+09</td>
+      <td>60.932493</td>
+      <td>1</td>
       <td>0</td>
-      <td>final-12-2.png</td>
+      <td>final-2-1.png</td>
     </tr>
     <tr>
       <th>3</th>
       <td>code</td>
       <td>down</td>
-      <td>130.017048</td>
-      <td>1.617372e+09</td>
-      <td>186.038527</td>
-      <td>1.617372e+09</td>
-      <td>56.021479</td>
+      <td>178.779508</td>
+      <td>1.616768e+09</td>
+      <td>220.707851</td>
+      <td>1.616768e+09</td>
+      <td>41.928343</td>
+      <td>1</td>
       <td>0</td>
-      <td>final-4-1.png</td>
+      <td>final-10-2.png</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>prose</td>
-      <td>up</td>
-      <td>191.067667</td>
-      <td>1.617372e+09</td>
-      <td>217.853919</td>
-      <td>1.617372e+09</td>
-      <td>26.786252</td>
+      <td>code</td>
+      <td>down</td>
+      <td>225.770106</td>
+      <td>1.616768e+09</td>
+      <td>331.949693</td>
+      <td>1.616768e+09</td>
+      <td>106.179587</td>
+      <td>1</td>
       <td>0</td>
-      <td>bugs_2.PNG</td>
+      <td>final-7-1.png</td>
     </tr>
     <tr>
       <th>...</th>
@@ -718,70 +738,76 @@ Concatenated!
       <td>...</td>
       <td>...</td>
       <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>33</th>
-      <td>prose</td>
-      <td>space</td>
-      <td>1278.203505</td>
-      <td>1.622234e+09</td>
-      <td>1278.348148</td>
-      <td>1.622234e+09</td>
-      <td>0.144643</td>
-      <td>5</td>
-      <td>bugs_9.PNG</td>
-    </tr>
-    <tr>
-      <th>34</th>
+      <th>43</th>
       <td>code</td>
       <td>space</td>
-      <td>1278.540643</td>
-      <td>1.622234e+09</td>
-      <td>1278.646399</td>
-      <td>1.622234e+09</td>
-      <td>0.105756</td>
-      <td>5</td>
+      <td>1697.310629</td>
+      <td>1.622714e+09</td>
+      <td>1697.480657</td>
+      <td>1.622714e+09</td>
+      <td>0.170028</td>
+      <td>0</td>
+      <td>1</td>
       <td>final-4-1.png</td>
     </tr>
     <tr>
-      <th>35</th>
-      <td>prose</td>
+      <th>44</th>
+      <td>code</td>
       <td>space</td>
-      <td>1278.836710</td>
-      <td>1.622234e+09</td>
-      <td>1278.991293</td>
-      <td>1.622234e+09</td>
-      <td>0.154583</td>
-      <td>5</td>
-      <td>bugs_6.PNG</td>
+      <td>1697.711316</td>
+      <td>1.622714e+09</td>
+      <td>1697.940819</td>
+      <td>1.622714e+09</td>
+      <td>0.229503</td>
+      <td>0</td>
+      <td>1</td>
+      <td>final-1-1.png</td>
     </tr>
     <tr>
-      <th>36</th>
+      <th>45</th>
       <td>prose</td>
       <td>space</td>
-      <td>1279.186634</td>
-      <td>1.622234e+09</td>
-      <td>1279.339957</td>
-      <td>1.622234e+09</td>
-      <td>0.153322</td>
-      <td>5</td>
-      <td>bugs_3.PNG</td>
+      <td>1698.210168</td>
+      <td>1.622714e+09</td>
+      <td>1707.505052</td>
+      <td>1.622714e+09</td>
+      <td>9.294884</td>
+      <td>0</td>
+      <td>1</td>
+      <td>bugs_8.PNG</td>
     </tr>
     <tr>
-      <th>37</th>
+      <th>46</th>
       <td>prose</td>
       <td>space</td>
-      <td>1279.536524</td>
-      <td>1.622234e+09</td>
-      <td>1279.646598</td>
-      <td>1.622234e+09</td>
-      <td>0.110074</td>
-      <td>5</td>
-      <td>bugs_1.PNG</td>
+      <td>1708.024928</td>
+      <td>1.622714e+09</td>
+      <td>1708.596526</td>
+      <td>1.622714e+09</td>
+      <td>0.571599</td>
+      <td>0</td>
+      <td>1</td>
+      <td>sat_10.PNG</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>code</td>
+      <td>space</td>
+      <td>1708.991467</td>
+      <td>1.622714e+09</td>
+      <td>1709.601287</td>
+      <td>1.622714e+09</td>
+      <td>0.609820</td>
+      <td>0</td>
+      <td>1</td>
+      <td>final-9-1.png</td>
     </tr>
   </tbody>
 </table>
-<p>190 rows × 9 columns</p>
+<p>238 rows × 10 columns</p>
 </div></div></div>
 </div>
 </div>
@@ -846,7 +872,7 @@ Concatenated!
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Filtered away 72 epochs due skipped by subject
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Filtered away 83 epochs due skipped by subject
 </pre></div>
 </div>
 </div>
@@ -966,7 +992,7 @@ Concatenated!
     <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected </span><span class="si">{</span><span class="n">expected_samples</span><span class="si">}</span><span class="s2"> samples, found </span><span class="si">{</span><span class="n">actual_samples</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         
-    <span class="n">epochs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">epoch</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;subject&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;img&#39;</span><span class="p">],</span> <span class="n">start</span><span class="p">))</span>
+    <span class="n">epochs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">epoch</span><span class="p">,</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;subject&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;img&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s2">&quot;session&quot;</span><span class="p">],</span> <span class="n">start</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;epochs: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">epochs</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -981,7 +1007,22 @@ Concatenated!
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Expected 6170 samples, found 5066
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>epochs: 118
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Expected 41657 samples, found 40856
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Expected 10233 samples, found 9130
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Expected 10802 samples, found 9710
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Expected 8679 samples, found 7588
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING: Expected 3885 samples, found 2926
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>epochs: 155
 </pre></div>
 </div>
 </div>
@@ -1023,38 +1064,38 @@ Concatenated!
   <tbody>
     <tr>
       <th>0</th>
-      <td>9.921022</td>
-      <td>7.226445</td>
-      <td>5.727254</td>
-      <td>9.057458</td>
+      <td>20.007946</td>
+      <td>6.799940</td>
+      <td>6.926718</td>
+      <td>17.653788</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>12.803513</td>
-      <td>7.496672</td>
-      <td>5.763509</td>
-      <td>11.359627</td>
+      <td>17.781042</td>
+      <td>6.440502</td>
+      <td>6.800540</td>
+      <td>15.418650</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>17.099052</td>
-      <td>11.001394</td>
-      <td>6.104204</td>
-      <td>16.914192</td>
+      <td>17.726928</td>
+      <td>7.133651</td>
+      <td>7.136381</td>
+      <td>17.313899</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>15.059678</td>
-      <td>8.607113</td>
-      <td>5.370929</td>
-      <td>14.374948</td>
+      <td>12.685037</td>
+      <td>6.721931</td>
+      <td>6.932718</td>
+      <td>13.287593</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>12.645058</td>
-      <td>8.410845</td>
-      <td>5.784551</td>
-      <td>11.658275</td>
+      <td>17.021343</td>
+      <td>8.122508</td>
+      <td>9.185972</td>
+      <td>13.382615</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1064,43 +1105,43 @@ Concatenated!
       <td>...</td>
     </tr>
     <tr>
-      <th>113</th>
-      <td>10.390034</td>
-      <td>10.069702</td>
-      <td>5.627033</td>
-      <td>9.331395</td>
+      <th>150</th>
+      <td>22.205421</td>
+      <td>11.546332</td>
+      <td>7.501825</td>
+      <td>21.126831</td>
     </tr>
     <tr>
-      <th>114</th>
-      <td>11.125515</td>
-      <td>9.020453</td>
-      <td>5.490925</td>
-      <td>9.953391</td>
+      <th>151</th>
+      <td>24.378785</td>
+      <td>12.610110</td>
+      <td>7.987176</td>
+      <td>23.027252</td>
     </tr>
     <tr>
-      <th>115</th>
-      <td>11.026527</td>
-      <td>8.612242</td>
-      <td>5.202042</td>
-      <td>10.223738</td>
+      <th>152</th>
+      <td>20.533728</td>
+      <td>10.316246</td>
+      <td>6.679006</td>
+      <td>20.847835</td>
     </tr>
     <tr>
-      <th>116</th>
-      <td>9.162438</td>
-      <td>6.831691</td>
-      <td>5.478145</td>
-      <td>8.065448</td>
+      <th>153</th>
+      <td>16.475166</td>
+      <td>9.744527</td>
+      <td>7.761458</td>
+      <td>15.636966</td>
     </tr>
     <tr>
-      <th>117</th>
-      <td>9.401461</td>
-      <td>8.168330</td>
-      <td>5.361028</td>
-      <td>8.489102</td>
+      <th>154</th>
+      <td>21.092290</td>
+      <td>10.916349</td>
+      <td>11.121113</td>
+      <td>20.335054</td>
     </tr>
   </tbody>
 </table>
-<p>118 rows × 4 columns</p>
+<p>155 rows × 4 columns</p>
 </div></div></div>
 </div>
 <div class="section" id="epochs-to-windows">
@@ -1122,12 +1163,12 @@ Concatenated!
     <span class="n">WINDOW_STEP</span> <span class="o">=</span> <span class="n">WINDOW_SIZE</span>
 
 <span class="n">windows</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">epoch</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">timestamp</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">:</span>
+<span class="k">for</span> <span class="n">epoch</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">timestamp</span> <span class="ow">in</span> <span class="n">epochs</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">epoch</span><span class="p">),</span> <span class="n">WINDOW_STEP</span><span class="p">):</span>
         <span class="c1">#print(i, i+WINDOW_SIZE)</span>
         <span class="n">window</span> <span class="o">=</span> <span class="n">epoch</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">WINDOW_SIZE</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">window</span><span class="p">)</span> <span class="o">==</span> <span class="n">WINDOW_SIZE</span><span class="p">:</span>
-            <span class="n">windows</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">window</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">))</span>
+            <span class="n">windows</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">window</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;epoch too small (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">window</span><span class="p">)</span><span class="si">}</span><span class="s1">), skipping&#39;</span><span class="p">)</span>    
 
@@ -1139,7 +1180,7 @@ Concatenated!
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using sliding window to generate windows
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>windows: 4299
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>windows: 5512
 </pre></div>
 </div>
 </div>
@@ -1165,14 +1206,14 @@ Concatenated!
 <p>Now to actually construct matrices that we can feed into the classifier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">subjs</span><span class="p">,</span> <span class="n">imgs</span><span class="p">,</span> <span class="n">ts</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">windows</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">subjs</span><span class="p">,</span> <span class="n">imgs</span><span class="p">,</span> <span class="n">sessions</span><span class="p">,</span> <span class="n">ts</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">windows</span><span class="p">)</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4299, 4, 1280)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(5512, 4, 1280)
 </pre></div>
 </div>
 </div>
@@ -1202,8 +1243,8 @@ Concatenated!
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4299,)
-Counter({&#39;code&#39;: 3053, &#39;prose&#39;: 1246})
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(5512,)
+Counter({&#39;code&#39;: 3777, &#39;prose&#39;: 1735})
 </pre></div>
 </div>
 </div>
@@ -1211,7 +1252,10 @@ Counter({&#39;code&#39;: 3053, &#39;prose&#39;: 1246})
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subjs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">subjs</span><span class="p">)</span>
+<span class="n">sessions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sessions</span><span class="p">)</span>
 <span class="n">imgs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">imgs</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">subjs</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">sessions</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">imgs</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1219,13 +1263,17 @@ Counter({&#39;code&#39;: 3053, &#39;prose&#39;: 1246})
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">subjs</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">sessions</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">subjs</span><span class="p">,</span> <span class="n">sessions</span><span class="p">)))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">imgs</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Counter({0: 1024, 5: 1023, 1: 819, 3: 730, 4: 703})
-Counter({&#39;final-3-1.png&#39;: 357, &#39;final-11-1.png&#39;: 283, &#39;final-8-1.png&#39;: 250, &#39;final-7-1.png&#39;: 231, &#39;final-15-1.png&#39;: 225, &#39;final-4-1.png&#39;: 200, &#39;final-5-1.png&#39;: 173, &#39;final-5-3.png&#39;: 164, &#39;final-5-2.png&#39;: 147, &#39;bugs_11.PNG&#39;: 145, &#39;final-2-1.png&#39;: 138, &#39;final-10-2.png&#39;: 137, &#39;final-9-1.png&#39;: 133, &#39;final-14-1.png&#39;: 125, &#39;bugs_10.PNG&#39;: 119, &#39;final-1-1.png&#39;: 114, &#39;final-10-1.png&#39;: 112, &#39;bugs_4.PNG&#39;: 106, &#39;bugs_20.PNG&#39;: 104, &#39;bugs_5.PNG&#39;: 97, &#39;bugs_19.PNG&#39;: 93, &#39;bugs_12.PNG&#39;: 89, &#39;final-2-2.png&#39;: 89, &#39;final-13-1.png&#39;: 76, &#39;bugs_2.PNG&#39;: 73, &#39;bugs_15.PNG&#39;: 71, &#39;bugs_18.PNG&#39;: 62, &#39;final-12-2.png&#39;: 61, &#39;bugs_8.PNG&#39;: 58, &#39;bugs_1.PNG&#39;: 43, &#39;final-12-1.png&#39;: 38, &#39;bugs_13.PNG&#39;: 35, &#39;bugs_3.PNG&#39;: 33, &#39;bugs_14.PNG&#39;: 27, &#39;bugs_6.PNG&#39;: 24, &#39;bugs_16.PNG&#39;: 24, &#39;bugs_9.PNG&#39;: 23, &#39;bugs_17.PNG&#39;: 20})
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Counter({0: 2237, 5: 1023, 1: 819, 3: 730, 4: 703})
+Counter({0: 4299, 1: 1213})
+Counter({(0, 1): 1213, (0, 0): 1024, (5, 0): 1023, (1, 0): 819, (3, 0): 730, (4, 0): 703})
+Counter({&#39;final-11-1.png&#39;: 360, &#39;final-3-1.png&#39;: 357, &#39;final-7-1.png&#39;: 307, &#39;final-5-3.png&#39;: 259, &#39;final-15-1.png&#39;: 250, &#39;final-8-1.png&#39;: 250, &#39;final-2-2.png&#39;: 233, &#39;final-12-2.png&#39;: 216, &#39;final-5-1.png&#39;: 201, &#39;final-4-1.png&#39;: 200, &#39;final-5-2.png&#39;: 175, &#39;final-2-1.png&#39;: 164, &#39;bugs_11.PNG&#39;: 159, &#39;final-14-1.png&#39;: 145, &#39;bugs_20.PNG&#39;: 143, &#39;final-10-2.png&#39;: 137, &#39;final-9-1.png&#39;: 133, &#39;bugs_10.PNG&#39;: 126, &#39;final-10-1.png&#39;: 124, &#39;bugs_2.PNG&#39;: 120, &#39;bugs_12.PNG&#39;: 119, &#39;final-1-1.png&#39;: 114, &#39;bugs_4.PNG&#39;: 110, &#39;final-13-1.png&#39;: 109, &#39;bugs_19.PNG&#39;: 107, &#39;bugs_5.PNG&#39;: 104, &#39;bugs_15.PNG&#39;: 76, &#39;bugs_18.PNG&#39;: 76, &#39;bugs_8.PNG&#39;: 58, &#39;bugs_1.PNG&#39;: 52, &#39;bugs_14.PNG&#39;: 50, &#39;bugs_17.PNG&#39;: 48, &#39;bugs_6.PNG&#39;: 47, &#39;final-12-1.png&#39;: 43, &#39;bugs_3.PNG&#39;: 41, &#39;sat_6.PNG&#39;: 38, &#39;bugs_13.PNG&#39;: 37, &#39;sat_9.PNG&#39;: 36, &#39;bugs_9.PNG&#39;: 34, &#39;sat_8.PNG&#39;: 33, &#39;sat_7.PNG&#39;: 31, &#39;sat_5.PNG&#39;: 28, &#39;bugs_16.PNG&#39;: 24, &#39;sat_2.PNG&#39;: 23, &#39;sat_1.PNG&#39;: 15})
 </pre></div>
 </div>
 </div>
@@ -1242,6 +1290,7 @@ Counter({&#39;final-3-1.png&#39;: 357, &#39;final-11-1.png&#39;: 283, &#39;final
     
     <span class="n">c_y</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
     <span class="n">c_smallest</span><span class="p">,</span> <span class="n">min_count</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">c_y</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Smallest class: </span><span class="si">{</span><span class="n">c_smallest</span><span class="si">}</span><span class="s2"> with </span><span class="si">{</span><span class="n">min_count</span><span class="si">}</span><span class="s2"> samples&quot;</span><span class="p">)</span>
     
     <span class="n">large_class_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">y</span> <span class="o">!=</span> <span class="n">c_smallest</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
@@ -1251,7 +1300,8 @@ Counter({&#39;final-3-1.png&#39;: 357, &#39;final-11-1.png&#39;: 283, &#39;final
     <span class="n">shuffle</span><span class="p">(</span><span class="n">large_class_samples</span><span class="p">)</span>
     <span class="n">subsample</span> <span class="o">=</span> <span class="n">large_class_samples</span><span class="p">[:</span><span class="n">min_count</span><span class="p">]</span>
     <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">subsample</span><span class="p">,</span> <span class="n">other_class_samples</span><span class="p">])))</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">subjs</span><span class="p">,</span> <span class="n">imgs</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">subjs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">imgs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">subjs</span><span class="p">,</span> <span class="n">imgs</span><span class="p">,</span> <span class="n">sessions</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">subjs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">imgs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">sessions</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total samples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     
     <span class="c1"># Doesn&#39;t work as fit_resample expects X to be a 2D matrix</span>
@@ -1263,10 +1313,25 @@ Counter({&#39;final-3-1.png&#39;: 357, &#39;final-11-1.png&#39;: 283, &#39;final
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Smallest class: prose with 1246 samples
-Total samples: 2492
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Smallest class: prose with 1735 samples
+[   0    2    4 ... 5509 5510 5511]
+Total samples: 3470
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">subjs</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sessions</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7faf08a791c0&gt;]
+</pre></div>
+</div>
+<img alt="../_images/Main_48_1.png" src="../_images/Main_48_1.png" />
 </div>
 </div>
 </div>
@@ -1274,12 +1339,12 @@ Total samples: 2492
 <h3>Inspect the dataset<a class="headerlink" href="#inspect-the-dataset" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">label_colors</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;prose&quot;</span><span class="p">:</span> <span class="s2">&quot;b&quot;</span><span class="p">}</span>
-<span class="n">img_to_id</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">img</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">imgs</span><span class="p">)))}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img_to_id</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">img</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">imgs</span><span class="p">)))}</span>
 
 <span class="n">tl</span> <span class="o">=</span> <span class="n">TimelineFigure</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Classification&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">label_colors</span><span class="p">[</span><span class="n">yy</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">yy</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y</span><span class="p">)],</span> <span class="s2">&quot;label&quot;</span><span class="p">)</span>
+<span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap_discrete</span><span class="p">({</span><span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;prose&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}[</span><span class="n">yy</span><span class="p">]))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">yy</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y</span><span class="p">)],</span> <span class="s2">&quot;label&quot;</span><span class="p">)</span>
 <span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap_discrete</span><span class="p">(</span><span class="n">subj</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">subj</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">subjs</span><span class="p">)],</span> <span class="s2">&quot;subject&quot;</span><span class="p">)</span>
+<span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap_discrete</span><span class="p">(</span><span class="n">sess</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sess</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sessions</span><span class="p">)],</span> <span class="s2">&quot;session&quot;</span><span class="p">)</span>
 <span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap_discrete</span><span class="p">(</span><span class="n">img_to_id</span><span class="p">[</span><span class="n">img</span><span class="p">]</span> <span class="o">%</span> <span class="mi">10</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">imgs</span><span class="p">)],</span> <span class="s2">&quot;image&quot;</span><span class="p">)</span>
 
 <span class="n">thres</span> <span class="o">=</span> <span class="mi">10</span>
@@ -1293,7 +1358,7 @@ Total samples: 2492
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Main_49_0.png" src="../_images/Main_49_0.png" />
+<img alt="../_images/Main_50_0.png" src="../_images/Main_50_0.png" />
 </div>
 </div>
 </div>
@@ -1383,36 +1448,36 @@ Total samples: 2492
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with CSP + Cov + TS =====
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Test score: 0.6284109149277689
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Test score: 0.6824207492795389
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: {&#39;precision&#39;: 0.6316053847699417, &#39;recall&#39;: 0.6300407384488449, &#39;fbeta&#39;: 0.627737372290375, &#39;support&#39;: array([640, 606]), &#39;bac&#39;: 0.6300407384488449, &#39;confusion_matrix&#39;: array([[365, 275],
-       [188, 418]])}
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: {&#39;precision&#39;: 0.6841096236203474, &#39;recall&#39;: 0.6701743211532014, &#39;fbeta&#39;: 0.6701986325447991, &#39;support&#39;: array([785, 950]), &#39;bac&#39;: 0.6701743211532014, &#39;confusion_matrix&#39;: array([[425, 360],
+       [191, 759]])}
 </pre></div>
 </div>
-<img alt="../_images/Main_54_3.png" src="../_images/Main_54_3.png" />
+<img alt="../_images/Main_55_3.png" src="../_images/Main_55_3.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with Cov + TS =====
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Test score: 0.6284109149277689
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Test score: 0.6824207492795389
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: {&#39;precision&#39;: 0.6316053847699417, &#39;recall&#39;: 0.6300407384488449, &#39;fbeta&#39;: 0.627737372290375, &#39;support&#39;: array([640, 606]), &#39;bac&#39;: 0.6300407384488449, &#39;confusion_matrix&#39;: array([[365, 275],
-       [188, 418]])}
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: {&#39;precision&#39;: 0.6841096236203474, &#39;recall&#39;: 0.6701743211532014, &#39;fbeta&#39;: 0.6701986325447991, &#39;support&#39;: array([785, 950]), &#39;bac&#39;: 0.6701743211532014, &#39;confusion_matrix&#39;: array([[425, 360],
+       [191, 759]])}
 </pre></div>
 </div>
-<img alt="../_images/Main_54_7.png" src="../_images/Main_54_7.png" />
+<img alt="../_images/Main_55_7.png" src="../_images/Main_55_7.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with Xdawn + TS =====
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Test score: 0.6316211878009631
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: Test score: 0.6708933717579251
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: {&#39;precision&#39;: 0.6324212227031407, &#39;recall&#39;: 0.6322890882838283, &#39;fbeta&#39;: 0.6316019672321225, &#39;support&#39;: array([640, 606]), &#39;bac&#39;: 0.6322890882838283, &#39;confusion_matrix&#39;: array([[389, 251],
-       [208, 398]])}
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: {&#39;precision&#39;: 0.6684267544482598, &#39;recall&#39;: 0.6621924237344954, &#39;fbeta&#39;: 0.6628489440345275, &#39;support&#39;: array([785, 950]), &#39;bac&#39;: 0.6621924237344954, &#39;confusion_matrix&#39;: array([[448, 337],
+       [234, 716]])}
 </pre></div>
 </div>
-<img alt="../_images/Main_54_11.png" src="../_images/Main_54_11.png" />
+<img alt="../_images/Main_55_11.png" src="../_images/Main_55_11.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1438,31 +1503,31 @@ Total samples: 2492
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with CSP + Cov + TS =====
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (shuffled):   [0.60320641 0.749499   0.51807229 0.55823293 0.562249  ]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (shuffled):   [0.69596542 0.55907781 0.58933718 0.58069164 0.69884726]
 </pre></div>
 </div>
-<img alt="../_images/Main_55_2.png" src="../_images/Main_55_2.png" />
+<img alt="../_images/Main_56_2.png" src="../_images/Main_56_2.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with Cov + TS =====
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (shuffled):   [0.60320641 0.749499   0.51807229 0.55823293 0.562249  ]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (shuffled):   [0.69596542 0.55907781 0.58933718 0.58069164 0.69884726]
 </pre></div>
 </div>
-<img alt="../_images/Main_55_5.png" src="../_images/Main_55_5.png" />
+<img alt="../_images/Main_56_5.png" src="../_images/Main_56_5.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with Xdawn + TS =====
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (shuffled):   [0.57915832 0.70340681 0.62650602 0.55823293 0.54216867]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (shuffled):   [0.65417867 0.56195965 0.57348703 0.58069164 0.66570605]
 </pre></div>
 </div>
-<img alt="../_images/Main_55_8.png" src="../_images/Main_55_8.png" />
+<img alt="../_images/Main_56_8.png" src="../_images/Main_56_8.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># LORO/LOGO split, where we leave out one subject for each fold</span>
 <span class="n">logo</span> <span class="o">=</span> <span class="n">LeaveOneGroupOut</span><span class="p">()</span>
-<span class="n">groups</span> <span class="o">=</span> <span class="n">subjs</span>
+<span class="n">groups</span> <span class="o">=</span> <span class="n">subjs</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">+</span> <span class="n">sessions</span>
 
 <span class="c1"># LORO</span>
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">clf</span> <span class="ow">in</span> <span class="n">clfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -1473,14 +1538,18 @@ Total samples: 2492
     <span class="n">score</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s2">&quot;test_score&quot;</span><span class="p">]</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CV score (LORO):   </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">score</span><span class="p">)</span> <span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (mean), </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">score</span><span class="p">)</span> <span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (std)&quot;</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;                   </span><span class="si">{</span><span class="n">score</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">groups</span><span class="p">)),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+        
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">logo</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">groups</span><span class="p">)):</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="n">clf</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="n">clf</span><span class="p">)</span>
+        <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">train</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">train</span><span class="p">])</span>
     
-    <span class="n">clf_trained</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s2">&quot;estimator&quot;</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
-    
-    <span class="c1"># FIXME: This shouldn&#39;t run on the entire sample</span>
-    <span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">clf_trained</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
-                          <span class="n">display_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">,</span> <span class="s1">&#39;prose&#39;</span><span class="p">],</span>
-                          <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Blues</span><span class="p">,</span>
-                          <span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">)</span>
+        <span class="n">plot_confusion_matrix</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="n">test</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">test</span><span class="p">],</span>
+                              <span class="n">display_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;code&#39;</span><span class="p">,</span> <span class="s1">&#39;prose&#39;</span><span class="p">],</span>
+                              <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Blues</span><span class="p">,</span>
+                              <span class="n">normalize</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1489,33 +1558,33 @@ Total samples: 2492
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with CSP + Cov + TS =====
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (LORO):   0.608 (mean), 0.068 (std)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (LORO):   0.638 (mean), 0.063 (std)
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:                    [0.5008547  0.70286885 0.60386473 0.5799458  0.65408805]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:                    [0.63517915 0.74371257 0.69123506 0.55251142 0.59278351 0.61183261]
 </pre></div>
 </div>
-<img alt="../_images/Main_56_3.png" src="../_images/Main_56_3.png" />
+<img alt="../_images/Main_57_3.png" src="../_images/Main_57_3.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with Cov + TS =====
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (LORO):   0.608 (mean), 0.068 (std)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (LORO):   0.638 (mean), 0.063 (std)
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:                    [0.5008547  0.70286885 0.60386473 0.5799458  0.65408805]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:                    [0.63517915 0.74371257 0.69123506 0.55251142 0.59278351 0.61183261]
 </pre></div>
 </div>
-<img alt="../_images/Main_56_7.png" src="../_images/Main_56_7.png" />
+<img alt="../_images/Main_57_7.png" src="../_images/Main_57_7.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with Xdawn + TS =====
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (LORO):   0.592 (mean), 0.052 (std)
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: CV score (LORO):   0.639 (mean), 0.046 (std)
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:                    [0.52136752 0.66598361 0.55797101 0.5799458  0.63522013]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO:                    [0.62703583 0.73652695 0.63346614 0.60045662 0.60051546 0.63780664]
 </pre></div>
 </div>
-<img alt="../_images/Main_56_11.png" src="../_images/Main_56_11.png" />
+<img alt="../_images/Main_57_11.png" src="../_images/Main_57_11.png" />
 </div>
 </div>
 <div class="section" id="learning-curves">
@@ -1526,6 +1595,8 @@ Total samples: 2492
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">eegclassify.util</span> <span class="kn">import</span> <span class="n">powspace</span>
+
+<span class="c1"># TODO: Add one participant to the training set each run instead of randomly sampled by trainsizes</span>
 
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">clf</span> <span class="ow">in</span> <span class="n">clfs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;===== Training with </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> =====&quot;</span><span class="p">)</span>
@@ -1563,7 +1634,7 @@ Total samples: 2492
     <span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">train_sizes</span><span class="p">,</span> <span class="n">m</span><span class="o">-</span><span class="n">std</span><span class="p">,</span> <span class="n">m</span><span class="o">+</span><span class="n">std</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
     
     <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">train_sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">train_sizes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
         
     <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
@@ -1575,69 +1646,87 @@ Total samples: 2492
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with CSP + Cov + TS =====
 </pre></div>
 </div>
-<img alt="../_images/Main_58_1.png" src="../_images/Main_58_1.png" />
+<img alt="../_images/Main_59_1.png" src="../_images/Main_59_1.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with Cov + TS =====
 </pre></div>
 </div>
-<img alt="../_images/Main_58_3.png" src="../_images/Main_58_3.png" />
+<img alt="../_images/Main_59_3.png" src="../_images/Main_59_3.png" />
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ===== Training with Xdawn + TS =====
 </pre></div>
 </div>
-<img alt="../_images/Main_58_5.png" src="../_images/Main_58_5.png" />
+<img alt="../_images/Main_59_5.png" src="../_images/Main_59_5.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use a specific subject for validation</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use a specific subject/session for validation</span>
 <span class="n">subj_val</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="n">idx_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">subjs</span> <span class="o">!=</span> <span class="n">subj_val</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-<span class="n">idx_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">subjs</span> <span class="o">==</span> <span class="n">subj_val</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-
-<span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">idx_train</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">idx_train</span><span class="p">]</span>
-<span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">idx_test</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">idx_test</span><span class="p">]</span>
+<span class="n">sess_val</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">sessions</span> <span class="o">!=</span> <span class="n">sess_val</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">sessions</span> <span class="o">==</span> <span class="n">sess_val</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
 
 <span class="c1"># Fit the first classifier on the training set</span>
 <span class="n">clf</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">clfs</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">train</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">train</span><span class="p">])</span>
 
 <span class="n">predicted</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-
-<span class="n">label_colors</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="s2">&quot;prose&quot;</span><span class="p">:</span> <span class="s2">&quot;b&quot;</span><span class="p">}</span>
-<span class="n">img_to_id</span> <span class="o">=</span> <span class="p">{</span><span class="n">img</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">imgs</span><span class="p">)))}</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">subjs</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Counter({5: 636, 0: 585, 1: 488, 3: 414, 4: 369})
+<span class="n">predicted_proba</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tl</span> <span class="o">=</span> <span class="n">TimelineFigure</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Classification&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">label_colors</span><span class="p">[</span><span class="n">yy</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">yy</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y</span><span class="p">)],</span> <span class="s2">&quot;label&quot;</span><span class="p">)</span>
-<span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">label_colors</span><span class="p">[</span><span class="n">pred</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pred</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">predicted</span><span class="p">)],</span> <span class="s2">&quot;predicted&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img_to_id</span> <span class="o">=</span> <span class="p">{</span><span class="n">img</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">imgs</span><span class="p">)))}</span>
+
+<span class="n">tl</span> <span class="o">=</span> <span class="n">TimelineFigure</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Classification&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap_discrete</span><span class="p">(</span><span class="n">img_to_id</span><span class="p">[</span><span class="n">img</span><span class="p">]</span> <span class="o">%</span> <span class="mi">10</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">imgs</span><span class="p">)],</span> <span class="s2">&quot;image&quot;</span><span class="p">)</span>
+<span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap_discrete</span><span class="p">({</span><span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;prose&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}[</span><span class="n">yy</span><span class="p">]))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">yy</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y</span><span class="p">)],</span> <span class="s2">&quot;label&quot;</span><span class="p">)</span>
+<span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap_discrete</span><span class="p">({</span><span class="s2">&quot;code&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;prose&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}[</span><span class="n">pred</span><span class="p">]))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pred</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">predicted</span><span class="p">)],</span> <span class="s2">&quot;predicted&quot;</span><span class="p">)</span>
+<span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap</span><span class="p">(</span><span class="n">prob</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">prob</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">predicted_proba</span><span class="p">)],</span> <span class="s2">&quot;predicted (prob)&quot;</span><span class="p">)</span>
 <span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span> <span class="k">if</span> <span class="n">pred</span> <span class="o">==</span> <span class="n">y</span> <span class="k">else</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">predicted</span><span class="p">))],</span> <span class="s2">&quot;correct&quot;</span><span class="p">)</span>
 <span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap_discrete</span><span class="p">(</span><span class="n">subj</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">subj</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">subjs</span><span class="p">)],</span> <span class="s2">&quot;subject&quot;</span><span class="p">)</span>
-<span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap_discrete</span><span class="p">(</span><span class="n">img_to_id</span><span class="p">[</span><span class="n">img</span><span class="p">]</span> <span class="o">%</span> <span class="mi">10</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">imgs</span><span class="p">)],</span> <span class="s2">&quot;image&quot;</span><span class="p">)</span>
-<span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">idx_train</span> <span class="k">else</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">imgs</span><span class="p">)],</span> <span class="s2">&quot;training set&quot;</span><span class="p">)</span>
-<span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">idx_test</span> <span class="k">else</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">imgs</span><span class="p">)],</span> <span class="s2">&quot;testing set&quot;</span><span class="p">)</span>
+<span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">train</span> <span class="k">else</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">imgs</span><span class="p">)],</span> <span class="s2">&quot;training set&quot;</span><span class="p">)</span>
+<span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">test</span> <span class="k">else</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">img</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">imgs</span><span class="p">)],</span> <span class="s2">&quot;testing set&quot;</span><span class="p">)</span>
 
-<span class="n">thres</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">bad</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">thres</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">bad</span> <span class="o">=</span> <span class="mi">40</span>
 <span class="n">quality</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">xx</span><span class="p">),</span> <span class="n">thres</span><span class="p">,</span> <span class="n">bad</span><span class="p">)</span> <span class="o">-</span> <span class="n">thres</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">bad</span> <span class="o">-</span> <span class="n">thres</span><span class="p">)</span> <span class="k">for</span> <span class="n">xx</span> <span class="ow">in</span> <span class="n">X</span><span class="p">]</span>
 <span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">cmap</span><span class="p">(</span><span class="n">q</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">quality</span><span class="p">)],</span> <span class="s2">&quot;quality (stddev)&quot;</span><span class="p">)</span>
-<span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span> <span class="k">if</span>  <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="k">else</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">xx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">X</span><span class="p">)],</span> <span class="s2">&quot;quality (thres)&quot;</span><span class="p">)</span>
+<span class="n">tl</span><span class="o">.</span><span class="n">add_bar</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span> <span class="k">if</span>  <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">thres</span> <span class="o">+</span> <span class="n">bad</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="k">else</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">xx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">X</span><span class="p">)],</span> <span class="s2">&quot;quality (thres)&quot;</span><span class="p">)</span>
 
 <span class="n">tl</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/Main_60_0.png" src="../_images/Main_60_0.png" />
+<img alt="../_images/Main_61_0.png" src="../_images/Main_61_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">plot_roc_curve</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Chance&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">clf</span> <span class="ow">in</span> <span class="n">clfs</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+    <span class="n">clf</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="n">clf</span><span class="p">)</span>
+    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">train</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">train</span><span class="p">])</span>
+    <span class="n">plot_roc_curve</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="n">test</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">test</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/Main_62_0.png" src="../_images/Main_62_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TODO: Train a classifier on the probability outputs, or otherwise aggregate the window classification into epoch classification</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -1653,7 +1742,7 @@ Total samples: 2492
 <span class="kn">from</span> <span class="nn">braindecode.datautil</span> <span class="kn">import</span> <span class="n">create_from_X_y</span>
 
 <span class="c1"># This wants X to be in the shape (x_trials, n_channels, n_samples)</span>
-<span class="n">Xb</span><span class="p">,</span> <span class="n">yb</span><span class="p">,</span> <span class="n">subjb</span><span class="p">,</span> <span class="n">imgb</span><span class="p">,</span> <span class="n">tsb</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">epochs</span><span class="p">)</span>
+<span class="n">Xb</span><span class="p">,</span> <span class="n">yb</span><span class="p">,</span> <span class="n">subjb</span><span class="p">,</span> <span class="n">imgb</span><span class="p">,</span> <span class="n">sessb</span><span class="p">,</span> <span class="n">tsb</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">epochs</span><span class="p">)</span>
 <span class="n">Xb</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">T</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">Xb</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Xb</span><span class="p">),</span> <span class="n">Xb</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="n">yb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span> <span class="k">if</span> <span class="n">yy</span> <span class="o">==</span> <span class="s1">&#39;code&#39;</span> <span class="k">else</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">yy</span> <span class="ow">in</span> <span class="n">y</span><span class="p">])</span>
@@ -1667,8 +1756,8 @@ Total samples: 2492
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>118 (4, 4056)
-(2492,)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>155 (4, 10149)
+(3470,)
 </pre></div>
 </div>
 </div>
@@ -1706,28 +1795,28 @@ Total samples: 2492
   <tbody>
     <tr>
       <th>0</th>
-      <td>1</td>
       <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1</td>
       <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>1</td>
       <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>1</td>
       <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>1</td>
       <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>...</th>
@@ -1735,33 +1824,33 @@ Total samples: 2492
       <td>...</td>
     </tr>
     <tr>
-      <th>113</th>
+      <th>150</th>
       <td>0</td>
-      <td>5</td>
+      <td>0</td>
     </tr>
     <tr>
-      <th>114</th>
+      <th>151</th>
       <td>0</td>
-      <td>5</td>
+      <td>0</td>
     </tr>
     <tr>
-      <th>115</th>
+      <th>152</th>
       <td>0</td>
-      <td>5</td>
+      <td>0</td>
     </tr>
     <tr>
-      <th>116</th>
+      <th>153</th>
       <td>0</td>
-      <td>5</td>
+      <td>0</td>
     </tr>
     <tr>
-      <th>117</th>
+      <th>154</th>
       <td>0</td>
-      <td>5</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
-<p>118 rows × 2 columns</p>
+<p>155 rows × 2 columns</p>
 </div></div></div>
 </div>
 <div class="cell docutils container">
@@ -1779,6 +1868,27 @@ Total samples: 2492
     <span class="n">train_set</span> <span class="o">+=</span> <span class="n">ts</span>
     
 <span class="n">valid_set</span> <span class="o">=</span> <span class="n">splitted</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">subj_val</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">train_set</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">train_set</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([[-12.583485  ,  -9.695121  ,  -4.902394  , ...,   3.477234  ,
+          0.21082559,  -2.1955576 ],
+       [-10.243412  ,  -7.936998  ,  -9.382902  , ...,   3.9354603 ,
+          1.9839554 ,  -0.61679256],
+       [  2.036242  ,   1.9114136 ,   2.8900352 , ...,  -4.1263094 ,
+         -6.81603   ,  -9.547414  ],
+       [ -5.7861447 ,  -8.162318  ,  -7.9717326 , ...,   5.341501  ,
+          2.4844682 ,  -0.2332687 ]], dtype=float32), 0, [0, 0, 1024])
+(4, 1024)
 </pre></div>
 </div>
 </div>
@@ -1840,27 +1950,6 @@ samples per window:  1024
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">train_set</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">train_set</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([[-12.583485  ,  -9.695121  ,  -4.902394  , ...,   3.477234  ,
-          0.21082559,  -2.1955576 ],
-       [-10.243412  ,  -7.936998  ,  -9.382902  , ...,   3.9354603 ,
-          1.9839554 ,  -0.61679256],
-       [  2.036242  ,   1.9114136 ,   2.8900352 , ...,  -4.1263094 ,
-         -6.81603   ,  -9.547414  ],
-       [ -5.7861447 ,  -8.162318  ,  -7.9717326 , ...,   5.341501  ,
-          2.4844682 ,  -0.2332687 ]], dtype=float32), 1, [0, 0, 1024])
-(4, 1024)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">skorch.callbacks</span> <span class="kn">import</span> <span class="n">LRScheduler</span>
 <span class="kn">from</span> <span class="nn">skorch.helper</span> <span class="kn">import</span> <span class="n">predefined_split</span>
 
@@ -1911,47 +2000,39 @@ samples per window:  1024
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ==== Training ShallowFBCSPNet ====
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  epoch    train_accuracy    train_loss    valid_accuracy    valid_loss      lr     dur
--------  ----------------  ------------  ----------------  ------------  ------  ------
-      1            <span class=" -Color -Color-Cyan">0.8428</span>        <span class=" -Color -Color-Green">0.9083</span>            <span class=" -Color -Color-Magenta">0.2933</span>        <span class=" -Color -Color-Red">1.8876</span>  0.0006  9.5658
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  epoch    train_accuracy    train_loss    valid_accuracy    valid_loss      lr      dur
+-------  ----------------  ------------  ----------------  ------------  ------  -------
+      1            <span class=" -Color -Color-Cyan">0.9831</span>        <span class=" -Color -Color-Green">0.3559</span>            <span class=" -Color -Color-Magenta">1.0000</span>        <span class=" -Color -Color-Red">0.0001</span>  0.0006  13.0927
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      2            <span class=" -Color -Color-Cyan">0.9170</span>        <span class=" -Color -Color-Green">0.4728</span>            <span class=" -Color -Color-Magenta">0.5228</span>        <span class=" -Color -Color-Red">0.9709</span>  0.0006  9.6847
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      2            <span class=" -Color -Color-Cyan">0.9948</span>        <span class=" -Color -Color-Green">0.0427</span>            1.0000        <span class=" -Color -Color-Red">0.0000</span>  0.0006  13.4024
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      3            <span class=" -Color -Color-Cyan">0.9275</span>        <span class=" -Color -Color-Green">0.4239</span>            0.2368        2.0477  0.0006  9.5806
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      3            <span class=" -Color -Color-Cyan">0.9972</span>        <span class=" -Color -Color-Green">0.0282</span>            1.0000        <span class=" -Color -Color-Red">0.0000</span>  0.0006  12.9936
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      4            0.9253        <span class=" -Color -Color-Green">0.3372</span>            0.1421        2.4417  0.0005  9.5401
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      4            <span class=" -Color -Color-Cyan">0.9988</span>        <span class=" -Color -Color-Green">0.0198</span>            1.0000        0.0000  0.0005  13.4129
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      5            <span class=" -Color -Color-Cyan">0.9336</span>        <span class=" -Color -Color-Green">0.3080</span>            0.2842        2.0382  0.0004  9.6078
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      5            <span class=" -Color -Color-Cyan">0.9996</span>        <span class=" -Color -Color-Green">0.0144</span>            1.0000        <span class=" -Color -Color-Red">0.0000</span>  0.0004  13.2219
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      6            <span class=" -Color -Color-Cyan">0.9364</span>        <span class=" -Color -Color-Green">0.2950</span>            0.3115        1.7125  0.0003  9.5647
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      6            0.9992        <span class=" -Color -Color-Green">0.0091</span>            1.0000        <span class=" -Color -Color-Red">0.0000</span>  0.0003  12.8055
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      7            0.9336        <span class=" -Color -Color-Green">0.2662</span>            0.1694        2.3894  0.0002  9.6197
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      7            0.9992        0.0094            1.0000        <span class=" -Color -Color-Red">0.0000</span>  0.0002  12.7715
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      8            <span class=" -Color -Color-Cyan">0.9408</span>        <span class=" -Color -Color-Green">0.2653</span>            0.2350        1.9262  0.0001  9.4546
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      8            0.9996        <span class=" -Color -Color-Green">0.0087</span>            1.0000        <span class=" -Color -Color-Red">0.0000</span>  0.0001  13.2380
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      9            <span class=" -Color -Color-Cyan">0.9436</span>        <span class=" -Color -Color-Green">0.2522</span>            0.2678        1.7668  0.0000  9.5957
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      9            0.9996        <span class=" -Color -Color-Green">0.0058</span>            1.0000        0.0000  0.0000  12.7951
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     10            <span class=" -Color -Color-Cyan">0.9441</span>        0.2757            0.2860        1.7095  0.0000  9.6111
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     10            0.9996        0.0115            1.0000        0.0000  0.0000  13.1646
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INFO: ==== Training Deep4Net ====
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  epoch    train_accuracy    train_loss    valid_accuracy    valid_loss      lr      dur
--------  ----------------  ------------  ----------------  ------------  ------  -------
-      1            <span class=" -Color -Color-Cyan">0.8080</span>        <span class=" -Color -Color-Green">1.0589</span>            <span class=" -Color -Color-Magenta">0.3898</span>        <span class=" -Color -Color-Red">1.4211</span>  0.0100  14.1953
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      2            <span class=" -Color -Color-Cyan">0.9043</span>        <span class=" -Color -Color-Green">0.3585</span>            <span class=" -Color -Color-Magenta">0.4189</span>        1.6794  0.0097  14.1034
 </pre></div>
 </div>
 </div>
