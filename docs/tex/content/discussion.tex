@@ -1,0 +1,37 @@
+\section{Discussion}
+
+\subsection{Ethical considerations}
+
+    When studying EEG data a range of ethical considerations arise. 
+
+    \begin{itemize}
+        \item Could the data be considered personally identifiable information (PII)? 
+        \item How privacy sensitive are EEG recordings? Could they contain something the subject would rather keep private? (could have medical implications)
+    \end{itemize}
+
+    Companies such as Neurosity have taken an approach with their products where all the processing happens on-device, and only aggregates and classifier outputs are sent to the cloud for storage and presentation to the user.
+
+    \add[inline]{Discuss ethics/privacy considerations of data collection, how it's dealt with in ActivityWatch, and implications of results on similar concerns apply to EEG data}
+
+    \add[inline]{Mention OpenMined, https://github.com/OpenMined/PySyft, and similar tech (esp in the context of crowdsourcing data)}
+
+\subsection{Democratization of neuroscience}
+
+    \add[inline]{Write about democratization efforts, like eeg-notebooks, and how it fits into the larger picture of EEG equipment becoming cheap and widely available.}
+
+    This thesis was made possible due to the efforts of individuals and communities such as NeuroTechX to democratize neuroscience. Indeed, it is the explicit goal of the NeuroTechX eeg-notebooks project to `democratize the neuroscience experiment'. Combined with the rapid cost reduction of research-grade EEG equipment over the last decade it has enabled any programmer to design and perform high-quality neuroscience experiments.
+
+    \todo[inline]{Mention the research process of going from costly fMRI (to reveal mechanisms) to cheaper EEG/fNIRS/etc (to put the research into practice)}
+
+    As development of BCIs advance and the consumer market for EEG devices grow (as evidenced by new devices being released with a regular cadence by InteraXon and Neurosity) we expect to see more uses and applications of these devices.
+
+    Much of this work was made possible due to the efforts of communities such as NeuroTechX to democratize neuroscience by publishing tools and code for running experiments.
+
+\subsection{Crowdsourcing data}
+
+    Collecting data is a significant time sink for researchers, and efforts to crowdsource data from the general public are difficult for EEG as it still requires access to the equipment, the knowledge to operate it, as well as considerations like signal quality, electrode placement, and other factors that might invalidate the data.
+
+    As part of the thesis work I've contributed to an effort in crowdsourcing EEG data collected from the experiments built in eeg-notebooks using consumer EEG devices like the Muse and OpenBCI\@. The effort, called the \href{https://neurotech-challenge.com/}{NeuroTech Challenge Series} (NTCS), is lead by John Griffiths at the University of Toronto.
+
+    \add[inline]{Write about crowdsourcing of EEG data, including the potential of transfer learning and privacy considerations.}
+
