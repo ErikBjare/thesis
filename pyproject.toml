@@ -14,37 +14,51 @@ eegclassify = "eegclassify.main:main"
 
 [tool.poetry.dependencies]
 python = "^3.7, <3.9"  # Less than 3.9 due to numba not having support
-numpy = "^1.18.5"
-scipy = "^1.4.1"
-matplotlib = "^3.2.1"
-pandas = "^1.0.4"
-mne = "^0.21.0"
-mne-bids = "^0.5"
-pybv = "^0.3.0"
-brainflow = "^3.0.3"
-muselsl = {git = "https://github.com/ErikBjare/muse-lsl.git", branch="dev/bleak"}
-#muselsl = {path = "./vendor/muse-lsl"}
-pygatt = {version = "^4.0.5", extras = ["GATTTOOL"]}
-vispy = "^0.6.5"
-PyQt5 = "^5.15.1"  # required for `muselsl view` to work, due to: https://github.com/alexandrebarachant/muse-lsl/issues/111
-pyqtgraph = "^0.11.0"
-eeg-notebooks = {git = "https://github.com/NeuroTechX/eeg-notebooks.git"}
-aw-core = {git = "https://github.com/ActivityWatch/aw-core.git"}
-aw-client = {git = "https://github.com/ActivityWatch/aw-client.git"}
-timeslot = {git = "https://github.com/ErikBjare/timeslot.git"}
-yasa = "^0.4.0"
-entropy = {git = "https://github.com/raphaelvallat/entropy.git"}
-coloredlogs = "^14.0"
-pylsl = "1.10.5"  # required, see: https://github.com/alexandrebarachant/muse-lsl/issues/136
+
+# Self-made
+aw-core = "*"
+aw-client = "*"
+timeslot = "*"
+
+# General datascience
+numpy = "*"
+scipy = "*"
+matplotlib = "*"
+pandas = "*"
+
+# ML
 scikit-learn = "^0.23.2"
 pyriemann = "^0.2.6"
 xgboost = "^1.2.1"
-bitstring = "^3.1.7"  # depended on by muse-lsl, don't know why it isn't installed
-tqdm = "^4.57.0"
-wxpython = {platform = "linux", url = "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04/wxPython-4.1.1-cp38-cp38-linux_x86_64.whl"}
-Braindecode = {git = "https://github.com/braindecode/braindecode.git"}
 torch = "^1.8.1"
 imbalanced-learn = "*"
+
+# EEG-specific
+mne = "^0.21.0"
+mne-bids = "^0.5"
+brainflow = "^3.0.3"
+muselsl = {git = "https://github.com/ErikBjare/muse-lsl.git", branch="dev/bleak"}
+#muselsl = {path = "./vendor/muse-lsl"}
+eeg-notebooks = {git = "https://github.com/NeuroTechX/eeg-notebooks.git"}
+yasa = "^0.4.0"
+entropy = {git = "https://github.com/raphaelvallat/entropy.git"}
+pylsl = "1.10.5"  # required, see: https://github.com/alexandrebarachant/muse-lsl/issues/136
+Braindecode = {git = "https://github.com/braindecode/braindecode.git"}
+
+# Bluetooth
+pygatt = {version = "^4.0.5", extras = ["GATTTOOL"]}
+
+# UI
+PyQt5 = "^5.15.1"  # required for `muselsl view` to work, due to: https://github.com/alexandrebarachant/muse-lsl/issues/111
+pyqtgraph = "^0.11.0"
+vispy = "^0.6.5"
+wxpython = {platform = "linux", url = "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04/wxPython-4.1.1-cp38-cp38-linux_x86_64.whl"}
+
+# Misc
+coloredlogs = "^14.0"
+bitstring = "^3.1.7"  # depended on by muse-lsl, don't know why it isn't installed
+tqdm = "^4.57.0"
+pybv = "^0.3.0"
 
 [tool.poetry.dev-dependencies]
 black = "*"
