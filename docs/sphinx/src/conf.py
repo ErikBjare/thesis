@@ -24,10 +24,14 @@ author = "Erik Bjäreholt"
 
 # -- General configuration ---------------------------------------------------
 
+notebooks = False
+
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ["sphinx.ext.autodoc", "myst_nb"]
+extensions = [
+    "sphinx.ext.autodoc",
+] + (["myst_nb"] if notebooks else ["myst_parser"])
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]

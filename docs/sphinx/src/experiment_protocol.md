@@ -1,32 +1,46 @@
 Experiment protocol
 ===================
 
-Protocol for running EEG experiments with subject.
+The experiment protocol for the controlled experiment.
 
 
 # Setup
 
- - EEG device
-   - Which? 
-     - Muse S?
-     - Cyton + Ultracortex?
+## EEG device
 
- - ActivityWatch
-   - `aw-watcher-web` to collect browser data
-   - `aw-watcher-input` to collect detailed input data
+Primary device: 
+
+ - Muse S
+
+Alternative devices (untested): 
+
+ - OpenBCI Cyton + Ultracortex
+ - Neurosity Notion/Crown
+
+## ActivityWatch
+
+(not for the controlled experiment)
+
+Watchers:
+
+ - Default watchers (`aw-watcher-window` and `aw-watcher-afk`)
+ - `aw-watcher-web` to collect browser data
+ - `aw-watcher-input` to collect detailed input data
      - Set the poll time to something low (0.2s?)
 
-
 # Protocol
+
+The actual protocol to follow when performing the experiment.
 
 ## Before
 
  - Inform about collected data and anonymization process (we won't store names or other personally identifiable information)
  - Ask for informed consent
  - Take note of: 
-   - gender?
-   - device?
-   - age?
+   - gender
+   - device
+   - age
+   - handedness
    - software dev experience, specifically C/C++
  - Ask subject how they are feeling
    - Any standardized way?
@@ -44,8 +58,12 @@ Protocol for running EEG experiments with subject.
    - Use `muselsl view -b Qt5Agg`
    - Use `eegwatch check`
  - Run codeprose task
- - (optional) Run arithmetic task
- - (optional) Other tasks?
+   - Ensure subject is correctly set
+
+Extras:
+
+ - Run arithmetic task
+ - Other tasks
    - 10min Twitter or 10min YouTube?
    - 10min of working through email? (include input watcher)
    - 10min of programming? (include input watcher)
@@ -60,7 +78,4 @@ Protocol for running EEG experiments with subject.
  - Ask briefly about their experience
    - Comfort
    - Difficulty of tasks
- - ...
  - Collect data
-   - EEG signals (duh)
-   -

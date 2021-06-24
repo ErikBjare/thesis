@@ -12,13 +12,16 @@ You can find the thesis at `erik.bjareholt.com/thesis/thesis.pdf <https://erik.b
    :caption: Contents
 
    intro
-   notebooks
+
+..  
+    notebooks
 
 .. toctree::
    :maxdepth: 2
    :caption: Developer
 
    readme
+   experiment_protocol
    api
 
 
