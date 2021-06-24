@@ -19,7 +19,7 @@ dist/%.pdf: docs/tex/build/%.pdf
 %.png: %.dot
 	dot -Tpng $< -o $@
 
-docs/tex/build/%.pdf: docs/tex/%.tex docs/tex/*.bib docs/tex/gqm.png
+docs/tex/build/%.pdf: docs/tex/%.tex docs/tex/*.bib docs/tex/gqm.png docs/tex/content/*.tex
 	latexmk $< -pdf -shell-escape -cd -output-directory=build -interaction=nonstopmode -file-line-error
 
 precommit:
