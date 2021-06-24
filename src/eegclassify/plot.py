@@ -1,5 +1,5 @@
 import logging
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Iterable, TypeVar, Callable, Union
 from datetime import datetime
 
 import numpy as np
@@ -9,6 +9,8 @@ import seaborn as sns
 
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
+
+from eegclassify.util import take_until_next
 
 logger = logging.getLogger(__name__)
 
@@ -40,6 +42,11 @@ def pca(X: np.ndarray, y: np.ndarray) -> None:
     plt.show()
 
 
+T = TypeVar("T")
+Color = Union[str, Tuple[float, float, float]]
+Index = int  # Union[int, datetime]
+
+
 class TimelineFigure:
     def __init__(self, title=None, **kwargs):
         self.fig = plt.figure(**kwargs)
@@ -60,5 +67,12 @@ class TimelineFigure:
 
         plt.show()
 
-    def add_bar(self, events: Tuple[datetime, datetime, str], title: str):
+    def add_bar(self, events: List[Tuple[Index, Index, Color]], title: str):
         self.bars.append({"events": events, "title": title})
+
+    def add_chunked(self, ls: Iterable[T], cmap: Callable[[T], Color], title: str):
+        """Optimized version of add_bar that takes care of identical subsequent values"""
+        bars = [
+            (i_start, i_end + 1, cmap(v)) for i_start, i_end, v in take_until_next(ls)
+        ]
+        self.add_bar(bars, title)
