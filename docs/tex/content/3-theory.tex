@@ -37,7 +37,7 @@
     \add[inline]{Explain theory used, like theory of EEG, Riemannian geometry, etc}
     \add[inline]{Plots of raw EEG signal, PSD, PCA, etc}
 
-    As measurements are taken on the scalp, neural activity of surface-level neurons can be expected to dominate the signal, which makes it difficult to use when studying systems deeper in the brain, such as the hippocampus. As an example of this, eye blinks are easily identifieable in the signal when electrodes are placed on the frontal cortex.
+    As measurements are taken on the scalp, neural activity of surface-level neurons, such as the cerebral (neo)cortex, can be expected to dominate the signal, which makes it difficult to use when studying systems deeper in the brain, such as the hippocampus. As an example of this, eye blinks are easily identifieable in the signal when electrodes are placed on the frontal cortex.
 
     \add[inline]{Mention need for bandpass filtering to get rid of powerline noise}
 
@@ -62,3 +62,10 @@
 
         \add[inline]{Explanation of Riemannian geometry, from \href{https://colab.research.google.com/drive/1y9tq7-lJwusxtVgpB38y-p1pYw7hg0iu}{this tutorial we're working on}, perhaps it should go in the Background/Theory section though?}
 
+        The Riemannian distance measure for two symmetric positive definite matrices (such as a covariance matrix) is:~\cite{grafarend_metric_2003}
+
+        \[ d(A, B) = \sqrt{\sum_{i=1}^{n} \ln^2 \lambda_i (A, B) } \]
+
+    \subsubsection{Neural networks}
+
+        Many state-of-the-art models in the field of EEG are deep-learning based models, usually employing convolutional neural networks (CNNs).
