@@ -27,6 +27,7 @@ prof
 coverage.xml
 htmlcov
 .python-version
+__pycache__
 
 # notebooks
 .ipynb_checkpoints
