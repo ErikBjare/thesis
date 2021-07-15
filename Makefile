@@ -35,7 +35,7 @@ format:
 
 typecheck:
 	poetry run mypy
-	bash -c 'poetry run nbqa mypy notebooks/*.ipynb --ignore-missing-imports'
+	bash -c 'poetry run nbqa mypy notebooks/Main.ipynb notebooks/Signal.ipynb notebooks/Activity.ipynb notebooks/PPG.ipynb --ignore-missing-imports'
 
 clean:
 	rm -rfv docs/tex/build
