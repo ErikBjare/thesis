@@ -60,7 +60,7 @@ class EEGDevice(metaclass=ABCMeta):
         self.stop()
 
     @abstractmethod
-    def start(self, filename: str = None, duration=None):
+    def start(self, filename: str = None, duration=None, extras: dict = None):
         """
         Starts the EEG device based on the defined backend.
 

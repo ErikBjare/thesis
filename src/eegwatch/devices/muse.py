@@ -3,6 +3,7 @@ import logging
 from time import time, sleep
 from multiprocessing import Process
 from typing import List, Optional
+from pathlib import Path
 
 import numpy as np
 import muselsl
@@ -48,7 +49,7 @@ class MuseDevice(EEGDevice):
             return self.stream_process.exitcode is None
         return False
 
-    def start(self, filename: str = None, duration=None):
+    def start(self, filename: str = None, duration=None, extras: dict = None):
         """
         Starts the EEG device.
 
@@ -58,6 +59,10 @@ class MuseDevice(EEGDevice):
         sources = ["EEG"]  # + ["PPG", "ACC", "GYRO"]
         if not duration:
             duration = 300
+        if extras:
+            for source in ["PPG", "ACC", "GYRO"]:
+                if extras.get(source, False):
+                    sources += [source]
 
         # Not sure why we only do this on *nix
         # Makes it seem like streaming is only supported on *nix?
@@ -90,9 +95,18 @@ class MuseDevice(EEGDevice):
         self.push_sample([99], timestamp=time())
 
     def record(self, sources: List[str], duration, filename):
-        # Start a background process that will stream data from the first available Muse
+        """
+        Start a background process that will stream data from the first available Muse.
+
+        If multiple sources are used, such as PPG or GYRO, it will save those to seperate files ending in, for example: '.PPG.csv'
+        """
+        filename_orig = filename
         for source in sources:
             logger.info("Starting background recording process")
+            if source != "EEG" and source not in str(filename_orig):
+                filename = Path(
+                    str(filename_orig).split(".csv")[0] + "." + source + ".csv"
+                )
             rec_process = Process(
                 target=record, args=(duration, filename, source), daemon=True
             )

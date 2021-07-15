@@ -68,7 +68,17 @@ def main():
 @click.option(
     "--loop/--no-loop", is_flag=True, default=True, help="Wether to loop recording"
 )
-def connect(device: str, duration: float, subject_id: int, loop: bool):
+@click.option(
+    "extras",
+    "--extra",
+    type=click.Choice(["PPG", "ACC", "GYRO"]),
+    multiple=True,
+    default=[],
+    help="Extra sources to record (only supported for Muse devices)",
+)
+def connect(
+    device: str, duration: float, subject_id: int, loop: bool, extras: List[str]
+):
     """Connect to device and start streaming & recording"""
     from .util import generate_save_fn
 
@@ -83,7 +93,9 @@ def connect(device: str, duration: float, subject_id: int, loop: bool):
 
         logger.info(f"Recording to {save_fn}")
         try:
-            eeg_device.start(save_fn, duration=duration)
+            eeg_device.start(
+                save_fn, duration=duration, extras={e: True for e in extras}
+            )
         except IndexError:
             logger.exception("Error while starting recording, trying again in 5s...")
             sleep(5)

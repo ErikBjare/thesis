@@ -25,10 +25,11 @@ def clean(df: pd.DataFrame) -> pd.DataFrame:
 
 def filter(
     X: np.ndarray,
-    sfreq: float = 250,
+    sfreq: float,
     n_chans: int = 4,
     low: float = 3,
     high: float = 40,
+    verbose: bool = True,
 ) -> np.ndarray:
     """Inspired by viewer_v2.py in muse-lsl"""
     window = 10
@@ -36,7 +37,7 @@ def filter(
     data_f = np.zeros((n_samples, n_chans))
 
     af = [1.0]
-    bf = create_filter(data_f.T, sfreq, low, high, method="fir")
+    bf = create_filter(data_f.T, sfreq, low, high, method="fir", verbose=verbose)
 
     zi = lfilter_zi(bf, af)
     filt_state = np.tile(zi, (n_chans, 1)).transpose()
