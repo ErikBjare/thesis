@@ -59,25 +59,39 @@ coloredlogs = "^14.0"
 bitstring = "^3.1.7"  # depended on by muse-lsl, don't know why it isn't installed
 tqdm = "^4.57.0"
 pybv = "^0.3.0"
+moabb = "^0.4.2"
 
 [tool.poetry.dev-dependencies]
+# Linting & formatting
 black = "*"
-mypy = "*"
 pylint = "*"
 flake8 = "*"
+
+# Typechecking
+mypy = "*"
+types-click = "*"
+
+# Testing
 pytest = "^6.0"
 pytest-cov = "*"
 pytest-profiling = "*"
-Pygments = "*"  # required to build latex
 coverage = {version = "*", extras = ["toml"]}
-ipykernel = "^5.5.0"
-nbval = "^0.9.6"
-nbqa = "^0.6.1"
-sphinx-book-theme = "^0.1.0"
-Sphinx = "3.1.1"
-myst-nb = "^0.12.3"
-types-click = "^0.1.14"
-sphinxcontrib-bibtex = "^2.3.0"
+
+# Notebook stuff
+ipykernel = "*"
+nbval = "*"
+nbqa = "*"
+# Needed due to https://github.com/jupyter/jupyter_client/issues/637
+# and because myst-nb hasn't made a new release since bumping the version
+myst-nb = {git = "https://github.com/executablebooks/MyST-NB.git"}
+#myst-nb = "*"
+
+# Docs
+Sphinx = "*"
+sphinx-book-theme = "*"
+sphinxcontrib-bibtex = "*"
+Pygments = "*"  # required to build latex
+
 
 [tool.pytest.ini_options]
 minversion = "6.0"
