@@ -48,7 +48,7 @@ class BrainflowDevice(EEGDevice):
         self.markers: List[Tuple[List[int], float]] = []
         self._init_brainflow()
 
-    def start(self, filename: str = None, duration=None) -> None:
+    def start(self, filename: str = None, duration=None, extras: dict = None) -> None:
         self.save_fn = filename
 
         def record():
