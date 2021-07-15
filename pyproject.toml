@@ -102,6 +102,7 @@ testpaths = [
     "notebooks",
 ]
 python_files = ["*.py", "*.ipynb"]
+ignore = ["notebooks/Braindecode.ipynb"]
 
 [tool.mypy]
 files = ["src/**/*.py", "tests/*.py", "scripts/*.py"]
