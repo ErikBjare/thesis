@@ -1,17 +1,23 @@
 \section{Introduction}
 
-\add[inline]{Write introduction}
-
 % How to write an introduction: https://student.unsw.edu.au/introductions
 
 % Move 1 establish your territory (say what the topic is about)
 
-The productivity of software engineers...
+We live in an age of massive data collection about all manner of things. Wether the goal is scientific, financial, or personal, the rise of computing over the last half century has led to ever increasing data collection and analysis in pursuit of these goals. Yet for some domains, like what goes on inside our heads, we have limited capability for data collection.
 
-Quantified Self movement has risen to the challenge of collecting and analyzing highly personal data for insights into our own lives. But while collecting external data, such as steps taken, physical location, has proven easy and generally considered a solved problem, it's more difficult to collect data on ones internal state (like mood, productivity, what one is thinking about), often requiring manual data collection, or approximations from other external data.
+Communities like the Quantified Self movement have risen to the challenge of collecting and analyzing highly personal data for insights into our lives and health. But while some data is easily observed, such as steps taken, physical location, and which app one is using, it's more difficult to collect data about ones internal state (like mood, productivity, what one is thinking about), often requiring manual data collection, or approximations constructed from other data.
+
+% other formulation of goals: profits, productivity, sustainability
 
 % Move 2 establish a niche (show why there needs to be further research on your topic)
 
-Brain Computer Interfaces (BCIs) have become available as consumer goods, thanks to the economic viability of brain imaging techniques like electroencephalography (EEG). These devices promise to measure different aspects of your mental state: wether you're grasping an object, or how calm you are during your meditation session. Low-cost brain imaging technologies like EEG are therefore suitable as candidates for richer collection about the user's mental state.
+While within the reach of medical professionals with access to expensive equipment like MRI scanners and high-density EEG setups, the ability for the average individual to collect data about their own brain activity has been limited. However, in recent years the cost of consumer EEG devices has fallen sharply, offering a feasible solution to monitor brain activity during everyday tasks.
+
+% Brain Computer Interfaces (BCIs) have become available as consumer goods, thanks to the economic viability of brain imaging techniques like electroencephalography (EEG). These devices promise to measure different aspects of your mental state: wether you're grasping an object, or how calm you are during your meditation session. Low-cost brain imaging technologies like EEG are therefore suitable as candidates for richer collection about the user's mental state.
 
 % Move 3 introduce the current research (make hypotheses; state the research questions)
+
+In this thesis, we've developed a framework for studying brain activity during various naturalistic device activities. We do so by collecting brain activity data using consumer-grade EEG devices while simultaneously tracking the device activity they're engaging in. We then use that data to train classifiers of device activity.
+
+We also apply similar methodology to a controlled experiment where we try to train a classifier to distinguish between the subject reading code vs prose.
