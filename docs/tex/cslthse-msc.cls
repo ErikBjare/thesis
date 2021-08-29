@@ -25,7 +25,7 @@
 \usepackage{textcomp}
 % other useful packages
 \usepackage{overpic}
-\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
 \usepackage{hyperref}
 \usepackage{pdfpages}
 \usepackage{ifoddpage}

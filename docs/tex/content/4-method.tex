@@ -1,8 +1,12 @@
-\section{Method}
+\chapter{Method}
 
-\subsection{Collection}
+Our method starts with gathering and configuring the equipment and tools needed to perform the experiment and analysis.
 
-    \subsubsection{Collection of device activity data}
+\section{Collection}
+
+In order to perform our experiment and analysis, we need two types of data: EEG data, and device activity data to label the EEG data.
+
+    \subsection{Collection of device activity data}
 
         All device activity is collected using the automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_2020-1}.
 
@@ -19,7 +23,7 @@
 
         The data from ActivityWatch is processed and categorized such that the resulting data has the 3 columns \mintinline{python}{start, end, category}. The category is determined by a regular expression that matches on window titles and URLs, such as \mintinline{python}{github.com}.
 
-    \subsubsection{Collection of EEG data}
+    \subsection{Collection of EEG data}
 
         EEG data was collected during organic device use and under controlled conditions.
 
@@ -124,7 +128,7 @@
             \end{figure}
             \end{center}
 
-\subsection{Analysis}
+\section{Analysis}
 
     For classification and analysis, we used common open source Python libraries for data analysis, like numpy~\cite{harris2020array}, pandas~\cite{reback2020pandas}, and scikit-learn~\cite{scikit-learn}. In addition, we used less common libraries tailored specifically for working with EEG data, such as MNE~\cite{noauthor_mne-python_2020}, pyriemann~\cite{alexandre_barachant_2020_3715511}, and YASA~\cite{vallat_yasa_2020}.
 

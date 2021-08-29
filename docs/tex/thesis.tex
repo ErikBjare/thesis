@@ -1,6 +1,15 @@
-\documentclass[a4paper]{article}
+% Uncomment to use official LTH thesis template
+\def\UseCSLTH{true}
 
-% Based on template: http://www.maths.lth.se/matematiklth/exjobb/exjobbarresurs/index.html
+\ifx\UseCSLTH\undefined
+    \documentclass[a4paper]{article}
+\else
+    \documentclass[nofilelist]{cslthse-msc}
+\fi
+
+% Based on templates: 
+%  - http://www.maths.lth.se/matematiklth/exjobb/exjobbarresurs/index.html
+%  - https://bitbucket.org/flavius_gruian/msccls/
 
 \usepackage[smartEllipses]{markdown}  % For markdown
 \def\markdownOptionOutputDir{build}  % Needed, see https://github.com/Witiko/markdown/issues/6#issuecomment-328699108
@@ -52,6 +61,8 @@
 \setlength{\parskip}{1em}
 
 % Encoding and languages
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
 \usepackage[T1]{fontenc}        % För svenska bokstäver
 %\usepackage[swedish]{babel}    %Svenska skrivregler och rubriker
 
@@ -90,35 +101,65 @@
 
 \defbibheading{notcited}{\section*{Further Reading}}
 
-\title{%
-    \small DRAFT \today \\
-    \small The latest version is available at \href{https://erik.bjareholt.com/thesis/thesis.pdf}{erik.bjareholt.com/thesis/thesis.pdf}\\
-    \large --- \\
-    \large \par M.Sc. Thesis\\
-    \huge Classifying brain activity using low-cost biosensors and automated time tracking \\
-}
-\author{Erik Bjäreholt \orcid{0000-0003-1350-9677} \\(erik@bjareho.lt, dat13ebj@student.lu.se)}
-\date{\today}
+\def\mytitleen{Classifying brain activity using low-cost biosensors and automated time tracking}
+\def\mytitlesv{Klassificering av hjärnaktivitet med hjälp av elektroencephalografi och automatiserad tidsspårning}
+
+\ifx\UseCSLTH\undefined
+    \title{%
+        \small DRAFT \today \\
+        \small The latest version is available at \href{https://erik.bjareholt.com/thesis/thesis.pdf}{erik.bjareholt.com/thesis/thesis.pdf}\\
+        \large --- \\
+        \large \par M.Sc. Thesis\\
+        \huge \mytitleen\\
+    }
+    \author{Erik Bjäreholt \orcid{0000-0003-1350-9677} \\(erik@bjareho.lt, dat13ebj@student.lu.se)}
+    \date{\today}
+\else
+    \title{\mytitleen}
+    \svensktitel{\mytitlesv}
+    \subtitle{Subtitle in progress}
+
+    \date{\today}
+    %\date{January 16, 2015}
+
+    \student{Erik Bjäreholt}{erik@bjareho.lt}
+
+    \company{RISE}
+    \supervisor{Markus Borg, \href{markus.borg@cs.lth.se}{\texttt{markus.borg@cs.lth.se}}}
+    \examiner{Elizabeth Bjarnarson, \href{mailto:elizabeth@cs.lth.se}{\texttt{elizabeth@cs.lth.se}}}
+
+    %\geometry{showframe}
+
+    \thesisnumber{LU-CS-EX: 2023-79} % Magic Number! Do not change unless Birger Swahn asks you to do so!
+    % default is Master. Uncomment the following for "kandidatarbete"/Bachelor's thesis
+    %\thesistype{Bachelor}{Kandidatarbete}
+
+    %\onelinetitle
+    %\twolinestitle
+    \threelinestitle
+    %\fourlinestitle
+
+    \theabstract{\input{content/0-abstract}}
+
+    \acknowledgements{\input{content/99-acknowledgements.tex}}
+
+    \keywords{electroencephalography, time tracking, code comprehension, productivity, MSc}
+\fi
 
 \begin{document}
-\maketitle
 
-\begin{abstract}
-\input{content/0-abstract}
-\end{abstract}
-
-\pagebreak %.\pagebreak
+\makefrontmatter
 
 \tableofcontents
 
 \listoftodos[Notes \& TODOs]
 
-\pagebreak %.\pagebreak
-
+\pagebreak
 \begin{refsection}
 
 \input{content/9-preface}
-\pagebreak
+%\pagebreak
+
 \input{content/1-introduction}
 \input{content/2-background}
 \input{content/3-theory}
@@ -145,16 +186,7 @@
 
 \section*{Acknowledgements}
 
-\begin{itemize}
- \item My advisor Markus Borg~\orcid{0000-0001-7879-4371}.
- \item My brother Johan Bjäreholt, for working with me on ActivityWatch all these years.
- \item The NeuroTechX crowd, specifically Morgan Hough~\orcid{0000-0001-5256-413X} and John Griffiths, for their support and time spent helping me.
- \item The people at the LTH Department for Automatic Control, for providing early guidance.
- \item Andrew Jay Keller at Neurosity, for giving me a refurbished Notion DK1 to work with.
- \item Alex K. Chen, for referring me to all the right people.
- \item All the test subjects.
- \item Everyone who's contributed to the open source tools I've used.
-\end{itemize}
+\input{content/99-acknowledgements.tex}
 
 
 % References
