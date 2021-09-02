@@ -1,6 +1,8 @@
 \chapter{Method}
 
-Our method starts with gathering and configuring the equipment and tools needed to perform the experiment and analysis.
+Our method starts with gathering the data, and to get started with data collection we configure the equipment and tools needed to perform the experiment.
+
+Once our data collection is done, we continue with our analysis by training a classifier using various machine learning methods.
 
 \section{Collection}
 
@@ -29,13 +31,13 @@ In order to perform our experiment and analysis, we need two types of data: EEG 
 
         For both conditions, code from the open source eeg-notebooks~\cite{barachant_eeg-notebooks_2020} was adapted to record the raw EEG stream into a CSV file. For the Muse S, muse-lsl~\cite{muse-lsl} was used as the underlying software to handle the connection (which uses Lab Streaming Layer). For the OpenBCI and Neurosity devices, brainflow~\cite{noauthor_brainflow_2020} was used to handle the connection.
 
-        \paragraph{During organic device use}
+        \subsubsection{During organic device use}
 
             For the organic device use conditions, we primarily used the Muse S due the superior comfort and ease of use compared with the alternatives, making it especially suitable for long recordings.\footnote{A wet electrode cap system was also considered, but ultimately not investigated due to being inconvenient to setup.}
 
             The subject was then simply asked to go about their usual device activities, often consisting of a mix of work (email, writing prose, writing code) and leisure (watching YouTube, reading Twitter).
 
-        \paragraph{During code vs prose comprehension task}
+        \subsubsection{During code vs prose comprehension task}
 
             For the controlled condition, we ended up using the Muse S as well due to the comfort and ease of setup.
 
@@ -61,14 +63,17 @@ In order to perform our experiment and analysis, we need two types of data: EEG 
 
             After these questions we put the devices on and ensure we get good signal by inspecting it in real time with the viewer provided by muse-lsl. The viewer itself does simple bandpass filtering between 3--40Hz, and the signal quality is indicated by the standard deviation of the filtered signal.
 
-        \paragraph{Devices}
+        \subsubsection{Devices}
 
-            We experimented with several devices but eventually settled on the Muse S. The motivation for choosing the Muse S was mainly due to comfort and ease of use. The other devices considered included the OpenBCI Cyton (with Ultracortex headset) and the Neurosity Notion DK1.
+            We experimented with several devices but eventually settled on the Muse S. The motivation for choosing the Muse S was mainly due to comfort and ease of use. The other devices considered included the OpenBCI Cyton (with Ultracortex headset), and the Neurosity Crown.\footnote{Earlier in the work, before we received the Crown, we were also generously gifted a Neurosity Notion DK1 to get a head start.}
 
             The Muse S is a 4-channel EEG headband with electrodes at TP9, AF7, AF8, and TP10, with the reference electrode at Fpz~\cite{krigolson_choosing_2017}.\footnote{According to the 10--20 system.}
 
-            \begin{widepage}
+            %\begin{minipage}
+
+            %\begin{widepage}
             \begin{table}
+                \centering
                 \begin{tabular}{llccc}
                     \toprule
                     Manufacturer
@@ -89,55 +94,58 @@ In order to perform our experiment and analysis, we need two types of data: EEG 
                     & 125--250Hz
                     & Low \\
                  % generously gifted by Neurosity
-                 Neurosity
-                    & Notion DK1
-                    & 8
-                    & 250Hz
-                    & Medium \\
+                 %Neurosity
+                 %   & Notion DK1
+                 %   & 8
+                 %   & 250Hz
+                 %   & Medium \\
                   % preordered, arrives in late spring
                   Neurosity
                     & Crown
                     & 8
                     & 250Hz
-                    & High? \\
+                    & Medium \\
                     \bottomrule
                 \end{tabular}
                 \caption{Devices used}\label{table:devices}
             \end{table}
-            \end{widepage}
+            %\end{widepage}
 
-            \begin{center}
+            %\begin{center}
             \begin{figure}
-                \begin{widepage}
-                \begin{tabular}{cc}
-                    \includegraphics[width=65mm]{img/Muse-S.jpg}
-                    & \includegraphics[width=65mm]{img/openbci-cyton.jpg}
+                \centering
+                %\begin{widepage}
+                \begin{tabular}{c}
+                    \includegraphics[width=80mm]{img/Muse-S.jpg}
                     \\
                     (a) Muse S
-                    & (b) OpenBCI Cyton with Ultracortex
                     \\[6pt]
-                    \includegraphics[width=65mm]{img/neurosity-notion.png}
-                    & \includegraphics[width=65mm]{img/neurosity-crown.jpg}
+                    \includegraphics[width=80mm]{img/openbci-cyton.jpg}
                     \\
-                    (c) Neurosity Notion DK1
-                    & (d) Neurosity Crown
+                    (b) OpenBCI Cyton with Ultracortex
+                    \\[6pt]
+                    \includegraphics[trim=0 100 0 0,clip,width=100mm]{img/crown-1.png}
+                    \\
+                    (c) Neurosity Crown
                     \\[6pt]
                 \end{tabular}
                 \caption{Photos of devices used}
-                \end{widepage}
+                %\end{widepage}
             \end{figure}
-            \end{center}
+            %\end{center}
+
+            %\end{minipage}
 
 \section{Analysis}
 
     For classification and analysis, we used common open source Python libraries for data analysis, like numpy~\cite{harris2020array}, pandas~\cite{reback2020pandas}, and scikit-learn~\cite{scikit-learn}. In addition, we used less common libraries tailored specifically for working with EEG data, such as MNE~\cite{noauthor_mne-python_2020}, pyriemann~\cite{alexandre_barachant_2020_3715511}, and YASA~\cite{vallat_yasa_2020}.
 
-    \subsubsection{Labelling}
+    \subsection{Labelling}
         For the uncontrolled condition, we split the EEG data into epochs using the categories assigned by our ActivityWatch script.
 
         For the controlled experiment, we split the EEG data into epochs using the trial markers, resulting in one epoch per stimuli.
 
-    \subsubsection{Data transformation}
+    \subsection{Data transformation}
 
         In order to train on the variable-length epochs, we need to split each epoch into a fixed-duration window, which can then we use to train and classify our model.
 
@@ -145,13 +153,13 @@ In order to perform our experiment and analysis, we need two types of data: EEG 
 
         Where $n_{samples}$ is the total number of samples for the epoch (variable-length), and $n_{channels}$ is 4 for the Muse S.
 
-        Since the matrix has variable dimensions for each epoch, we split it into \~5s windows, which at the 256Hz sampling frequency of the Muse gives us 1280 samples per window.
+        Since the matrix has variable dimensions for each epoch, we split it into $\sim$5s windows, which at the 256Hz sampling frequency of the Muse gives us 1280 samples per window.
 
         Dimensions of the window matrix: \[ (n_{windows}, n_{channels}, 1280) \]
 
-        We experimented with different windowing methods to potentially augment the data...  \todo{inline}{...and? Should a sliding window approach be used to improve data augmentation?}
+        We experimented with different windowing methods to potentially augment the data...  \todo[inline]{...and? Should a sliding window approach be used to improve data augmentation?}
 
-    \subsubsection{Data cleaning}
+    \subsection{Data cleaning}
 
         % TODO: Should this say 'reject windows' instead?
         We reject samples that either:
@@ -164,7 +172,7 @@ In order to perform our experiment and analysis, we need two types of data: EEG 
 
         \todo[inline]{List how many epochs are rejected by each cleaning step}
 
-    \subsubsection{Feature engineering}
+    \subsection{Feature engineering}
 
         One approach to classifying EEG data is to perform feature extraction/engineering. Common features used for EEG data include bandpower ratios, as well as covariance matrixes using the Riemannian metric.
         
@@ -182,19 +190,19 @@ In order to perform our experiment and analysis, we need two types of data: EEG 
 
             The \improvement{according to whom?}{state of the art in many EEG classification tasks} involves the use of Riemannian geometry. For this, we used the open source pyriemann library by Alexandre Barachant\footnote{First author of the original paper to apply Riemannian geometry to EEG~\cite{barachant_classification_2013}}.
 
-    \subsubsection{Neural Networks}
+    \subsection{Neural Networks}
 
         One of the classifiers we want to train is a neural network. We use braindecode~\cite{schirrmeister_deep_2017}\cite{noauthor_braindecode_2021}, a neural network toolbox for EEG data that uses PyTorch and integrates it with scikit-learn through skorch.
 
         The networks provided by braindecode are convolutional\ldots
 
-    \subsubsection{Cross Validation}
+    \subsection{Cross Validation}
 
         We use LORO (``Leave-One-Run-Out'') cross-validation, a variation of LOGO (``Leave-One-Group-Out''), in order to ensure the samples used in validation are using subjects or tasks that are unseen in training.
 
         We attempt both out-of-subject validation and out-of-task validation in order to estimate the ability of the classifiers to generalize across subjects and tasks.
 
-    \subsubsection{Single subject}
+    \subsection{Single subject}
 
         % TODO: what experiments?
         % TODO: what devices?

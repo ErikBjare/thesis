@@ -1,5 +1,7 @@
 \chapter{Introduction}
 
+\todo[inline]{Add references}
+
 % How to write an introduction: https://student.unsw.edu.au/introductions
 
 % Move 1 establish your territory (say what the topic is about)
@@ -8,7 +10,7 @@ We live in an age of extensive data collection. Whether the goal is scientific, 
 
 % other formulation of goals: profits, productivity, sustainability
 
-Some communities, like the Quantified Self movement, have risen to the challenge of collecting and analyzing personal data for insights into our lives and health. But while some data is easily observed (such as location, steps taken, and which app one is using), it remains difficult to collect data about subjective attributes (like mood, productivity, what one is thinking about). To collect data on these more elusive phenomena, researchers and individuals have to resort to manual data collection like questionaires, or approximations constructed from other data, leading to significant time costs and scaling difficulties.
+Some communities, like the Quantified Self movement, have risen to the challenge of collecting and analyzing personal data for insights into our lives and health. But while some data is easily observed (such as location, steps taken, and which app one is using), it remains difficult to collect data about subjective attributes (like mood, focus). To collect data on these more elusive phenomena, researchers and individuals have to resort to manual data collection like questionnaires, or approximations constructed from other data, leading to significant time costs and scaling difficulties.\cite{malhi_promise_2017}
 
 % Move 2 establish a niche (show why there needs to be further research on your topic)
 
@@ -20,6 +22,6 @@ EEG works by measuring tiny amounts of electricity (on the order of microvolts) 
 
 % Move 3 introduce the current research (make hypotheses; state the research questions)
 
-In this thesis, we've developed a framework for studying brain activity during various naturalistic device activities. We do so by collecting brain activity data using consumer-grade EEG devices while simultaneously tracking the device activity they're engaging in. We then use that data to train classifiers of device activity.
+In this thesis, we've developed a framework and tooling for studying brain activity during various naturalistic device activities. We do so by collecting brain activity data using consumer-grade EEG devices while simultaneously tracking the device activity they're engaging in. We then use that data to train classifiers of device activity.
 
-We also apply similar methodology to a controlled experiment where we present subjects, monitored with EEG, with a set of code- and prose-comprehension tasks. We use the collected data to train a classifier to distinguish between the two tasks, to help evaluate the feasibility of EEG to distinguish between the two tasks, and use the results as an indication whether is could extend to other tasks.
+We also apply similar methodology to a controlled experiment where we present a small number of subjects with a set of code- and prose-comprehension tasks while being monitored with EEG\@. We use the collected data to train a classifier, evaluating the feasibility of EEG to distinguish between the two tasks, and use the results as an indication whether is could extend to other tasks.
