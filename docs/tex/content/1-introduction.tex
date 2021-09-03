@@ -6,7 +6,7 @@
 
 % Move 1 establish your territory (say what the topic is about)
 
-We live in an age of extensive data collection. Whether the goal is scientific, financial, or personal, the rise of computing over the last half century has led to an unprecedented rise in data acquisition and analysis in pursuit of these goals. Yet for some domains, like what goes on inside our heads, our capabilities are still limited.
+We live in an age of extensive data collection. Whether the goal is scientific, financial, or personal, the rise of computing over the last half century has led to an unprecedented rise in data acquisition and analysis in pursuit of these goals. Yet for some domains, like what goes on inside our heads, our capabilities are still limited despite the many potential applications for productivity and mental health.
 
 % other formulation of goals: profits, productivity, sustainability
 
@@ -14,18 +14,18 @@ Some communities, like the Quantified Self movement, have risen to the challenge
 
 % Move 2 establish a niche (show why there needs to be further research on your topic)
 
-Collecting data about brain activity has been historically inaccessible to the general public, but more expensive equipment, such as \emph{magnetic resonance imaging} (MRI) scanners and high-density \emph{electroencephalography} (EEG) headsets has long been in use within medicine. While this professional equipment is still unavailable to the general public, in recent years some brain imaging techniques have become commercialized for various purposes (such as meditation aids, biofeedback) and sold as consumer devices. In particular, the cost of consumer EEG devices has fallen sharply, offering a feasible solution to monitor brain activity during everyday tasks.
+Individuals' ability to collect data about brain activity has historically been limited. However, more expensive equipment, such as \emph{magnetic resonance imaging} (MRI) scanners and high-density \emph{electroencephalography} (EEG) headsets, has long been in use within medicine. While this professional equipment is still unavailable to the general public, in recent years some brain imaging techniques have become commercialized for various purposes (such as meditation aids, biofeedback) and sold as consumer devices. In particular, the cost of EEG devices has fallen sharply, offering a feasible solution to monitor brain activity during everyday tasks.
 
 EEG works by measuring tiny amounts of electricity (on the order of microvolts) on the scalp to listen to the underlying firing of neurons. By placing electrodes in various configurations, information about the activity of different brain regions can be inferred. The extent of how much information can actually be decoded from the signal remains an open research question.
 
 % TODO: Mention brain computer interfaces at least once
 
-Technologies such as EEG have shown promise as early \emph{brain computer interfaces} (BCIs), but while much research has been focused on active attempts by the user to use EEG as an input device, much less...
+Technologies such as EEG have shown promise as early \emph{brain computer interfaces} (BCIs), but while much research has been focused on active attempts by the user to use EEG as an input device, much less work has been done on understanding how the brain behaves in general during various computer activities.
 
 % Brain Computer Interfaces (BCIs) have become available as consumer goods, thanks to the economic viability of brain imaging techniques like electroencephalography (EEG). These devices promise to measure different aspects of your mental state: wether you're grasping an object, or how calm you are during your meditation session. Low-cost brain imaging technologies like EEG are therefore suitable as candidates for richer collection about the user's mental state.
 
 % Move 3 introduce the current research (make hypotheses; state the research questions)
 
-In this thesis, we've developed a framework and tooling for studying brain activity during various naturalistic device activities. We do so by collecting brain activity data using consumer-grade EEG devices while simultaneously tracking the device activity they're engaging in. We then use that data to train classifiers of device activity.
+To that end, we have in this thesis developed a framework and tooling for studying brain activity during various naturalistic device activities. We do so by collecting brain activity data using consumer-grade EEG devices while simultaneously tracking the device activity they're engaging in. We then use that data to train classifiers of device activity.
 
 We also apply similar methodology to a controlled experiment where we present a small number of subjects with a set of code- and prose-comprehension tasks while being monitored with EEG\@. We use the collected data to train a classifier, evaluating the feasibility of EEG to distinguish between the two tasks, and use the results as an indication whether is could extend to other tasks.
