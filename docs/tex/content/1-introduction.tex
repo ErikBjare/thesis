@@ -1,7 +1,7 @@
 \chapter{Introduction}
 
 \todo[inline]{Add references}
-\todo[inline]{Change 'device activity' -> 'task'?}
+\todo[inline]{Change `device activity' -> `task'?}
 
 % How to write an introduction: https://student.unsw.edu.au/introductions
 
@@ -11,7 +11,11 @@ We live in an age of extensive data collection. Whether the goal is scientific, 
 
 % other formulation of goals: profits, productivity, sustainability
 
-In the field of software engineering research
+% In the field of software engineering research
+
+% This becomes especially relevant for knowledge workers, in particular software developers, who spend the vast majority of their time working on computers.
+
+% Brain imaging techniques such as EEG show a potential to shed light on many of these research questions, and the relationship between device usage and brain activity seems an largely unexplored area worth investigating.
 
 \todo[inline]{Mention themes in Fucci paper re software engineers}
 
@@ -39,17 +43,9 @@ To that end, we have in this thesis developed a framework and tooling for studyi
 
 We also apply similar methodology to a controlled experiment where we present a small number of subjects with a set of code- and prose-comprehension tasks while being monitored with EEG\@. We use the collected data to train a classifier, evaluating the feasibility of EEG to distinguish between the two tasks, and use the results as an indication whether it could extend to other tasks.
 
-\hrule
-
 %\add[inline]{Add connection to software developers}
 
-This becomes especially relevant for knowledge workers, in particular software developers, who spend the vast majority of their time working on computers.
-
-Brain imaging techniques such as EEG show a potential to shed light on many of these research questions, and the relationship between device usage and brain activity seems an largely unexplored area worth investigating.
-
-Some communities, like the Quantified Self movement, have risen to the challenge of collecting and analyzing personal data for insights into our lives and health. But while some data is easily observed (such as device usage, location, and physical movement), it remains difficult to collect data about subjective attributes (like mood, focus). To collect data on these more elusive phenomena, researchers and individuals have to resort to manual data collection like questionnaires, or approximations constructed from other data, leading to significant time costs and scaling difficulties.\cite{malhi_promise_2017} Technologies such as EEG could serve as useful tools in this endeavor.
-
-\subsection{Functional brain imaging and Electroencephalography}
+\section{Functional brain imaging and Electroencephalography}
 
     Functional brain imaging methods such as fMRI, fNIRS, and EEG, have been used to study the relationship between cognitive or physical activity, and brain activity~\cite{floyd_decoding_2017}\cite{hong_classification_2015}\cite{fucci_replication_2019}. The more accurate methods such as fMRI are costly and inflexible/impractical for many uses.
 
@@ -61,7 +57,7 @@ Some communities, like the Quantified Self movement, have risen to the challenge
 
     \add[inline]{Separate sections for applications in BCIs vs neuroscience}
 
-    \subsubsection{Cost reduction}
+    \subsection{Cost reduction}
 
     The cost-reduction of EEG devices took hold in 2013, when OpenBCI ran the founding crowdfunding round on Kickstarter. During the campaign, they offered their 16-channel Cyton + Daisy board for \$549.\footnote{Fun fact: I funded them at one of the lower tiers back then.}\cite{noauthor_openbci_nodate}
 
@@ -69,7 +65,7 @@ Some communities, like the Quantified Self movement, have risen to the challenge
 
     More recently, projects like the FreeEEG32 offer a 32 channel board for only \$199, expected to ship in 2022.\cite{noauthor_freeeeg32_nodate}
 
-    \subsubsection{Applications in neurolinguistics}
+    \subsection{Applications in neurolinguistics}
 
         EEG has found many applications in neurolinguistics, both to understand how the brain processes natural languages as well as programming languages~\cite{prat_relating_2020}.
 
@@ -77,9 +73,9 @@ Some communities, like the Quantified Self movement, have risen to the challenge
 
         The code vs prose comprehension task has also been modified into a writing task studied under fMRI, to further shed light to the underlying brain activity. In one study it was found that code and prose writing are significantly dissimilar tasks for the brain, where prose writing engages brain regions associated with language in the left hemisphere while while code writing engages brain regions associated with attention, working memory, planning, and spatial cognition in the right hemisphere\cite{noauthor_neurological_nodate}. To study this with MRI, the authors had to use (develop?) an MRI-safe keyboard.
 
-        As far as I know, code vs prose writing has not been studied with EEG\. However, using ActivityWatch and other tools we've developed in this thesis (like the input watcher) one can to distinguish wether the user is reading or writing, as well as wether they're working with code or prose, which enables studying the same activities in a naturalistic setting.
+        As far as I know, code vs prose \emph{writing} has not been studied with EEG\. However, using ActivityWatch and other tools we've developed in this thesis (like the input watcher) one can to distinguish wether the user is reading or writing, as well as wether they're working with code or prose, which enables studying the same activities in a naturalistic setting.
 
-    \subsubsection{Applications in software engineering}
+    \subsection{Applications in software engineering}
 
         \add[inline]{Applications to software engineers (Fucci and related stuff)}
 
@@ -92,7 +88,7 @@ Some communities, like the Quantified Self movement, have risen to the challenge
     %  - HEG
 
 
-\subsection{Automated time trackers and ActivityWatch}
+\section{Automated time trackers and ActivityWatch}
 
     People spend more time than ever using computing devices. Work, entertainment, and services, have been steadily moving online over the last few decades and this trend is expected to continue.
     While several studies have been tracking how people spend time on their devices, a wider study of how people's app usage is changing over time, and how it varies with demographics, is not publicly available.
@@ -110,9 +106,11 @@ Some communities, like the Quantified Self movement, have risen to the challenge
 
     Automated time-trackers have been developed for computing devices, with various applications such as tracking hours worked, personal productivity, managing excessive use of social networking sites (SNSs), and studying human behavior.
 
+    This section introduces how such devices are used in commercial services and in research. Finally, we present the open source solution ActivityWatch.
+
     \subsubsection*{Commercial use}
 
-        Companies like RescueTime~\cite{noauthor_rescuetime_nodate}, Hubstaff~\cite{noauthor_hubstaff_nodate}, and others offer automated time tracking as a service. These services let the user track their screen time by installing a program on their device which tracks the active application and sends the data to their servers for storage and analysis. The user can then view their data in a dashboard on the service's website. Some of these services, like RescueTime and Hubstaff, are marketed towards teams and professionals, who want to keep track of individual and team productivity.
+        Companies like RescueTime~\cite{noauthor_rescuetime_nodate}, Hubstaff~\cite{noauthor_hubstaff_nodate}, and others offer automated time tracking as a service. These services track users' screen time using an application which tracks the active application, and sends the data to their servers for storage and analysis. The user can then view their data in a dashboard on the services' website. Many of these services are marketed towards professionals who want to keep track of individual and team productivity.
 
         However, these services have some issues for use by researchers and individuals alike. Notably, their collection of detailed and non-anonymized behavioral data into a centralized system bring significant privacy concerns, especially in cases where the data is shared with a team or an employer.
 
@@ -138,32 +136,35 @@ Some communities, like the Quantified Self movement, have risen to the challenge
 
         \todo[inline]{What more could I add about ActivityWatch? There should be relevant stuff in the docs, and in the slides I made way back.}
 
-\subsection{Aim of the thesis}
+\section{Aim of the thesis}
 
     \todo[inline]{Make align with goaldoc}
 
-    The primary aim of the thesis is to improve upon previous attempts~\cite{fucci_replication_2019} to classify whether the user is reading code or prose using EEG data. This is to be achieved by using better EEG equipment and state of the art analysis methods such as Riemannian geometry. A secondary aim of the thesis is to investigate whether the ability of EEG analysis to classify code vs prose comprehension generalizes across more activities, such as the wide variety of tasks engaged in during organic device use.
+    The primary aim of the thesis is to improve upon previous attempts~\cite{fucci_replication_2019} to classify whether the user is reading code or prose using EEG data. This is to be achieved by using better EEG equipment and explore state of the art analysis methods, such as Riemannian geometry and neural networks.
 
-    Secondary aims of the thesis include:
+    The secondary aim of the thesis is to investigate whether the ability of EEG analysis to classify code vs prose comprehension generalizes across more activities, such as the wide variety of tasks engaged in during organic device use.
+
+    Additional aims of the thesis include:
 
     \begin{enumerate}
-        \item Implementing a classifier for device activities from EEG data, during organic device use
-        \item Improving open-source tools for EEG analysis
+        \item Develop a method for automatically labelling EEG data using ActivityWatch
+        \item Providing a complete reproduction package, including all code and data.
+        \item Improving open-source tools for EEG analysis.
     \end{enumerate}
 
     \add[inline]{Insert stuff from goal document}
 
-\subsection{Related work}
+\section{Related work}
 
-    A systematic mapping study has been published which seeks to review the usage of psychophysiological data in software engineering~\cite{vieira_usage_2021}.
+    Farias et al.\ conducted a systematic mapping study which reviews the usage of psychophysiological data in software engineering~\cite{vieira_usage_2021}.
 
-    It has previously been shown that fMRI~\cite{floyd_decoding_2017} and EEG\cite{fucci_replication_2019} provides enough information to classify whether a subject is reading prose or code. However, accuracy with single-channel EEG has been found to be poor, and notably outperformed by a heart rate variability (HRV) monitor.
+    Previous research shows that fMRI (by Floyd et al.~\cite{floyd_decoding_2017}) and EEG (by Fucci et al.~\cite{fucci_replication_2019}) can be used to classify whether a subject is reading prose or code. However, accuracy with single-channel EEG has been found to be poor, and notably outperformed by a heart rate variability (HRV) monitor.
 
     % Here, we used functional magnetic resonance imaging to investigate two candidate brain systems: the multiple demand (MD) system, typically recruited during math, logic, problem solving, and executive tasks, and the language system, typically recruited during linguistic processing.
-    Recently, it has been shown that the multiple demand (MD) system is typically recruited for code comprehension tasks, as opposed to the language system that is typically recruited during prose comprehension~\cite{ivanova_comprehension_2020}. This sheds light on the significant differences in how the brain processes code vs prose.
+    Recently, it has been shown that the multiple demand (MD) system\footnote{A set of frontoparietal brain regions involved in diverse tasks} is typically recruited for code comprehension tasks, as opposed to the language system\footnote{Specialized brain regions that respond selectively during language processing} that is typically recruited during prose comprehension~\cite{ivanova_comprehension_2020}. This sheds light on the significant differences in how the brain processes code vs prose.
 
     In addition to purely studying comprehension (reading) code and prose, an 2020 fMRI study showed that there are indeed significant neurological differences between \emph{writing} code and prose as well~\cite{noauthor_neurological_nodate}.
 
-    In software engineerig research, low-cost biosensors such as wristbands that measure electrodermal activity and heart-related metrics have been used for emotion detection, as a tool in studying developer productivity.
+    In software engineering research, low-cost biosensors such as wristbands that measure electrodermal activity and heart-related metrics have been used for emotion detection, as a tool in studying developer productivity~\cite{girardi_recognizing_2020}.
 
-    \add[inline]{Insert mention of preprint that Fucci mentioned?}
+    %\add[inline]{Insert mention of preprint that Fucci mentioned?}
