@@ -2,7 +2,7 @@
 
 This chapter serves to introduce relevant theory on which the thesis rests. We will briefly review EEG and some of the machine learning techniques used.
 
-\section{Electroencephalography (EEG)}
+\section{Electroencephalography (EEG)}\label{eeg-theory}
 
     Electroencephalography is a method used to measure the activity of neurons in the brain by recording the electrical activity on the scalp.
 
@@ -46,7 +46,7 @@ This chapter serves to introduce relevant theory on which the thesis rests. We w
     \add[inline]{Plot of signal during eye blink}
     \add[inline]{Discuss some of the review articles on EEG/BCI/ML}
 
-\subsection{Machine Learning}
+\section{Machine Learning}
 
     Machine learning on EEG data utilizes several domain-specific methods (which?) often similar to other methods seen applied to general time-series data.
 
@@ -60,7 +60,7 @@ This chapter serves to introduce relevant theory on which the thesis rests. We w
 
     \add[inline]{Formulas}
 
-    \subsubsection{Riemannian geometry}
+    \subsection{Riemannian geometry}
 
         \add[inline]{Explanation of Riemannian geometry, from \href{https://colab.research.google.com/drive/1y9tq7-lJwusxtVgpB38y-p1pYw7hg0iu}{this tutorial we're working on}, perhaps it should go in the Background/Theory section though?}
 
@@ -68,6 +68,6 @@ This chapter serves to introduce relevant theory on which the thesis rests. We w
 
         \[ d(A, B) = \sqrt{\sum_{i=1}^{n} \ln^2 \lambda_i (A, B) } \]
 
-    \subsubsection{Neural networks}
+    \subsection{Neural networks}
 
         Many state-of-the-art models in the field of EEG are deep-learning based models, usually employing convolutional neural networks (CNNs).

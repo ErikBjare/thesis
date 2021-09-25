@@ -1,13 +1,31 @@
 \chapter{Introduction}
 
 \todo[inline]{Add references}
-\todo[inline]{Change `device activity' -> `task'?}
+\todo[inline]{Change `device/computer activity' -> `task'?}
+\todo[inline]{Change `natural(istic)' -> `organic'?}
 
 % How to write an introduction: https://student.unsw.edu.au/introductions
 
 % Move 1 establish your territory (say what the topic is about)
 
-We live in an age of extensive data collection. Whether the goal is scientific, financial, or personal, the rise of computing over the last half century has led to an unprecedented rise in data acquisition and analysis in pursuit of these goals. Yet for some domains, like what goes on inside our heads, our capabilities are still limited despite the many potential applications for productivity and mental health.
+The rise of computing over the last half century has led to an unprecedented rise in new methods for data acquisition and analysis. However, our ability to quantify and analyse brain function is still limited. With advanced and expensive equipment, such as \emph{magnetic resonance imaging} (MRI) scanners and high-density \emph{electroencephalography} (EEG) headsets, we can record brain activity at an adequate resolution to draw conclusions about neural activation patterns under different behaviours.
+
+While this professional-grade equipment is still unavailable to the general public, in recent years some brain imaging techniques have become commercialized for various purposes (such as meditation aids, biofeedback) and sold as consumer devices. Consequently, the cost of EEG devices has fallen sharply, offering a feasible solution to monitor brain activity in a wide range of situations to answer a range on scientific questions relating to brain activity during different tasks.
+
+% Move 2 establish a niche (show why there needs to be further research on your topic)
+% Niche 1: using automated time tracking
+% Niche 2: code vs prose comprehension
+
+Here we introduce an automated time tracker, tracking the computer activities a subject engages in, to study brain activity during a wide variety of computer-based tasks.
+
+Studying brain activity during computer-based tasks is of particular interest to software engineers. For example, research has been done on:
+
+\begin{itemize}
+    \item Studying differences in code- and prose-comprehension~\cite{floyd_decoding_2017}\cite{fucci_replication_2019}.
+    \item Measuring the difficulty of a development task~\cite{fritz_using_2014}.
+    \item Minimizing interruptions~\cite{zuger_reducing_2017}.
+    \item Recognizing emotions during programming~\cite{girardi_recognizing_2020}.
+\end{itemize}
 
 % other formulation of goals: profits, productivity, sustainability
 
@@ -17,47 +35,41 @@ We live in an age of extensive data collection. Whether the goal is scientific, 
 
 % Brain imaging techniques such as EEG show a potential to shed light on many of these research questions, and the relationship between device usage and brain activity seems an largely unexplored area worth investigating.
 
-\todo[inline]{Mention themes in Fucci paper re software engineers}
+\todo[inline]{Move this paragraph elsewhere}
 
 Some communities, like the Quantified Self movement, have risen to the challenge of collecting and analyzing personal data for insights into our lives and health. But while some data is easily observed (such as device usage, location, and physical movement), it remains difficult to collect data about subjective attributes (like mood, focus). To collect data on these more elusive phenomena, researchers and individuals have to resort to manual data collection like questionnaires, or approximations constructed from other data, leading to significant time costs and scaling difficulties.\cite{malhi_promise_2017}
 
-The purpose of this study is to investigate the feasibility of using low-cost biosensors...
-
-% Move 2 establish a niche (show why there needs to be further research on your topic)
-
-Individuals' ability to collect data about brain activity has historically been limited. However, more expensive equipment, such as \emph{magnetic resonance imaging} (MRI) scanners and high-density \emph{electroencephalography} (EEG) headsets, has long been in use within medicine. While this professional equipment is still unavailable to the general public, in recent years some brain imaging techniques have become commercialized for various purposes (such as meditation aids, biofeedback) and sold as consumer devices. In particular, the cost of EEG devices has fallen sharply, offering a feasible solution to monitor brain activity during everyday tasks.
-
-EEG works by measuring tiny amounts of electricity (on the order of microvolts) on the scalp to listen to the underlying firing of neurons. By placing electrodes in various configurations, information about the activity of different brain regions can be inferred. The extent of how much information can actually be decoded from the signal remains an open research question.
+% The purpose of this study is to investigate the feasibility of using low-cost biosensors...
 
 % TODO: Mention brain computer interfaces at least once
 
-Technologies such as EEG have shown promise as early \emph{brain computer interfaces} (BCIs). The body of BCI research centers around using EEG as an input device, while \todo{really?}{less attention} has been paid to understanding how the brain behaves during various computer activities.
-
-% Brain Computer Interfaces (BCIs) have become available as consumer goods, thanks to the economic viability of brain imaging techniques like electroencephalography (EEG). These devices promise to measure different aspects of your mental state: wether you're grasping an object, or how calm you are during your meditation session. Low-cost brain imaging technologies like EEG are therefore suitable as candidates for richer collection about the user's mental state.
+% Technologies such as EEG have shown promise as early \emph{brain computer interfaces} (BCIs). The body of BCI research centers around using EEG as an input device, while \todo{really?}{less attention} has been paid to understanding how the brain behaves during various computer activities.
 
 % Move 3 introduce the current research (make hypotheses; state the research questions)
 
 % The contributions of this study are...
 
-To that end, we have in this thesis developed a framework and tooling for studying brain activity during uncontrolled device use (\emph{naturalistic device activities}). We do so by collecting brain activity data using consumer-grade EEG devices while simultaneously tracking the device activity they're engaging in. We then use the data to train machine learning models to predict the task engaged in based on the EEG readings of brain activity.
+To summarize, we have in this thesis developed a framework and tooling for studying brain activity during uncontrolled device use (\emph{naturalistic device activities}). We do so by collecting brain activity data using consumer-grade EEG devices while simultaneously tracking the device activity they're engaging in. We then use the data to train machine learning models to predict the task engaged in based on the EEG readings of brain activity.
 
 We also apply similar methodology to a controlled experiment where we present a small number of subjects with a set of code- and prose-comprehension tasks while being monitored with EEG\@. We use the collected data to train a classifier, evaluating the feasibility of EEG to distinguish between the two tasks, and use the results as an indication whether it could extend to other tasks.
 
+% Brain Computer Interfaces (BCIs) have become available as consumer goods, thanks to the economic viability of brain imaging techniques like electroencephalography (EEG). These devices promise to measure different aspects of your mental state: wether you're grasping an object, or how calm you are during your meditation session. Low-cost brain imaging technologies like EEG are therefore suitable as candidates for richer collection about the user's mental state.
+
 %\add[inline]{Add connection to software developers}
 
-\section{Functional brain imaging and Electroencephalography}
+\section{Functional brain imaging}
 
     Functional brain imaging methods such as fMRI, fNIRS, and EEG, have been used to study the relationship between cognitive or physical activity, and brain activity~\cite{floyd_decoding_2017}\cite{hong_classification_2015}\cite{fucci_replication_2019}. The more accurate methods such as fMRI are costly and inflexible/impractical for many uses.
 
     However, the recent availability of low-cost biosensors such as EEG, HEG, and fNIRS, enables studying brain activity during real-life tasks.
 
+    EEG works by measuring tiny amounts of electricity (on the order of microvolts) on the scalp to listen to the underlying firing of neurons. By placing electrodes in various configurations, information about the activity of different brain regions can be inferred. The extent of how much information can actually be decoded from the signal remains an open research question.
+
     But EEG is not without its limitations --- among them a notably low signal-to-noise ratio~\cite{mcfarland_eeg-based_2017}, as well as being difficult to use for discerning activity deeper in the brain~\cite{fahimi_hnazaee_localization_2020} --- yet these limitations have been overcome for many applications, like ERP experiments, and has even turned out prove sufficient for high-speed BCI applications through detecting visual evoked potentials (VEPs)~\cite{spuler_high-speed_2017}.
 
     To combat the low signal-to-noise ratio, machine learning methods have been employed with varying degrees of success. Examples from previous research include Convolutional Neural Networks (CNNs), which have been successful in classifying time series in general~\cite{zhao_convolutional_2017}, and EEG data in particular~\cite{schirrmeister_deep_2017}. As well as Hierarchical Convolutional Neural Networks (HCNNs), which have been used for EEG-based emotion recognition~\cite{li_hierarchical_2018}.
 
-    \add[inline]{Separate sections for applications in BCIs vs neuroscience}
-
-    \subsection{Cost reduction}
+    \subsection*{Cost reduction}
 
     The cost-reduction of EEG devices took hold in 2013, when OpenBCI ran the founding crowdfunding round on Kickstarter. During the campaign, they offered their 16-channel Cyton + Daisy board for \$549.\footnote{Fun fact: I funded them at one of the lower tiers back then.}\cite{noauthor_openbci_nodate}
 
@@ -65,7 +77,7 @@ We also apply similar methodology to a controlled experiment where we present a 
 
     More recently, projects like the FreeEEG32 offer a 32 channel board for only \$199, expected to ship in 2022.\cite{noauthor_freeeeg32_nodate}
 
-    \subsection{Applications in neurolinguistics}
+    \subsection*{Applications in neurolinguistics}
 
         EEG has found many applications in neurolinguistics, both to understand how the brain processes natural languages as well as programming languages~\cite{prat_relating_2020}.
 
@@ -73,11 +85,10 @@ We also apply similar methodology to a controlled experiment where we present a 
 
         The code vs prose comprehension task has also been modified into a writing task studied under fMRI, to further shed light to the underlying brain activity. In one study it was found that code and prose writing are significantly dissimilar tasks for the brain, where prose writing engages brain regions associated with language in the left hemisphere while while code writing engages brain regions associated with attention, working memory, planning, and spatial cognition in the right hemisphere\cite{noauthor_neurological_nodate}. To study this with MRI, the authors had to use (develop?) an MRI-safe keyboard.
 
-        As far as I know, code vs prose \emph{writing} has not been studied with EEG\. However, using ActivityWatch and other tools we've developed in this thesis (like the input watcher) one can to distinguish wether the user is reading or writing, as well as wether they're working with code or prose, which enables studying the same activities in a naturalistic setting.
+        As far as I know, code vs prose \emph{writing} has not been studied with EEG\. However, using ActivityWatch and other tools we've developed in this thesis (like the input watcher) one can to distinguish whether the user is reading or writing, as well as whether they're working with code or prose, which enables studying the same activities in a naturalistic setting.
 
-    \subsection{Applications in software engineering}
-
-        \add[inline]{Applications to software engineers (Fucci and related stuff)}
+    % Moved earlier in the introduction
+    %\subsection*{Applications in software engineering}
 
     % https://docs.openbci.com/citations
 
@@ -88,7 +99,7 @@ We also apply similar methodology to a controlled experiment where we present a 
     %  - HEG
 
 
-\section{Automated time trackers and ActivityWatch}
+\section{Automated time trackers}
 
     People spend more time than ever using computing devices. Work, entertainment, and services, have been steadily moving online over the last few decades and this trend is expected to continue.
     While several studies have been tracking how people spend time on their devices, a wider study of how people's app usage is changing over time, and how it varies with demographics, is not publicly available.
@@ -142,15 +153,15 @@ We also apply similar methodology to a controlled experiment where we present a 
 
     The primary aim of the thesis is to improve upon previous attempts~\cite{fucci_replication_2019} to classify whether the user is reading code or prose using EEG data. This is to be achieved by using better EEG equipment and explore state of the art analysis methods, such as Riemannian geometry and neural networks.
 
-    The secondary aim of the thesis is to investigate whether the ability of EEG analysis to classify code vs prose comprehension generalizes across more activities, such as the wide variety of tasks engaged in during organic device use.
+    The secondary aim of the thesis is to investigate whether the ability of EEG analysis to classify code vs prose comprehension generalizes across more activities, such as the wide variety of tasks engaged in during natural device use.
 
     Additional aims of the thesis include:
 
-    \begin{enumerate}
+    \begin{itemize}
         \item Develop a method for automatically labelling EEG data using ActivityWatch
         \item Providing a complete reproduction package, including all code and data.
         \item Improving open-source tools for EEG analysis.
-    \end{enumerate}
+    \end{itemize}
 
     \add[inline]{Insert stuff from goal document}
 
