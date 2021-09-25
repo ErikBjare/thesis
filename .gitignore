@@ -8,6 +8,7 @@ templates
 documents
 _minted*
 *.pyg*
+reviews
 
 # Built by dot
 gqm.png

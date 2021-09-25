@@ -31,13 +31,16 @@ Running classifier:
    - You probably want to adjust the categorization rules embedded in the file
  - (TODO) Run `eegclassify --help` for instructions on how to train and run the classifier
 
-# Supported devices
+# Devices
+
+I've worked with multiple devices, but the experiments were performed using the Muse S, which is therefore the best-supported device.
 
  - Muse S 
    - PPG support (experimental)
  - Neurosity Notion 1 & 2
-   - Thanks to [@andrewjaykeller](https://github.com/andrewjaykeller) at [@neurosity](https://github.com/neurosity) for sending me a refurbished DK1 to test with!
- - OpenBCI Cyton (WIP)
+   - Thanks to [@andrewjaykeller](https://github.com/andrewjaykeller) at [@neurosity](https://github.com/neurosity) for sending me a refurbished Notion 1 to test with!
+ - Neurosity Crown
+ - OpenBCI Cyton
  - In theory: any device supported by Brainflow or muse-lsl
 
 # Notebooks

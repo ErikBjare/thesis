@@ -1,0 +1,25 @@
+digraph graphname {
+    // TODO: Should I have seperate diagrams for the two conditions?
+
+    // Controlled
+    C1[label="EEG setup"];
+    C2[label="Experiment run"];
+    C1 -> C2;
+    C2 -> A1;
+    //{rank = same; C1; C2;}
+
+    // Uncontrolled
+    U1[label="ActivityWatch setup"];
+    U2[label="EEG setup"];
+    U3[label="Organic device use"];
+    U1 -> U2 -> U3;
+    U3 -> A1;
+    //{rank = same; U1; U2; U3;}
+
+    // Analysis
+    A1[label="Train classifier"];
+    A2[label="Evaluate performance"];
+    A1 -> A2;
+    //{rank = same; A1; A2;}
+
+}

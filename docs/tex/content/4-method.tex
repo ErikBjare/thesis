@@ -4,32 +4,19 @@ Our method starts with gathering the data, and to get started with data collecti
 
 Once our data collection is done, we continue with our analysis by training a classifier using various machine learning methods.
 
+\includegraphics[width=10cm]{img/method.png}
+
 \section{Collection}
 
 In order to perform our experiment and analysis, we need two types of data: EEG data, and device activity data to label the EEG data.
-
-    \subsection{Collection of device activity data}
-
-        All device activity is collected using the automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_2020-1}.
-
-        ActivityWatch collects data through modules called watchers which report to the ActivityWatch server. It comes with two watchers by default:
-
-        \begin{itemize}
-            \item aw-watcher-window, tracks the active window and its title
-            \item aw-watcher-afk, tracks if the user is active or not by observing input device activity
-        \end{itemize}
-
-        We've also built a custom watcher, aw-watcher-input, to track metrics of mouse and keyboard activity. It tracks by listening to mouse and keyboard events and records the distance\footnote{in pixels} the mouse moves and number of clicks (but not which key was clicked). Every second this is bundled into an event, the values are reset, and then it continues with the next event. It was inspired by similar functionality in Andrej Karpathy's ulogme~\cite{karpathy_ulogme_2016}.
-
-        A limitation that we have to consider is that the window watcher uses a polling method to track the active window, with a default poll time of 1 second. This means that we can't rely on the timestamps to mark the exact time the window became active/inactive.
-
-        The data from ActivityWatch is processed and categorized such that the resulting data has the 3 columns \mintinline{python}{start, end, category}. The category is determined by a regular expression that matches on window titles and URLs, such as \mintinline{python}{github.com}.
 
     \subsection{Collection of EEG data}
 
         EEG data was collected during organic device use and under controlled conditions.
 
-        For both conditions, code from the open source eeg-notebooks~\cite{barachant_eeg-notebooks_2020} was adapted to record the raw EEG stream into a CSV file. For the Muse S, muse-lsl~\cite{muse-lsl} was used as the underlying software to handle the connection (which uses Lab Streaming Layer). For the OpenBCI and Neurosity devices, brainflow~\cite{noauthor_brainflow_2020} was used to handle the connection.
+        For both conditions, code from the open source eeg-notebooks~\cite{barachant_eeg-notebooks_2020} was adapted to record the raw EEG stream into a CSV file.
+
+        Depending on the device used we require certain software to connect to the devices. We used muse-lsl for the Muse S~\cite{muse-lsl} which in turn uses Lab Streaming Layer. To support OpenBCI and Neurosity devices we used brainflow~\cite{noauthor_brainflow_2020}.
 
         \subsubsection{During organic device use}
 
@@ -41,18 +28,21 @@ In order to perform our experiment and analysis, we need two types of data: EEG 
 
             For the controlled condition, we ended up using the Muse S as well due to the comfort and ease of setup.
 
+            \todo[inline]{Update with latest}
+            We had 9 subjects, sampled by convenience. They were mostly male in their late 20s.
+
             We implemented the task in eeg-notebooks~\cite{barachant_eeg-notebooks_2020}, which uses previously mentioned libraries for data collection as well as PsychoPy~\cite{peirce_psychopy2_2019} to provide the stimuli.
 
             The experiment consists of presenting images with code or prose comprehension tasks, as seen in Figure~\ref{fig:codetask} and~\ref{fig:prosetask}.
 
-            \begin{figure}
+            \begin{figure}[h]
                 \begin{center}
                     \includegraphics[trim=0 120 0 0,clip,width=100mm]{img/final-1-1.png}
                 \end{center}
                 \caption{Sample of the code comprehension task}\label{fig:codetask}
             \end{figure}
 
-            \begin{figure}
+            \begin{figure}[h]
                 \begin{center}
                     \includegraphics[width=100mm]{img/bugs_1.PNG}
                 \end{center}
@@ -72,7 +62,7 @@ In order to perform our experiment and analysis, we need two types of data: EEG 
             %\begin{minipage}
 
             %\begin{widepage}
-            \begin{table}
+                \begin{table}[h]
                 \centering
                 \begin{tabular}{llccc}
                     \toprule
@@ -81,7 +71,7 @@ In order to perform our experiment and analysis, we need two types of data: EEG 
                     & Channels
                     & Sampling rate
                     & Comfort
-                    \\ 
+                    \\
                     \midrule
                     InteraXon
                     & Muse S
@@ -112,7 +102,7 @@ In order to perform our experiment and analysis, we need two types of data: EEG 
             %\end{widepage}
 
             %\begin{center}
-            \begin{figure}
+                \begin{figure}[H]
                 \centering
                 %\begin{widepage}
                 \begin{tabular}{c}
@@ -135,6 +125,23 @@ In order to perform our experiment and analysis, we need two types of data: EEG 
             %\end{center}
 
             %\end{minipage}
+
+    \subsection{Collection of device activity data}
+
+        All device activity is collected using the automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_2020-1}.
+
+        ActivityWatch collects data through modules called watchers which report to the ActivityWatch server. It comes with two watchers by default:
+
+        \begin{itemize}
+            \item aw-watcher-window, tracks the active window and its title
+            \item aw-watcher-afk, tracks if the user is active or not by observing input device activity
+        \end{itemize}
+
+        We've also built a custom watcher, aw-watcher-input, to track metrics of mouse and keyboard activity. It tracks by listening to mouse and keyboard events and records the distance\footnote{in pixels} the mouse moves and number of clicks (but not which key was clicked). Every second this is bundled into an event, the values are reset, and then it continues with the next event. It was inspired by similar functionality in Andrej Karpathy's ulogme~\cite{karpathy_ulogme_2016}.
+
+        A limitation that we have to consider is that the window watcher uses a polling method to track the active window, with a default poll time of 1 second. This means that we can't rely on the timestamps to mark the exact time the window became active/inactive.
+
+        The data from ActivityWatch is processed and categorized such that the resulting data has the 3 columns \mintinline{python}{start, end, category}. The category is determined by a regular expression that matches on window titles and URLs, such as \mintinline{python}{github.com}.
 
 \section{Analysis}
 
@@ -175,10 +182,12 @@ In order to perform our experiment and analysis, we need two types of data: EEG 
     \subsection{Feature engineering}
 
         One approach to classifying EEG data is to perform feature extraction/engineering. Common features used for EEG data include bandpower ratios, as well as covariance matrixes using the Riemannian metric.
-        
-        To evaluate most common machine learning classifiers, we need to 
 
-        \paragraph{Bandpower}
+        To evaluate most common machine learning classifiers, we need to
+
+        \subsubsection{Bandpower}
+
+            \todo[inline]{Refer/move to theory section instead?}
 
             Bandpower features are simple and commonly used in EEG research for many tasks, including the paper by Fucci et al we seek to improve upon~\cite{fucci_replication_2019}. As a reference, we implemented classifiers which solely used bandpower features as input, to gain information of how much any improvement from classifier performance is likely due to better EEG equipment versus how much is due to from improved analysis methods.
 
@@ -186,7 +195,9 @@ In order to perform our experiment and analysis, we need two types of data: EEG 
 
             To further enrich our feature vector, we can use ratios between two frequency bands.
 
-        \paragraph{Riemannian geometry}
+        \subsubsection{Riemannian geometry}
+
+            \todo[inline]{Refer/move to theory section instead?}
 
             The \improvement{according to whom?}{state of the art in many EEG classification tasks} involves the use of Riemannian geometry. For this, we used the open source pyriemann library by Alexandre Barachant\footnote{First author of the original paper to apply Riemannian geometry to EEG~\cite{barachant_classification_2013}}.
 
