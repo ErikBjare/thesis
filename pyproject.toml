@@ -36,7 +36,7 @@ imbalanced-learn = "*"
 # EEG-specific
 mne = "^0.21.0"
 mne-bids = "^0.5"
-brainflow = "^3.0.3"
+brainflow = "*"
 muselsl = {git = "https://github.com/ErikBjare/muse-lsl.git", branch="dev/bleak"}
 #muselsl = {path = "./vendor/muse-lsl"}
 eeg-notebooks = {git = "https://github.com/NeuroTechX/eeg-notebooks.git"}
@@ -95,14 +95,15 @@ Pygments = "*"  # required to build latex
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--cov-report=term --cov-report=xml --cov-report=html --cov=eegclassify --cov=eegwatch --profile --nbval-lax --current-env"
+addopts = "--cov-report=term --cov-report=xml --cov-report=html --cov=eegclassify --cov=eegwatch --profile --nbval-lax --current-env --ignore notebooks/Braindecode.ipynb"
 testpaths = [
     "src",
     "tests",
     "notebooks",
 ]
 python_files = ["*.py", "*.ipynb"]
-ignore = ["notebooks/Braindecode.ipynb"]
+# Doesn't seem to be respected?
+#ignore = ["notebooks/Braindecode.ipynb"]
 
 [tool.mypy]
 files = ["src/**/*.py", "tests/*.py", "scripts/*.py"]
