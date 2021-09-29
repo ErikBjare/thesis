@@ -22,6 +22,7 @@
 \usepackage{subfig}
 \usepackage{booktabs}
 \usepackage{changepage}
+\usepackage{rotating, graphicx}
 \usepackage[bottom]{footmisc}
 \usepackage[colorinlistoftodos, prependcaption, textsize=tiny]{todonotes}
 
@@ -33,6 +34,16 @@
 {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
 \titlespacing*{\paragraph}
 {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+% Better formating for values and units
+% From https://tex.stackexchange.com/questions/79141/is-there-a-designated-symbol-for-the-negative-sign-in-say-16
+\DeclareUnicodeCharacter{2212}{\textminus}% requires a unicode capable editor
+\usepackage{siunitx}
+\sisetup{
+   detect-mode,
+   detect-family,
+   detect-inline-family=math,
+}
 
 % Ensures floats stay in their section
 \usepackage[section]{placeins}

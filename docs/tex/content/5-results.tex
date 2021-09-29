@@ -4,9 +4,9 @@
 
     \section{Code vs prose task}
 
-        Our top-performing classifier yields a LORO-CV score of: $$0.614$$ (mean), $$0.089$$ (std).\todo[inline]{Exclude bad subjects from training}
+        Our top-performing classifier yields a LORO-CV score of: $0.614 \pm 0.089$ (mean $\pm$ std).\todo[inline]{Exclude bad subjects from training}
 
-        The following is the performance statistics for our model trained on 5 second windows. It from all subjects except one, which is excluded from training and used in testing:
+        The following is the performance statistics for our model trained on \SI{5}{\second} windows. It is trained on all subjects except one, which is used in testing:
 
         \begin{verbatim}
         INFO: {
@@ -19,7 +19,7 @@
         }
         \end{verbatim}
 
-        The following are the performance statistics for our model on the epoch-level. We achieve epoch-level classification by training on 5 second windows which are aggregated into epochs by taking the mean of the prediction probabilities. The same subject selection as the previous statistics is used:
+        The following are the performance statistics for our model on the epoch-level. We achieve epoch-level classification by training on \SI{5}{\second} windows which are aggregated into epochs by taking the mean of the prediction probabilities. The same subject selection as the previous statistics is used:
 
         \begin{verbatim}
         INFO: {
@@ -48,11 +48,13 @@
             \end{center}
         \end{table}
 
-        \begin{figure}[h]
+        %\begin{figure}[h]
+        \begin{sidewaysfigure}
         \centering
-        \includegraphics[width=16cm]{img/timebars.png}
-        \caption{A visualization of the labeled data, the predicted class, the subject, the training and testing split, and a measure of signal quality.}\label{fig:timebars}
-        \end{figure}
+        \includegraphics[width=24cm]{img/timebars.png}
+        \caption{Visualization of the labeled data, the predicted class, the subject, the training and testing split, and a measure of signal quality.}\label{fig:timebars}
+        \end{sidewaysfigure}
+        %\end{figure}
 
         Our classifier performance is\ldots
 

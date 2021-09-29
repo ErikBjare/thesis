@@ -1,24 +1,29 @@
 digraph graphname {
+    node [margin="0.2, 0", shape=box, style=rounded];
+    rankdir=LR;
     // TODO: Should I have seperate diagrams for the two conditions?
 
     // Controlled
+    C2[label="Experiment setup"];
     C1[label="EEG setup"];
-    C2[label="Experiment run"];
-    C1 -> C2;
-    C2 -> A1;
+    C3[label="Experiment run"];
+    C1 -> C3;
+    C2 -> C3;
+    C3 -> A1;
     //{rank = same; C1; C2;}
 
     // Uncontrolled
-    U1[label="ActivityWatch setup"];
-    U2[label="EEG setup"];
+    //U1[label="EEG setup"];
+    U2[label="ActivityWatch setup"];
     U3[label="Organic device use"];
-    U1 -> U2 -> U3;
+    C1 -> U3;
+    U2 -> U3;
     U3 -> A1;
     //{rank = same; U1; U2; U3;}
 
     // Analysis
-    A1[label="Train classifier"];
-    A2[label="Evaluate performance"];
+    A1[label="Train\nclassifier"];
+    A2[label="Evaluate\nperformance"];
     A1 -> A2;
     //{rank = same; A1; A2;}
 
