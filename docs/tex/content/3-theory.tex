@@ -1,6 +1,8 @@
 \chapter{Theory}
 
-This chapter serves to introduce relevant theory on which the thesis rests. We will briefly review EEG and some of the machine learning techniques used.
+This chapter serves to introduce relevant theory on which the thesis rests. 
+
+We will briefly review EEG, and some of the machine learning techniques used.
 
 \section{Electroencephalography (EEG)}\label{eeg-theory}
 
@@ -8,7 +10,7 @@ This chapter serves to introduce relevant theory on which the thesis rests. We w
 
     As a non-invasive method it is widely used in medicine to diagnose and study a wide range of conditions, including epilepsy and sleep disorders.
 
-    In research it has also found use in studying ``Event Related Potentials'', or ERPs, which are stereotypes responses to a stimulus. Common ERPs can be seen in Table~\ref{table:erps}.
+    In research it has also found use in studying ``Event Related Potentials'', or ERPs, which are stereotyped responses to a stimulus. Common ERPs can be seen in Table~\ref{table:erps}.
 
     \begin{table}
         \begin{tabular}{ll}
@@ -36,15 +38,19 @@ This chapter serves to introduce relevant theory on which the thesis rests. We w
         \caption{The 10–20 system}\label{fig:1020}
     \end{figure}
 
-    \add[inline]{Explain theory used, like theory of EEG, Riemannian geometry, etc}
-    \add[inline]{Plots of raw EEG signal, PSD, PCA, etc}
+    As measurements are taken on the scalp, neural activity of surface-level neurons (such as the cerebral cortex) can be expected to dominate the signal, which makes it difficult to use when studying systems deeper in the brain (such as the hippocampus). As an example of this, eye blinks are easily identifieable in the signal when electrodes are placed on the frontal cortex (as seen in Figure~\ref{fig:raweeg}).
 
-    As measurements are taken on the scalp, neural activity of surface-level neurons, such as the cerebral (neo)cortex, can be expected to dominate the signal, which makes it difficult to use when studying systems deeper in the brain, such as the hippocampus. As an example of this, eye blinks are easily identifieable in the signal when electrodes are placed on the frontal cortex.
-
+    \add[inline]{Plots of PSD, PCA, etc}
     \add[inline]{Mention need for bandpass filtering to get rid of powerline noise}
 
-    \add[inline]{Plot of signal during eye blink}
     \add[inline]{Discuss some of the review articles on EEG/BCI/ML}
+
+    \begin{sidewaysfigure}
+        \begin{center}
+            \includegraphics[trim=60 50 50 60,clip,width=24cm]{img/raw-signal.png}
+        \end{center}
+        \caption{EEG signal, with 3 eye blinks identifiable around $\SI{-4}{\second}$.\\ The signal has been bandpass filtered to eliminate noise.}\label{fig:raweeg}
+    \end{sidewaysfigure}
 
 \section{Machine Learning}
 

@@ -17,7 +17,7 @@ dist/%.pdf: docs/tex/build/%.pdf
 	cp $< dist
 
 %.png: %.dot
-	dot -Tpng $< -o $@
+	dot -Tpng -Gdpi=300 $< -o $@
 
 docs/tex/build/%.pdf: docs/tex/%.tex docs/tex/*.bib docs/tex/img/method.png docs/tex/img/gqm.png docs/tex/content/*.tex
 	latexmk $< -pdf -shell-escape -cd -output-directory=build -interaction=nonstopmode -file-line-error

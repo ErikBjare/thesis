@@ -139,14 +139,7 @@ Recording to recording_2021-09-29-09.22.24.csv
 
         Or run the following to plot the raw signal: \mintinline{bash}{brainwatch plot}
 
-        Alternatively, we can plot using muse-lsl's built-in plotting functionality: \mintinline{bash}{muselsl view -b Qt5Agg}
-
-        \begin{sidewaysfigure}
-            \begin{center}
-                \includegraphics[trim=60 50 50 60,clip,width=24cm]{img/raw-signal.png}
-            \end{center}
-            \caption{EEG signal, with 3 eye blinks identifiable around $\SI{-4}{\second}$.\\ The signal has been bandpass filtered to eliminate noise.}\label{fig:raweeg}
-        \end{sidewaysfigure}
+        Alternatively, we can plot using muse-lsl's built-in plotting functionality: \mintinline{bash}{muselsl view -b Qt5Agg} (as seen in figure~\ref{fig:raweeg}).
 
         \subsubsection*{During organic device use}
 
@@ -162,28 +155,31 @@ Recording to recording_2021-09-29-09.22.24.csv
 
             We have 9 subjects, sampled by convenience. The subjects were 8 males and one female. Most are in their late 20s or early 30s, except two who are in their 40s.
 
-            The experiment consists of presenting images with code or prose comprehension tasks, as seen in Figure~\ref{fig:codetask} and~\ref{fig:prosetask}. These images are from previous studies on code vs prose comprehension by Floyd et al~\cite{floyd_decoding_2017} and Fucci et al.\cite{fucci_replication_2019}. We note that Fucci et al. modified the prose comprehension images from the original review-like task to become more comprehension-like, arguably better suited for the task. However, due to the images being in Italian, we've used the original images used by Floyd et al.
+            The experiment consists of presenting images with code or prose comprehension tasks, as seen in Figure~\ref{fig:tasks}. These images are from previous studies on code vs prose comprehension by Floyd et al.~\cite{floyd_decoding_2017} and Fucci et al.~\cite{fucci_replication_2019}. 
+
+            \begin{figure}[H]
+                \centering
+                \begin{tabular}{cc}
+                    \includegraphics[trim=25 160 0 0,clip,width=75mm]{img/final-1-1.png}
+                    &
+                    \includegraphics[trim=20 0 20 0,clip,width=75mm]{img/bugs_1.PNG}
+                    \\
+                    (a) Code comprehension
+                    &
+                    (b) Prose review
+                \end{tabular}
+                \caption{Sample of the tasks}\label{fig:tasks}
+            \end{figure}
+
+            We note that Fucci et al.~modified the prose comprehension images from the original review-like task to become more comprehension-like, arguably better suited for the task. However, due to the modified images being in Italian, we've used the original images by Floyd et al.
 
             We implemented the task in eeg-notebooks~\cite{barachant_eeg-notebooks_2020}, which uses previously mentioned libraries for data collection as well as PsychoPy~\cite{peirce_psychopy2_2019} to provide the stimuli.
-
-            \begin{figure}[h]
-                \begin{center}
-                    \includegraphics[trim=0 120 0 0,clip,width=100mm]{img/final-1-1.png}
-                \end{center}
-                \caption{Sample of the code comprehension task}\label{fig:codetask}
-            \end{figure}
-
-            \begin{figure}[h]
-                \begin{center}
-                    \includegraphics[width=100mm]{img/bugs_1.PNG}
-                \end{center}
-                \caption{Sample of the prose review task}\label{fig:prosetask}
-            \end{figure}
 
             Before each run, the subject was asked about their gender, age, and software development experience (specifically experience with C/C++). For good measure, we also asked if the subject had consumed caffeine the hours prior to the experiment.
 
             After these questions we put the devices on and ensure we get good signal by inspecting it in real time with the viewer provided by muse-lsl. The viewer itself does simple bandpass filtering between 3--40Hz, and the signal quality is indicated by the standard deviation of the filtered signal.
 
+    \pagebreak
     \subsection{Collection of device activity data}
 
         All device activity is collected using the automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_2020-1}.
@@ -215,6 +211,7 @@ start,               stop,                class
     \caption{Examples of labeled time windows, collected and categorized with ActivityWatch}\label{code:class-csv}
 \end{figure}
 
+\pagebreak
 \section{Analysis}
 
     For classification and analysis, we used common open source Python libraries for data analysis, like numpy~\cite{harris2020array}, pandas~\cite{reback2020pandas}, and scikit-learn~\cite{scikit-learn}. In addition, we used less common libraries tailored specifically for working with EEG data, such as MNE~\cite{noauthor_mne-python_2020}, pyriemann~\cite{alexandre_barachant_2020_3715511}, and YASA~\cite{vallat_yasa_2020}.
