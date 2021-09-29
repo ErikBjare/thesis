@@ -28,6 +28,7 @@ class BrainflowDevice(EEGDevice):
         "brainbit",
         "notion1",
         "notion2",
+        "crown",
     ]
 
     def __init__(
@@ -47,20 +48,25 @@ class BrainflowDevice(EEGDevice):
         self.ip_addr = ip_addr
         self.markers: List[Tuple[List[int], float]] = []
         self._init_brainflow()
+        self.save_started: bool = False
 
     def start(self, filename: str = None, duration=None, extras: dict = None) -> None:
         self.save_fn = filename
 
         def record():
-            sleep(duration)
+            # NOTE: This runs in a seperate process
+            self.board.start_stream()
+            for i in range(duration):
+                sleep(1)
+                self._save()
             self._stop_brainflow()
 
-        self.board.start_stream()
         if duration:
             logger.info(
                 "Starting background recording process, will save to file: %s"
                 % self.save_fn
             )
+            # NOTE: This will start the recording in a new process!
             self.recording = Process(target=lambda: record())
             self.recording.start()
 
@@ -108,6 +114,7 @@ class BrainflowDevice(EEGDevice):
             "notion1": BoardIds.NOTION_1_BOARD.value,
             "notion2": BoardIds.NOTION_2_BOARD.value,
             "synthetic": BoardIds.SYNTHETIC_BOARD.value,
+            "crown": BoardIds.CROWN_BOARD.value,
         }
 
         # validate mapping
@@ -155,9 +162,13 @@ class BrainflowDevice(EEGDevice):
 
         data = self.board.get_board_data()  # will clear board buffer
 
+        # doesn't clear buffer
+        # data_current = self.board.get_current_board_data(1024)
+        # data = data_current
+
         # transform data for saving
         data = data.T  # transpose data
-        print(data)
+        # print(data)
 
         # get the channel names for EEG data
         if self.brainflow_id == BoardIds.GANGLION_BOARD.value:
@@ -189,8 +200,17 @@ class BrainflowDevice(EEGDevice):
     def _save(self) -> None:
         """Saves the data to a CSV file."""
         assert self.save_fn
-        df = self.get_data()
-        df.to_csv(self.save_fn, index=False)
+        if self.save_started:
+            # Append to previous file
+            df = self.get_data()
+            df.to_csv(self.save_fn, index=False, header=False, mode="a")
+            logger.debug(f"Appended {len(df)} entries")
+        else:
+            # Save new file
+            df = self.get_data()
+            df.to_csv(self.save_fn, index=False)
+            logger.debug(f"Wrote new file with {len(df)} entries")
+            self.save_started = True
 
     def _stop_brainflow(self) -> None:
         """This functions kills the brainflow backend and saves the data to a CSV file."""
