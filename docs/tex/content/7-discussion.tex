@@ -3,10 +3,11 @@
 Our classifier performance is comparable to that of Fucci et al. (TODO: compare), which is positive considering the limited data collected.
 
 When I started the thesis, we set a goal of answering two research questions:
+As stated earlier in the section ``Aim of the thesis'' (\ref{section:aim}), we set out to answer two research questions:
 
 \begin{itemize}
-        \item RQ1. Can we train an EEG classifier to separate software developers’ device activities?
-        \item RQ2. Can we improve upon previous results in classifying code vs prose comprehension with EEG~?
+        \item RQ1. Can we improve upon previous results in classifying code vs prose comprehension with EEG~?
+        \item RQ2. Can we train an EEG classifier to separate software developers’ device activities?
 \end{itemize}
 
 
@@ -33,13 +34,13 @@ Applications of our results include:
 
 \subsection{Threats to validity}
 
-    During our work we've considered several potential threats to validity. Some of these arise from our limited and biased dataset, while others are about the task and methodology.
+    During our work we have considered several potential threats to validity. Some of these arise from our limited and biased dataset, while others are about the task and methodology.
 
-    Starting with our dataset, we collected on mostly right-handed males in their late 20s. This uniform/homogenous sample may lead to less data needed to train a classifier for that particular group, but doesn't necessarily generalize well to the population at large.
+    Starting with our dataset, we collected on mostly right-handed males in their late 20s. This uniform/homogenous sample may lead to less data needed to train a classifier for that particular group, but does not necessarily generalize well to the population at large. Future studies should include a more diverse sample of participants.
 
-    Among our considerations, one threat to the validity is the stimuli images themselves (as seen in Figure~\ref{fig:tasks}). In Floyd et al.~the images used for prose comprehension are in fact more like a code review task, while Fucci et al.~modified the images to test comprehension, instead of ability to judge correctness. We also discovered that subjects found the prose stimuli used by Floyd et al.~confusing, and it would have been preferrable to use prose stimuli more like that used by Fucci et al.
+    Among our considerations, one threat to the validity is the stimuli images themselves (seen in Figure~\ref{fig:tasks}). In Floyd et al.~the images used for prose comprehension are in fact more like a code review task, while Fucci et al.~modified the images to test comprehension, instead of ability to judge correctness. We also discovered that subjects found the prose stimuli used by Floyd et al.~confusing, and it would have been preferrable to use prose stimuli more like that used by Fucci et al.
 
-    The stimuli images differ on more than just content. Examples of such differences are the background color, the difference in eye saccades while reading (eyes jump around more during the code tasks, where the user may have to jump between the code and the question about it). We haven't been able to discard the possibility that the front-heavy electrode placements (with reference electrode at Fpz) lead to much of the signal being from eye saccades. 
+    The stimuli images differ on more than just content. Examples of such differences are the background color, the difference in eye saccades while reading (eyes jump around more during the code tasks, where the user may have to jump between the code and the question about it). We have not been able to discard the possibility that the front-heavy electrode placements (with reference electrode at Fpz) lead to much of the signal being from eye saccades. 
 
     Future research could evaluate this further either by using an eye tracker or by using an EEG device with different placements of both the electrodes and reference electrode.
 
@@ -73,7 +74,11 @@ Applications of our results include:
 
     Collecting data is a significant time sink for researchers, and efforts to crowdsource data from the general public are difficult for EEG as it still requires access to the equipment, the knowledge to operate it, as well as considerations like signal quality, electrode placement, and other factors that might invalidate the data.
 
-    As part of the thesis work I've contributed to an effort in crowdsourcing EEG data collected from the experiments built in eeg-notebooks using consumer EEG devices like the Muse and OpenBCI\@. The effort, called the \href{https://neurotech-challenge.com/}{NeuroTech Challenge Series} (NTCS), is lead by John Griffiths at the University of Toronto.
+    As part of the thesis work I have contributed to an effort in crowdsourcing EEG data collected from the experiments built in eeg-notebooks, using consumer EEG devices like those from Muse, OpenBCI, and Neurosity\@. The effort, called the \href{https://neurotech-challenge.com/}{NeuroTech Challenge Series} (NTCS), is lead by John Griffiths at the University of Toronto.
+
+    Crowdsourcing data comes with new challenges. One of them is that data is now recorded by many different devices, with differences in channel count, sampling rate, electrode placement, and so on, that are difficult to combine in the same dataset. 
+
+    A potential solution to the problem of learning new variations from a small additional sample problem is to attempt cross-task or cross-subject transfer learning. In such a setup, a model is already trained on a large amount of subjects, or many tasks, and through additional collected data can self-improve and adapt to one user or one task.
 
     \add[inline]{Write about crowdsourcing of EEG data, including the potential of transfer learning and privacy considerations.}
 

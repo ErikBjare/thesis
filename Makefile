@@ -8,6 +8,13 @@ docs:
 
 tex: dist/thesis.pdf dist/goaldocument.pdf
 
+lint-tex:
+	# Check 'as seen in' should probably be just 'seen in'
+	! git grep 'as seen' docs/tex/content/
+	# Contractions
+	! git grep "'ve" docs/tex/content/
+	! git grep "'t" docs/tex/content/
+
 .PHONY: notebooks
 notebooks:
 	cd notebooks && poetry run make

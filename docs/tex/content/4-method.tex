@@ -24,7 +24,7 @@ Once data collection is done, we continue with our analysis by training classifi
 
     The other devices considered included the OpenBCI Cyton (with the Ultracortex headset), and the Neurosity Crown.\footnote{Earlier in the work, before we received the Crown, we were also generously gifted a Neurosity Notion DK1 to get a head start.} 
 
-    We have tried to make the code support all of the headsets mentioned (and more), such that future work can use whichever device one wants.
+    In our framework, we have implemented support all of the headsets mentioned (and more), such that future work can use whichever device is desired.
 
     \vspace{0.5cm}
 
@@ -63,7 +63,7 @@ Once data collection is done, we continue with our analysis by training classifi
 
     \begin{minipage}{\textwidth}
         \paragraph*{Muse S}
-        The Muse S is a 4-channel EEG headband with electrodes at TP9, AF7, AF8, and TP10, with the reference electrode at Fpz~\cite{krigolson_choosing_2017}. Its main advantage is its perfect comfort and long battery life. It's limited by its channel count and electrode placement. It connects using Bluetooth.
+        The Muse S is a 4-channel EEG headband with electrodes at TP9, AF7, AF8, and TP10, with the reference electrode at Fpz~\cite{krigolson_choosing_2017}. Its main advantage is its very comfortable form-factor and long battery life. It's limited by its channel count and electrode placement. It connects using Bluetooth.
 
         \begin{figure}[H]
             \centering
@@ -101,20 +101,20 @@ Once data collection is done, we continue with our analysis by training classifi
 \pagebreak
 \section{Collection}
 
-We need two types of data for the experiments: EEG data, and labels.
-
-To collect data for the organic use experiment, we:
-
-\begin{enumerate}
-    \item Set up the EEG equipment
-    \item Configure ActivityWatch to collect device usage data
-\end{enumerate}
+We need two types of data for the experiments: EEG data, and labels. For the controlled experiment, our labels are wether the stimuli is code or prose. For the organic use experiment, our labels are the device usage categories.
 
 To collect data for the controlled experiment, we:
 
 \begin{enumerate}
     \item Set up the EEG equipment
     \item Use eeg-notebooks to present the stimuli, and record the time markers of when the stimuli changed as labels.
+\end{enumerate}
+
+To collect data for the organic use experiment, we:
+
+\begin{enumerate}
+    \item Set up the EEG equipment
+    \item Configure ActivityWatch to collect device usage data
 \end{enumerate}
 
     \subsection{Collection of EEG data}
@@ -139,7 +139,7 @@ Recording to recording_2021-09-29-09.22.24.csv
 
         Or run the following to plot the raw signal: \mintinline{bash}{brainwatch plot}
 
-        Alternatively, we can plot using muse-lsl's built-in plotting functionality: \mintinline{bash}{muselsl view -b Qt5Agg} (as seen in figure~\ref{fig:raweeg}).
+        Alternatively, we can plot using muse-lsl's built-in plotting functionality: \mintinline{bash}{muselsl view -b Qt5Agg} (seen in figure~\ref{fig:raweeg}).
 
         \subsubsection*{During organic device use}
 
@@ -155,7 +155,9 @@ Recording to recording_2021-09-29-09.22.24.csv
 
             We have 9 subjects, sampled by convenience. The subjects were 8 males and one female. Most are in their late 20s or early 30s, except two who are in their 40s.
 
-            The experiment consists of presenting images with code or prose comprehension tasks, as seen in Figure~\ref{fig:tasks}. These images are from previous studies on code vs prose comprehension by Floyd et al.~\cite{floyd_decoding_2017} and Fucci et al.~\cite{fucci_replication_2019}. 
+            The experiment consists of presenting images with code or prose comprehension tasks, seen in Figure~\ref{fig:tasks}. These images are from previous studies on code vs prose comprehension by Floyd et al.~\cite{floyd_decoding_2017} and Fucci et al.~\cite{fucci_replication_2019}. 
+
+            \add[inline]{Markus: Beskriv experimentet i mer detalj. Jämn fördelning av kod och prosa? Slumpvis presentation? Hur lång tid per bild? När avbröts sittningen? Osv.}
 
             \begin{figure}[H]
                 \centering
@@ -171,11 +173,11 @@ Recording to recording_2021-09-29-09.22.24.csv
                 \caption{Sample of the tasks}\label{fig:tasks}
             \end{figure}
 
-            We note that Fucci et al.~modified the prose comprehension images from the original review-like task to become more comprehension-like, arguably better suited for the task. However, due to the modified images being in Italian, we've used the original images by Floyd et al.
+            We note that Fucci et al.~modified the prose comprehension images from the original review-like task to become more comprehension-like, arguably better suited for the task. However, due to the modified images being in Italian, we have used the original images by Floyd et al.
 
             We implemented the task in eeg-notebooks~\cite{barachant_eeg-notebooks_2020}, which uses previously mentioned libraries for data collection as well as PsychoPy~\cite{peirce_psychopy2_2019} to provide the stimuli.
 
-            Before each run, the subject was asked about their gender, age, and software development experience (specifically experience with C/C++). For good measure, we also asked if the subject had consumed caffeine the hours prior to the experiment.
+            Before each run, the subject was asked about their gender, age, handedness, and software development experience (specifically experience with C/C++). For good measure, we also asked if the subject had consumed caffeine the hours prior to the experiment.
 
             After these questions we put the devices on and ensure we get good signal by inspecting it in real time with the viewer provided by muse-lsl. The viewer itself does simple bandpass filtering between 3--40Hz, and the signal quality is indicated by the standard deviation of the filtered signal.
 
@@ -191,9 +193,9 @@ Recording to recording_2021-09-29-09.22.24.csv
             \item aw-watcher-afk, tracks if the user is active or not by observing input device activity
         \end{itemize}
 
-        We have also built a custom watcher, aw-watcher-input, to track metrics of mouse and keyboard activity. It tracks by listening to mouse and keyboard events and records the distance\footnote{in pixels} the mouse moves and number of clicks (but not which key was clicked). Every second this is bundled into an event, the values are reset, and then it continues with the next event. It was inspired by similar functionality in Andrej Karpathy's ulogme~\cite{karpathy_ulogme_2016}.
+        We have also built a custom watcher, aw-watcher-input, to track metrics of mouse and keyboard activity. It tracks by listening to mouse and keyboard events and records the distance in pixels the mouse moves and the number of key presses (but not which key was pressed). Every second this is bundled into an event, the values are reset, and then it continues with the next event. It was inspired by similar functionality in Andrej Karpathy's ulogme~\cite{karpathy_ulogme_2016}.
 
-        A limitation that we have to consider is that the window watcher uses a polling method to track the active window, with a default poll time of 1 second. This means that we can't rely on the timestamps to mark the exact time the window became active/inactive.
+        A limitation that we have to consider is that the window watcher uses a polling method to track the active window, with a default poll time of 1 second. This means that we can not rely on the timestamps to mark the exact time the window became active/inactive.
 
         The data from ActivityWatch is processed and categorized such that the resulting data has the 3 columns \mintinline{text}{start, stop, class}. The class is determined by a regular expression that matches on window titles and URLs. For example, the regular expression \mintinline{text}{GitHub|github.com} could be used to match GitHub use.
 
@@ -211,6 +213,8 @@ start,               stop,                class
     \caption{Examples of labeled time windows, collected and categorized with ActivityWatch}\label{code:class-csv}
 \end{figure}
 
+\todo[inline]{Decide on final classes for organic use}
+
 \pagebreak
 \section{Analysis}
 
@@ -221,17 +225,19 @@ start,               stop,                class
 
         For the controlled experiment, we split the EEG data into epochs using the trial markers, resulting in one epoch per stimuli.
 
+        \todo[inline]{Markus: behöver utvecklas lite för begriplighet. Vad är en epok? Kan man rita en figur som visar hur de olika splittarna skiljer sig åt?}
+
     \subsection{Data transformation}
 
-        In order to train on the variable-length epochs, we need to split each epoch into a fixed-duration window, which can then be used to train and classify our model.
+        In order to train on the epochs, which have variable length, we need to split each epoch into a fixed-duration window, which can then be used to train and classify our model.
 
-        Dimensions of each epoch matrix: \[ (n_{samples}, n_{channels}) \]
+        Dimensions of each epoch matrix: \[ (n_{\mathrm{samples}}, n_{\mathrm{channels}}) \]
 
-        Where $n_{samples}$ is the total number of samples for the epoch (variable-length), and $n_{channels}$ is 4 for the Muse S.
+        Where $n_{\mathrm{samples}}$ is the total number of samples for the epoch (variable-length), and $n_{\mathrm{channels}}$ is the number of channels (4 for the Muse S).
 
         Since the matrix has variable dimensions for each epoch, we split it into $\sim$5s windows, which at the 256Hz sampling frequency of the Muse gives us 1280 samples per window.
 
-        Dimensions of the window matrix: \[ (n_{windows}, n_{channels}, 1280) \]
+        Dimensions of the window matrix: \[ (n_{\mathrm{windows}}, n_{\mathrm{channels}}, 1280) \]
 
         We experimented with different windowing methods to potentially augment the data...  \todo[inline]{...and? Should a sliding window approach be used to improve data augmentation?}
 
@@ -241,16 +247,18 @@ start,               stop,                class
         We reject samples that either:
 
         \begin{enumerate}
-            \item Don't have an assigned class
+            \item Do not have an assigned class
             \item Have a bad signal quality (as indicated by a high signal variance)
-            \item Are too short (due to missing samples)
+            \item Are too short due to missing samples (such that a 5s window cannot be constructed)
         \end{enumerate}
+
+        \todo[inline]{Markus: Explicita tröskelvärden här skulle ge trovärdighet. Vad är "bad"?}
 
         \todo[inline]{List how many epochs are rejected by each cleaning step}
 
     \subsection{Feature engineering}
 
-        One approach to classifying EEG data is to perform feature extraction/engineering. Common features used for EEG data include bandpower ratios, as well as covariance matrixes using the Riemannian metric.
+        One approach to classifying EEG data is to perform feature extraction/engineering. Common features used for EEG data include bandpower ratios, as well as covariance matrices using the Riemannian metric.
 
         To evaluate most common machine learning classifiers, we need to
 
@@ -258,11 +266,12 @@ start,               stop,                class
 
             \todo[inline]{Refer/move to theory section instead?}
 
-            Bandpower features are simple and commonly used in EEG research for many tasks, including the paper by Fucci et al we seek to improve upon~\cite{fucci_replication_2019}. As a reference, we implemented classifiers which solely used bandpower features as input, to gain information of how much any improvement from classifier performance is likely due to better EEG equipment versus how much is due to from improved analysis methods.
+            Bandpower features are simple and commonly used in EEG research for many tasks, including the paper by Fucci et al we seek to improve upon~\cite{fucci_replication_2019}. As a benchmark reference, we implemented classifiers which solely used bandpower features as input, to gain information of how much any improvement from classifier performance is likely due to better EEG equipment versus how much is due to from improved analysis methods.
 
             To compute this feature, we utilized the bandpower function provided by YASA~\cite{vallat_yasa_2020}. The implementation estimates the power spectral density using Welch's method for each channel, and bins them by their associated frequency band.
 
             To further enrich our feature vector, we can use ratios between two frequency bands.
+            \todo[inline]{Markus: gjorde vi eller skulle vi kunna göra i future work?}
 
         \subsubsection{Riemannian geometry}
 
@@ -281,6 +290,8 @@ start,               stop,                class
         We use LORO (``Leave-One-Run-Out'') cross-validation, a variation of LOGO (``Leave-One-Group-Out''), in order to ensure the samples used in validation are using subjects or tasks that are unseen in training.
 
         We attempt both out-of-subject validation and out-of-task validation in order to estimate the ability of the classifiers to generalize across subjects and tasks.
+
+        \add[inline]{Markus: Behöver utvecklas. Figur + text.}
 
     \subsection{Single subject}
 

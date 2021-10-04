@@ -12,6 +12,8 @@ We will briefly review EEG, and some of the machine learning techniques used.
 
     In research it has also found use in studying ``Event Related Potentials'', or ERPs, which are stereotyped responses to a stimulus. Common ERPs can be seen in Table~\ref{table:erps}.
 
+    \add[inline]{Plot of aggregated ERP trials, to highlight an ERP pattern (found in eeg-notebooks examples)}
+
     \begin{table}
         \begin{tabular}{ll}
             \toprule
@@ -29,16 +31,25 @@ We will briefly review EEG, and some of the machine learning techniques used.
         \caption{Common ERPs}\label{table:erps}
     \end{table}
 
-    Electrodes can be placed at different locations on the scalp, targeting different regions of the brain. The system used to position the electrodes is called the 10–20 system, and is the standard way to label electrode placements.
+    Electrodes can be placed at different locations on the scalp, targeting different regions of the brain. The system used to position the electrodes is called the 10–20 system (seen in Figure~\ref{fig:1020}), and is the standard way to label electrode placements. The \emph{10} and \emph{20} come from the fact that distances between adjacent electrodes are either 10\% or 20\% of the total front–back or right–left distance of the scalp.
+
+    For configurations with high-density or non-standard electrode placement there is also the \emph{Modified Combinatorial Nomenclature} (MCN) version with more electrode locations, where the electrodes are divided by 10\% increments instead of the usual 20\% (seen in Figure~\ref{fig:1020-extended}).
 
     \begin{figure}
         \begin{center}
             \includegraphics[width=10cm]{img/1020system.png}
         \end{center}
-        \caption{The 10–20 system}\label{fig:1020}
+        \caption{The 10–20 system.}\label{fig:1020}
     \end{figure}
 
-    As measurements are taken on the scalp, neural activity of surface-level neurons (such as the cerebral cortex) can be expected to dominate the signal, which makes it difficult to use when studying systems deeper in the brain (such as the hippocampus). As an example of this, eye blinks are easily identifieable in the signal when electrodes are placed on the frontal cortex (as seen in Figure~\ref{fig:raweeg}).
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=14cm]{img/1020system-extended-with-extra-info.png}
+        \end{center}
+        \caption{The extended 10–20 system, following the Modified Combinatorial Nomenclature (MCN).}\label{fig:1020-extended}
+    \end{figure}
+
+    As measurements are taken on the scalp, neural activity of surface-level neurons (such as the cerebral cortex) can be expected to dominate the signal, which makes it difficult to use when studying systems deeper in the brain (such as the hippocampus). As an example of this, eye blinks are easily identifieable in the signal when electrodes are placed on the frontal cortex (seen in Figure~\ref{fig:raweeg}).
 
     \add[inline]{Plots of PSD, PCA, etc}
     \add[inline]{Mention need for bandpass filtering to get rid of powerline noise}

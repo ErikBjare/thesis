@@ -161,7 +161,10 @@
 
 \makefrontmatter
 
-\tableofcontents
+% CS template inserts ToC as part of frontmatter
+\ifx\UseCSLTH\undefined
+    \tableofcontents
+\fi
 
 \listoftodos[Notes \& TODOs]
 
@@ -178,7 +181,6 @@
 \input{content/5-results}
 \input{content/6-conclusions}
 \input{content/7-discussion}
-\input{content/8-other-contributions}
 
 
 % References
