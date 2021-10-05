@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 def split_rows(df: pd.DataFrame, min_duration: int) -> pd.DataFrame:
     """
-    Splits long-duration rows into shorter segments no shorter than ``min_duration``.
+    Splits variable-duration rows (epochs) into shorter segments (windows) no shorter than ``min_duration``.
 
     Note that this might not be suitable for all types of analysis, especially not
     those with a distinct start of stimuli (as opposed to continuous stimuli), like controlled experiments.
@@ -21,7 +21,7 @@ def split_rows(df: pd.DataFrame, min_duration: int) -> pd.DataFrame:
         if len(df_new.index) == len(df.index):
             break
         df = df_new
-    logger.info(f"Split {len(df_orig.index)} rows into {len(df.index)} rows")
+    logger.info(f"Split {len(df_orig.index)} epochs into {len(df.index)} windows")
     return df
 
 

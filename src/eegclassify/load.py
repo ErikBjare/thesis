@@ -109,7 +109,7 @@ def test_load_labels():
 
 
 def _get_all_recording_files() -> List[Path]:
-    files = sorted(list(musedir.glob("subject*/session*/*.csv")))
+    files = sorted(list(musedir.glob("subject*/session*/recording_*.csv")))
     files = list(reversed(files))
     return files
 
@@ -137,12 +137,13 @@ def _read_csv(fn: Path) -> pd.DataFrame:
 
 # @memory.cache
 def _load_eeg(files: List[Path]) -> pd.DataFrame:
+    logger.info("Loading EEG recordings...")
     with Pool(4) as p:
         dfs: List[pd.DataFrame] = p.map(_read_csv, files)
 
-    print("Concatenating...")
+    logger.info("Concatenating...")
     df = pd.concat(dfs)
-    print("Concatenated!")
+    logger.info("Concatenated!")
     df = df.drop(columns=["Marker0", "Right AUX"], errors="ignore")
     return df
 

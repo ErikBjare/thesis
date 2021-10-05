@@ -110,7 +110,7 @@ def connect(
             else:
                 raise
 
-        loud = False
+        loud = True
         started = time()
         stop = started + duration
         print(f"Starting recording for {duration}s")
@@ -124,8 +124,13 @@ def connect(
 
             if loud:
                 progress = time() - started
+                status = (
+                    "fresh"
+                    if last_modified is not None and last_modified < 3
+                    else "stale"
+                )
                 print_statusline(
-                    f"Recording #{times_ran + 1}: {round(progress)}/{duration}s"
+                    f"Recording #{times_ran + 1}: {round(progress)}/{duration}s ({status})"
                 )
         print("Done!")
         logger.info("Done recording")

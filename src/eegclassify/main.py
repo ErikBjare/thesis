@@ -199,8 +199,8 @@ def _save_best_model(clf, perf: dict):
     pprint(perf)
     if MODEL_PERF.exists():
         saved_model_perf = joblib.load(MODEL_PERF)
-        print("Saved model perf:")
-        pprint(saved_model_perf)
+        # print("Saved model perf:")
+        # pprint(saved_model_perf)
         # FIXME: Better criterion
         if perf["bac"] > saved_model_perf["bac"]:
             logger.info("Beat best model! Saving.")

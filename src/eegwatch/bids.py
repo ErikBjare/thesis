@@ -19,13 +19,15 @@ PATH_TESTFILE = (
 )
 
 
-def raw_to_mne(data: np.ndarray, first_samp=0) -> mne.io.RawArray:
-    ch_names = CHANNELS_MUSE
-    sfreq = 250  # The Muse S uses 250Hz
-
+def raw_to_mne(
+    data: np.ndarray,
+    first_samp=0,
+    ch_names=CHANNELS_MUSE,
+    sfreq=256,
+) -> mne.io.RawArray:
     info = mne.create_info(ch_names, sfreq, ch_types="eeg")
     info["line_freq"] = 50
-    raw = mne.io.RawArray(data.T / 1_000_000, info, verbose=True)
+    raw = mne.io.RawArray(data.T / 1_000_000, info, verbose=False)
     # raw.set_channel_types({ch: "eeg" for ch in ch_names})
 
     # print(raw)
