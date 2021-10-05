@@ -13,7 +13,7 @@ eegwatch = "eegwatch.main:main"
 eegclassify = "eegclassify.main:main"
 
 [tool.poetry.dependencies]
-python = "^3.7, <3.9"  # Less than 3.9 due to numba not having support
+python = "^3.8, <3.10"  # Less than 3.10 due to numba not having support
 
 # Self-made
 aw-core = "*"
@@ -28,7 +28,7 @@ pandas = "*"
 
 # ML
 scikit-learn = "^0.23.2"
-pyriemann = "^0.2.6"
+pyriemann = "^0.2.7"
 xgboost = "^1.2.1"
 torch = "^1.8.1"
 imbalanced-learn = "*"
@@ -40,7 +40,7 @@ brainflow = "*"
 muselsl = {git = "https://github.com/ErikBjare/muse-lsl.git", branch="dev/bleak"}
 #muselsl = {path = "./vendor/muse-lsl"}
 eeg-notebooks = {git = "https://github.com/NeuroTechX/eeg-notebooks.git"}
-yasa = "^0.4.0"
+yasa = "^0.5"
 entropy = {git = "https://github.com/raphaelvallat/entropy.git"}
 pylsl = "1.10.5"  # required, see: https://github.com/alexandrebarachant/muse-lsl/issues/136
 Braindecode = {git = "https://github.com/braindecode/braindecode.git"}
