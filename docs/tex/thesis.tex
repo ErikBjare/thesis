@@ -1,6 +1,8 @@
 % Uncomment to use official LTH thesis template
 \def\UseCSLTH{true}
 
+\PassOptionsToPackage{table}{xcolor}
+
 \ifx\UseCSLTH\undefined
     \documentclass[a4paper]{article}
 \else
@@ -14,8 +16,9 @@
 \usepackage[smartEllipses]{markdown}  % For markdown
 \def\markdownOptionOutputDir{build}  % Needed, see https://github.com/Witiko/markdown/issues/6#issuecomment-328699108
 
-\usepackage[dvipsnames]{xcolor}
+\usepackage{array}
 \usepackage{hyperref}
+\usepackage{makecell}
 \usepackage{comment}
 \usepackage{xargs}
 \usepackage{verbatim}
@@ -23,8 +26,14 @@
 \usepackage{booktabs}
 \usepackage{changepage}
 \usepackage{rotating, graphicx}
+\usepackage{multirow}
+\usepackage[dvipsnames]{xcolor}
 \usepackage[bottom]{footmisc}
 \usepackage[colorinlistoftodos, prependcaption, textsize=tiny]{todonotes}
+
+% References
+\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
+\usepackage{cleveref}
 
 % Add subsubsubsection
 % As per https://tex.stackexchange.com/a/60212/36302
@@ -103,8 +112,6 @@
 {\end{adjustwidth}}
 
 % References
-\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
-\usepackage{cleveref}
 \bibliography{zotero}
 \bibliography{misc}
 \DeclareBibliographyCategory{cited}

@@ -1,19 +1,53 @@
 \chapter{Method}
 
-The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replication_2019} with some differences: We have reimplemented the task in eeg-notebooks, used a different device, and have a smaller \& less diverse sample.
-
 We start by deciding on an EEG device to use, then we collect data for both the controlled and organic experiments.
 
 Once data collection is done, we continue with our analysis by training classifiers using various machine learning methods.
 
 \begin{figure}[h]
     \begin{center}
-        \includegraphics[width=10cm]{img/method.png}
+        \includegraphics[width=14cm]{img/method.png}
     \end{center}
     \caption{Overview of the process for the two seperate tasks}\label{fig:method}
 \end{figure}
 
-\pagebreak
+The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replication_2019} with some differences (seen in Table~\ref{table:compare-method}): 
+
+\begin{itemize}
+        \item We use EEG exclusively.
+        \item We used a different device.
+        \item We have a smaller \& less diverse sample.
+        \item We have reimplemented the task in eeg-notebooks.
+        \item We have used the original prose-review images by Floyd et al.~\cite{floyd_decoding_2017}.
+\end{itemize}
+
+% Comparing to Fucci and original study
+\rowcolors{4}{gray!25}{white}
+\begin{sidewaystable}
+    \begin{center}
+        \begin{tabular}{llll}
+            \toprule
+            \multirow{2}{*}{\textbf{Setting}} & \multicolumn{3}{c}{\textbf{Study}} \\
+            \cmidrule(lr){2-4}
+            & \makecell[c]{\textbf{This study}} & \makecell[c]{\textbf{Fucci et al.} (2019)} & \makecell[c]{\textbf{Floyd et al.} (2017)} \\
+            \midrule
+            Experiment site & Lund Univ. (Sweden) & Univ.\ of Bari (Italy) & Univ.\ of Virginia (USA)  \\
+            \# Participants & 9 & 28 & 29 \\
+            Participants experience & Grads & Undergrads & Grads \& Undergrads \\
+            \# Tasks & Variable & 36 tasks & 27 tasks \\
+            Task type & \makecell[l]{Code comprehension \\ Prose review} & \makecell[l]{Code comprehension \\ Prose comprehension} & \makecell[l]{Code comprehension \\ Code review \\ Prose review} \\
+            Physiological signal & Neural & \makecell[l]{Neural \\ Skin \\ Heart} & Neural \\
+            Physiological measure & EEG & \makecell[l]{EEG \\ EDA \\ HR, HRV, BVP} & BOLD \\
+            Device & Muse S & \makecell[l]{BrainLink Headset \\ Empatica wristband} & fMRI \\
+            Classifier & \makecell[l]{Riemannian geometry \\ Neural networks} & 8 algorithms & Gaussian Process \\
+            Classifier validation & LORO-CV & \makecell[l]{LORO-CV \\ Hold-out} & LORO-CV \\
+            Classifier metric & Balanced accuracy (BAC) & Balanced accuracy (BAC) & Balanced accuracy (BAC) \\
+            \bottomrule
+        \end{tabular}
+        \caption{Comparison of this study's method with previous studies.}\label{table:compare-method}
+    \end{center}
+\end{sidewaystable}
+\rowcolors{2}{}{}
 
 % Equipment
 \section{Devices}
@@ -63,7 +97,7 @@ Once data collection is done, we continue with our analysis by training classifi
 
     \begin{minipage}{\textwidth}
         \paragraph*{Muse S}
-        The Muse S is a 4-channel EEG headband with electrodes at TP9, AF7, AF8, and TP10, with the reference electrode at Fpz~\cite{krigolson_choosing_2017}. Its main advantage is its very comfortable form-factor and long battery life. It's limited by its channel count and electrode placement. It connects using Bluetooth.
+        The Muse S is a 4-channel EEG headband with electrodes at TP9, AF7, AF8, and TP10 (using the modified 10--20 system, seen in Figure~\ref{fig:1020-extended}), with the reference electrode at Fpz~\cite{krigolson_choosing_2017}. Its main advantage is its very comfortable form-factor and long battery life. It's limited by its channel count and electrode placement. It connects using Bluetooth.
 
         \begin{figure}[H]
             \centering
@@ -143,11 +177,9 @@ Recording to recording_2021-09-29-09.22.24.csv
 
         \subsubsection*{During organic device use}
 
-            For the organic device use conditions, we used the Muse S due the superior comfort and ease of use compared with the alternatives, making it especially suitable for long recordings.\footnote{A wet electrode cap system was also considered, but ultimately not investigated due to being inconvenient to setup.}
+            For the organic device use conditions, we used the Muse S due the superior comfort and ease of use compared with the alternatives, making it especially suitable for long recordings.\footnote{A wet electrode cap system was also considered, but was not used due to being inconvenient to setup.}
 
-            For this experiment we use a single-subject, with the experimenter as the subject.
-
-            The subject was asked to go about their usual device activities, often consisting of a mix of work (email, writing prose, writing code) and leisure (watching YouTube, reading Twitter).
+            For this experiment we use a single-subject, with the experimenter as the subject. The subject was asked to go about their usual device activities, often consisting of a mix of work (writing code, writing prose, email) and leisure (watching YouTube, reading Twitter).
 
         \subsubsection*{During code vs prose comprehension task}
 
@@ -170,10 +202,16 @@ Recording to recording_2021-09-29-09.22.24.csv
                     &
                     (b) Prose review
                 \end{tabular}
-                \caption{Sample of the tasks}\label{fig:tasks}
+                \caption{Sample of the tasks presented.}\label{fig:tasks}
             \end{figure}
 
-            We note that Fucci et al.~modified the prose comprehension images from the original review-like task to become more comprehension-like, arguably better suited for the task. However, due to the modified images being in Italian, we have used the original images by Floyd et al.
+            We note that Fucci et al.~modified the prose comprehension images from the original review-like task to become more comprehension-like, arguably better suited for the task (seen in Figure~\ref{fig:prose-comp-fucci}). However, due to the modified images being in Italian, we have used the original prose review images by Floyd et al.
+
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=90mm]{img/prose-comprehension.png}
+                \caption{Sample of the prose comprehension task used by Fucci et al. (translated from Italian).}\label{fig:prose-comp-fucci}
+            \end{figure}
 
             We implemented the task in eeg-notebooks~\cite{barachant_eeg-notebooks_2020}, which uses previously mentioned libraries for data collection as well as PsychoPy~\cite{peirce_psychopy2_2019} to provide the stimuli.
 
@@ -181,8 +219,7 @@ Recording to recording_2021-09-29-09.22.24.csv
 
             After these questions we put the devices on and ensure we get good signal by inspecting it in real time with the viewer provided by muse-lsl. The viewer itself does simple bandpass filtering between 3--40Hz, and the signal quality is indicated by the standard deviation of the filtered signal.
 
-    \pagebreak
-    \subsection{Collection of device activity data}
+    \subsection{Collection of device activity data}\label{section:collect-usage}
 
         All device activity is collected using the automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_2020-1}.
 
@@ -213,8 +250,18 @@ start,               stop,                class
     \caption{Examples of labeled time windows, collected and categorized with ActivityWatch}\label{code:class-csv}
 \end{figure}
 
-\todo[inline]{Decide on final classes for organic use}
 
+We chose the following classes for analysis:
+
+\begin{itemize}
+        \item Editing -> Code
+        \item Editing -> Prose
+        \item Reading documentation (Stack Overflow, readthedocs)
+        \item Twitter
+        \item YouTube
+\end{itemize}
+
+\vfill
 \pagebreak
 \section{Analysis}
 
@@ -287,9 +334,12 @@ start,               stop,                class
 
     \subsection{Cross Validation}
 
-        We use LORO (``Leave-One-Run-Out'') cross-validation, a variation of LOGO (``Leave-One-Group-Out''), in order to ensure the samples used in validation are using subjects or tasks that are unseen in training.
+        We use LORO (``Leave-One-Run-Out'') cross-validation, a variation of LOGO (``Leave-One-Group-Out''), in order to ensure the samples used in validation are using subjects or tasks that are unseen in training. Since LORO validation generates $n$ folds (one for each subject), with $n-1$ subjects used for training in each fold, and $1$ subject for validation. 
 
-        We attempt both out-of-subject validation and out-of-task validation in order to estimate the ability of the classifiers to generalize across subjects and tasks.
+        % FIXME: Fucci uses the median, should we too?
+        To aggregate performance metrics from each fold, we take the mean of the performance metrics from each fold (as presented in Section~\ref{section:results}).
+
+        Since we have one run per subject, this LORO cross-validation is effectively an out-of-subject validation, estimating the ability of the classifier to generalize across subjects.
 
         \add[inline]{Markus: Behöver utvecklas. Figur + text.}
 
@@ -299,3 +349,10 @@ start,               stop,                class
         % TODO: what devices?
         % FIXME: is this out of scope?
         We experimented with single-subject analysis to validate different devices and tasks.
+
+    \subsection{Performance scoring}
+
+        Previous studies have used \emph{balanced accuracy} (BAC) scoring with LORO validation to evaluate model performance. To be able to compare results to previous studies, we do the same. BAC deals with imbalanced datasets by taking the average of recall obtained on each class. For balanced datasets, the BAC score is equal to accuracy.
+
+        \todo[inline]{Move the following elsewhere}
+        We do not perform any significant hyperparameter optimization.

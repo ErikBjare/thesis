@@ -1,11 +1,15 @@
-\chapter{Results}
+\chapter{Results}\label{section:results}
+
+    Here we present the results from our two different experiments.
+
+    We compare the results of our code-prose experiment to the original study~\cite{floyd_decoding_2017} and the replication study~\cite{fucci_replication_2019}, and investigate the results from our naturalistic device use experiment to see if results generalize to other types of device activity.
 
     \todo[inline]{Update with final values}
 
     \section{Code vs prose task}
 
-        Our top-performing classifier yields a LORO-CV score of: $0.614 \pm 0.089$ (mean $\pm$ std).
-        \todo[inline]{Exclude bad subjects from training}
+        % FIXME: Fucci uses the median, should we too?
+        Our top-performing classifier yields a LORO-CV mean BAC score of: $0.614 \pm 0.089$ (mean $\pm$ std).
         \todo[inline]{Markus: Mätetalet behöver introduceras i Kapitel 3 så att läsaren förstår innebörden här.}
 
         The following is the performance statistics for our model trained on \SI{5}{\second} windows. It is trained on all subjects except one, which is used in testing:
@@ -20,7 +24,7 @@
             'confusion_matrix': array([[141, 167], [ 18, 259]])
         }
         \end{verbatim}
-        \todo[inline]{Nya mätetal här också. Det är ok att förklara vad de betyder här. Tolkningarna av resultaten kan vi fortfarande spara till nästa kapitel.}
+        \todo[inline]{Markus: Nya mätetal här också. Det är ok att förklara vad de betyder här. Tolkningarna av resultaten kan vi fortfarande spara till nästa kapitel.}
 
         \todo[inline]{Markus: Vilken modell är det som gäller nu? Och vilka features och clearning och sånt bygger den på? Kanske avsluta kapitel 3 med att tydligt presentera vad som används i experimenten?}
         The following are the performance statistics for our model on the epoch-level. We achieve epoch-level classification by training on \SI{5}{\second} windows which are aggregated into epochs by taking the mean of the prediction probabilities. The same subject selection as the previous statistics is used:
@@ -41,7 +45,7 @@
         \todo[inline]{Use LORO instead of testing subject}
         \begin{table}
             \begin{center}
-                \begin{tabular}{ l | c | c }
+                \begin{tabular}{lcc}
                   \toprule
                   & Epoch-level (subject \#6) & Window-level (subject \#6) \\ \midrule
                   Precision & 85.4\% & 74.7\% \\
@@ -58,7 +62,7 @@
         \begin{sidewaysfigure}
         \centering
         \includegraphics[width=24cm]{img/timebars.png}
-        \caption{Visualization of the labeled data, the predicted class, the subject, the training and testing split, and a measure of signal quality.}\label{fig:timebars}
+        \caption{Visualization of the labeled data, the predicted class, the subject, the training and testing split, and a measure of signal quality. The x-axis is the window index, sorted by acquisition time.}\label{fig:timebars}
         \end{sidewaysfigure}
         %\end{figure}
 
@@ -67,13 +71,34 @@
         \begin{figure}[h]
         \centering
         \includegraphics[width=12cm]{img/roccurve.png}
-        \caption{Receiver operating characteristic (ROC) curve}\label{fig:roc}
+        \caption{Receiver operating characteristic (ROC) curve.}\label{fig:roc}
         \end{figure}
+        \todo[inline]{Update with higher-res image}
 
+        Compared to previous studies, we achieve a moderate improvement over the EEG-only classifier trained in Fucci et al., and achieve a similar performance to the fMRI study by Floyd et al. (seen in Table~\ref{table:compare-results}).
 
-        Compared to Fucci\ldots
+        \begin{table}
+            \begin{center}
+                \begin{tabular}{lccc}
+                    \toprule
+                    & \textbf{This study} & \textbf{Fucci et al.} & \textbf{Floyd et al.} \\
+                    \midrule
+                    Overall & 0.77 & 0.66 & 0.79 \\
+                    Code & x & x & x \\
+                    Prose & x & x & x \\
+                    \bottomrule
+                \end{tabular}
+                \caption{Result comparison between the previous studies and this study. Best BAC results are reported. For Fucci et al.\ we chose the best EEG-only score.}\label{table:compare-results}
+            \end{center}
+        \end{table}
 
     \section{Naturalistic device activity}
 
-        Our classifier performance is\ldots
+        We collected TODO hours of EEG data during natural device use.
+
+        We use the classes defined in Section~\ref{section:collect-usage}.
+
+        The class distribution is as follows: TODO
+
+        Our classifier performance is: TODO
 
