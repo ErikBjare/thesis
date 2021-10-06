@@ -8,45 +8,42 @@
 
     \section{Code vs prose task}
 
-        Our top-performing window-level classifier, using LORO cross-validation, yields a median BAC score of: $0.749$.
+        Our top-performing classifier, using LORO cross-validation, yields a median BAC score of $0.749$  for window-level classification and $0.9$ for epoch-level classification (seen in Table~\ref{table:bac-selective}).
 
-        Our top-performing epoch-level classifier, using LORO cross-validation, yields a median BAC score of: $0.90$.
+        The top-performing classifier computes the covariance matrices, and then uses using Riemannian geometry, Common Spatial Pattern, and TangentSpace. With logistic regression for the final step.
 
         We do window-level classification by training on the \SI{5}{\second} windows (as described in Section~\ref{section:transform}).
 
         We achieve epoch-level classification by training a window-level classifier just as for the \SI{5}{\second} windows, we then make a classification for the entire epoch by taking the mean of the prediction probabilities from the windows in that epoch.
 
+        \todo[inline]{Markus: Vilken modell är det som gäller nu? Och vilka features och clearning och sånt bygger den på? Kanske avsluta kapitel 3 med att tydligt presentera vad som används i experimenten?}
         
         \begin{comment}
-        The following is the performance statistics for our model trained on \SI{5}{\second} windows. It is trained on all subjects except one, which is used in testing:
+            The following is the performance statistics for our model trained on \SI{5}{\second} windows. It is trained on all subjects except one, which is used in testing:
 
-        \begin{verbatim}
-        INFO: {
-            'precision': 0.7473868367437329, 
-            'recall': 0.696405129166862, 
-            'fbeta': 0.6703482474923927, 
-            'support': array([308, 277]), 
-            'bac': 0.696405129166862, 
-            'confusion_matrix': array([[141, 167], [ 18, 259]])
-        }
-        \end{verbatim}
-        \end{comment}
+            \begin{verbatim}
+            INFO: {
+                'precision': 0.7473868367437329, 
+                'recall': 0.696405129166862, 
+                'fbeta': 0.6703482474923927, 
+                'support': array([308, 277]), 
+                'bac': 0.696405129166862, 
+                'confusion_matrix': array([[141, 167], [ 18, 259]])
+            }
+            \end{verbatim}
 
-        \todo[inline]{Markus: Vilken modell är det som gäller nu? Och vilka features och clearning och sånt bygger den på? Kanske avsluta kapitel 3 med att tydligt presentera vad som används i experimenten?}
+            The following are the performance statistics for our model on the epoch-level.  The same subject selection as the previous statistics is used:
 
-        \begin{comment}
-        The following are the performance statistics for our model on the epoch-level.  The same subject selection as the previous statistics is used:
-
-        \begin{verbatim}
-        INFO: {
-            'precision': 0.8541666666666667, 
-            'recall': 0.7666666666666666, 
-            'fbeta': 0.7624602332979852, 
-            'support': array([15, 17]), 
-            'bac': 0.7666666666666666, 
-            'confusion_matrix': array([[ 8,  7], [ 0, 17]])
-        }
-        \end{verbatim}
+            \begin{verbatim}
+            INFO: {
+                'precision': 0.8541666666666667, 
+                'recall': 0.7666666666666666, 
+                'fbeta': 0.7624602332979852, 
+                'support': array([15, 17]), 
+                'bac': 0.7666666666666666, 
+                'confusion_matrix': array([[ 8,  7], [ 0, 17]])
+            }
+            \end{verbatim}
         \end{comment}
 
         \begin{table}[h]
@@ -67,7 +64,7 @@
             Median & 0.5985 & 0.573 \\
             \bottomrule
             \end{tabular}
-            \caption{The BAC score for each LORO fold/subject. Excluding subjects 3 and 4.}
+            \caption{The BAC score for each LORO fold/subject. Excluding subjects 3 and 4.}\label{table:bac-all}
         \end{table}
 
 
@@ -86,10 +83,9 @@
             Median & 0.749 & 0.9 \\
             \bottomrule
             \end{tabular}
-            \caption{The BAC score for each LORO fold/subject. Excluding subjects 3, 4, 8, 9, and 10.}
+            \caption{The BAC score for each LORO fold/subject. Excluding subjects 3, 4, 8, 9, and 10.}\label{table:bac-selective}
         \end{table}
 
-        \todo[inline]{Use LORO instead of testing subject}
         \begin{table}
             \begin{center}
                 \begin{tabular}{lcc}
@@ -106,20 +102,23 @@
 
         %\begin{figure}[h]
         \begin{sidewaysfigure}
-        \centering
-        \includegraphics[width=24cm]{img/timebars.png}
-        \caption{Visualization of the labeled data, the predicted class, the subject, the training and testing split, and a measure of signal quality. The x-axis is the window index, sorted by acquisition time.}\label{fig:timebars}
+            \centering
+            \includegraphics[width=24cm]{img/timebars.png}
+            \caption{Visualization of the labeled data. Shows the \emph{image} (stimuli), the \emph{label} for that stimuli, the \emph{predicted} class, wether the prediction is \emph{correct}, the \emph{subject}, the \emph{training} and \emph{testing} split, and a measure of signal \emph{quality}. The x-axis is the window index, sorted by acquisition time.
+            \\ 
+            \\
+            It can be seen that subjects \#3 and \#4 have bad signal quality, and have therefore been excluded from the training set. The last two subjects have also been excluded from training due to issues during data collection. It can also be seen that for subject \#1 the stimuli images were not shuffled.}\label{fig:timebars}
         \end{sidewaysfigure}
         %\end{figure}
 
-        Our classifier performance is\ldots
-
-        \begin{figure}[h]
-        \centering
-        \includegraphics[width=12cm]{img/roccurve.png}
-        \caption{Receiver operating characteristic (ROC) curve.}\label{fig:roc}
-        \end{figure}
-        \todo[inline]{Update with higher-res image}
+        \begin{comment}
+            \begin{figure}[h]
+            \centering
+            \includegraphics[width=12cm]{img/roccurve.png}
+            \caption{Receiver operating characteristic (ROC) curve for subject \#6.}\label{fig:roc}
+            \end{figure}
+            \todo[inline]{Update with higher-res image}
+        \end{comment}
 
         Compared to previous studies, we achieve a moderate improvement over the EEG-only classifier trained in Fucci et al., and achieve a similar performance to the fMRI study by Floyd et al. (seen in Table~\ref{table:compare-results}).
 
@@ -129,7 +128,7 @@
                     \toprule
                     & \textbf{This study} & \textbf{Fucci et al.} & \textbf{Floyd et al.} \\
                     \midrule
-                    Overall & 0.77 & 0.66 & 0.79 \\
+                    Overall & 0.75 & 0.66 & 0.79 \\
                     Code & x & x & x \\
                     Prose & x & x & x \\
                     \bottomrule
@@ -143,6 +142,14 @@
         We collected TODO hours of EEG data during natural device use.
 
         We use the classes defined in Section~\ref{section:collect-usage}.
+
+        We train classifiers for the label pairs:
+
+        \begin{itemize}
+                \item Editing Code / Editing Prose
+                \item Editing Code / Twitter
+                \item Twitter / YouTube
+        \end{itemize}
 
         The class distribution is as follows: TODO
 

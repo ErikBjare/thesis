@@ -276,13 +276,13 @@ We chose the following classes for analysis:
 
     \subsection{Data transformation}\label{section:transform}
 
-        In order to train on the epochs, which have variable length, we need to split each epoch into a fixed-duration window, which can then be used to train and classify our model.
+        In order to train on the epochs, which have variable length due to each subject taking a different amount of time to answer each trial, we split each epoch into a fixed-duration window. After some experimentation we found \SI{5}{\second} to be a suitable window size. Once we have our fixed-duration windows, we can use them to train our model and classify new samples.
 
         Dimensions of each epoch matrix: \[ (n_{\mathrm{samples}}, n_{\mathrm{channels}}) \]
 
         Where $n_{\mathrm{samples}}$ is the total number of samples for the epoch (variable-length), and $n_{\mathrm{channels}}$ is the number of channels (4 for the Muse S).
 
-        Since the matrix has variable dimensions for each epoch, we split it into $\sim$5s windows, which at the 256Hz sampling frequency of the Muse gives us 1280 samples per window.
+        Since the matrix has variable dimensions for each epoch, we split it into \SI{5}{\second} windows, which at the 256Hz sampling frequency of the Muse gives us 1280 samples per window.
 
         Dimensions of the window matrix: \[ (n_{\mathrm{windows}}, n_{\mathrm{channels}}, 1280) \]
 
@@ -351,10 +351,10 @@ We chose the following classes for analysis:
 
     \subsection{Cross Validation}
 
-        We use \emph{Leave-One-Run-Out} (LORO) cross-validation, a variation of \emph{Leave-One-Group-Out} (LOGO), in order to ensure the samples used in validation are using subjects or tasks that are unseen in training. LORO validation generates $n$ folds (one for each subject), with $n-1$ subjects used for training in each fold, and $1$ subject for validation (seen in Table~\ref{table:loro}).
+        We use \emph{Leave-One-Run-Out} (LORO) cross-validation, a variation of \emph{Leave-One-Group-Out} (LOGO), in order to ensure the samples used in validation are from subjects that are unseen in training. LORO validation generates $n$ folds (one for each subject), with $n-1$ subjects used for training in each fold, and $1$ subject for validation (seen in Table~\ref{table:loro}).
 
         \definecolor{train}{RGB}{163, 206, 255}
-        \definecolor{test}{RGB}{255, 197, 79}
+        \definecolor{test}{RGB}{255, 181, 84}
         \begin{table}[h]
             \centering
             \begin{tabular}{lcccc}
