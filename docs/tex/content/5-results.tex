@@ -8,10 +8,16 @@
 
     \section{Code vs prose task}
 
-        % FIXME: Fucci uses the median, should we too?
-        Our top-performing classifier yields a LORO-CV mean BAC score of: $0.614 \pm 0.089$ (mean $\pm$ std).
-        \todo[inline]{Markus: Mätetalet behöver introduceras i Kapitel 3 så att läsaren förstår innebörden här.}
+        Our top-performing window-level classifier, using LORO cross-validation, yields a median BAC score of: $0.749$.
 
+        Our top-performing epoch-level classifier, using LORO cross-validation, yields a median BAC score of: $0.90$.
+
+        We do window-level classification by training on the \SI{5}{\second} windows (as described in Section~\ref{section:transform}).
+
+        We achieve epoch-level classification by training a window-level classifier just as for the \SI{5}{\second} windows, we then make a classification for the entire epoch by taking the mean of the prediction probabilities from the windows in that epoch.
+
+        
+        \begin{comment}
         The following is the performance statistics for our model trained on \SI{5}{\second} windows. It is trained on all subjects except one, which is used in testing:
 
         \begin{verbatim}
@@ -24,12 +30,12 @@
             'confusion_matrix': array([[141, 167], [ 18, 259]])
         }
         \end{verbatim}
-        \todo[inline]{Markus: Nya mätetal här också. Det är ok att förklara vad de betyder här. Tolkningarna av resultaten kan vi fortfarande spara till nästa kapitel.}
+        \end{comment}
 
         \todo[inline]{Markus: Vilken modell är det som gäller nu? Och vilka features och clearning och sånt bygger den på? Kanske avsluta kapitel 3 med att tydligt presentera vad som används i experimenten?}
-        The following are the performance statistics for our model on the epoch-level. We achieve epoch-level classification by training on \SI{5}{\second} windows which are aggregated into epochs by taking the mean of the prediction probabilities. The same subject selection as the previous statistics is used:
 
-        \todo[inline]{Use performance statistics from LORO-CV, not from single-subject validation}
+        \begin{comment}
+        The following are the performance statistics for our model on the epoch-level.  The same subject selection as the previous statistics is used:
 
         \begin{verbatim}
         INFO: {
@@ -41,20 +47,60 @@
             'confusion_matrix': array([[ 8,  7], [ 0, 17]])
         }
         \end{verbatim}
+        \end{comment}
+
+        \begin{table}[h]
+            \centering
+            \begin{tabular}{lcc}
+            \toprule
+                \textbf{Subject} & \textbf{Window-level} & \textbf{Epoch-level} \\
+            \midrule
+            \#0  & 0.608  & 0.603 \\
+            \#1  & 0.802  & 0.864 \\
+            \#5  & 0.589  & 0.534 \\
+            \#6  & 0.701  & 0.767 \\
+            \#7  & 0.694  & 0.8   \\
+            \#8  & 0.547  & 0.542 \\
+            \#9  & 0.484  & 0.5   \\
+            \#10 & 0.474  & 0.5   \\
+            \midrule
+            Median & 0.5985 & 0.573 \\
+            \bottomrule
+            \end{tabular}
+            \caption{The BAC score for each LORO fold/subject. Excluding subjects 3 and 4.}
+        \end{table}
+
+
+        \begin{table}[h]
+            \centering
+            \begin{tabular}{lcc}
+            \toprule
+                \textbf{Subject} & \textbf{Window-level} & \textbf{Epoch-level} \\
+            \midrule
+            \#0 & 0.673 & 0.727 \\
+            \#1 & 0.895 & 0.955 \\
+            \#5 & 0.616 & 0.542 \\
+            \#6 & 0.864 & 0.908 \\
+            \#7 & 0.749 & 0.9   \\
+            \midrule
+            Median & 0.749 & 0.9 \\
+            \bottomrule
+            \end{tabular}
+            \caption{The BAC score for each LORO fold/subject. Excluding subjects 3, 4, 8, 9, and 10.}
+        \end{table}
 
         \todo[inline]{Use LORO instead of testing subject}
         \begin{table}
             \begin{center}
                 \begin{tabular}{lcc}
                   \toprule
-                  & Epoch-level (subject \#6) & Window-level (subject \#6) \\ \midrule
-                  Precision & 85.4\% & 74.7\% \\
-                  Recall & 76.7\% & 69.6\% \\
-                  BAC & 76.7\% & 69.6\% \\
+                            & Epoch-level (subject \#6) & Window-level (subject \#6) \\
+                  \midrule
+                  Precision & 85.4\%                    & 74.7\% \\
+                  BAC       & 76.7\%                    & 69.6\% \\
                   \bottomrule
-                  
                 \end{tabular}
-                \caption{Performance statistics of our models trained on all subjects except subject number \#6 which is used for testing}\label{fig:stats}
+                \caption{Performance statistics of our models trained on all subjects with good signal quality, except subject number \#6 which is used for testing.}\label{fig:stats}
             \end{center}
         \end{table}
 

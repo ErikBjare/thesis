@@ -217,7 +217,7 @@ Recording to recording_2021-09-29-09.22.24.csv
 
             Before each run, the subject was asked about their gender, age, handedness, and software development experience (specifically experience with C/C++). For good measure, we also asked if the subject had consumed caffeine the hours prior to the experiment.
 
-            After these questions we put the devices on and ensure we get good signal by inspecting it in real time with the viewer provided by muse-lsl. The viewer itself does simple bandpass filtering between 3--40Hz, and the signal quality is indicated by the standard deviation of the filtered signal.
+            After these questions we put the devices on and ensure we get good signal by inspecting it in real time with the viewer provided by muse-lsl (seen in Figure~\ref{muselsl-signal}). The viewer itself does simple bandpass filtering between 3--40Hz, and the signal quality is indicated by the standard deviation of the filtered signal.
 
     \subsection{Collection of device activity data}\label{section:collect-usage}
 
@@ -274,7 +274,7 @@ We chose the following classes for analysis:
 
         \todo[inline]{Markus: behöver utvecklas lite för begriplighet. Vad är en epok? Kan man rita en figur som visar hur de olika splittarna skiljer sig åt?}
 
-    \subsection{Data transformation}
+    \subsection{Data transformation}\label{section:transform}
 
         In order to train on the epochs, which have variable length, we need to split each epoch into a fixed-duration window, which can then be used to train and classify our model.
 
@@ -295,13 +295,25 @@ We chose the following classes for analysis:
 
         \begin{enumerate}
             \item Do not have an assigned class
-            \item Have a bad signal quality (as indicated by a high signal variance)
+            \item Have a bad signal quality (as indicated by a signal variance $>40$)
             \item Are too short due to missing samples (such that a 5s window cannot be constructed)
         \end{enumerate}
 
         \todo[inline]{Markus: Explicita tröskelvärden här skulle ge trovärdighet. Vad är "bad"?}
 
         \todo[inline]{List how many epochs are rejected by each cleaning step}
+
+        We also perform bandpass filtering between \SI{3}{\hertz} and \SI{40}{\hertz} to eliminate powerline noise. We can see the results of the bandpass filtering in Figure~\ref{fig:signal-unfiltered} and~\ref{fig:signal-filtered}.
+
+        \begin{figure}[h]
+            \includegraphics[width=14cm]{img/raw-signal-prefilter.png}
+            \caption{Raw EEG signal with no filtering. Powerline noise clearly visible.}\label{fig:signal-unfiltered}
+        \end{figure}
+
+        \begin{figure}[h]
+            \includegraphics[width=14cm]{img/raw-signal-postfilter.png}
+            \caption{Same EEG signal as in Figure~\ref{fig:signal-unfiltered}, but with bandpass filter applied. We can see that powerline noise has been eliminated.}\label{fig:signal-filtered}
+        \end{figure}
 
     \subsection{Feature engineering}
 
@@ -322,33 +334,13 @@ We chose the following classes for analysis:
 
         \subsubsection{Riemannian geometry}
 
-            \todo[inline]{Refer/move to theory section instead?}
-
-            The \improvement{according to whom?}{state of the art in many EEG classification tasks} involves the use of Riemannian geometry. For this, we used the open source pyriemann library by Alexandre Barachant\footnote{First author of the original paper to apply Riemannian geometry to EEG~\cite{barachant_classification_2013}}.
+            The state of the art in many EEG classification tasks involves the use of Riemannian geometry (described in Section~\ref{section:riemannian-theory}). For this, we used the open source \texttt{pyriemann} library by Alexandre Barachant\footnote{First author of the original paper to apply Riemannian geometry to EEG~\cite{barachant_classification_2013}}.
 
     \subsection{Neural Networks}
 
-        One of the classifiers we want to train is a neural network. We use braindecode~\cite{schirrmeister_deep_2017}\cite{noauthor_braindecode_2021}, a neural network toolbox for EEG data that uses PyTorch and integrates it with scikit-learn through skorch.
+        One of the classifiers we want to train is a neural network. We use braindecode~\cite{schirrmeister_deep_2017}\cite{noauthor_braindecode_2021}, a neural network library for EEG data that uses PyTorch and integrates it with scikit-learn through skorch.
 
         The networks provided by braindecode are convolutional\ldots
-
-    \subsection{Cross Validation}
-
-        We use LORO (``Leave-One-Run-Out'') cross-validation, a variation of LOGO (``Leave-One-Group-Out''), in order to ensure the samples used in validation are using subjects or tasks that are unseen in training. Since LORO validation generates $n$ folds (one for each subject), with $n-1$ subjects used for training in each fold, and $1$ subject for validation. 
-
-        % FIXME: Fucci uses the median, should we too?
-        To aggregate performance metrics from each fold, we take the mean of the performance metrics from each fold (as presented in Section~\ref{section:results}).
-
-        Since we have one run per subject, this LORO cross-validation is effectively an out-of-subject validation, estimating the ability of the classifier to generalize across subjects.
-
-        \add[inline]{Markus: Behöver utvecklas. Figur + text.}
-
-    \subsection{Single subject}
-
-        % TODO: what experiments?
-        % TODO: what devices?
-        % FIXME: is this out of scope?
-        We experimented with single-subject analysis to validate different devices and tasks.
 
     \subsection{Performance scoring}
 
@@ -356,3 +348,36 @@ We chose the following classes for analysis:
 
         \todo[inline]{Move the following elsewhere}
         We do not perform any significant hyperparameter optimization.
+
+    \subsection{Cross Validation}
+
+        We use \emph{Leave-One-Run-Out} (LORO) cross-validation, a variation of \emph{Leave-One-Group-Out} (LOGO), in order to ensure the samples used in validation are using subjects or tasks that are unseen in training. LORO validation generates $n$ folds (one for each subject), with $n-1$ subjects used for training in each fold, and $1$ subject for validation (seen in Table~\ref{table:loro}).
+
+        \definecolor{train}{RGB}{163, 206, 255}
+        \definecolor{test}{RGB}{255, 197, 79}
+        \begin{table}[h]
+            \centering
+            \begin{tabular}{lcccc}
+                \toprule
+                       & Subject 1 & Subject 2 & Subject 3 & Subject 4 \\
+                \midrule
+                Fold 1 & \cellcolor{test}     & \multicolumn{3}{c}{\cellcolor{train}} \\
+                Fold 2 & \cellcolor{train} & \cellcolor{test}     & \multicolumn{2}{c}{\cellcolor{train}     } \\
+                Fold 3 & \multicolumn{2}{c}{\cellcolor{train}     } & \cellcolor{test}     & \cellcolor{train} \\
+                Fold 4 & \multicolumn{3}{c}{\cellcolor{train}} & \cellcolor{test}     \\
+                \bottomrule
+            \end{tabular}
+            \caption{Example of Leave-One-Run-Out cross validation with 4 subjects. For each fold, subjects marked \textcolor{train}{\textbf{blue}} are used for training and subjects marked \textcolor{BurntOrange}{\textbf{orange}} are used for testing.}\label{table:loro}
+        \end{table}
+
+        % FIXME: Fucci uses the median, should we too?
+        To aggregate performance metrics from each fold, we take the mean of the performance metrics from each fold (as presented in Section~\ref{section:results}).
+
+        Since we have one run per subject, this LORO cross-validation is effectively an out-of-subject validation, estimating the ability of the classifier to generalize across subjects.
+
+    \subsection{Single subject}
+
+        % TODO: what experiments?
+        % TODO: what devices?
+        % FIXME: is this out of scope?
+        We experimented with single-subject analysis to validate different devices and tasks.
