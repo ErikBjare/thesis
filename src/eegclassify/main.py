@@ -108,9 +108,11 @@ def _train_raw(df, shuffle=False):
 
     clfs: Dict[str, Pipeline] = {
         # These four are from https://neurotechx.github.io/eeg-notebooks/auto_examples/visual_ssvep/02r__ssvep_decoding.html
-        "CSP + Cov + TS": make_pipeline(
+        "Cov + CSP + TS": make_pipeline(
             Covariances(),
-            CSP(4, log=False),
+            # One can use (metric='euclic', log=True) instead of (metric='riemann') to approximate (and improve performance).
+            # (see 10.1109/MMSP.2010.5662067)
+            CSP(4, metric="riemann", log=False),
             TangentSpace(),
             LogisticRegression(dual=dual),
         ),
@@ -118,11 +120,13 @@ def _train_raw(df, shuffle=False):
             Covariances(), TangentSpace(), LogisticRegression(dual=dual)
         ),
         # Performs meh
-        # "CSP + RegLDA": make_pipeline(
-        #     Covariances(), CSP(4), LDA(shrinkage="auto", solver="eigen")
-        # ),
-        # Performs badly
-        # "Cov + MDM": make_pipeline(Covariances(), MDM()),
+        "Cov + CSP + RegLDA": make_pipeline(
+            Covariances(),
+            CSP(4, metric="riemann", log=False),
+            LDA(shrinkage="auto", solver="eigen"),
+        ),
+        # Performs badly, naive 'Minimum Distance to the Mean'
+        "Cov + MDM": make_pipeline(Covariances(), MDM()),
     }
 
     for name, clf in clfs.items():
