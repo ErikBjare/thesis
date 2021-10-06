@@ -13,7 +13,7 @@ def compute_features(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def bandpower(df: pd.DataFrame) -> pd.DataFrame:
-    df["bandpower"] = [[] for _ in range(len(df))]
+    df.loc[:, "bandpower"] = [[] for _ in range(len(df))]
     for i, row in df.iterrows():
         timestamps, *ch = zip(*row["raw_data"])
         data = np.array(ch).T

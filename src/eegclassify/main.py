@@ -98,7 +98,7 @@ def _load(use_cache: bool, since: datetime = None) -> pd.DataFrame:
     return df
 
 
-def _train_raw(df):
+def _train_raw(df, shuffle=False):
     """Train a classifier on raw EEG data"""
     X, y = transform.signal_ndarray(df)
     # print(X, y)
@@ -127,10 +127,10 @@ def _train_raw(df):
 
     for name, clf in clfs.items():
         logger.info(f"===== Training with {name} =====")
-        _train(X, y, clf)
+        _train(X, y, sklearn.clone(clf), shuffle=shuffle)
 
 
-def _train_features(df: pd.DataFrame):
+def _train_features(df: pd.DataFrame, shuffle=False):
     """Train a classifier using features"""
     logger.info("Computing features...")
     df = features.compute_features(df)
@@ -150,15 +150,15 @@ def _train_features(df: pd.DataFrame):
 
     for name, clf in clfs_feat.items():
         logger.info(f"===== Training with {name} =====")
-        _train(X, y, clf)
+        _train(X, y, clf, shuffle=shuffle)
 
 
-def _train(X, y, clf):
+def _train(X, y, clf, shuffle: bool = False):
     # TODO: Add LORO cross validation ("Leave-One-Run-Out")
     # TODO: Use shuffle=False as a substitute for LORO
     # Split into train and test
     X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(
-        X, y, test_size=0.3, shuffle=True
+        X, y, test_size=0.3, shuffle=shuffle
     )
 
     logger.info("Training...")
@@ -195,8 +195,8 @@ MODEL_PERF = load.cachedir / Path("model.performance.dict")
 
 
 def _save_best_model(clf, perf: dict):
-    pprint(clf)
-    pprint(perf)
+    # pprint(clf)
+    # pprint(perf)
     if MODEL_PERF.exists():
         saved_model_perf = joblib.load(MODEL_PERF)
         # print("Saved model perf:")
@@ -308,7 +308,10 @@ def df_to_vectors(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
 
 
 def cross_val(clf, X, y, n):
-    scores = sklearn.model_selection.cross_val_score(clf, X, y, cv=n)
-    logger.info(f"CV score: {scores.mean()}")
+    logger.info(f"Running CV with cv={n}")
+    scores = sklearn.model_selection.cross_val_score(
+        clf, X, y, cv=n, scoring="balanced_accuracy"
+    )
+    logger.info(f"CV score (mean BAC): {scores.mean()} ({scores})")
     # logger.info(sklearn.model_selection.cross_val_predict(clf, X, y, cv=n))
     # logger.info(sklearn.model_selection.cross_validate(clf, X, y, cv=n))

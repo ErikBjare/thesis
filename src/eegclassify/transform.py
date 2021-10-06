@@ -23,7 +23,7 @@ def signal_ndarray(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
     y = np.empty((n_trials))
 
     catmap = dict(((cls, i) for i, cls in enumerate(df["class"].cat.categories)))
-    pprint(catmap)
+    # pprint(catmap)
 
     i_t = 0
     for _, trial in df.reindex().iterrows():

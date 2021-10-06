@@ -56,14 +56,17 @@ class TimelineFigure:
         self.bars = []
 
     def plot(self):
+        max_end = 0
         for bar_idx, bar in enumerate(self.bars):
             for event in bar["events"]:
                 start, end, color = event
                 plt.barh(-bar_idx, end - start, left=start, color=color)
+                max_end = max(max_end, end)
 
         tick_idxs = list(range(0, -len(self.bars), -1))
         self.ax.set_yticks(tick_idxs)
         self.ax.set_yticklabels([bar["title"] for bar in self.bars])
+        self.ax.set_xlim(0, max_end)
 
         plt.show()
 
