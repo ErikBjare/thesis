@@ -39,8 +39,9 @@ def query() -> List[Event]:
         [["Editing"], cat_re("NVIM")],
         [["Editing", "Code"], cat_re(r"[.](py|rs|js|ts)")],
         [["Editing", "Prose"], cat_re(r"[.](tex|md)")],
-        [["Reading docs"], cat_re("readthedocs.io")],
-        [["Stack Overflow"], cat_re("Stack Overflow")],
+        [["Reading", "Docs"], cat_re("readthedocs.io")],
+        [["Reading", "Wikipedia"], cat_re("wikipedia.org")],
+        [["Reading", "Stack Overflow"], cat_re("Stack Overflow")],
         [["GitHub", "Pull request"], cat_re(r"Pull Request #[0-9]+")],
         [["GitHub", "Issues"], cat_re(r"Issue #[0-9]+")],
         # NOTE: There may be a significant difference between scrolling on the landing page and actually watching videos
