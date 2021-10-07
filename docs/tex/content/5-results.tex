@@ -4,50 +4,16 @@
 
     We compare the results of our code-prose experiment to the original study~\cite{floyd_decoding_2017} and the replication study~\cite{fucci_replication_2019}, and investigate the results from our naturalistic device use experiment to see if results generalize to other types of device activity.
 
-    \change[inline]{Update with final values}
-
     \section{Code vs prose task}
-        Table~\ref{table:bac-all} shows the BAC scores for the code vs prose task.
+        Table~\ref{table:bac-all} shows the performance we achieved for the code vs prose task.
 
-        The \emph{Benchmark} columns show show the results for the 8 subjects using the bandpower benchmark for window-level data and epoch-level data, respectively. Analogously, the \emph{Riemannian} columns show the corresponding results using Riemannian geometry. The classifier using Riemann geometry outperforms the baseline by TODO.
+        Our top-performing classifier, using Riemannian methods and cross-validated using LORO, yields a median balanced accuracy of $0.749$  for window-level classification and $0.9$ for epoch-level classification (seen in Table~\ref{table:bac-selective}).
 
-        Our top-performing classifier, using LORO cross-validation, yields a median BAC score of $0.749$  for window-level classification and $0.9$ for epoch-level classification (seen in Table~\ref{table:bac-selective}).
-
-        The top-performing classifier computes the covariance matrices, and then uses using Riemannian geometry, Common Spatial Pattern, and TangentSpace. With logistic regression for the final step.
+        The \textbf{Bandpower} columns show the results for each subject-fold using the bandpower benchmark for window-level data and epoch-level data, respectively. Correspondingly, the \textbf{Riemannian} columns show the results using Riemannian geometry. The classifier using Riemann geometry tends to outperform the baseline in each fold.
 
         We do window-level classification by training on the \SI{5}{\second} windows (as described in Section~\ref{section:transform}).
 
         We achieve epoch-level classification by training a window-level classifier just as for the \SI{5}{\second} windows, we then make a classification for the entire epoch by taking the mean of the prediction probabilities from the windows in that epoch.
-
-        \add[inline]{Markus: Vilken modell är det som gäller nu? Och vilka features och clearning och sånt bygger den på? Kanske avsluta kapitel 3 med att tydligt presentera vad som används i experimenten?}
-        
-        \begin{comment}
-            The following is the performance statistics for our model trained on \SI{5}{\second} windows. It is trained on all subjects except one, which is used in testing:
-
-            \begin{verbatim}
-            INFO: {
-                'precision': 0.7473868367437329, 
-                'recall': 0.696405129166862, 
-                'fbeta': 0.6703482474923927, 
-                'support': array([308, 277]), 
-                'bac': 0.696405129166862, 
-                'confusion_matrix': array([[141, 167], [ 18, 259]])
-            }
-            \end{verbatim}
-
-            The following are the performance statistics for our model on the epoch-level.  The same subject selection as the previous statistics is used:
-
-            \begin{verbatim}
-            INFO: {
-                'precision': 0.8541666666666667, 
-                'recall': 0.7666666666666666, 
-                'fbeta': 0.7624602332979852, 
-                'support': array([15, 17]), 
-                'bac': 0.7666666666666666, 
-                'confusion_matrix': array([[ 8,  7], [ 0, 17]])
-            }
-            \end{verbatim}
-        \end{comment}
 
         \begin{table}[h]
             \centering

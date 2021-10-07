@@ -178,7 +178,7 @@ Recording to recording_2021-09-29-09.22.24.csv
 
         Or run the following to plot the raw signal: \mintinline{bash}{brainwatch plot}
 
-        Alternatively, we can plot using muse-lsl's built-in plotting functionality: \mintinline{bash}{muselsl view -b Qt5Agg} (seen in figure~\ref{fig:raweeg}).
+        Alternatively, we can plot using muse-lsl's built-in plotting functionality: \mintinline{bash}{muselsl view -b Qt5Agg} (seen in Figure~\ref{fig:muselsl-signal}).
 
         \subsubsection*{During organic device use}
 
@@ -222,7 +222,7 @@ Recording to recording_2021-09-29-09.22.24.csv
 
             Before each run, the subject was asked about their gender, age, handedness, and software development experience (specifically experience with C/C++). For good measure, we also asked if the subject had consumed caffeine the hours prior to the experiment.
 
-            After these questions we put the devices on and ensure we get good signal by inspecting it in real time with the viewer provided by muse-lsl (seen in Figure~\ref{muselsl-signal}). The viewer itself does simple bandpass filtering between 3--40Hz, and the signal quality is indicated by the standard deviation of the filtered signal.
+            After these questions we put the devices on and ensure we get good signal by inspecting it in real time with the viewer provided by muse-lsl (seen in Figure~\ref{fig:muselsl-signal}). The viewer itself does simple bandpass filtering between 3--40Hz, and the signal quality is indicated by the standard deviation of the filtered signal.
 
     \subsection{Collection of device activity data}\label{section:collect-usage}
 
@@ -334,14 +334,38 @@ We chose the following classes for analysis:
 
             To compute this feature, we utilized the bandpower function provided by YASA~\cite{vallat_yasa_2020}. The implementation estimates the power spectral density using Welch's method for each channel, and bins them by their associated frequency band.
 
-            To further enrich our feature vector, we can use ratios between two frequency bands. As this is what Fucci et al.\ did, \todo{we haven't yet!}{we do the same}.
-            \change[inline]{Markus: gjorde vi eller skulle vi kunna göra i future work?}
+            To further enrich our feature vector, we can use ratios between two frequency bands. As this is what Fucci et al.\ did, we do the same.
+
+            \change[inline]{Markus: gjorde vi eller skulle vi kunna göra i future work? \\ Erik: Inte gjort än, ska göras!}
 
         \subsubsection{Riemannian geometry}
 
             The state of the art in many EEG classification tasks involves the use of Riemannian geometry (described in Section~\ref{section:riemannian-theory}). For this, we used the open source \texttt{pyriemann} library by Alexandre Barachant\footnote{First author of the original paper to apply Riemannian geometry to EEG~\cite{barachant_classification_2013}}.
 
+            Our final pipeline is defined by:
+
+\begin{minted}{python}
+from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import LogisticRegression
+from pyriemann.estimation import Covariances
+from pyriemann.spatialfilters import CSP
+from pyriemann.tangentspace import TangentSpace
+
+clf = make_pipeline(
+    Covariances(),
+    CSP(4, metric='riemann'),  # can be approximated with log=False
+    TangentSpace(),
+    LogisticRegression(),
+)
+\end{minted}
+
+            We do not perform any hyperparameter optimization.
+
+            \add[inline]{Explanation of pipeline}
+
     \subsection{Neural Networks}
+
+        \change[inline]{Future work!}
 
         One of the classifiers we want to train is a neural network. We use braindecode~\cite{schirrmeister_deep_2017}\cite{noauthor_braindecode_2021}, a neural network library for EEG data that uses PyTorch and integrates it with scikit-learn through skorch.
 
@@ -349,10 +373,7 @@ We chose the following classes for analysis:
 
     \subsection{Performance scoring}
 
-        Previous studies have used \emph{balanced accuracy} (BAC) scoring with LORO validation to evaluate model performance. To be able to compare results to previous studies, we do the same. BAC deals with imbalanced datasets by taking the average of recall obtained on each class. For balanced datasets, the BAC score is equal to accuracy.
-
-        \todo[inline]{Move the following elsewhere}
-        We do not perform any significant hyperparameter optimization.
+        Previous studies have used \emph{balanced accuracy} (BAC) scoring with LORO validation to evaluate model performance. To be able to compare results to previous studies, we do the same. BAC deals with imbalanced datasets by taking the average of recall obtained on each class. It is defined as the average of recall obtained on each class. For balanced datasets, the \info{is it?}{balanced accuracy is equal to the accuracy}.
 
     \subsection{Cross Validation}
 

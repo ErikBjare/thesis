@@ -1,28 +1,22 @@
 \section{Discussion}\label{section:discussion}
 
-Our classifier performance is comparable to that of Fucci et al. (TODO: compare), which is positive considering the limited data collected.
-
-When I started the thesis, we set a goal of answering two research questions:
 As stated earlier in the section ``Aim of the thesis'' (\ref{section:aim}), we set out to answer two research questions:
 
-\begin{itemize}
-        \item RQ1. Can we improve upon previous results in classifying code vs prose comprehension with EEG~?
-        \item RQ2. Can we train an EEG classifier to separate software developers’ device activities?
-\end{itemize}
+\paragraph*{RQ1. Can we improve upon previous results in classifying code vs prose comprehension with EEG~?}
 
-\paragraph*{RQ1}
-With respect to RQ1, we found that we do improve upon the best classifier performance by Fucci et al (in their EEG-only configuration). However, we had to remove certain subjects from our sample, and our sample in general was smaller and more homogenous. 
+We found that we do improve upon the best classifier performance by Fucci et al (in their EEG-only configuration). However, we had to remove certain subjects from our sample, and our sample in general was smaller and more homogenous. 
 
-Our results are impacted by our cherry-picked subject set for our final analysis. Issues with signal quality and limited data (due to spurious device disconnects during experiment) was ultimately what led to removal of some subjects. However, despite these interventions we find that out Riemannian-based classifiers outperform using basic bandpower features (as done by Fucci et al.), this indicates some improvement of our method over previous work.
+Our results are impacted by our cherry-picked subject set for our final analysis. Issues with signal quality and limited data (due to spurious device disconnects during experiments) ultimately led to exclusion of several subjects. However, despite these interventions we find that Riemannian-based classifiers outperforms using bandpower-features (as by Fucci et al.), this suggests some improvement of our method over previous work.
 
-We were not able to beat the performance achieved by Floyd et al.\ using fMRI\@.
+We were not able to outperform the results by Floyd et al., which is not surprising given they were using using fMRI\@.
 
-\paragraph*{RQ2}
-With respect to RQ2, we successfully train several classifiers. We distinguishing work (writing code) from leisure (YouTube/Twitter). 
+\paragraph*{RQ2. Can we train an EEG classifier to separate software developers’ device activities?}
+
+We successfully train several classifiers. We especially distinguishing work (writing code) from social media (Twitter), but many models show significant improvements when given more data. We \todo{explore}{not yet} explore a multiclass classifier, but\ldots
 
 Among the classifiers we train, we found that discerning leisure-activities from each other (such as YouTube vs Twitter) is harder than discerning work from leisure (such as writing code vs Twitter).
 
-\todo[inline]{More discussion of results}
+\add[inline]{More discussion of results}
 
 \subsection{Applications to software engineering}
 
@@ -30,11 +24,11 @@ As we mentioned in the introduction, gaining insight into the brains of develope
 
 Some to assist in development, like helping to identify developer confusion, but other applications could be imagined where a summary of the developers' brain activity during a particular commit (such as if the developer was confused, focused, tired).
 
-\todo[inline]{Include image of mood attached in commit message from Fucci talk?}
+\add[inline]{Include mention and image of mood attached in commit message from Fucci talk?}
 
 \subsection{Applications to the average device user}
 
-\todo[inline]{Merge with applications to software engineering?}
+\change[inline]{Merge with applications to software engineering?}
 
 Applications of our results include:
 
@@ -57,7 +51,7 @@ Applications of our results include:
 
     Future research could evaluate this further either by using an eye tracker or by using an EEG device with different placements of both the electrodes and reference electrode.
 
-    \todo[inline]{Investigate threats to validity mentioned by previous authors}
+    \add[inline]{Investigate threats to validity mentioned by previous authors}
 
 \subsection{Ethical considerations}
 
