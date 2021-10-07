@@ -1,5 +1,9 @@
-import numpy as np
+import logging
 from typing import List, Tuple, TypeVar, Generator, Iterable
+
+import numpy as np
+
+logger = logging.getLogger(__name__)
 
 
 def unison_shuffled_copies(a, *bs):
@@ -86,12 +90,16 @@ def aggregate_windows_to_epochs(
     """
     map_cls = {"code": 0, "prose": 1, 0: 0, 1: 1}
 
+    if majority_vote is False and not hasattr(clf, "predict_proba"):
+        logger.warning("Classifier does not support predict_proba, using majority vote")
+        majority_vote = True
+
     if majority_vote:
         predicted = clf.predict(X)
     else:
         predicted_proba = clf.predict_proba(X)
 
-    majority_votes = []
+    votes = []
     ys_epoch = []
     for i_start, i_stop, _ in take_until_next(list(zip(subjs[test], imgs[test]))):
         y_epoch = np.array([map_cls[v] for v in y[test][i_start : i_stop + 1]])
@@ -106,10 +114,10 @@ def aggregate_windows_to_epochs(
                 map(lambda v: map_cls[v], predicted[test][i_start : i_stop + 1])
             )
             vote = sum(y_preds) / len(y_preds)
-            majority_votes.append(vote > 0.5)
+            votes.append(vote > 0.5)
         else:
             # Use the mean probability
             vote = np.mean(predicted_proba[test][i_start : i_stop + 1, 1])
-            majority_votes.append(vote > 0.5)
+            votes.append(vote > 0.5)
 
-    return np.array(ys_epoch), np.array(majority_votes)
+    return np.array(ys_epoch), np.array(votes)
