@@ -120,10 +120,10 @@
             \begin{figure}
                 \centering
                 \includegraphics[width=24cm]{img/timebars.png}
-                \caption{Visualization of the labeled data. Shows the \emph{image} (stimuli), the \emph{label} for that stimuli, the \emph{predicted} class, whether the prediction is \emph{correct}, the \emph{subject}, the \emph{training} and \emph{testing} split, and a measure of signal \emph{quality}. The x-axis is the window index, sorted by acquisition time.
-                \\ 
+                \caption{Visualization of the labeled data with classifications from one fold. Shows the \emph{Image} (stimuli), the \emph{Label} for that stimuli, the \emph{Predicted} class, whether the prediction is \emph{Correct}, the \emph{Subject}, the \emph{Split}/Fold, and our threshold measure for signal \emph{Quality}. The x-axis is the window index, sorted by acquisition time.
                 \\
-                It can be seen that subjects \#3 and \#4 have bad signal quality, and have therefore been excluded from the training set. The last two subjects have also been excluded from training due to issues during data collection. It can also be seen that for subject \#1 the stimuli images were not shuffled.}\label{fig:timebars}
+                \\
+                It can be seen that (1) subjects \#3 and \#4 have bad signal quality, and have therefore been excluded from the training set. (2) The subjects \#9 and \#10 have also been excluded from training due to issues during data collection. (3) For subject \#1 the stimuli images were not shuffled. (4) Subject \#0 appears twice, as they did two sessions (using unseen stimuli).}\label{fig:timebars}
             \end{figure}
         \end{landscape}
 
