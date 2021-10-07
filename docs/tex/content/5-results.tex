@@ -7,6 +7,9 @@
     \todo[inline]{Update with final values}
 
     \section{Code vs prose task}
+        Table~\ref{table:bac-all} shows the BAC scores for the code vs prose task.
+
+        The \emph{Benchmark} columns show show the results for the 8 subjects using the bandpower benchmark for window-level data and epoch-level data, respectively. Analogously, the \emph{Riemannian} columns show the corresponding results using Riemannian geometry. The classifier using Riemann geometry outperforms the baseline by TODO.
 
         Our top-performing classifier, using LORO cross-validation, yields a median BAC score of $0.749$  for window-level classification and $0.9$ for epoch-level classification (seen in Table~\ref{table:bac-selective}).
 
@@ -48,21 +51,24 @@
 
         \begin{table}[h]
             \centering
-            \begin{tabular}{lcc}
-            \toprule
-                \textbf{Subject} & \textbf{Window-level} & \textbf{Epoch-level} \\
-            \midrule
-            \#0  & 0.608  & 0.603 \\
-            \#1  & 0.802  & 0.864 \\
-            \#5  & 0.589  & 0.534 \\
-            \#6  & 0.701  & 0.767 \\
-            \#7  & 0.694  & 0.8   \\
-            \#8  & 0.547  & 0.542 \\
-            \#9  & 0.484  & 0.5   \\
-            \#10 & 0.474  & 0.5   \\
-            \midrule
-            Median & 0.5985 & 0.573 \\
-            \bottomrule
+            \begin{tabular}{lcccc}
+                \toprule
+                & \multicolumn{2}{c}{\textbf{Riemannian}} & \multicolumn{2}{c}{\textbf{Bandpower}} \\
+                \cmidrule(lr){2-3}
+                \cmidrule(lr){4-5}
+                \textbf{Subject} & Window-level & Epoch-level & Window-level & Epoch-level \\
+                \midrule
+                \#0  & 0.608  & 0.603 & x & x \\
+                \#1  & 0.802  & 0.864 & x & x \\
+                \#5  & 0.589  & 0.534 & x & x \\
+                \#6  & 0.701  & 0.767 & x & x \\
+                \#7  & 0.694  & 0.8   & x & x \\
+                \#8  & 0.547  & 0.542 & x & x \\
+                \#9  & 0.484  & 0.5   & x & x \\
+                \#10 & 0.474  & 0.5   & x & x \\
+                \midrule
+                Median & 0.5985 & 0.573 & x & x \\
+                \bottomrule
             \end{tabular}
             \caption{The BAC score for each LORO fold/subject. Excluding subjects 3 and 4.}\label{table:bac-all}
         \end{table}
@@ -70,18 +76,21 @@
 
         \begin{table}[h]
             \centering
-            \begin{tabular}{lcc}
-            \toprule
-                \textbf{Subject} & \textbf{Window-level} & \textbf{Epoch-level} \\
-            \midrule
-            \#0 & 0.673 & 0.727 \\
-            \#1 & 0.895 & 0.955 \\
-            \#5 & 0.616 & 0.542 \\
-            \#6 & 0.864 & 0.908 \\
-            \#7 & 0.749 & 0.9   \\
-            \midrule
-            Median & 0.749 & 0.9 \\
-            \bottomrule
+            \begin{tabular}{lcccc}
+                \toprule
+                & \multicolumn{2}{c}{\textbf{Riemannian}} & \multicolumn{2}{c}{\textbf{Bandpower}} \\
+                \cmidrule(lr){2-3}
+                \cmidrule(lr){4-5}
+                \textbf{Subject} & Window-level & Epoch-level & Window-level & Epoch-level \\
+                \midrule
+                \#0 & 0.673 & 0.727 & x & x \\
+                \#1 & 0.895 & 0.955 & x & x \\
+                \#5 & 0.616 & 0.542 & x & x \\
+                \#6 & 0.864 & 0.908 & x & x \\
+                \#7 & 0.749 & 0.9   & x & x \\
+                \midrule
+                Median & 0.749 & 0.9 & x & x \\
+                \bottomrule
             \end{tabular}
             \caption{The BAC score for each LORO fold/subject. Excluding subjects 3, 4, 8, 9, and 10.}\label{table:bac-selective}
         \end{table}
@@ -89,18 +98,19 @@
         \begin{table}
             \begin{center}
                 \begin{tabular}{lcc}
-                  \toprule
-                            & Epoch-level (subject \#6) & Window-level (subject \#6) \\
-                  \midrule
-                  Precision & 85.4\%                    & 74.7\% \\
-                  BAC       & 76.7\%                    & 69.6\% \\
-                  \bottomrule
+                    \toprule
+                            & Window-level & Epoch-level \\
+                    \midrule
+                    Precision & 74.7\% & 85.4\%  \\
+                    BAC       & 69.6\% & 76.7\%  \\
+                    \bottomrule
                 \end{tabular}
-                \caption{Performance statistics of our models trained on all subjects with good signal quality, except subject number \#6 which is used for testing.}\label{fig:stats}
+                \caption{Performance statistics of our models trained on all subjects with good signal quality except number \#6, which is used for testing.}\label{fig:stats}
             \end{center}
         \end{table}
 
-        %\begin{figure}[h]
+
+        \change[inline]{Remove excessive bars (quality? train/test split? predicted (prob)?). Explain meaning of colors. Update with version that has subjects numbered.}
         \begin{landscape}
             \begin{figure}
                 \centering
@@ -111,7 +121,6 @@
                 It can be seen that subjects \#3 and \#4 have bad signal quality, and have therefore been excluded from the training set. The last two subjects have also been excluded from training due to issues during data collection. It can also be seen that for subject \#1 the stimuli images were not shuffled.}\label{fig:timebars}
             \end{figure}
         \end{landscape}
-        %\end{figure}
 
         \begin{comment}
             \begin{figure}[h]
@@ -141,19 +150,32 @@
 
     \section{Naturalistic device activity}
 
-        We collected TODO hours of EEG data during natural device use.
+        We collected $\sim5$ hours of labeled EEG data during natural device use.
 
         We use the classes defined in Section~\ref{section:collect-usage}.
 
         We train classifiers for the label pairs:
 
         \begin{itemize}
-                \item Editing Code / Editing Prose
-                \item Editing Code / Twitter
+                \item Programming / Writing
+                \item Programming / Twitter
                 \item Twitter / YouTube
         \end{itemize}
 
+        Our results are seen in Table~\ref{table:scores-natural}.
+
+        \begin{table}[h]
+            \centering
+            \begin{tabular}{llrr}
+                \toprule
+                Experiment & Score & Support & Hours of data \\
+                \midrule
+                Programming vs Writing & 0.676 & (1386, 209) & 2.22h \\
+                Programming vs Twitter & 0.695 &  (1386, 949) & 1.69h \\
+                Twitter vs YouTube & 0.604 & (949, 266) & 3.24h \\
+                \bottomrule
+            \end{tabular}
+            \caption{The scores for each label pairing. The score is the mean BAC of the StratifiedKFold splits.}\label{table:scores-natural}
+        \end{table}
+
         The class distribution is as follows: TODO
-
-        Our classifier performance is: TODO
-
