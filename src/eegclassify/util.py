@@ -67,3 +67,49 @@ def take_until_next(ls: Iterable[T]) -> Generator[Tuple[int, int, T], None, None
 def test_take_until_next():
     ls = [1, 1, 1, 2, 3, 3]
     assert [(0, 2, 1), (3, 3, 2), (4, 5, 3)] == list(take_until_next(ls))
+
+
+def aggregate_windows_to_epochs(
+    clf,
+    X: np.ndarray,
+    y: np.ndarray,
+    subjs: np.ndarray,
+    imgs: np.ndarray,
+    test: np.ndarray,
+    majority_vote=False,
+) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Aggregate the window classification into epoch classification by taking the mean of
+    the prediction probabilities, or a majority vote.
+
+    Takes a fitted classifier, and needed data.
+    """
+    map_cls = {"code": 0, "prose": 1, 0: 0, 1: 1}
+
+    if majority_vote:
+        predicted = clf.predict(X)
+    else:
+        predicted_proba = clf.predict_proba(X)
+
+    majority_votes = []
+    ys_epoch = []
+    for i_start, i_stop, _ in take_until_next(list(zip(subjs[test], imgs[test]))):
+        y_epoch = np.array([map_cls[v] for v in y[test][i_start : i_stop + 1]])
+
+        # Check that we're not mixing classes
+        assert 0 == np.std(y_epoch), np.std(y_epoch)
+        ys_epoch.append(y_epoch[0])
+
+        if majority_vote:
+            # Use the majority vote
+            y_preds = list(
+                map(lambda v: map_cls[v], predicted[test][i_start : i_stop + 1])
+            )
+            vote = sum(y_preds) / len(y_preds)
+            majority_votes.append(vote > 0.5)
+        else:
+            # Use the mean probability
+            vote = np.mean(predicted_proba[test][i_start : i_stop + 1, 1])
+            majority_votes.append(vote > 0.5)
+
+    return np.array(ys_epoch), np.array(majority_votes)

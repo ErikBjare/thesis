@@ -157,7 +157,7 @@ def _train_features(df: pd.DataFrame, shuffle=False):
         _train(X, y, clf, shuffle=shuffle)
 
 
-def _train(X, y, clf, shuffle: bool = False):
+def _train(X, y, clf, cv=None, shuffle: bool = False):
     # TODO: Add LORO cross validation ("Leave-One-Run-Out")
     # TODO: Use shuffle=False as a substitute for LORO
     # Split into train and test
@@ -175,7 +175,7 @@ def _train(X, y, clf, shuffle: bool = False):
     logger.info(perf)
     _save_best_model(clf, perf)
 
-    cross_val(clf, X, y, 3)
+    cross_val(clf, X, y, cv or 3, shuffle)
 
 
 def _performance(y_test, y_pred) -> dict:
@@ -311,10 +311,15 @@ def df_to_vectors(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
     return X, y
 
 
-def cross_val(clf, X, y, n):
-    logger.info(f"Running CV with cv={n}")
+def cross_val(clf, X, y, cv, shuffle: bool):
+    from sklearn.model_selection import StratifiedKFold
+
+    if isinstance(cv, int):
+        cv = StratifiedKFold(cv, shuffle=shuffle)
+
+    logger.info(f"Running CV with cv={cv}")
     scores = sklearn.model_selection.cross_val_score(
-        clf, X, y, cv=n, scoring="balanced_accuracy"
+        clf, X, y, cv=cv, scoring="balanced_accuracy"
     )
     logger.info(f"CV score (mean BAC): {scores.mean()} ({scores})")
     # logger.info(sklearn.model_selection.cross_val_predict(clf, X, y, cv=n))
