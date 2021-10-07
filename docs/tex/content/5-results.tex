@@ -36,7 +36,7 @@
                 Median & 0.5985 & 0.573 & x & x \\
                 \bottomrule
             \end{tabular}
-            \caption{The BAC score for each LORO fold/subject. Excluding subjects 3 and 4.}\label{table:bac-all}
+            \caption{The balanced accuracy for each LORO fold/subject. Excluding subjects 3 and 4.}\label{table:bac-all}
         \end{table}
 
         In Table~\ref{table:bac-all} we see that performance is bad (no better than chance) for several subjects. We investigate these and find issues with the amount of data (and\ldots). We remove them from analysis, and get the much improved results in Table~\ref{table:bac-selective}.
@@ -61,7 +61,7 @@
                 Median & 0.749 & 0.9 & 0.634 & 0.792 \\
                 \bottomrule
             \end{tabular}
-            \caption{The BAC score for each LORO fold/subject. Excluding subjects 3, 4, 8, 9, and 10.}\label{table:bac-selective}
+            \caption{The balanced accuracy for each LORO fold/subject. Excluding subjects 3, 4, 8, 9, and 10.}\label{table:bac-selective}
         \end{table}
 
         \begin{comment}
@@ -80,8 +80,6 @@
             \end{table}
         \end{comment}
 
-
-        \change[inline]{Remove excessive bars (quality? train/test split? predicted (prob)?). Explain meaning of colors. Update with version that has subjects numbered.}
         \begin{landscape}
             \begin{figure}
                 \centering

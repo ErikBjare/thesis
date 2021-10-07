@@ -353,7 +353,7 @@ from pyriemann.tangentspace import TangentSpace
 
 clf = make_pipeline(
     Covariances(),
-    CSP(4, metric='riemann'),  # can be approximated with log=False
+    CSP(4, log=False),
     TangentSpace(),
     LogisticRegression(),
 )
