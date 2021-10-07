@@ -22,31 +22,33 @@ The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replica
 \end{itemize}
 
 % Comparing to Fucci and original study
-\rowcolors{4}{gray!25}{white}
-\begin{sidewaystable}
-    \begin{center}
-        \begin{tabular}{llll}
-            \toprule
-            \multirow{2}{*}{\textbf{Setting}} & \multicolumn{3}{c}{\textbf{Study}} \\
-            \cmidrule(lr){2-4}
-            & \makecell[c]{\textbf{This study}} & \makecell[c]{\textbf{Fucci et al.} (2019)} & \makecell[c]{\textbf{Floyd et al.} (2017)} \\
-            \midrule
-            Experiment site & Lund Univ. (Sweden) & Univ.\ of Bari (Italy) & Univ.\ of Virginia (USA)  \\
-            \# Participants & 9 & 28 & 29 \\
-            Participants experience & Grads & Undergrads & Grads \& Undergrads \\
-            \# Tasks & Variable & 36 tasks & 27 tasks \\
-            Task type & \makecell[l]{Code comprehension \\ Prose review} & \makecell[l]{Code comprehension \\ Prose comprehension} & \makecell[l]{Code comprehension \\ Code review \\ Prose review} \\
-            Physiological signal & Neural & \makecell[l]{Neural \\ Skin \\ Heart} & Neural \\
-            Physiological measure & EEG & \makecell[l]{EEG \\ EDA \\ HR, HRV, BVP} & BOLD \\
-            Device & Muse S & \makecell[l]{BrainLink Headset \\ Empatica wristband} & fMRI \\
-            Classifier & \makecell[l]{Riemannian geometry \\ Neural networks} & 8 algorithms & Gaussian Process \\
-            Classifier validation & LORO-CV & \makecell[l]{LORO-CV \\ Hold-out} & LORO-CV \\
-            Classifier metric & Balanced accuracy (BAC) & Balanced accuracy (BAC) & Balanced accuracy (BAC) \\
-            \bottomrule
-        \end{tabular}
-        \caption{Comparison of this study's method with previous studies.}\label{table:compare-method}
-    \end{center}
-\end{sidewaystable}
+\begin{landscape}
+    \rowcolors{4}{gray!25}{white}
+    \begin{table}
+        \begin{center}
+            \begin{tabular}{llll}
+                \toprule
+                \multirow{2}{*}{\textbf{Setting}} & \multicolumn{3}{c}{\textbf{Study}} \\
+                \cmidrule(lr){2-4}
+                & \makecell[c]{\textbf{This study}} & \makecell[c]{\textbf{Fucci et al.} (2019)} & \makecell[c]{\textbf{Floyd et al.} (2017)} \\
+                \midrule
+                Experiment site & Lund Univ. (Sweden) & Univ.\ of Bari (Italy) & Univ.\ of Virginia (USA)  \\
+                \# Participants & 9 & 28 & 29 \\
+                Participants experience & Grads & Undergrads & Grads \& Undergrads \\
+                \# Tasks & Variable & 36 tasks & 27 tasks \\
+                Task type & \makecell[l]{Code comprehension \\ Prose review} & \makecell[l]{Code comprehension \\ Prose comprehension} & \makecell[l]{Code comprehension \\ Code review \\ Prose review} \\
+                Physiological signal & Neural & \makecell[l]{Neural \\ Skin \\ Heart} & Neural \\
+                Physiological measure & EEG & \makecell[l]{EEG \\ EDA \\ HR, HRV, BVP} & BOLD \\
+                Device & Muse S & \makecell[l]{BrainLink Headset \\ Empatica wristband} & fMRI \\
+                Classifier & \makecell[l]{Riemannian geometry \\ Neural networks} & 8 algorithms & Gaussian Process \\
+                Classifier validation & LORO-CV & \makecell[l]{LORO-CV \\ Hold-out} & LORO-CV \\
+                Classifier metric & Balanced accuracy (BAC) & Balanced accuracy (BAC) & Balanced accuracy (BAC) \\
+                \bottomrule
+            \end{tabular}
+            \caption{Comparison of this study's method with previous studies.}\label{table:compare-method}
+        \end{center}
+    \end{table}
+\end{landscape}
 \rowcolors{2}{}{}
 
 % Equipment
@@ -367,7 +369,7 @@ We chose the following classes for analysis:
                 Fold 4 & \multicolumn{3}{c}{\cellcolor{train}} & \cellcolor{test}     \\
                 \bottomrule
             \end{tabular}
-            \caption{Example of Leave-One-Run-Out cross validation with 4 subjects. For each fold, subjects marked \textcolor{train}{\textbf{blue}} are used for training and subjects marked \textcolor{BurntOrange}{\textbf{orange}} are used for testing.}\label{table:loro}
+            \caption{Example of Leave-One-Run-Out cross validation with 4 subjects. For each fold, subjects marked \textcolor{NavyBlue}{\textbf{blue}} are used for training and subjects marked \textcolor{BurntOrange}{\textbf{orange}} are used for testing.}\label{table:loro}
         \end{table}
 
         % FIXME: Fucci uses the median, should we too?
