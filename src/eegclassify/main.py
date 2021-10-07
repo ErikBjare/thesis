@@ -144,7 +144,7 @@ def _train_features(df: pd.DataFrame, shuffle=False):
         "SVM": make_pipeline(StandardScaler(), LinearSVC()),
         "randomforest": make_pipeline(RandomForestClassifier(n_estimators=10)),
         # "xgb": make_pipeline(xgb.XGBClassifier(objective="multi:softmax")),
-        # "mpl": Pipeline(
+        # "mlp": Pipeline(
         #     steps=[
         #         ("scaler", StandardScaler()),
         #         ("mlp_ann", MLPClassifier(hidden_layer_sizes=(1275, 637))),

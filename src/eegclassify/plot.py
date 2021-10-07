@@ -1,6 +1,7 @@
 import logging
 from typing import List, Optional, Tuple, Iterable, TypeVar, Callable, Union
 from datetime import datetime
+from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
@@ -45,6 +46,14 @@ def pca(X: np.ndarray, y: np.ndarray) -> None:
 T = TypeVar("T")
 Color = Union[str, Tuple[float, float, float]]
 Index = int  # Union[int, datetime]
+Event = Tuple[Index, Index, Color, str]
+
+
+@dataclass
+class Bar:
+    title: str
+    events: List[Event]
+    show_label: bool
 
 
 class TimelineFigure:
@@ -53,29 +62,44 @@ class TimelineFigure:
         self.ax = plt.gca()
         if title:
             self.ax.set_title(title)
-        self.bars = []
+        self.bars: List[Bar] = []
 
     def plot(self):
         max_end = 0
         for bar_idx, bar in enumerate(self.bars):
-            for event in bar["events"]:
-                start, end, color = event
-                plt.barh(-bar_idx, end - start, left=start, color=color)
+            for event in bar.events:
+                start, end, color, label = event
+                length = end - start
+                plt.barh(-bar_idx, length, left=start, color=color)
                 max_end = max(max_end, end)
+                plt.text(
+                    start + length / 2,
+                    -bar_idx,
+                    label,
+                    horizontalalignment="center",
+                    verticalalignment="center",
+                )
 
         tick_idxs = list(range(0, -len(self.bars), -1))
         self.ax.set_yticks(tick_idxs)
-        self.ax.set_yticklabels([bar["title"] for bar in self.bars])
+        self.ax.set_yticklabels([bar.title for bar in self.bars])
         self.ax.set_xlim(0, max_end)
 
         plt.show()
 
-    def add_bar(self, events: List[Tuple[Index, Index, Color]], title: str):
-        self.bars.append({"events": events, "title": title})
+    def add_bar(self, events: List[Event], title: str, show_label: bool = False):
+        self.bars.append(Bar(title, events, show_label))
 
-    def add_chunked(self, ls: Iterable[T], cmap: Callable[[T], Color], title: str):
+    def add_chunked(
+        self,
+        ls: Iterable[T],
+        cmap: Callable[[T], Color],
+        title: str,
+        show_label: bool = False,
+    ):
         """Optimized version of add_bar that takes care of identical subsequent values"""
         bars = [
-            (i_start, i_end + 1, cmap(v)) for i_start, i_end, v in take_until_next(ls)
+            (i_start, i_end + 1, cmap(v), str(v) if show_label else "")
+            for i_start, i_end, v in take_until_next(ls)
         ]
-        self.add_bar(bars, title)
+        self.add_bar(bars, title, show_label)
