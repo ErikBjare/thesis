@@ -4,7 +4,7 @@
 
     We compare the results of our code-prose experiment to the original study~\cite{floyd_decoding_2017} and the replication study~\cite{fucci_replication_2019}, and investigate the results from our naturalistic device use experiment to see if results generalize to other types of device activity.
 
-    \todo[inline]{Update with final values}
+    \change[inline]{Update with final values}
 
     \section{Code vs prose task}
         Table~\ref{table:bac-all} shows the BAC scores for the code vs prose task.
@@ -19,7 +19,7 @@
 
         We achieve epoch-level classification by training a window-level classifier just as for the \SI{5}{\second} windows, we then make a classification for the entire epoch by taking the mean of the prediction probabilities from the windows in that epoch.
 
-        \todo[inline]{Markus: Vilken modell är det som gäller nu? Och vilka features och clearning och sånt bygger den på? Kanske avsluta kapitel 3 med att tydligt presentera vad som används i experimenten?}
+        \add[inline]{Markus: Vilken modell är det som gäller nu? Och vilka features och clearning och sånt bygger den på? Kanske avsluta kapitel 3 med att tydligt presentera vad som används i experimenten?}
         
         \begin{comment}
             The following is the performance statistics for our model trained on \SI{5}{\second} windows. It is trained on all subjects except one, which is used in testing:
@@ -133,7 +133,7 @@
             \includegraphics[width=12cm]{img/roccurve.png}
             \caption{Receiver operating characteristic (ROC) curve for subject \#6.}\label{fig:roc}
             \end{figure}
-            \todo[inline]{Update with higher-res image}
+            \change[inline]{Update with higher-res image}
         \end{comment}
 
         Compared to previous studies, we achieve a moderate improvement over the EEG-only classifier trained in Fucci et al., and achieve a similar performance to the fMRI study by Floyd et al. (seen in Table~\ref{table:compare-results}).

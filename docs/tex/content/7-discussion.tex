@@ -13,6 +13,8 @@ As stated earlier in the section ``Aim of the thesis'' (\ref{section:aim}), we s
 \paragraph*{RQ1}
 With respect to RQ1, we found that we do improve upon the best classifier performance by Fucci et al (in their EEG-only configuration). However, we had to remove certain subjects from our sample, and our sample in general was smaller and more homogenous. 
 
+Our results are impacted by our cherry-picked subject set for our final analysis. Issues with signal quality and limited data (due to spurious device disconnects during experiment) was ultimately what led to removal of some subjects. However, despite these interventions we find that out Riemannian-based classifiers outperform using basic bandpower features (as done by Fucci et al.), this indicates some improvement of our method over previous work.
+
 We were not able to beat the performance achieved by Floyd et al.\ using fMRI\@.
 
 \paragraph*{RQ2}
@@ -93,3 +95,9 @@ Applications of our results include:
 
     \add[inline]{Write about crowdsourcing of EEG data, including the potential of transfer learning and privacy considerations.}
 
+
+\subsection{Transfer learning}
+
+An important aspect, as highlighted earlier in this thesis, is the ability of a classifier to be able to work on subjects unseen in training. Some BCI systems employ a calibration phase to achieve greater performance, but it is time consuming and can be straining. 
+
+To minimize, and perhaps even eliminate, the need for this calibration is a stated research goal in Khazem et al.~\cite{khazem_minimizing_2021}, which presents what is called Riemannian Transfer Learning. They build on Riemannian geometry used in state-of-the-art classifiers, and find that\add{TODO}{\ldots}
