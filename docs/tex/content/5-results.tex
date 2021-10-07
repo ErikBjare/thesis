@@ -73,6 +73,9 @@
             \caption{The BAC score for each LORO fold/subject. Excluding subjects 3 and 4.}\label{table:bac-all}
         \end{table}
 
+        In Table~\ref{table:bac-all} we see that performance is bad (no better than chance) for several subjects. We investigate these and find issues with the amount of data (and\ldots). We remove them from analysis, and get the much improved results in Table~\ref{table:bac-selective}.
+
+        We discuss our subject selection further in Section~\ref{section:discussion}.
 
         \begin{table}[h]
             \centering
@@ -83,31 +86,33 @@
                 \cmidrule(lr){4-5}
                 \textbf{Subject} & Window-level & Epoch-level & Window-level & Epoch-level \\
                 \midrule
-                \#0 & 0.673 & 0.727 & x & x \\
-                \#1 & 0.895 & 0.955 & x & x \\
-                \#5 & 0.616 & 0.542 & x & x \\
-                \#6 & 0.864 & 0.908 & x & x \\
-                \#7 & 0.749 & 0.9   & x & x \\
+                \#0 & 0.673 & 0.727 & 0.533 & 0.551 \\
+                \#1 & 0.895 & 0.955 & 0.687 & 0.859 \\
+                \#5 & 0.616 & 0.542 & 0.614 & 0.792 \\
+                \#6 & 0.864 & 0.908 & 0.730 & 0.808 \\
+                \#7 & 0.749 & 0.9   & 0.634 & 0.733 \\
                 \midrule
-                Median & 0.749 & 0.9 & x & x \\
+                Median & 0.749 & 0.9 & 0.634 & 0.792 \\
                 \bottomrule
             \end{tabular}
             \caption{The BAC score for each LORO fold/subject. Excluding subjects 3, 4, 8, 9, and 10.}\label{table:bac-selective}
         \end{table}
 
-        \begin{table}
-            \begin{center}
-                \begin{tabular}{lcc}
-                    \toprule
-                            & Window-level & Epoch-level \\
-                    \midrule
-                    Precision & 74.7\% & 85.4\%  \\
-                    BAC       & 69.6\% & 76.7\%  \\
-                    \bottomrule
-                \end{tabular}
-                \caption{Performance statistics of our models trained on all subjects with good signal quality except number \#6, which is used for testing.}\label{fig:stats}
-            \end{center}
-        \end{table}
+        \begin{comment}
+            \begin{table}
+                \begin{center}
+                    \begin{tabular}{lcc}
+                        \toprule
+                                & Window-level & Epoch-level \\
+                        \midrule
+                        Precision & 74.7\% & 85.4\%  \\
+                        BAC       & 69.6\% & 76.7\%  \\
+                        \bottomrule
+                    \end{tabular}
+                    \caption{Performance statistics of our models trained on all subjects with good signal quality except number \#6, which is used for testing.}\label{fig:stats}
+                \end{center}
+            \end{table}
+        \end{comment}
 
 
         \change[inline]{Remove excessive bars (quality? train/test split? predicted (prob)?). Explain meaning of colors. Update with version that has subjects numbered.}
@@ -171,8 +176,8 @@
                 Experiment & Score & Support & Hours of data \\
                 \midrule
                 Programming vs Writing & 0.676 & (1386, 209) & 2.22h \\
-                Programming vs Twitter & 0.695 &  (1386, 949) & 1.69h \\
-                Twitter vs YouTube & 0.604 & (949, 266) & 3.24h \\
+                Programming vs Twitter & 0.695 &  (1386, 949) & 3.24h \\
+                Twitter vs YouTube & 0.604 & (949, 266) & 1.69h \\
                 \bottomrule
             \end{tabular}
             \caption{The scores for each label pairing. The score is the mean BAC of the StratifiedKFold splits.}\label{table:scores-natural}
