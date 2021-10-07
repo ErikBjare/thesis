@@ -9,6 +9,7 @@ Abstraction for the various supported EEG devices.
 import logging
 from typing import List, Dict
 from abc import ABCMeta, abstractmethod
+from time import sleep
 
 import numpy as np
 
@@ -84,14 +85,9 @@ class EEGDevice(metaclass=ABCMeta):
         """
         raise NotImplementedError
 
-    def get_samples(self):
+    def get_data(self, clear_buffer: bool = False):
         raise NotImplementedError
 
     @abstractmethod
-    def check(self):
+    def check(self, max_uv_abs: float):
         raise NotImplementedError
-
-
-def test_create():
-    device = EEGDevice.create("synthetic")
-    assert device

@@ -1,6 +1,6 @@
 import logging
 from time import sleep
-from multiprocessing import Process
+from threading import Thread
 from typing import List, Tuple
 
 import numpy as np
@@ -54,21 +54,25 @@ class BrainflowDevice(EEGDevice):
         self.save_fn = filename
 
         def record():
-            # NOTE: This runs in a seperate process
+            # NOTE: This runs in a seperate process/thread
             self.board.start_stream()
             for i in range(duration):
                 sleep(1)
                 self._save()
             self._stop_brainflow()
 
+        # Only record if duration is set
         if duration:
             logger.info(
                 "Starting background recording process, will save to file: %s"
                 % self.save_fn
             )
-            # NOTE: This will start the recording in a new process!
-            self.recording = Process(target=lambda: record())
+            # NOTE: This will start the recording in a new process/thread!
+            #       Is a thread or process better? (thread gives insight, process makes it resistant to errors elsewhere in code)
+            self.recording = Thread(target=lambda: record())
             self.recording.start()
+        else:
+            self.board.start_stream()
 
     def stop(self) -> None:
         self._stop_brainflow()
@@ -78,7 +82,7 @@ class BrainflowDevice(EEGDevice):
         self.markers.append((marker, last_timestamp))
 
     def check(self, max_uv_abs=200) -> List[str]:
-        data = self.board.get_board_data()  # will clear board buffer
+        data = self._get_raw_data(clear_buffer=False)
         # print(data)
         channel_names = BoardShim.get_eeg_names(self.brainflow_id)
         # FIXME: _check_samples expects different (Muse) inputs
@@ -157,18 +161,22 @@ class BrainflowDevice(EEGDevice):
         self.board = BoardShim(self.brainflow_id, self.brainflow_params)
         self.board.prepare_session()
 
-    def get_data(self) -> pd.DataFrame:
-        from eegnb.devices.utils import create_stim_array
-
-        data = self.board.get_board_data()  # will clear board buffer
-
-        # doesn't clear buffer
-        # data_current = self.board.get_current_board_data(1024)
-        # data = data_current
+    def _get_raw_data(self, clear_buffer=True) -> np.ndarray:
+        if clear_buffer:
+            # will clear board buffer
+            data = self.board.get_board_data()
+        else:
+            # doesn't clear buffer
+            data = self.board.get_current_board_data(1024)
 
         # transform data for saving
         data = data.T  # transpose data
-        # print(data)
+        return data
+
+    def get_data(self, clear_buffer=True) -> pd.DataFrame:
+        from eegnb.devices.utils import create_stim_array
+
+        data = self._get_raw_data(clear_buffer)
 
         # get the channel names for EEG data
         if self.brainflow_id == BoardIds.GANGLION_BOARD.value:
@@ -219,23 +227,3 @@ class BrainflowDevice(EEGDevice):
             self._save()
         self.board.stop_stream()
         self.board.release_session()
-
-
-def test_check():
-    device = BrainflowDevice(device_name="synthetic")
-    with device:
-        sleep(2)  # is 2s really needed?
-        bads = device.check(max_uv_abs=300)
-        # Seems to blink between the two...
-        assert bads == ["F6", "F8"] or bads == ["F4", "F6", "F8"]
-        # print(bads)
-        # assert not bads
-
-
-def test_get_data():
-    device = BrainflowDevice(device_name="synthetic")
-    with device:
-        sleep(2)
-        df = device.get_data()
-        print(df)
-        assert not df.empty

@@ -139,6 +139,10 @@ class MuseDevice(EEGDevice):
         inlet = inlets[0]
         return inlet.buffer  # type: ignore
 
+    def get_data(self):
+        # TODO: Might need to do something different here (return same type of array as from Brainflow backend)
+        return self._read_buffer()
+
     def check(self) -> List[str]:
         checked = _check_samples(
             self._read_buffer(), channels=["TP9", "AF7", "AF8", "TP10"]

@@ -102,6 +102,9 @@ testpaths = [
     "notebooks",
 ]
 python_files = ["*.py", "*.ipynb"]
+filterwarnings = [
+    'ignore::DeprecationWarning'
+]
 # Doesn't seem to be respected?
 #ignore = ["notebooks/Braindecode.ipynb"]
 
