@@ -119,7 +119,14 @@ We will briefly review EEG, and some of the machine learning techniques used.
 
         The naive Riemannian approach using \emph{Minimum Distance to Mean} (MDM) starts with computing the covariance matrix for each trial, and then estimating a mean covariance matrix for each class (the class centroid) using the Riemannian distance metric $\delta_G$. When classification is performed, the distance between the new covariance matrix and the class centroids is estimated using the Riemannian distance metric, and the new covariance matrix is classified according to which class centroid is closest.
 
-        To allow for use of other classification approaches in the final step, such as logistic regression and SVMs, we can project our covariance matrices onto a tangent space. Once projected onto this tangent space, our covariance matrices can be compared fairly well using the standard Euclidean distance metric, letting us use other methods than the Riemannian MDM which do not require the Riemannian distance metric~\cite{congedo_riemannian_2017}.
+        To allow for use of other classification approaches in the final step, such as logistic regression and SVMs, we can project our covariance matrices onto a tangent space. Once projected onto this tangent space, our covariance matrices can be compared fairly well using the standard Euclidean distance metric, letting us use other methods which do not employ the Riemannian distance metric~\cite{congedo_riemannian_2017}.
+
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=12cm]{img/riemannian-tangent-space.png}
+            \caption{Schematic representation of the symmetric positive definite matrix manifold, the geometric mean $G$ of two points and the tangent space at $G$. The geometric mean of these points is the midpoint on the geodesic connecting $C_1$ and $C_2$, i.e.\ it minimizes the sum of the two squared distances.}\label{figure:tangent-space}
+            \source{Congedo et al.~\cite{congedo_riemannian_2017}}
+        \end{figure}
 
     \begin{comment}
     \subsection{Neural networks}
