@@ -1,4 +1,4 @@
-\section{Discussion}\label{section:discussion}
+\chapter{Discussion}\label{section:discussion}
 
 As stated earlier in the section ``Aim of the thesis'' (\ref{section:aim}), we set out to answer two research questions:
 
@@ -18,17 +18,13 @@ Among the classifiers we train, we found that discerning leisure-activities from
 
 \add[inline]{More discussion of results}
 
-\subsection{Applications to software engineering}
+\section{Applications to software engineering}
 
 As we mentioned in the introduction, gaining insight into the brains of developers at work can be used to aid and enhance the productivity of developers in several ways.
 
 Some to assist in development, like helping to identify developer confusion, but other applications could be imagined where a summary of the developers' brain activity during a particular commit (such as if the developer was confused, focused, tired).
 
 \add[inline]{Include mention and image of mood attached in commit message from Fucci talk?}
-
-\subsection{Applications to the average device user}
-
-\change[inline]{Merge with applications to software engineering?}
 
 Applications of our results include:
 
@@ -37,7 +33,9 @@ Applications of our results include:
     \item Detecting distraction.
 \end{itemize}
 
-\subsection{Threats to validity}\label{section:threats}
+We consider our novel idea of `mental churn', a neurally integrated alternative to the measure of code churn, where not only code changes are measured as churn, but also the \emph{attention} a file or piece of code receives as a whole. The notion of mental churn could also include what response the code elicited in an engineer (confusion, focus, confidence).
+
+\section{Threats to validity}\label{section:threats}
 
     During our work we have considered several potential threats to validity. Some of these arise from our limited and biased dataset, while others are about the task and methodology.
 
@@ -53,7 +51,7 @@ Applications of our results include:
 
     \add[inline]{Investigate threats to validity mentioned by previous authors}
 
-\subsection{Ethical considerations}
+\section{Ethical considerations}
 
     When studying EEG data a range of ethical considerations arise. 
 
@@ -69,7 +67,7 @@ Applications of our results include:
 
     \add[inline]{Mention OpenMined, https://github.com/OpenMined/PySyft, and similar tech (esp in the context of crowdsourcing data)}
 
-\subsection{Democratization of neuroscience}
+\section{Democratization of neuroscience}
 
     This thesis was made possible due to the efforts of individuals and communities such as NeuroTechX to democratize neuroscience. Indeed, it is the explicit goal of the NeuroTechX eeg-notebooks project to `democratize the neuroscience experiment'. Combined with the rapid cost reduction of research-grade EEG equipment over the last decade it has enabled any programmer to design and perform high-quality neuroscience experiments.
 
@@ -77,25 +75,23 @@ Applications of our results include:
 
     Much of this work was made possible due to the efforts of communities such as NeuroTechX to democratize neuroscience by publishing tools and code for running experiments.
 
-\subsection{Crowdsourcing data}
+\section{Crowdsourcing data}
 
     Collecting data is a significant time sink for researchers, and efforts to crowdsource data from the general public are difficult for EEG as it still requires access to the equipment, the knowledge to operate it, as well as considerations like signal quality, electrode placement, and other factors that might invalidate the data.
 
-    As part of the thesis work I have contributed to an effort in crowdsourcing EEG data collected from the experiments built in eeg-notebooks, using consumer EEG devices like those from Muse, OpenBCI, and Neurosity\@. The effort, called the \href{https://neurotech-challenge.com/}{NeuroTech Challenge Series} (NTCS), is lead by John Griffiths at the University of Toronto.
-
     Crowdsourcing data comes with new challenges. One of them is that data is now recorded by many different devices, with differences in channel count, sampling rate, electrode placement, and so on, that are difficult to combine in the same dataset. 
 
-    A potential solution to the problem of learning new variations from a small additional sample problem is to attempt cross-task or cross-subject transfer learning. In such a setup, a model is already trained on a large amount of subjects, or many tasks, and through additional collected data can self-improve and adapt to one user or one task.
+    A potential solution to the problem of learning new variations from a small additional sample problem is to attempt cross-task or cross-subject transfer learning. In such a setup, a model is already trained on a large amount of subjects, or many tasks, and through additional collected data can self-improve and adapt to one user or one task. This is discussed further in Section~\ref{section:transfer-learning}.
 
     \add[inline]{Write about crowdsourcing of EEG data, including the potential of transfer learning and privacy considerations.}
 
+    \paragraph*{NeuroTech Challenge Series}\label{section:ntcs}
 
-\subsection{Transfer learning}
+    As part of the thesis work I have contributed to an effort in crowdsourcing EEG data collected from the experiments built in eeg-notebooks, using mobile consumer EEG devices like those from Muse, OpenBCI, and Neurosity\@. The effort, called the \href{https://neurotech-challenge.com/}{NeuroTech Challenge Series} (NTCS), is a collaborative effort lead by John Griffiths at the University of Toronto, with support from OpenBCI and NeuroTechX.
+
+
+\section{Transfer learning}\label{section:transfer-learning}
 
 An important aspect, as highlighted earlier in this thesis, is the ability of a classifier to be able to work on subjects unseen in training. Some BCI systems employ a calibration phase to achieve greater performance, but it is time consuming and can be straining. 
 
 To minimize, and perhaps even eliminate, the need for this calibration is a stated research goal in Khazem et al.~\cite{khazem_minimizing_2021}, which presents what is called Riemannian Transfer Learning. They build on Riemannian geometry used in state-of-the-art classifiers, and find that\add{TODO}{\ldots}
-
-\subsection{Future work}
-
-Future work could be to integrate the codeprose task into moabb to make it easier to replicate the results and evaluate new methods. As mentioned, the study would also benefit from more data collection, possibly through NTCS\@.

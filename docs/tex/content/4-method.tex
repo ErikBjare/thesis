@@ -23,31 +23,7 @@ The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replica
 
 % Comparing to Fucci and original study
 \begin{landscape}
-    \rowcolors{4}{gray!25}{white}
-    \begin{table}
-        \begin{center}
-            \begin{tabular}{llll}
-                \toprule
-                \multirow{2}{*}{\textbf{Setting}} & \multicolumn{3}{c}{\textbf{Study}} \\
-                \cmidrule(lr){2-4}
-                & \makecell[c]{\textbf{This study}} & \makecell[c]{\textbf{Fucci et al.} (2019)} & \makecell[c]{\textbf{Floyd et al.} (2017)} \\
-                \midrule
-                Experiment site & Lund Univ. (Sweden) & Univ.\ of Bari (Italy) & Univ.\ of Virginia (USA)  \\
-                \# Participants & 9 & 28 & 29 \\
-                Participants experience & Grads & Undergrads & Grads \& Undergrads \\
-                \# Tasks & Variable & 36 tasks & 27 tasks \\
-                Task type & \makecell[l]{Code comprehension \\ Prose review} & \makecell[l]{Code comprehension \\ Prose comprehension} & \makecell[l]{Code comprehension \\ Code review \\ Prose review} \\
-                Physiological signal & Neural & \makecell[l]{Neural \\ Skin \\ Heart} & Neural \\
-                Physiological measure & EEG & \makecell[l]{EEG \\ EDA \\ HR, HRV, BVP} & BOLD \\
-                Device & Muse S & \makecell[l]{BrainLink Headset \\ Empatica wristband} & fMRI \\
-                Classifier & \makecell[l]{Riemannian geometry \\ Neural networks} & 8 algorithms & Gaussian Process \\
-                Classifier validation & LORO-CV & \makecell[l]{LORO-CV \\ Hold-out} & LORO-CV \\
-                Classifier metric & Balanced accuracy (BAC) & Balanced accuracy (BAC) & Balanced accuracy (BAC) \\
-                \bottomrule
-            \end{tabular}
-            \caption{Comparison of this study's method with previous studies.}\label{table:compare-method}
-        \end{center}
-    \end{table}
+    \input{figures/table-compare-method.tex}
 \end{landscape}
 \rowcolors{2}{}{}
 
@@ -63,46 +39,12 @@ The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replica
     In our framework, we have implemented support all of the headsets mentioned (and more), such that future work can use whichever device is desired.
 
     \vspace{0.5cm}
-
-    \begin{table}[H]
-        \centering
-        \begin{tabular}{llcrr}
-            \toprule
-            Manufacturer
-            & Device
-            & Channels
-            & Sampling rate
-            & Comfort
-            \\
-            \midrule
-            InteraXon
-            & Muse S (2020)
-            & 4
-            & 256Hz
-            & High
-            \\
-            Neurosity
-            & Crown (2021)
-            & 8
-            & 256Hz
-            & Medium
-            \\
-            OpenBCI
-            & Cyton (2013) + Ultracortex
-            & 8--16
-            & 125--250Hz
-            & Low
-            \\
-            \bottomrule
-        \end{tabular}
-        \caption{Devices used}\label{table:devices}
-    \end{table}
-
+    \input{figures/table-devices.tex}
     \vspace{0.5cm}
 
     \begin{minipage}{\textwidth}
         \paragraph*{Muse S}
-        The Muse S is a 4-channel EEG headband with electrodes at TP9, AF7, AF8, and TP10 (using the modified 10--20 system, seen in Figure~\ref{fig:1020-extended}), with the reference electrode at Fpz~\cite{krigolson_choosing_2017}. Its main advantage is its very comfortable form-factor and long battery life. It's limited by its channel count and electrode placement. It connects using Bluetooth.
+        The Muse S is a 4-channel EEG headband with electrodes at TP9, AF7, AF8, and TP10 (using the modified 10--10 system, seen in Figure~\ref{fig:1010}), with the reference electrode at Fpz~\cite{krigolson_choosing_2017}. Its main advantage is its very comfortable form-factor and long battery life. It's limited by its channel count and electrode placement. It connects using Bluetooth.
 
         \begin{figure}[H]
             \centering
@@ -167,7 +109,7 @@ To collect data for the organic use experiment, we:
         We have developed `brainwatch', a command-line interface tool, to help us connect to and record from EEG devices. To connect \& record from an EEG device, we can simply run:
 
 \begin{minted}{bash}
-brainwatch connect --device museS
+\$ brainwatch connect --device museS
 
 Searching for Muses, this may take up to 10 seconds...
 Found device MuseS-2754, MAC Address 00:55:DA:B9:27:54
@@ -363,6 +305,7 @@ clf = make_pipeline(
 
             \add[inline]{Explanation of pipeline}
 
+    \begin{comment}
     \subsection{Neural Networks}
 
         \change[inline]{Future work!}
@@ -370,6 +313,7 @@ clf = make_pipeline(
         One of the classifiers we want to train is a neural network. We use braindecode~\cite{schirrmeister_deep_2017}\cite{noauthor_braindecode_2021}, a neural network library for EEG data that uses PyTorch and integrates it with scikit-learn through skorch.
 
         The networks provided by braindecode are convolutional\ldots
+    \end{comment}
 
     \subsection{Performance scoring}
 
@@ -379,22 +323,7 @@ clf = make_pipeline(
 
         We use \emph{Leave-One-Run-Out} (LORO) cross-validation, a variation of \emph{Leave-One-Group-Out} (LOGO), in order to ensure the samples used in validation are from subjects that are unseen in training. LORO validation generates $n$ folds (one for each subject), with $n-1$ subjects used for training in each fold, and $1$ subject for validation (seen in Table~\ref{table:loro}).
 
-        \definecolor{train}{RGB}{163, 206, 255}
-        \definecolor{test}{RGB}{255, 181, 84}
-        \begin{table}[h]
-            \centering
-            \begin{tabular}{lcccc}
-                \toprule
-                       & Subject 1 & Subject 2 & Subject 3 & Subject 4 \\
-                \midrule
-                Fold 1 & \cellcolor{test}     & \multicolumn{3}{c}{\cellcolor{train}} \\
-                Fold 2 & \cellcolor{train} & \cellcolor{test}     & \multicolumn{2}{c}{\cellcolor{train}     } \\
-                Fold 3 & \multicolumn{2}{c}{\cellcolor{train}     } & \cellcolor{test}     & \cellcolor{train} \\
-                Fold 4 & \multicolumn{3}{c}{\cellcolor{train}} & \cellcolor{test}     \\
-                \bottomrule
-            \end{tabular}
-            \caption{Example of Leave-One-Run-Out cross validation with 4 subjects. For each fold, subjects marked \textcolor{NavyBlue}{\textbf{blue}} are used for training and subjects marked \textcolor{BurntOrange}{\textbf{orange}} are used for testing.}\label{table:loro}
-        \end{table}
+        \input{figures/table-loro.tex}
 
         % FIXME: Fucci uses the median, should we too?
         To aggregate performance metrics from each fold, we take the mean of the performance metrics from each fold (as presented in Section~\ref{section:results}).

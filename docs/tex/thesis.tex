@@ -78,6 +78,10 @@
 \newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum, backgroundcolor=Plum!25,bordercolor=Plum, #1]{\textbf{Improve:} #2}}
 \newcommandx{\thiswillnotshow}[2][1=]{\todo[disable, #1]{#2}}
 
+% For adding source captions to figures.
+% From: https://tex.stackexchange.com/a/246285/36302
+\newcommand{\source}[1]{\vspace{-0.3cm} \caption*{\footnotesize{Source: \textit{{#1}}}}}
+
 % Formatting
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1em}
@@ -188,8 +192,8 @@
 \input{content/3-theory}
 \input{content/4-method}
 \input{content/5-results}
-\input{content/6-conclusions}
-\input{content/7-discussion}
+\input{content/6-discussion}
+\input{content/7-conclusions}
 
 
 % References

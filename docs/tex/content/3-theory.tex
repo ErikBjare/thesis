@@ -33,14 +33,14 @@ We will briefly review EEG, and some of the machine learning techniques used.
 
     Electrodes can be placed at different locations on the scalp, targeting different regions of the brain. The system used to position the electrodes is called the 10–20 system (seen in Figure~\ref{fig:1020}), and is the standard way to label electrode placements. The \emph{10} and \emph{20} come from the fact that distances between adjacent electrodes are either 10\% or 20\% of the total front–back or right–left distance of the scalp.
 
-    For configurations with high-density or non-standard electrode placement there is also the \emph{Modified Combinatorial Nomenclature} (MCN) version with more electrode locations, where the electrodes are divided by 10\% increments instead of the usual 20\% (seen in Figure~\ref{fig:1020-extended}).
+    For configurations with high-density or more specific electrode placement there is also the extended 10--10 system, using \emph{Modified Combinatorial Nomenclature} (MCN). In this system, the electrode placements are divided by 10\% increments instead of the usual 20\% (seen in Figure~\ref{fig:1010}).
 
-    \add[inline]{Add attribution to 10--20 figures.}
     \begin{figure}
         \begin{center}
             \includegraphics[width=10cm]{img/1020system.png}
         \end{center}
         \caption{The 10–20 system.}\label{fig:1020}
+        \source{\href{https://commons.wikimedia.org/wiki/File:21_electrodes_of_International_10-20_system_for_EEG.svg}{Wikimedia Commons} (public domain)}
     \end{figure}
 
     \begin{landscape}
@@ -48,7 +48,8 @@ We will briefly review EEG, and some of the machine learning techniques used.
             \begin{center}
                 \includegraphics[width=20cm]{img/1020system-extended-with-extra-info.png}
             \end{center}
-            \caption{The extended 10–20 system, following the Modified Combinatorial Nomenclature (MCN).}\label{fig:1020-extended}
+            \caption{The extended 10–10 system, following the Modified Combinatorial Nomenclature (MCN).}\label{fig:1010}
+            \source{\href{https://commons.wikimedia.org/wiki/File:EEG_10-10_system_with_additional_information.svg}{Wikimedia Commons} (CC-0)}
         \end{figure}
     \end{landscape}
 
@@ -62,7 +63,7 @@ We will briefly review EEG, and some of the machine learning techniques used.
     \begin{landscape}
         \begin{figure}
             \begin{center}
-                \includegraphics[trim=60 50 50 60,clip,width=24cm]{img/muselsl-signal.png}
+                \includegraphics[trim=60 50 50 60,clip,width=22cm]{img/muselsl-signal.png}
             \end{center}
             \caption{EEG signal viewed with muse-lsl. There are 3 eye blinks identifiable around $\SI{-4}{\second}$.\\ The signal has been bandpass filtered to eliminate noise.}\label{fig:muselsl-signal}
         \end{figure}
@@ -90,6 +91,8 @@ We will briefly review EEG, and some of the machine learning techniques used.
 
         \[ d(A, B) = \sqrt{\sum_{i=1}^{n} \ln^2 \lambda_i (A, B) } \]
 
+    \begin{comment}
     \subsection{Neural networks}
 
         Many state-of-the-art models in the field of EEG are deep-learning based models, usually employing convolutional neural networks (CNNs).
+    \end{comment}

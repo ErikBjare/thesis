@@ -1,8 +1,7 @@
 \chapter{Introduction}
 
-\add[inline]{Add references}
-\change[inline]{Change `device/computer activity' -> `task'?}
-\change[inline]{Change `natural (istic)' -> `organic'?}
+%\change[inline]{Change `device/computer activity' -> `task'?}
+%\change[inline]{Change `natural (istic)' -> `organic'?}
 
 % How to write an introduction: https://student.unsw.edu.au/introductions
 
@@ -18,6 +17,8 @@ While this professional-grade equipment is still unavailable to the general publ
 
 Here we introduce an automated time tracker, tracking the computer activities a subject engages in, to study brain activity during a wide variety of computer-based tasks.
 
+\begin{minipage}{\textwidth}
+
 Studying brain activity during computer-based tasks is of particular interest to software engineers. For example, research has been done on:
 
 \begin{itemize}
@@ -27,6 +28,8 @@ Studying brain activity during computer-based tasks is of particular interest to
     \item Recognizing emotions during programming~\cite{girardi_recognizing_2020}.
 \end{itemize}
 
+\end{minipage}
+
 % other formulation of goals: profits, productivity, sustainability
 
 % In the field of software engineering research
@@ -35,9 +38,7 @@ Studying brain activity during computer-based tasks is of particular interest to
 
 % Brain imaging techniques such as EEG show a potential to shed light on many of these research questions, and the relationship between device usage and brain activity seems an largely unexplored area worth investigating.
 
-\change[inline]{Move this paragraph elsewhere}
-
-Some communities, like the Quantified Self movement, have risen to the challenge of collecting and analyzing personal data for insights into our lives and health. But while some data is easily observed (such as device usage, location, and physical movement), it remains difficult to collect data about subjective attributes (like mood, focus). To collect data on these more elusive phenomena, researchers and individuals have to resort to manual data collection like questionnaires, or approximations constructed from other data, leading to significant time costs and scaling difficulties.\cite{malhi_promise_2017}
+In addition, some communities like the Quantified Self movement have risen to the challenge of collecting and analyzing personal data for insights into our lives and health. But while some data is easily observed (such as device usage, location, and physical movement), it remains difficult to collect data about subjective attributes (like mood, focus). To collect data on these more elusive phenomena, researchers and individuals have to resort to manual data collection like questionnaires, or approximations constructed from other data, leading to significant time costs and scaling difficulties~\cite{malhi_promise_2017}. This makes low-cost brain imaging techniques like EEG a budding new frontier for the Quantified Self movement in particular, and citizen science in general.
 
 % The purpose of this study is to investigate the feasibility of using low-cost biosensors...
 
@@ -51,14 +52,15 @@ Some communities, like the Quantified Self movement, have risen to the challenge
 
 To summarize, we have in this thesis developed a framework and tooling for studying brain activity during uncontrolled device use (\emph{naturalistic device activities}). We do so by collecting brain activity data using consumer-grade EEG devices while simultaneously tracking the device activity they're engaging in. We then use the data to train machine learning models to predict the task engaged in based on the EEG readings of brain activity.
 
-We also apply similar methodology to replicate a controlled experiment reported by Fucci et al.~in 2019~\cite{fucci_replication_2019}, where we present a small number of subjects with a set of code- and prose-comprehension tasks while being monitored with EEG\@. We use the collected data to train a classifier, evaluating the feasibility of EEG to distinguish between the two tasks, and use the results as an indication whether it could extend to other tasks.
+We also apply similar methodology to replicate a controlled experiment reported by Fucci et al.~in 2019~\cite{fucci_replication_2019}, where we present a small number of subjects with a set of code- and prose-comprehension tasks while being monitored with EEG\@. We use the collected data to train machine learning classifiers, evaluating the feasibility of low-cost EEG equipment to distinguish between the two tasks, and use the results as an indication whether it could extend to other tasks, as in our naturalistic setting experiment.
 
-\add[inline]{Markus: Jag hade avslutat detta stycke med en mening med att spoila resultatet. I akademiska texter skriver man samma sak många gånger, med lite olika vinkel och touch. Intron blir en teaser för läsare - ska locka till vidare läsning.}
-
-\add[inline]{Briefly describe results}
 % Någon variation på följande stycken:
 % - "Our results indicate that a consumer-grade EEG device can provide actionable insights into what a user is doing at the computer. More specifically, we show that\ldots"
 % - "Our results confirm the findings of the original study, i.e., EEG data can be used to distinguish between code and prose-comprehension. Furthermore, the classifier based on Riemann geometry outperforms previous work regarding classification accuracy by..."
+
+Our results confirm the findings of the original study, i.e., EEG data can be used to distinguish between code and prose-comprehension. Furthermore, the classifier based on Riemannian geometry outperforms the bandpass-features used by Fucci et al.~in terms of classification accuracy.
+
+Furthermore, our naturalistic experiments indicate that a consumer-grade EEG device can discern between different activities that a user performs at the computer. Among other results, we show that not only can code and prose \emph{comprehension} be distinguished, but also code and prose \emph{writing}.
 
 % Kommentar från Markus:
 % 
