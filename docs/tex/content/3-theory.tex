@@ -6,13 +6,12 @@ We will briefly review EEG, and some of the machine learning techniques used.
 
 \section{Electroencephalography (EEG)}\label{eeg-theory}
 
-    Electroencephalography is a method used to measure the activity of neurons in the brain by recording the electrical activity on the scalp.
+    % Intro
+    Electroencephalography is a method used to measure the activity of neurons in the brain by recording the electrical potential of the scalp. These measurements are performed (sampled) hundreds of times per second, and are then put in sequence to form a signal of so-called ``brain waves''. 
 
-    As a non-invasive method it is widely used in medicine to diagnose and study a wide range of conditions, including epilepsy and sleep disorders.
-
-    In research it has also found use in studying ``Event Related Potentials'', or ERPs, which are stereotyped responses to a stimulus. Common ERPs can be seen in Table~\ref{table:erps}.
-
-    \add[inline]{Plot of aggregated ERP trials, to highlight an ERP pattern (found in eeg-notebooks examples)}
+    % Use in medicine & research
+    As a non-invasive method it is widely used in medicine to diagnose and study a wide range of conditions, including epilepsy and sleep disorders. 
+    At has also found use in research, in particular for studying \emph{Event Related Potentials}, or ERPs, which are stereotyped responses to a stimulus. Examples of common ERPs can be seen in Table~\ref{table:erps}.
 
     \begin{table}
         \begin{tabular}{ll}
@@ -28,20 +27,26 @@ We will briefly review EEG, and some of the machine learning techniques used.
             \\
             \bottomrule
         \end{tabular}
-        \caption{Common ERPs}\label{table:erps}
+        \caption{Common \emph{Event-Related Potentials} (ERPs)}\label{table:erps}
     \end{table}
+
+    One difficulty of working with EEG lies in the low signal-to-noise ratio: measurements are on the order of microvolts, and what is being measured is the electrical activity of some subset of the approximately 86 billion neurons in the human brain. This often leads to signal artifacts from neural activity which is not under study, such as eye blinks and other muscle activity.
+
+    It can be contrasted with \emph{electrocorticography} (ECoG), also known as \emph{intracranial electroencephalography} (iEEG), which is an invasive method where a craniotomy (a surgical incision on the skull) is performed to implant an electrode grid directly on the cerebral cortex. The result is higher spatial resolution, and improved signal-to-noise ratio due to closer proximity to neural activity. It is almost exclusively used in patients with intractable epilepsy (not responding to anticonvulsants).
+
+    \add[inline]{Plot of aggregated ERP trials, to highlight an ERP pattern (found in eeg-notebooks examples)}
 
     Electrodes can be placed at different locations on the scalp, targeting different regions of the brain. The system used to position the electrodes is called the 10–20 system (seen in Figure~\ref{fig:1020}), and is the standard way to label electrode placements. The \emph{10} and \emph{20} come from the fact that distances between adjacent electrodes are either 10\% or 20\% of the total front–back or right–left distance of the scalp.
 
-    For configurations with high-density or more specific electrode placement there is also the extended 10--10 system, using \emph{Modified Combinatorial Nomenclature} (MCN). In this system, the electrode placements are divided by 10\% increments instead of the usual 20\% (seen in Figure~\ref{fig:1010}).
-
-    \begin{figure}
+    \begin{figure}[h]
         \begin{center}
-            \includegraphics[width=10cm]{img/1020system.png}
+            \includegraphics[width=8cm]{img/1020system.png}
         \end{center}
         \caption{The 10–20 system.}\label{fig:1020}
         \source{\href{https://commons.wikimedia.org/wiki/File:21_electrodes_of_International_10-20_system_for_EEG.svg}{Wikimedia Commons} (public domain)}
     \end{figure}
+
+    For configurations with high-density or more specific electrode placement there is also the extended 10--10 system, using \emph{Modified Combinatorial Nomenclature} (MCN). In this system, the electrode placements are divided by 10\% increments instead of the usual 20\% (seen in Figure~\ref{fig:1010}).
 
     \begin{landscape}
         \begin{figure}
@@ -53,7 +58,24 @@ We will briefly review EEG, and some of the machine learning techniques used.
         \end{figure}
     \end{landscape}
 
-    As measurements are taken on the scalp, neural activity of surface-level neurons (such as the cerebral cortex) can be expected to dominate the signal, which makes it difficult to use when studying systems deeper in the brain (such as the hippocampus). As an example of this, eye blinks are easily identifieable in the signal when electrodes are placed on the frontal cortex (seen in Figure~\ref{fig:muselsl-signal}).
+    As measurements are taken on the scalp, neural activity of surface-level neurons (such as the cerebral cortex) are expected to dominate the signal, which makes it difficult to use when studying systems deeper in the brain (such as the hippocampus). As an example of this, eye blinks are easily identifiable in the signal when electrodes are placed on the frontal cortex (seen in Figure~\ref{fig:muselsl-signal}).
+
+    \begin{table}
+        \centering
+        \begin{tabular}{lll}
+            \toprule
+            Frequency band & Frequencies & Brain states \\
+            \midrule
+            Gamma ($\gamma$) & >35 Hz & Concentration \\
+            Beta ($\beta$) & 16--35 Hz & Active, external attention, relaxed \\
+            Sigma ($\sigma$) & 12--16 Hz & Sleep spindles \\
+            Alpha ($\alpha$) & 8--12 Hz & Very relaxed, passive attention \\
+            Theta ($\theta$) & 4--8 Hz & Deeply relaxed \\
+            Delta ($\delta$) & 0.5--4 Hz & Sleep \\
+            \bottomrule
+        \end{tabular}
+        \caption{Characteristics of common frequency bands used in EEG research. Note the \emph{Sigma} band, which is usually grouped with the \emph{Beta} band, but is often used in sleep research where it targets sleep spindles during stage 2 NREM sleep. In some research, these bands are split further into slow and fast counterparts.}\label{table:freq-bands}
+    \end{table}
 
     \add[inline]{Plots of PSD, PCA, etc}
     \add[inline]{Mention need for bandpass filtering to get rid of powerline noise}
@@ -75,21 +97,29 @@ We will briefly review EEG, and some of the machine learning techniques used.
 
     Among these we find methods like bandpass filtering, windowing, spectral density estimation, and the computation of covariance matrices to estimate interdependencies between channels.
 
-    Methods used in analysis and classification of EEG data include Linear Discriminant Analysis (LDA), Common Spatial Pattern (CSP)~\cite{barachant_common_2010} filters.
+    Methods used in analysis and classification of EEG data include Linear Discriminant Analysis (LDA), Common Spatial Pattern (CSP) filters~\cite{barachant_common_2010}.
 
     With the use of these methods, we can compute features to use when training our classifiers.
 
     The underlying ML algorithms themselves are often off-the-shelf logistic regression, with some domain adaptations found in more complex models like neural networks.
 
-    \add[inline]{Formulas}
+    The \emph{log loss} function $L$ is defined as:
+
+    \[ L(x, y') = \sum_{(x,y) \in D} -y \log y' - (1 - y) \log(1 - y')\]
 
     \subsection{Riemannian geometry}\label{section:riemannian-theory}
 
-        \add[inline]{Explanation of Riemannian geometry, from \href{https://colab.research.google.com/drive/1y9tq7-lJwusxtVgpB38y-p1pYw7hg0iu}{this tutorial we're working on}, perhaps it should go in the Background/Theory section though?}
+        %\add[inline]{Explanation of Riemannian geometry, from \href{https://colab.research.google.com/drive/1y9tq7-lJwusxtVgpB38y-p1pYw7hg0iu}{this tutorial we're working on}}
 
-        The Riemannian distance measure for two symmetric positive definite matrices (such as a covariance matrix) is:~\cite{grafarend_metric_2003}
+        EEG decoding approaches based on Riemannian geometry have led to state-of-the-art classification performance on many tasks. The idea behind it is to take advantage of the spatial structure of EEG, i.e.\ the fact that there are multiple channels which co-vary in specific ways.
 
-        \[ d(A, B) = \sqrt{\sum_{i=1}^{n} \ln^2 \lambda_i (A, B) } \]
+        The Riemannian distance metric $\delta_G$ for two symmetric positive definite matrices $A$ and $B$ (such as covariance matrices) is~\cite{grafarend_metric_2003}:
+
+        \[ \delta_G(A, B) = \sqrt{\sum_{i=1}^N \log^2 \lambda_i (A, B) } \]
+
+        The naive Riemannian approach using \emph{Minimum Distance to Mean} (MDM) starts with computing the covariance matrix for each trial, and then estimating a mean covariance matrix for each class (the class centroid) using the Riemannian distance metric $\delta_G$. When classification is performed, the distance between the new covariance matrix and the class centroids is estimated using the Riemannian distance metric, and the new covariance matrix is classified according to which class centroid is closest.
+
+        To allow for use of other classification approaches in the final step, such as logistic regression and SVMs, we can project our covariance matrices onto a tangent space. Once projected onto this tangent space, our covariance matrices can be compared fairly well using the standard Euclidean distance metric, letting us use other methods than the Riemannian MDM which do not require the Riemannian distance metric~\cite{congedo_riemannian_2017}.
 
     \begin{comment}
     \subsection{Neural networks}

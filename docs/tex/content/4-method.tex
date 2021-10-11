@@ -122,7 +122,7 @@ To collect data for the organic use experiment, we:
 
             For this experiment we use a single-subject (the experimenter). The subject was asked to go about their usual device activities, often consisting of a mix of work (writing code, writing prose, email) and leisure (watching YouTube, reading Twitter).
             
-            We collected $\sim5$ hours of EEG data during natural device use, and use the classes defined in Section~\ref{section:collect-usage} as labels for the data.
+            We collected approximately 5 hours of EEG data during natural device use, and use the classes defined in Section~\ref{section:collect-usage} as labels for the data.
 
         \subsubsection*{During code vs prose comprehension task}
 
@@ -162,7 +162,7 @@ To collect data for the organic use experiment, we:
 
             After these questions we put the devices on and ensure we get good signal by inspecting it in real time with the viewer provided by muse-lsl (seen in Figure~\ref{fig:muselsl-signal}). The viewer itself does simple bandpass filtering between 3--40Hz, and the signal quality is indicated by the standard deviation of the filtered signal.
 
-            The stimuli images were presented in random order, for all subjects except subject \#1 due to experimenter error (seen in Figure~\ref{fig:timebars}). For each stimuli the subject is asked to answer Yes/No to the questions posed by the code comprehension stimuli, or Correct/Incorrect for the prose review images. There is a short rest period of 5s between each stimuli.
+            The stimuli images were presented in random order, for all subjects except subject \#1 due to experimenter error (seen in Figure~\ref{fig:timebars}). For each stimuli the subject is asked to answer True/False to the questions posed by the code comprehension stimuli, or Correct/Incorrect for the prose review images. There is a short rest period of 5s between each stimuli.
 
     \vfill
     \pagebreak
@@ -259,12 +259,12 @@ start,               stop,                class
 
         We also perform bandpass filtering between \SI{3}{\hertz} and \SI{40}{\hertz} to eliminate powerline noise. We can see the results of the bandpass filtering in Figure~\ref{fig:signal-unfiltered} and~\ref{fig:signal-filtered}.
 
-        \begin{figure}[h]
+        \begin{figure}[H]
             \includegraphics[width=14cm]{img/raw-signal-prefilter.png}
             \caption{Raw EEG signal with no filtering. Powerline noise clearly visible.}\label{fig:signal-unfiltered}
         \end{figure}
 
-        \begin{figure}[h]
+        \begin{figure}[H]
             \includegraphics[width=14cm]{img/raw-signal-postfilter.png}
             \caption{Same EEG signal as in Figure~\ref{fig:signal-unfiltered}, but with bandpass filter applied. We can see that powerline noise has been eliminated.}\label{fig:signal-filtered}
         \end{figure}
@@ -279,9 +279,11 @@ start,               stop,                class
 
             \todo[inline]{Refer/move to theory section instead?}
 
-            Bandpower features are simple and commonly used in EEG research for many tasks, including the paper by Fucci et al we seek to improve upon~\cite{fucci_replication_2019}. As a benchmark reference, we implemented classifiers which solely used bandpower features as input, to gain information of how much any improvement from classifier performance is likely due to better EEG equipment versus how much is due to from improved analysis methods.
+            Bandpower features are simple and commonly used in EEG research for many tasks, including the paper by Fucci et al we seek to improve upon~\cite{fucci_replication_2019}. 
 
-            To compute this feature, we utilized the bandpower function provided by YASA~\cite{vallat_yasa_2020}. The implementation estimates the power spectral density using Welch's method for each channel, and bins them by their associated frequency band.
+            As a benchmark reference, we implemented classifiers which solely used bandpower features as input, to gain information of how much any improvement from classifier performance is likely due to better EEG equipment versus how much is due to from improved analysis methods.
+
+            To compute this feature, we utilized the bandpower function provided by YASA~\cite{vallat_yasa_2020}. The implementation estimates the power spectral density using Welch's method for each channel, and bins them by their associated frequency band (seen in Table~\ref{table:freq-bands}).
 
             To further enrich our feature vector, we can use ratios between two frequency bands. As this is what Fucci et al.\ did, we do the same.
 
