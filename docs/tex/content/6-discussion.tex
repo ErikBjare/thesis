@@ -4,15 +4,15 @@ As stated earlier in the section ``Aim of the thesis'' (\ref{section:aim}), we s
 
 \paragraph*{RQ1. Can we improve upon previous results in classifying code vs prose comprehension with EEG~?}
 
-We found that we do improve upon the best classifier performance by Fucci et al (in their EEG-only configuration). However, we had to remove certain subjects from our sample, and our sample in general was smaller and more homogenous. 
+We found that we do improve upon the best classifier performance by Fucci et al.\ in their EEG-only configuration~\cite{fucci_replication_2019}. However, we had to remove certain subjects from our sample, and our sample in general was smaller and more homogenous. 
 
 Our results are impacted by our cherry-picked subject set for our final analysis. Issues with signal quality and limited data (due to spurious device disconnects during experiments) ultimately led to exclusion of several subjects. However, despite these interventions we find that Riemannian-based classifiers outperforms using bandpower-features (as by Fucci et al.), this suggests some improvement of our method over previous work.
 
-We were not able to outperform the results by Floyd et al., which is not surprising given they were using using fMRI\@.
+We were not able to outperform the results by Floyd et al., which is not surprising given they were using using fMRI which has far superior spatial resolution and can therefore accurately detect elevated activity in specific brain regions. However, our method using EEG has the benefit of high temporal resolution, allowing classification of small amounts of data (as little as \SI{5}{\second}) and in real-time.
 
 \paragraph*{RQ2. Can we train an EEG classifier to separate software developers’ device activities?}
 
-We successfully train several classifiers. We especially distinguishing work (writing code) from social media (Twitter), but many models show significant improvements when given more data. We \todo{explore}{not yet} explore a multiclass classifier, but\ldots
+We train several classifiers and achieve promising results. We especially distinguishing work (writing code) from social media (Twitter), but many models show significant improvements when given more data. We \todo{explore}{not yet} explore a multiclass classifier, but\ldots
 
 Among the classifiers we train, we found that discerning leisure-activities from each other (such as YouTube vs Twitter) is harder than discerning work from leisure (such as writing code vs Twitter).
 
@@ -33,7 +33,7 @@ Applications of our results include:
     \item Detecting distraction.
 \end{itemize}
 
-We consider our novel idea of `mental churn', a neurally integrated alternative to the measure of code churn, where not only code changes are measured as churn, but also the \emph{attention} a file or piece of code receives as a whole. The notion of mental churn could also include what response the code elicited in an engineer (confusion, focus, confidence).
+We consider our novel idea of `mental churn', a neurally integrated alternative to the measure of code churn, where not only code changes are measured, but also the \emph{attention} a file or piece of code receives as a whole. This notion of mental churn could also include what response the code elicited in an engineer (confusion, focus, confidence).
 
 \section{Threats to validity}\label{section:threats}
 
@@ -69,7 +69,7 @@ We consider our novel idea of `mental churn', a neurally integrated alternative 
 
 \section{Democratization of neuroscience}
 
-    This thesis was made possible due to the efforts of individuals and communities such as NeuroTechX to democratize neuroscience. Indeed, it is the explicit goal of the NeuroTechX eeg-notebooks project to `democratize the neuroscience experiment'. Combined with the rapid cost reduction of research-grade EEG equipment over the last decade it has enabled any programmer to design and perform high-quality neuroscience experiments.
+    This thesis was made possible due to the efforts of individuals and communities such as NeuroTechX to democratize neuroscience. Indeed, it is the explicit goal of the NeuroTechX eeg-notebooks project to `democratize the neuroscience experiment'. Combined with the rapid cost reduction of research-grade EEG equipment over the last decade it has enabled hobbyists to design and perform high-quality neuroscience experiments. This enables citizen scientists to contribute to data collection, an example of such an effort is the NeuroTech Challenge Series (described in Section~\ref{section:ntcs}).
 
     As development of BCIs advance and the consumer market for EEG devices grow (as evidenced by new devices being released with a regular cadence by InteraXon and Neurosity) we expect to see more uses and applications of these devices.
 
@@ -81,13 +81,11 @@ We consider our novel idea of `mental churn', a neurally integrated alternative 
 
     Crowdsourcing data comes with new challenges. One of them is that data is now recorded by many different devices, with differences in channel count, sampling rate, electrode placement, and so on, that are difficult to combine in the same dataset. 
 
-    A potential solution to the problem of learning new variations from a small additional sample problem is to attempt cross-task or cross-subject transfer learning. In such a setup, a model is already trained on a large amount of subjects, or many tasks, and through additional collected data can self-improve and adapt to one user or one task. This is discussed further in Section~\ref{section:transfer-learning}.
+    A potential solution to the problem of learning new variations from a small additional sample is to attempt cross-task or cross-subject transfer learning. In such a setup, a model is already trained on a group of subjects, or a similar task, and through a small amount of new data for a particular subject or task, the model can adapt to learn those previously unseen subjects or tasks. This is discussed further in Section~\ref{section:transfer-learning}.
 
-    \add[inline]{Write about crowdsourcing of EEG data, including the potential of transfer learning and privacy considerations.}
+    \subsection{NeuroTech Challenge Series}\label{section:ntcs}
 
-    \paragraph*{NeuroTech Challenge Series}\label{section:ntcs}
-
-    As part of the thesis work I have contributed to an effort in crowdsourcing EEG data collected from the experiments built in eeg-notebooks, using mobile consumer EEG devices like those from Muse, OpenBCI, and Neurosity\@. The effort, called the \href{https://neurotech-challenge.com/}{NeuroTech Challenge Series} (NTCS), is a collaborative effort lead by John Griffiths at the University of Toronto, with support from OpenBCI and NeuroTechX.
+    As part of the thesis work I have contributed to the \href{https://neurotech-challenge.com/}{NeuroTech Challenge Series} (NTCS), an effort in crowdsourcing EEG data using the experiments built in \texttt{eeg-notebooks}. The challenge can be performed by anyone with access mobile consumer EEG devices, like those from Muse, OpenBCI, and Neurosity\@. The project is a collaborative effort led by John Griffiths at the University of Toronto, with support from OpenBCI and NeuroTechX.
 
 
 \section{Transfer learning}\label{section:transfer-learning}

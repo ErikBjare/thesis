@@ -108,13 +108,7 @@ To collect data for the organic use experiment, we:
 
         We have developed `brainwatch', a command-line interface tool, to help us connect to and record from EEG devices. To connect \& record from an EEG device, we can simply run:
 
-\begin{minted}{bash}
-\$ brainwatch connect --device museS
-
-Searching for Muses, this may take up to 10 seconds...
-Found device MuseS-2754, MAC Address 00:55:DA:B9:27:54
-Recording to recording_2021-09-29-09.22.24.csv
-\end{minted}
+        \inputminted{bash}{figures/brainwatch-example.txt}
 
         We can then check signal quality with: \mintinline{bash}{brainwatch check}
 
@@ -122,11 +116,13 @@ Recording to recording_2021-09-29-09.22.24.csv
 
         Alternatively, we can plot using muse-lsl's built-in plotting functionality: \mintinline{bash}{muselsl view -b Qt5Agg} (seen in Figure~\ref{fig:muselsl-signal}).
 
-        \subsubsection*{During organic device use}
+        \subsubsection*{During naturalistic device use}\label{section:collect-eeg-naturalistic}
 
-            For the organic device use conditions, we used the Muse S due the superior comfort and ease of use compared with the alternatives, making it especially suitable for long recordings.\footnote{A wet electrode cap system was also considered, but was not used due to being inconvenient to setup.}
+            For the naturalistic device use conditions, we used the Muse S due the superior comfort and ease of use compared with the alternatives, making it especially suitable for long recordings.\footnote{A wet electrode cap system was also considered, but was not used due to being inconvenient to setup.}
 
-            For this experiment we use a single-subject, with the experimenter as the subject. The subject was asked to go about their usual device activities, often consisting of a mix of work (writing code, writing prose, email) and leisure (watching YouTube, reading Twitter).
+            For this experiment we use a single-subject (the experimenter). The subject was asked to go about their usual device activities, often consisting of a mix of work (writing code, writing prose, email) and leisure (watching YouTube, reading Twitter).
+            
+            We collected $\sim5$ hours of EEG data during natural device use, and use the classes defined in Section~\ref{section:collect-usage} as labels for the data.
 
         \subsubsection*{During code vs prose comprehension task}
 
@@ -166,16 +162,22 @@ Recording to recording_2021-09-29-09.22.24.csv
 
             After these questions we put the devices on and ensure we get good signal by inspecting it in real time with the viewer provided by muse-lsl (seen in Figure~\ref{fig:muselsl-signal}). The viewer itself does simple bandpass filtering between 3--40Hz, and the signal quality is indicated by the standard deviation of the filtered signal.
 
+            The stimuli images were presented in random order, for all subjects except subject \#1 due to experimenter error (seen in Figure~\ref{fig:timebars}). For each stimuli the subject is asked to answer Yes/No to the questions posed by the code comprehension stimuli, or Correct/Incorrect for the prose review images. There is a short rest period of 5s between each stimuli.
+
+    \vfill
+    \pagebreak
     \subsection{Collection of device activity data}\label{section:collect-usage}
 
         All device activity is collected using the automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_2020-1}.
 
+        \begin{minipage}{\textwidth}
         ActivityWatch collects data through modules called watchers which report to the ActivityWatch server. It comes with two watchers by default:
 
         \begin{itemize}
             \item aw-watcher-window, tracks the active window and its title
             \item aw-watcher-afk, tracks if the user is active or not by observing input device activity
         \end{itemize}
+        \end{minipage}
 
         We have also built a custom watcher, aw-watcher-input, to track metrics of mouse and keyboard activity. It tracks by listening to mouse and keyboard events and records the distance in pixels the mouse moves and the number of key presses (but not which key was pressed). Every second this is bundled into an event, the values are reset, and then it continues with the next event. It was inspired by similar functionality in Andrej Karpathy's ulogme~\cite{karpathy_ulogme_2016}.
 
@@ -183,30 +185,34 @@ Recording to recording_2021-09-29-09.22.24.csv
 
         The data from ActivityWatch is processed and categorized such that the resulting data has the 3 columns \mintinline{text}{start, stop, class}. The class is determined by a regular expression that matches on window titles and URLs. For example, the regular expression \mintinline{text}{GitHub|github.com} could be used to match GitHub use.
 
+We chose a few classes for analysis, seen in Table~\ref{table:activity-classes}. Among them we have the classes \emph{Programming} and \emph{Writing}, to see if we can separate these activities in a natural setting.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ll}
+        \toprule
+        \textbf{Activity} & \textbf{Regular Expression} \\
+        \midrule
+        Programming & \texttt{[.](py|rs|js|ts)} \\
+        Writing & \texttt{[.](tex|md)} \\
+        Twitter & \texttt{Twitter|twitter.com} \\
+        YouTube & \texttt{YouTube|youtube.com} \\
+        \bottomrule
+    \end{tabular}
+    \caption{Activity classes used to label EEG data.}\label{table:activity-classes}
+\end{table}
+
 \begin{figure}[h]
 \begin{minted}{text}
 start,               stop,                class
-2020-09-20 13:07:41, 2020-09-20 13:08:20, YouTube
 2020-09-20 13:32:51, 2020-09-20 13:34:09, Twitter
 2020-09-20 14:44:08, 2020-09-20 14:46:11, YouTube
 2020-09-21 09:49:04, 2020-09-21 09:49:35, GitHub->Issues
-2020-09-21 09:51:32, 2020-09-21 09:52:23, YouTube
-2020-09-21 10:04:29, 2020-09-21 10:05:01, GitHub->Issues
-2020-09-21 10:20:18, 2020-09-21 10:21:05, Editing->Prose
+2020-09-21 09:51:32, 2020-09-21 09:52:23, Programming
+2020-09-21 10:20:18, 2020-09-21 10:21:05, Writing
 \end{minted}
     \caption{Examples of labeled time windows, collected and categorized with ActivityWatch}\label{code:class-csv}
 \end{figure}
-
-
-We chose the following classes for analysis:
-
-\begin{itemize}
-        \item Editing -> Code
-        \item Editing -> Prose
-        \item Reading documentation (Stack Overflow, readthedocs)
-        \item Twitter
-        \item YouTube
-\end{itemize}
 
 \vfill
 \pagebreak
@@ -215,15 +221,19 @@ We chose the following classes for analysis:
     For classification and analysis, we used common open source Python libraries for data analysis, like numpy~\cite{harris2020array}, pandas~\cite{reback2020pandas}, and scikit-learn~\cite{scikit-learn}. In addition, we used less common libraries tailored specifically for working with EEG data, such as MNE~\cite{noauthor_mne-python_2020}, pyriemann~\cite{alexandre_barachant_2020_3715511}, and YASA~\cite{vallat_yasa_2020}.
 
     \subsection{Labelling}
+        When labeling our data we define two levels of granularity: epochs and windows.
+
+        An epoch is a single trial, such as a single stimuli image, which can have variable length due to the experiment setup where the subject decides when to move on to the next stimuli. We label epochs using markers from our experiments.
+
+        A window is a fixed-duration slice of an epoch, such that each window matrix has the same dimensions. This enables us to more easily compute various features which require matrices to be of the same dimension. Windows inherit the label of the epoch from which they belong.
+
         For the organic device use experiment, we split the EEG data into epochs using the categories assigned by our ActivityWatch script.
 
         For the controlled experiment, we split the EEG data into epochs using the trial markers, resulting in one epoch per stimuli.
 
-        \todo[inline]{Markus: behöver utvecklas lite för begriplighet. Vad är en epok? Kan man rita en figur som visar hur de olika splittarna skiljer sig åt?}
-
     \subsection{Data transformation}\label{section:transform}
 
-        In order to train on the epochs, which have variable length due to each subject taking a different amount of time to answer each trial, we split each epoch into a fixed-duration window. After some experimentation we found \SI{5}{\second} to be a suitable window size. Once we have our fixed-duration windows, we can use them to train our model and classify new samples.
+        In order to classify the epochs, which have variable length due to each subject taking a different amount of time to answer each trial, we split each epoch into a fixed-duration window. After some experimentation we found \SI{5}{\second} to be a suitable window size. Once we have our fixed-duration windows, we can use them to train our model and classify new samples.
 
         Dimensions of each epoch matrix: \[ (n_{\mathrm{samples}}, n_{\mathrm{channels}}) \]
 
@@ -233,11 +243,10 @@ We chose the following classes for analysis:
 
         Dimensions of the window matrix: \[ (n_{\mathrm{windows}}, n_{\mathrm{channels}}, 1280) \]
 
-        We experimented with different windowing methods to potentially augment the data...  \todo[inline]{...and? Should a sliding window approach be used to improve data augmentation?}
+        We experimented with different windowing methods to augment the data, but we ultimately decided against using them, as the methods did not seem to contribute to the performance of trained classifiers.
 
     \subsection{Data cleaning}
 
-        % TODO: Should this say 'reject windows' instead?
         We reject samples that either:
 
         \begin{enumerate}
@@ -246,9 +255,7 @@ We chose the following classes for analysis:
             \item Are too short due to missing samples (such that a 5s window cannot be constructed)
         \end{enumerate}
 
-        \todo[inline]{Markus: Explicita tröskelvärden här skulle ge trovärdighet. Vad är "bad"?}
-
-        \todo[inline]{List how many epochs are rejected by each cleaning step}
+        The exact number of samples rejected by each cleaning step, as well as the exact parameters used, can be viewed in the code notebooks published alongside this report.
 
         We also perform bandpass filtering between \SI{3}{\hertz} and \SI{40}{\hertz} to eliminate powerline noise. We can see the results of the bandpass filtering in Figure~\ref{fig:signal-unfiltered} and~\ref{fig:signal-filtered}.
 
@@ -303,7 +310,7 @@ clf = make_pipeline(
 
             We do not perform any hyperparameter optimization.
 
-            \add[inline]{Explanation of pipeline}
+            \add[inline]{Explanation of pipeline (refer to theory chapter)}
 
     \begin{comment}
     \subsection{Neural Networks}
@@ -330,9 +337,11 @@ clf = make_pipeline(
 
         Since we have one run per subject, this LORO cross-validation is effectively an out-of-subject validation, estimating the ability of the classifier to generalize across subjects.
 
+    \begin{comment}
     \subsection{Single subject}
 
         % TODO: what experiments?
         % TODO: what devices?
         % FIXME: is this out of scope?
         We experimented with single-subject analysis to validate different devices and tasks.
+    \end{comment}

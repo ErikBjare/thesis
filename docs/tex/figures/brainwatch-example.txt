@@ -1,0 +1,5 @@
+$ brainwatch connect --device museS
+
+Searching for Muses, this may take up to 10 seconds...
+Found device MuseS-2754, MAC Address 00:55:DA:B9:27:54
+Recording to recording_2021-09-29-09.22.24.csv

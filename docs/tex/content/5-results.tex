@@ -1,11 +1,11 @@
 \chapter{Results}\label{section:results}
 
-    Here we present the results from our two different experiments.
+    We present the results from our two different experiments, and compare the results of our code vs prose experiment to the original study~\cite{floyd_decoding_2017} and the replication study~\cite{fucci_replication_2019}. 
 
-    We compare the results of our code-prose experiment to the original study~\cite{floyd_decoding_2017} and the replication study~\cite{fucci_replication_2019}, and investigate the results from our naturalistic device use experiment to see if results generalize to other types of device activity.
+    In addition, we investigate the results from our naturalistic device use experiment to see if results from the code vs prose experiment generalizes to other types of device activity.
 
     \section{Code vs prose task}
-        Table~\ref{table:bac-all} shows the performance we achieved for the code vs prose task.
+        Table~\ref{table:bac-all} and~\ref{table:bac-selective} shows the performance we achieved for the code vs prose task, for two different subject selections.
 
         Our top-performing classifier, using Riemannian methods and cross-validated using LORO, yields a median balanced accuracy of $0.749$  for window-level classification and $0.9$ for epoch-level classification (seen in Table~\ref{table:bac-selective}).
 
@@ -39,9 +39,11 @@
             \caption{The balanced accuracy for each LORO fold/subject. Excluding subjects 3 and 4.}\label{table:bac-all}
         \end{table}
 
-        In Table~\ref{table:bac-all} we see that performance is bad (no better than chance) for several subjects. We investigate these and find issues with the quality and amount of data. Due to this we remove them from analysis, and get the improved results in Table~\ref{table:bac-selective}.
+        In Table~\ref{table:bac-all} we see that performance is bad (no better than chance) for several subjects. We investigate these and find issues with the quality and amount of data. Due to this we remove them from analysis, and get the improved results seen in Table~\ref{table:bac-selective}. We discuss our subject selection further in Section~\ref{section:discussion}.
 
-        We discuss our subject selection further in Section~\ref{section:discussion}.
+        Figure~\ref{fig:timebars} shows a detailed overview of classification results for one example fold.
+
+        Compared to previous studies, we achieve a moderate improvement over the EEG-only classifier trained in Fucci et al., and achieve a similar performance to the fMRI study by Floyd et al. (seen in Table~\ref{table:compare-results}).
 
         \begin{table}[h]
             \centering
@@ -64,6 +66,21 @@
             \caption{The balanced accuracy for each LORO fold/subject. Excluding subjects 3, 4, 8, 9, and 10.}\label{table:bac-selective}
         \end{table}
 
+        \begin{table}
+            \begin{center}
+                \begin{tabular}{lccc}
+                    \toprule
+                    & \textbf{This study} & \textbf{Fucci et al.} & \textbf{Floyd et al.} \\
+                    \midrule
+                    Overall & 0.75 & 0.66 & 0.79 \\
+                    Code & x & x & x \\
+                    Prose & x & x & x \\
+                    \bottomrule
+                \end{tabular}
+                \caption{Result comparison between the previous studies and this study. Best BAC results are reported. For Fucci et al.\ we chose the best EEG-only score.}\label{table:compare-results}
+            \end{center}
+        \end{table}
+
         \begin{comment}
             \begin{table}
                 \begin{center}
@@ -78,6 +95,21 @@
                     \caption{Performance statistics of our models trained on all subjects with good signal quality except number \#6, which is used for testing.}\label{fig:stats}
                 \end{center}
             \end{table}
+        \end{comment}
+
+        % Keep this?
+        \begin{comment}
+            The rows in the figure can be interpreted as follows:
+
+            \begin{itemize}
+                \item Image: the stimuli image shown.
+                \item Label: the class of the stimuli.
+                \item Predicted: the predicted class.
+                \item Correct: whether the prediction matches the label.
+                \item Subject: the subject performing the task.
+                \item Split: the train/test split.
+                \item Quality: whether the signal meets our quality standard.
+            \end{itemize}
         \end{comment}
 
         \begin{landscape}
@@ -100,30 +132,11 @@
             \change[inline]{Update with higher-res image}
         \end{comment}
 
-        Compared to previous studies, we achieve a moderate improvement over the EEG-only classifier trained in Fucci et al., and achieve a similar performance to the fMRI study by Floyd et al. (seen in Table~\ref{table:compare-results}).
-
-        \begin{table}
-            \begin{center}
-                \begin{tabular}{lccc}
-                    \toprule
-                    & \textbf{This study} & \textbf{Fucci et al.} & \textbf{Floyd et al.} \\
-                    \midrule
-                    Overall & 0.75 & 0.66 & 0.79 \\
-                    Code & x & x & x \\
-                    Prose & x & x & x \\
-                    \bottomrule
-                \end{tabular}
-                \caption{Result comparison between the previous studies and this study. Best BAC results are reported. For Fucci et al.\ we chose the best EEG-only score.}\label{table:compare-results}
-            \end{center}
-        \end{table}
-
     \section{Naturalistic device activity}
 
-        We collected $\sim5$ hours of labeled EEG data during natural device use.
+        As described in Section~\ref{section:collect-eeg-naturalistic}, we collected approximately \SI{5}{hours} of labeled EEG data using our labels described in Section~\ref{section:collect-usage}.
 
-        We use the classes defined in Section~\ref{section:collect-usage}.
-
-        We train classifiers for the label pairs:
+        Using that data, we trained classifiers for the label pairs:
 
         \begin{itemize}
                 \item Programming / Writing
@@ -144,7 +157,5 @@
                 Twitter vs YouTube & 0.604 & (949, 266) & 1.69h \\
                 \bottomrule
             \end{tabular}
-            \caption{The scores for each label pairing. The score is the mean BAC of the StratifiedKFold splits.}\label{table:scores-natural}
+            \caption{The scores for each label pairing. The score is the mean balanced accuracy of the StratifiedKFold splits.}\label{table:scores-natural}
         \end{table}
-
-        The class distribution is as follows: TODO
