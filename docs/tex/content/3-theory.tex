@@ -78,9 +78,20 @@ We will briefly review EEG, and some of the machine learning techniques used.
     \end{table}
 
     \add[inline]{Plots of PSD, PCA, etc}
-    \add[inline]{Mention need for bandpass filtering to get rid of powerline noise}
-
     \add[inline]{Discuss some of the review articles on EEG/BCI/ML}
+
+    Raw EEG data usually contain artifacts from powerline noise, which needs to be filtered out. This is usually done with a simple bandpass filter, an example of which can be seen in Figure~\ref{fig:signal-unfiltered} and~\ref{fig:signal-filtered}.
+    
+    \begin{figure}[H]
+        \includegraphics[width=14cm]{img/raw-signal-prefilter.png}
+        \caption{Raw EEG signal with no filtering. Powerline noise clearly visible.}\label{fig:signal-unfiltered}
+    \end{figure}
+
+    \begin{figure}[H]
+        \includegraphics[width=14cm]{img/raw-signal-postfilter.png}
+        \caption{Same EEG signal as in Figure~\ref{fig:signal-unfiltered}, but with bandpass filter applied. We can see that powerline noise has been eliminated.}\label{fig:signal-filtered}
+    \end{figure}
+
 
     \begin{landscape}
         \begin{figure}
