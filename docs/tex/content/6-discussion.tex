@@ -12,11 +12,11 @@ We were not able to outperform the results by Floyd et al., which is not surpris
 
 \paragraph*{RQ2. Can we train an EEG classifier to separate software developers’ device activities?}
 
-We train several classifiers and achieve promising results. We especially distinguishing work (writing code) from social media (Twitter), but many models show significant improvements when given more data. We \todo{explore}{not yet} explore a multiclass classifier, but\ldots
+We train several classifiers and achieve promising results. We especially distinguishing work (writing code) from social media (Twitter), but many models show significant improvements when given more data.
 
 Among the classifiers we train, we found that discerning leisure-activities from each other (such as YouTube vs Twitter) is harder than discerning work from leisure (such as writing code vs Twitter).
 
-\add[inline]{More discussion of results}
+We conclude that our preliminary results seem to indicate that it is possible to discern many different device activities using EEG\@. However, more data from multiple subjects are needed in future work to validate the method and results. 
 
 \section{Applications to software engineering}
 
@@ -33,7 +33,7 @@ Applications of our results include:
     \item Detecting distraction.
 \end{itemize}
 
-We consider our novel idea of `mental churn', a neurally integrated alternative to the measure of code churn, where not only code changes are measured, but also the \emph{attention} a file or piece of code receives as a whole. This notion of mental churn could also include what response the code elicited in an engineer (confusion, focus, confidence).
+We also consider our novel idea of `mental churn', a neurally integrated alternative to the measure of code churn, where not only code changes are measured, but also the \emph{attention} a file or piece of code receives as a whole. This notion of mental churn could also include what response the code elicited in an engineer (confusion, focus, confidence).
 
 \section{Threats to validity}\label{section:threats}
 
@@ -43,13 +43,13 @@ We consider our novel idea of `mental churn', a neurally integrated alternative 
 
     We also had issues during data collection with spurious disconnects from the device, leading to data loss and incomplete experiment runs. This is a threat to the validity of the study due to not all subjects having undergone as many (or the same) trials.
 
-    Among our considerations, one threat to the validity is the stimuli images themselves (seen in Figure~\ref{fig:tasks}). In Floyd et al.~the images used for prose comprehension are in fact more like a code review task, while Fucci et al.~modified the images to test comprehension, instead of ability to judge correctness. We also discovered that subjects found the prose stimuli used by Floyd et al.~confusing, and it would have been preferrable to use prose stimuli more like that used by Fucci et al.
+    Among our considerations, one threat to the validity is the stimuli images themselves (seen in Figure~\ref{fig:tasks}). In Floyd et al.~the images used for prose comprehension are in fact more like a code review task, while Fucci et al.~modified the images to test comprehension, instead of ability to judge correctness. We also discovered that subjects found the prose stimuli used by Floyd et al.~confusing, and it would have been preferable to use prose stimuli more like that used by Fucci et al.
 
     The stimuli images differ on more than just content. Examples of such differences are the background color, the difference in eye saccades while reading (eyes jump around more during the code tasks, where the user may have to jump between the code and the question about it). We have not been able to discard the possibility that the front-heavy electrode placements (with reference electrode at Fpz) lead to much of the signal being from eye saccades. 
 
     Future research could evaluate this further either by using an eye tracker or by using an EEG device with different placements of both the electrodes and reference electrode.
 
-    \add[inline]{Investigate threats to validity mentioned by previous authors}
+    %\add[inline]{Investigate threats to validity mentioned by previous authors}
 
 \section{Ethical considerations}
 
@@ -61,11 +61,13 @@ We consider our novel idea of `mental churn', a neurally integrated alternative 
         \item How do we build large public datasets, while preserving participants privacy?
     \end{itemize}
 
-    Companies such as Neurosity have taken an approach with their products where all the processing happens on-device, and only aggregates and classifier outputs are sent to the cloud for storage and presentation to the user.
+    Companies such as Neurosity have taken an approach with their products where all the processing happens on-device, and only aggregates and classifier outputs are sent to the cloud for storage and presentation to the user. This is similar to the approach taken by ActivityWatch for device usage data, where all data is stored locally and never sent to a remote server for processing. 
 
-    \add[inline]{Discuss ethics/privacy considerations of data collection, how it's dealt with in ActivityWatch, and implications of results on similar concerns apply to EEG data}
+    We believe this approach is the most privacy-preserving, but it comes at the cost of difficulty in building large datasets, as the data is no longer collected in a central repository under the control of companies or service providers. Therefore, there's a need to bridge the gap between privacy and sharing data.
 
-    \add[inline]{Mention OpenMined, https://github.com/OpenMined/PySyft, and similar tech (esp in the context of crowdsourcing data)}
+    Simple solutions to this problem include opt-in to data collection, which is easy to do at scale for companies offering EEG devices. But other efforts include projects such as the NeuroTech Challenge (mentioned in Section~\ref{section:ntcs}).
+
+    There are also more advanced solutions, such as privacy-preserving ML systems. One example of such solutions is PySyft, which enables private deep learning using federated learning, differential privacy, and encrypted computation (through Multi-Party Computation and Homomorphic Encryption) to work within common deep learning frameworks such as PyTorch and Tensorflow.
 
 \section{Democratization of neuroscience}
 
@@ -90,6 +92,8 @@ We consider our novel idea of `mental churn', a neurally integrated alternative 
 
 \section{Transfer learning}\label{section:transfer-learning}
 
-An important aspect, as highlighted earlier in this thesis, is the ability of a classifier to be able to work on subjects unseen in training. Some BCI systems employ a calibration phase to achieve greater performance, but it is time consuming and can be straining. 
+An important aspect, as highlighted earlier in this thesis, is the ability of a classifier to be able to work on subjects unseen in training. Some BCI systems employ a calibration phase to achieve greater performance, but this can be time consuming and straining for the user. 
 
-To minimize, and perhaps even eliminate, the need for this calibration is a stated research goal in Khazem et al.~\cite{khazem_minimizing_2021}, which presents what is called Riemannian Transfer Learning. They build on Riemannian geometry used in state-of-the-art classifiers, and find that\add{TODO}{\ldots}
+To minimize this need for calibration is a stated research goal in Khazem et al.~\cite{khazem_minimizing_2021}, which presents what is called Riemannian Transfer Learning. They build on Riemannian geometry used in state-of-the-art classifiers, and develop a variation of MDM (explained in Section~\ref{section:riemannian-theory}) called \emph{Minimum Distance to Weighted Mean} (MDWM). The method takes a parameter $\lambda$ (where $0 \leq \lambda \leq 1$) that controls how much the algorithms should rely on the class centroids learned from past subjects versus the calibration data from a new subject. This is useful in online learning contexts, where the parameter can initially start at $0$ and then be incrementally adjusted towards $1$. The researchers found $\lambda = 0.7$ to be a reasonable value for many tasks. 
+
+The researchers also considered using weights for each source subject as done by Kalunga et al.~\ref{kalunga_transfer_2018}, which could be used to adjust for subject similarity.

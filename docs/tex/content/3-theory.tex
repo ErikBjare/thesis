@@ -77,8 +77,8 @@ We will briefly review EEG, and some of the machine learning techniques used.
         \caption{Characteristics of common frequency bands used in EEG research. Note the \emph{Sigma} band, which is usually grouped with the \emph{Beta} band, but is often used in sleep research where it targets sleep spindles during stage 2 NREM sleep. In some research, these bands are split further into slow and fast counterparts.}\label{table:freq-bands}
     \end{table}
 
-    \add[inline]{Plots of PSD, PCA, etc}
-    \add[inline]{Discuss some of the review articles on EEG/BCI/ML}
+    %\add[inline]{Plots of PSD, PCA, etc}
+    %\add[inline]{Discuss some of the review articles on EEG/BCI/ML}
 
     Raw EEG data usually contain artifacts from powerline noise, which needs to be filtered out. This is usually done with a simple bandpass filter, an example of which can be seen in Figure~\ref{fig:signal-unfiltered} and~\ref{fig:signal-filtered}.
     
@@ -104,17 +104,17 @@ We will briefly review EEG, and some of the machine learning techniques used.
 
 \section{Machine Learning}
 
-    Machine learning on EEG data utilizes several domain-specific methods (which?) often similar to other methods seen applied to general time-series data.
+    Machine learning on EEG data utilizes several domain-specific methods, often similar to other methods for time-series data in general. However, some methods differ by taking advantage of the spatial information that is available through the analysis of interdependence between multiple EEG channels.
 
-    Among these we find methods like bandpass filtering, windowing, spectral density estimation, and the computation of covariance matrices to estimate interdependencies between channels.
+    Methods used in analysis and classification of EEG data include Linear Discriminant Analysis (LDA), Common Spatial Pattern (CSP) filters~\cite{barachant_common_2010}, spectral density estimation (bandpower features), and the computation of covariance matrices to estimate interdependencies between channels. 
 
-    Methods used in analysis and classification of EEG data include Linear Discriminant Analysis (LDA), Common Spatial Pattern (CSP) filters~\cite{barachant_common_2010}.
+    Furthermore, preprocessing methods include bandpass filtering, windowing, and various tricks for channel selection (in high-density setups). 
 
-    With the use of these methods, we can compute features to use when training our classifiers.
+    With the use of these methods, we can preprocess the data, compute features, and train our classifiers.
 
-    The underlying ML algorithms themselves are often off-the-shelf logistic regression, with some domain adaptations found in more complex models like neural networks.
+    The underlying ML algorithms being trained on the features are often off-the-shelf logistic regression, support vector machines, random forests, etc. Some domain adaptations are found in more complex models like neural networks.
 
-    The \emph{log loss} function $L$ is defined as:
+    For logistic regression, the \emph{log loss} function $L$ is defined as:
 
     \[ L(x, y') = \sum_{(x,y) \in D} -y \log y' - (1 - y) \log(1 - y')\]
 
@@ -130,7 +130,7 @@ We will briefly review EEG, and some of the machine learning techniques used.
 
         The naive Riemannian approach using \emph{Minimum Distance to Mean} (MDM) starts with computing the covariance matrix for each trial, and then estimating a mean covariance matrix for each class (the class centroid) using the Riemannian distance metric $\delta_G$. When classification is performed, the distance between the new covariance matrix and the class centroids is estimated using the Riemannian distance metric, and the new covariance matrix is classified according to which class centroid is closest.
 
-        To allow for use of other classification approaches in the final step, such as logistic regression and SVMs, we can project our covariance matrices onto a tangent space. Once projected onto this tangent space, our covariance matrices can be compared fairly well using the standard Euclidean distance metric, letting us use other methods which do not employ the Riemannian distance metric~\cite{congedo_riemannian_2017}.
+        To allow for use of other classification approaches in the final step, such as logistic regression and SVMs, we can project our covariance matrices onto a tangent space. Once projected onto this tangent space, our covariance matrices can be compared fairly well using the standard Euclidean distance metric, letting us use common methods which do not employ the Riemannian distance metric~\cite{congedo_riemannian_2017}.
 
         \begin{figure}[h]
             \centering
@@ -141,6 +141,5 @@ We will briefly review EEG, and some of the machine learning techniques used.
 
     \begin{comment}
     \subsection{Neural networks}
-
         Many state-of-the-art models in the field of EEG are deep-learning based models, usually employing convolutional neural networks (CNNs).
     \end{comment}
