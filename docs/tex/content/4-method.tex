@@ -8,7 +8,7 @@ Once data collection is done, we continue with our analysis by training classifi
     \begin{center}
         \includegraphics[width=14cm]{img/method.png}
     \end{center}
-    \caption{Overview of the process for the two seperate tasks}\label{fig:method}
+    \caption{Overview of the process for the two separate tasks}\label{fig:method}
 \end{figure}
 
 The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replication_2019} with some differences (seen in Table~\ref{table:compare-method}): 
@@ -82,7 +82,7 @@ The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replica
 \pagebreak
 \section{Collection}
 
-We need two types of data for the experiments: EEG data, and labels. For the controlled experiment, our labels are wether the stimuli is code or prose. For the organic use experiment, our labels are the device usage categories.
+We need two types of data for the experiments: EEG data, and labels. For the controlled experiment, our labels are whether the stimuli is code or prose. For the organic use experiment, our labels are the device usage categories.
 
 To collect data for the controlled experiment, we:
 
@@ -129,8 +129,6 @@ To collect data for the organic use experiment, we:
             We have 9 subjects, sampled by convenience. The subjects were 8 males and one female. Most are in their late 20s or early 30s, except two who are in their 40s.
 
             The experiment consists of presenting images with code or prose comprehension tasks, seen in Figure~\ref{fig:tasks}. These images are from previous studies on code vs prose comprehension by Floyd et al.~\cite{floyd_decoding_2017} and Fucci et al.~\cite{fucci_replication_2019}. 
-
-            \add[inline]{Markus: Beskriv experimentet i mer detalj. Jämn fördelning av kod och prosa? Slumpvis presentation? Hur lång tid per bild? När avbröts sittningen? Osv.}
 
             \begin{figure}[H]
                 \centering
@@ -276,8 +274,6 @@ start,               stop,                class
 
             To further enrich our feature vector, we can use ratios between two frequency bands. As this is what Fucci et al.\ did, we do the same.
 
-            \change[inline]{Markus: gjorde vi eller skulle vi kunna göra i future work? \\ Erik: Inte gjort än, ska göras!}
-
             Finally, the pipeline trains 3 models using either logistic regression, support vector machines, or random forests.
 
         \subsubsection{Riemannian geometry}
@@ -317,7 +313,9 @@ clf = make_pipeline(
 
     \subsection{Performance scoring}
 
-        Previous studies have used \emph{balanced accuracy} (BAC) scoring with LORO validation to evaluate model performance. To be able to compare results to previous studies, we do the same. BAC deals with imbalanced datasets by taking the average of recall obtained on each class. It is defined as the average of recall obtained on each class. For balanced datasets, the \info{is it?}{balanced accuracy is equal to the accuracy}.
+        Previous studies have used \emph{balanced accuracy} (BAC) scoring with LORO validation to evaluate model performance. To be able to compare results to previous studies, we do the same. 
+
+        BAC deals with imbalanced datasets by evaluating the performance of the classifier on each class and combining them into a single number. It is defined as the average of recall obtained on each class, or equivalently, the mean of the classifier sensitivity and specificity.
 
     \subsection{Cross Validation}
 
@@ -326,7 +324,7 @@ clf = make_pipeline(
         \input{figures/table-loro.tex}
 
         % FIXME: Fucci uses the median, should we too?
-        To aggregate performance metrics from each fold, we take the mean of the performance metrics from each fold (as presented in Section~\ref{section:results}).
+        To aggregate performance metrics from each fold, we take the median of the performance metrics from each fold (as presented in Section~\ref{section:results}).
 
         Since we have one run per subject, this LORO cross-validation is effectively an out-of-subject validation, estimating the ability of the classifier to generalize across subjects.
 
