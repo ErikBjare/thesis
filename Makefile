@@ -14,6 +14,8 @@ lint-tex:
 	# Contractions
 	! git grep "'ve" docs/tex/content/
 	! git grep "'t" docs/tex/content/
+	! git grep "there's" docs/tex/content/
+	! git grep "it's" docs/tex/content/
 
 .PHONY: notebooks
 notebooks:
@@ -26,7 +28,7 @@ dist/%.pdf: docs/tex/build/%.pdf
 %.png: %.dot
 	dot -Tpng -Gdpi=300 $< -o $@
 
-docs/tex/build/%.pdf: docs/tex/%.tex docs/tex/*.bib docs/tex/img/method.png docs/tex/img/gqm.png docs/tex/content/*.tex
+docs/tex/build/%.pdf: docs/tex/%.tex docs/tex/*.bib docs/tex/img/method.png docs/tex/img/gqm.png docs/tex/content/*.tex docs/tex/figures/*.tex
 	latexmk $< -pdf -shell-escape -cd -output-directory=build -interaction=nonstopmode -file-line-error
 
 precommit:
