@@ -6,17 +6,19 @@ As stated earlier in the section ``Aim of the thesis'' (\ref{section:aim}), we s
 
 We found that we do improve upon the best classifier performance by Fucci et al.\ in their EEG-only configuration~\cite{fucci_replication_2019}. However, we had to remove certain subjects from our sample, and our sample in general was smaller and more homogenous. 
 
-Our results are impacted by our cherry-picked subject set for our final analysis. Issues with signal quality and limited data (due to spurious device disconnects during experiments) ultimately led to exclusion of several subjects. However, despite these interventions we find that Riemannian-based classifiers outperforms using bandpower-features (as by Fucci et al.), this suggests some improvement of our method over previous work.
+Our results are impacted by our cherry-picked subject set for our final analysis. Issues with signal quality and limited data (due to spurious device disconnects during experiments) ultimately led to exclusion of several subjects. 
 
-We were not able to outperform the results by Floyd et al., which is not surprising given they were using using fMRI which has far superior spatial resolution and can therefore accurately detect elevated activity in specific brain regions. However, our method using EEG has the benefit of high temporal resolution, allowing classification of small amounts of data (as little as \SI{5}{\second}) and in real-time.
+Our findings show that the Riemannian methods used in this paper are better at distinguishing between the code and prose tasks than the bandpower-features approach used by Fucci et al.
+
+We were not able to outperform the results by Floyd et al.~\cite{floyd_decoding_2017}. This is not surprising given they were using fMRI, which has far superior spatial resolution and can therefore accurately detect elevated activity in specific brain regions over the duration of an epoch. However, our method using EEG has the benefit of high temporal resolution, allowing classification using small amounts of data, enabling near real-time applications.
 
 \paragraph*{RQ2. Can we train an EEG classifier to separate software developers’ device activities?}
 
-We train several classifiers and achieve promising results. We especially distinguishing work (writing code) from social media (Twitter), but many models show significant improvements when given more data.
+We train several classifiers and achieve promising results. We were especially successful in distinguishing work (writing code) from social media (Twitter).
 
-Among the classifiers we train, we found that discerning leisure-activities from each other (such as YouTube vs Twitter) is harder than discerning work from leisure (such as writing code vs Twitter).
+Among the classifiers we train, we found that discerning leisure-activities from each other (such as YouTube vs Twitter) is harder than discerning work from leisure (such as writing code vs Twitter). We also find that EEG is sufficient to not only pick up differences in code vs prose \emph{comprehension} but also in \emph{writing}.
 
-We conclude that our preliminary results seem to indicate that it is possible to discern many different device activities using EEG\@. However, more data from multiple subjects are needed in future work to validate the method and results. 
+We conclude that our preliminary results indicate that it is possible to discern several different device activities using EEG\@. However, more data from multiple subjects are needed in future work to validate the method and results. 
 
 \section{Applications to software engineering}
 
@@ -24,7 +26,7 @@ As we mentioned in the introduction, gaining insight into the brains of develope
 
 Some to assist in development, like helping to identify developer confusion, but other applications could be imagined where a summary of the developers' brain activity during a particular commit (such as if the developer was confused, focused, tired).
 
-\add[inline]{Include mention and image of mood attached in commit message from Fucci talk?}
+%\add[inline]{Include mention and image of mood attached in commit message from Fucci talk?}
 
 Applications of our results include:
 
@@ -63,11 +65,11 @@ We also consider our novel idea of `mental churn', a neurally integrated alterna
 
     Companies such as Neurosity have taken an approach with their products where all the processing happens on-device, and only aggregates and classifier outputs are sent to the cloud for storage and presentation to the user. This is similar to the approach taken by ActivityWatch for device usage data, where all data is stored locally and never sent to a remote server for processing. 
 
-    We believe this approach is the most privacy-preserving, but it comes at the cost of difficulty in building large datasets, as the data is no longer collected in a central repository under the control of companies or service providers. Therefore, there's a need to bridge the gap between privacy and sharing data.
+    We believe this approach is the most privacy-preserving, but it comes at the cost of difficulty in building large datasets, as the data is no longer collected in a central repository under the control of companies or service providers. Therefore, there is a need to bridge the gap between privacy and sharing data.
 
     Simple solutions to this problem include opt-in to data collection, which is easy to do at scale for companies offering EEG devices. But other efforts include projects such as the NeuroTech Challenge (mentioned in Section~\ref{section:ntcs}).
 
-    There are also more advanced solutions, such as privacy-preserving ML systems. One example of such solutions is PySyft, which enables private deep learning using federated learning, differential privacy, and encrypted computation (through Multi-Party Computation and Homomorphic Encryption) to work within common deep learning frameworks such as PyTorch and Tensorflow.
+    There are also more advanced solutions, such as privacy-preserving ML systems. One example of such solutions is \href{https://github.com/OpenMined/PySyft}{PySyft}, which enables private deep learning using federated learning, differential privacy, and encrypted computation (through Multi-Party Computation and Homomorphic Encryption) to work within common deep learning frameworks such as PyTorch and Tensorflow.
 
 \section{Democratization of neuroscience}
 
@@ -96,4 +98,4 @@ An important aspect, as highlighted earlier in this thesis, is the ability of a 
 
 To minimize this need for calibration is a stated research goal in Khazem et al.~\cite{khazem_minimizing_2021}, which presents what is called Riemannian Transfer Learning. They build on Riemannian geometry used in state-of-the-art classifiers, and develop a variation of MDM (explained in Section~\ref{section:riemannian-theory}) called \emph{Minimum Distance to Weighted Mean} (MDWM). The method takes a parameter $\lambda$ (where $0 \leq \lambda \leq 1$) that controls how much the algorithms should rely on the class centroids learned from past subjects versus the calibration data from a new subject. This is useful in online learning contexts, where the parameter can initially start at $0$ and then be incrementally adjusted towards $1$. The researchers found $\lambda = 0.7$ to be a reasonable value for many tasks. 
 
-The researchers also considered using weights for each source subject as done by Kalunga et al.~\ref{kalunga_transfer_2018}, which could be used to adjust for subject similarity.
+The researchers also considered using weights for each source subject as done by Kalunga et al.~\cite{kalunga_transfer_2018}, which could be used to adjust for subject similarity.

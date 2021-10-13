@@ -121,7 +121,7 @@ Furthermore, our naturalistic experiments indicate that a consumer-grade EEG dev
         As an example it has been shown that it is possible to classify if a participant is reading code or prose using fMRI~\cite{floyd_decoding_2017}, which has been replicated using EEG and low-cost biosensors~\cite{fucci_replication_2019}. The ability to distinguish between these two tasks have been has been explained neurologically by the recruitment of different neural networks in the brain~\cite{ivanova_comprehension_2020}.
         % Markus: En mening här om vad förklaringen innebär kanske? T.ex. prose aktiverar språk, och källkod tycks aktiverar något annat.
 
-        The code vs prose comprehension task has also been modified into a writing task studied under fMRI, to further shed light to the underlying brain activity. In one study it was found that code and prose writing are significantly dissimilar tasks for the brain, where prose writing engages brain regions associated with language in the left hemisphere while while code writing engages brain regions associated with attention, working memory, planning, and spatial cognition in the right hemisphere\cite{noauthor_neurological_nodate}. To study this with MRI, the authors had to use (develop?) an MRI-safe keyboard.
+        The code vs prose comprehension task has also been modified into a writing task studied under fMRI, to further shed light to the underlying brain activity. In one study it was found that code and prose writing are significantly dissimilar tasks for the brain, where prose writing engages brain regions associated with language in the left hemisphere while while code writing engages brain regions associated with attention, working memory, planning, and spatial cognition in the right hemisphere\cite{noauthor_neurological_nodate}. To study this with MRI, the authors had to use an MRI-safe keyboard, as the powerful magnetic field prevents the use of normal electronics.
 
         As far as I know, code vs prose \emph{writing} has not been studied with EEG\@. However, using ActivityWatch and other tools we have developed in this thesis (like the input watcher) one can to distinguish whether the user is reading or writing, as well as whether they are working with code or prose, which enables studying the same activities in a naturalistic setting.
 
@@ -206,26 +206,27 @@ Furthermore, our naturalistic experiments indicate that a consumer-grade EEG dev
         \item Improves open-source tools for EEG analysis.
     \end{itemize}
 
-    As part of the work on this thesis I have contributed several improvements to some of the open source projects used, including muse-lsl, moabb, eeg-notebooks, and pyriemann.
+    As part of the work on this thesis I have contributed several improvements to some of the open source projects used, including muse-lsl, moabb, eeg-notebooks, pyriemann, and braindecode.
 
     \begin{itemize}
-        \item \href{%
+        \item Pull requests to \href{%
                 https://github.com/search?q=org%3ANeuroTechX+is%3Apr+sort%3Aupdated-desc+author%3AErikBjare
-            }{PRs to NeuroTechX repos} (eeg-notebooks, moabb) (22)
-        \item \href{%
+            }{NeuroTechX repos} (eeg-notebooks, moabb) (22)
+        \item Pull requests to \href{%
                 https://github.com/search?q=org%3Aalexandrebarachant+is%3Apr+sort%3Aupdated-desc+author%3AErikBjare
-            }{PRs to Alexandre Barachant repos} (muse-lsl, pyriemann) (4)
-        \item \href{%
+            }{muse-lsl} (3)
+        \item Pull requests to \href{%
+                https://github.com/search?q=org%3Apyriemann+is%3Apr+sort%3Aupdated-desc+author%3AErikBjare
+            }{pyriemann} (1)
+        \item Pull requests to \href{%
                 https://github.com/search?q=org%3Abraindecode+is%3Apr+sort%3Aupdated-desc+author%3AErikBjare
-            }{PRs to the braindecode repo} (1)
+            }{braindecode} (1)
     \end{itemize}
-
-    %\add[inline]{Insert stuff from goal document}
 
 \section{Related work}
 
-    Farias et al.\ conducted a systematic mapping study which reviews the usage of psychophysiological data in software engineering~\cite{vieira_usage_2021}.
-    \add[inline]{Ett par meningar om vad Farias secondary study kom fram till. De stora dragen... vilka slutsatser hade hen?}
+    \add[inline]{Lite kvar att utveckla i denna del. En sida till i omfattning känns rimligt. Det brukar vara ganska tacksamt att skriva... identifiera 5-10 relaterade artiklar och sammanfattade dem med i ett stycke var med egna ord. Eftersom du har översiktsstudien av Vieira sa kan du slipper du leta artiklar själv.
+Sen får du avsluta med ett stycka eller två där du gör någon syntes av det du har läst... finns det mönster i det som har gjorts? finns det något som har utelämnats? Kan du skapa en nisch för ditt bidrag? Sen kliver du in där och säger precis hur du bidrar med något som är både "novel" and "significant".}
 
     Previous research shows that fMRI (by Floyd et al.~\cite{floyd_decoding_2017}) and EEG (by Fucci et al.~\cite{fucci_replication_2019}) can be used to classify whether a subject is reading prose or code. However, accuracy with single-channel EEG has been found to be poor, and notably outperformed by a heart rate variability (HRV) monitor.
 
@@ -237,4 +238,5 @@ Furthermore, our naturalistic experiments indicate that a consumer-grade EEG dev
     \add[inline]{briefly summarize results of referenced paper, or integrate with section about the review?}
     In software engineering research, low-cost biosensors such as wristbands that measure electrodermal activity and heart-related metrics have been used for emotion detection, as a tool in studying developer productivity~\cite{girardi_recognizing_2020}. 
 
-    %\add[inline]{Insert mention of preprint that Fucci mentioned?}
+    A systematic mapping study has also been conducted by Vieira et al.~\cite{vieira_usage_2021} which reviews the usage of psychophysiological data in software engineering.
+    \add[inline]{Ett par meningar om vad Vieiras secondary study kom fram till. De stora dragen... vilka slutsatser hade hen?}

@@ -299,8 +299,6 @@ clf = make_pipeline(
 
             We do not perform any hyperparameter optimization.
 
-            \add[inline]{Explanation of pipeline (refer to theory chapter)}
-
     \begin{comment}
     \subsection{Neural Networks}
 
@@ -315,7 +313,9 @@ clf = make_pipeline(
 
         Previous studies have used \emph{balanced accuracy} (BAC) scoring with LORO validation to evaluate model performance. To be able to compare results to previous studies, we do the same. 
 
-        BAC deals with imbalanced datasets by evaluating the performance of the classifier on each class and combining them into a single number. It is defined as the average of recall obtained on each class, or equivalently, the mean of the classifier sensitivity and specificity.
+        BAC deals with imbalanced datasets by evaluating the performance of the classifier on each class and combining them into a single number. It is defined as the average of recall obtained on each class, or equivalently for a binary classifier, the average of the classifier sensitivity and specificity. 
+
+        For a binary classifier, a balanced accuracy score of 0.5 is no better than chance, and a score of 1 is perfect.
 
     \subsection{Cross Validation}
 
