@@ -132,8 +132,8 @@
 
 \defbibheading{notcited}{\section*{Further Reading}}
 
-\def\mytitleen{Classifying brain activity using electroencephalography and automated tracking of computer use}
-\def\mytitlesv{Klassificering av hjärnaktivitet med elektroencephalografi och automatiserad loggning av datoranvändning}
+\def\mytitleen{Classifying brain activity using electroencephalography and automated time tracking of computer use}
+\def\mytitlesv{Klassificering av hjärnaktivitet med elektroencephalografi och automatiserad tidsspårning av datoranvändning}
 
 \ifx\UseCSLTH\undefined
     \title{%
@@ -148,7 +148,8 @@
 \else
     \title{\mytitleen}
     \svensktitel{\mytitlesv}
-    \subtitle{Subtitle in progress}
+    % TODO: Add a subtitle?
+    %\subtitle{Discerning reading code vs prose and other device activities, using consumer EEG devices and the open source automated time tracker ActivityWatch}
 
     \date{\today}
     %\date{January 16, 2015}
@@ -167,8 +168,8 @@
 
     %\onelinetitle
     %\twolinestitle
-    \threelinestitle
-    %\fourlinestitle
+    %\threelinestitle
+    \fourlinestitle
 
     \theabstract{\input{content/0-abstract}}
 

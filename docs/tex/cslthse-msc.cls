@@ -189,7 +189,7 @@
 	\newcommand{\onelinetitle}{\titlebox{77}{12}}
 	\newcommand{\twolinestitle}{\titlebox{74}{15}}% two lines title
 	\newcommand{\threelinestitle}{\titlebox{71}{18}}% three lines title
-	\newcommand{\fourlinestitle}{\titlebox{68}{21}}% four lines title
+	\newcommand{\fourlinestitle}{\titlebox{66}{23}}% four lines title
 
 
 

@@ -37,7 +37,7 @@ digraph graphname {
         C1; C2; U2;
     }
     subgraph cluster_run { 
-        label="Run";
+        label="Collection";
         style=dotted;
         C3; INVIS; U3;
     }
