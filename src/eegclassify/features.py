@@ -10,9 +10,9 @@ from eegwatch.bids import raw_to_mne
 logger = logging.getLogger(__name__)
 
 
-def compute_features(df: pd.DataFrame) -> pd.DataFrame:
+def compute_features(df: pd.DataFrame, ratios: bool = False) -> pd.DataFrame:
     logger.info("Computing features...")
-    df = bandpower(df)
+    df = bandpower(df, ratios=ratios)
     logger.info("Done computing features!")
     return df
 

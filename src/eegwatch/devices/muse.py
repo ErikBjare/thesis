@@ -143,9 +143,11 @@ class MuseDevice(EEGDevice):
         # TODO: Might need to do something different here (return same type of array as from Brainflow backend)
         return self._read_buffer()
 
-    def check(self) -> List[str]:
+    def check(self, max_uv_abs: float) -> List[str]:
         checked = _check_samples(
-            self._read_buffer(), channels=["TP9", "AF7", "AF8", "TP10"]
+            self._read_buffer(),
+            channels=["TP9", "AF7", "AF8", "TP10"],
+            max_uv_abs=max_uv_abs,
         )
         bads = [ch for ch, ok in checked.items() if not ok]
         return bads

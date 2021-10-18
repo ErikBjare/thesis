@@ -9,7 +9,6 @@ Abstraction for the various supported EEG devices.
 import logging
 from typing import List, Dict
 from abc import ABCMeta, abstractmethod
-from time import sleep
 
 import numpy as np
 

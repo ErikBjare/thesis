@@ -164,7 +164,7 @@ def check(device_name: str):
     while True:
         # Check every 0.5s
         if time() > last_check + 0.5:
-            bads = device.check()
+            bads = device.check(max_uv_abs=200)
             all_good = len(bads) == 0
             if all_good:
                 if not last_good:
