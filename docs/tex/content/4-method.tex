@@ -1,16 +1,14 @@
 \chapter{Method}
 
-We start by deciding on an EEG device to use, then we collect data for both the controlled and organic experiments.
-
-Once data collection is done, we continue with our analysis by training classifiers using various machine learning methods.
+We start by deciding on an EEG device to use, we then collect data for both the controlled and naturalistic experiments. Once the data has been collected, we continue with our analysis by training classifiers using various machine learning methods. An overview of the process is seen in Figure~\ref{fig:method}.
 
 \begin{figure}[h]
-    \begin{center}
-        \includegraphics[width=14cm]{img/method.png}
-    \end{center}
-    \caption{Overview of the process for the two separate tasks}\label{fig:method}
+    \centering
+    \includegraphics[width=14cm]{img/method.png}
+    \caption{Overview of the process for the two separate tasks.}\label{fig:method}
 \end{figure}
 
+\begin{minipage}{\textwidth}
 The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replication_2019} with some differences (seen in Table~\ref{table:compare-method}): 
 
 \begin{itemize}
@@ -18,8 +16,9 @@ The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replica
         \item We used a different device.
         \item We have a smaller \& less diverse sample.
         \item We have reimplemented the task in eeg-notebooks.
-        \item We have used the original prose-review images by Floyd et al.~\cite{floyd_decoding_2017}.
+        \item We have used the original prose-review stimuli by Floyd et al.~\cite{floyd_decoding_2017}.
 \end{itemize}
+\end{minipage}
 
 % Comparing to Fucci and original study
 \begin{landscape}
@@ -82,7 +81,7 @@ The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replica
 \pagebreak
 \section{Collection}
 
-We need two types of data for the experiments: EEG data, and labels. For the controlled experiment, our labels are whether the stimuli is code or prose. For the organic use experiment, our labels are the device usage categories.
+We need two types of data for the experiments: EEG data, and labels. For the controlled experiment, our labels are whether the stimuli is code or prose. For the naturalistic use experiment, our labels are the device usage categories.
 
 To collect data for the controlled experiment, we:
 
@@ -91,7 +90,7 @@ To collect data for the controlled experiment, we:
     \item Use eeg-notebooks to present the stimuli, and record the time markers of when the stimuli changed as labels.
 \end{enumerate}
 
-To collect data for the organic use experiment, we:
+To collect data for the naturalistic use experiment, we:
 
 \begin{enumerate}
     \item Set up the EEG equipment
@@ -100,7 +99,7 @@ To collect data for the organic use experiment, we:
 
     \subsection{Collection of EEG data}
 
-        EEG data was collected during organic device use and under controlled conditions. For both conditions, code from the open source \texttt{eeg-notebooks}~\cite{barachant_eeg-notebooks_2020} was adapted to record the raw EEG stream into a CSV file.
+        EEG data was collected for the controlled experiment and during naturalistic device use. For both conditions, code from the open source \texttt{eeg-notebooks}~\cite{barachant_eeg-notebooks_2020} was adapted to record the raw EEG stream into a CSV file.
 
         Depending on the device used we require certain software to connect to the devices. We used muse-lsl for the Muse S~\cite{muse-lsl} which in turn uses Lab Streaming Layer. To support OpenBCI and Neurosity devices we used brainflow~\cite{noauthor_brainflow_2020}.
 
@@ -108,9 +107,7 @@ To collect data for the organic use experiment, we:
 
         \inputminted{bash}{figures/brainwatch-example.txt}
 
-        We can then check signal quality with: \mintinline{bash}{brainwatch check}
-
-        Or run the following to plot the raw signal: \mintinline{bash}{brainwatch plot}
+        We can then check signal quality with \mintinline{bash}{brainwatch check}, or run \mintinline{bash}{brainwatch plot} to plot the raw signal.
 
         Alternatively, we can plot using muse-lsl's built-in plotting functionality: \mintinline{bash}{muselsl view -b Qt5Agg} (seen in Figure~\ref{fig:muselsl-signal}).
 
@@ -223,7 +220,7 @@ start,               stop,                class
 
         A window is a fixed-duration slice of an epoch, such that each window matrix has the same dimensions. This enables us to more easily compute various features which require matrices to be of the same dimension. Windows inherit the label of the epoch from which they belong.
 
-        For the organic device use experiment, we split the EEG data into epochs using the categories assigned by our ActivityWatch script.
+        For the naturalistic device use experiment, we split the EEG data into epochs using the categories assigned by our ActivityWatch script.
 
         For the controlled experiment, we split the EEG data into epochs using the trial markers, resulting in one epoch per stimuli.
 

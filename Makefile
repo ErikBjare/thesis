@@ -16,6 +16,7 @@ lint-tex:
 	! git grep "'t" docs/tex/content/
 	! git grep "there's" docs/tex/content/
 	! git grep "it's" docs/tex/content/
+	! git grep "organic" docs/tex/  # should be 'naturalistic'
 
 .PHONY: notebooks
 notebooks:

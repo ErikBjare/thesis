@@ -4,11 +4,9 @@ As stated earlier in the section ``Aim of the thesis'' (\ref{section:aim}), we s
 
 \paragraph*{RQ1. Can we improve upon previous results in classifying code vs prose comprehension with EEG~?}
 
-We found that we do improve upon the best classifier performance by Fucci et al.\ in their EEG-only configuration~\cite{fucci_replication_2019}. However, we had to remove certain subjects from our sample, and our sample in general was smaller and more homogenous. 
+We found that we do improve upon the best classifier performance by Fucci et al.\ in their EEG-only configuration~\cite{fucci_replication_2019}. However, we had to remove certain subjects from our sample, and our sample in general was smaller and more homogenous.\footnote{The reason for this cherry-picked subject selection is due to issues with signal quality and limited data (due to spurious device disconnects).}
 
-Our results are impacted by our cherry-picked subject set for our final analysis. Issues with signal quality and limited data (due to spurious device disconnects during experiments) ultimately led to exclusion of several subjects. 
-
-Our findings show that the Riemannian methods used in this paper are better at distinguishing between the code and prose tasks than the bandpower-features approach used by Fucci et al.
+Our findings also show that Riemannian methods, as used in this paper, are better at distinguishing between the code and prose tasks than the bandpower-features approach, as used by Fucci et al. Our Riemannian score\footnote{Scores taken from Table~\ref{table:compare-results}} was $0.75$, which is better than both our bandpower-features score of $0.69$, as well as the Fucci et al score of $0.66$. This is in line with our expectations, as Riemannian methods are considered state-of-the-art for many EEG and BCI tasks, unlike bandpower features.
 
 We were not able to outperform the results by Floyd et al.~\cite{floyd_decoding_2017}. This is not surprising given they were using fMRI, which has far superior spatial resolution and can therefore accurately detect elevated activity in specific brain regions over the duration of an epoch. However, our method using EEG has the benefit of high temporal resolution, allowing classification using small amounts of data, enabling near real-time applications.
 
@@ -33,9 +31,10 @@ Applications of our results include:
 \begin{itemize}
     \item Use the confidence in the task prediction as an alternative measurement of focus (not merely measuring that the subject was focused, but what they were focused on). 
     \item Detecting distraction.
+    %\item The ability to collect all data needed to train an EEG classifier during normal device use.
 \end{itemize}
 
-We also consider our novel idea of `mental churn', a neurally integrated alternative to the measure of code churn, where not only code changes are measured, but also the \emph{attention} a file or piece of code receives as a whole. This notion of mental churn could also include what response the code elicited in an engineer (confusion, focus, confidence).
+We also consider our novel idea of `mental churn', a neurally integrated alternative to the measure of code churn, where not only code changes are measured, but also the \emph{attention} a file or piece of code receives as a whole. It can be viewed as quantifying the \emph{cognitive load} of the developer, and attributing it to the current context. This notion of mental churn could also include what response the code elicited in an engineer (confusion, focus, confidence).
 
 \section{Threats to validity}\label{section:threats}
 

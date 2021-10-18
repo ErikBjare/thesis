@@ -12,10 +12,14 @@ digraph graphname {
     C3 -> A1;
     //{rank = same; C1; C2;}
 
+    // To vertically align the clusters
+    INVIS[style=invis];
+    C1 -> INVIS [style=invis; weight=100];
+
     // Uncontrolled
     //U1[label="EEG setup"];
     U2[label="ActivityWatch setup"];
-    U3[label="Organic device use"];
+    U3[label="Natural device use"];
     C1 -> U3;
     U2 -> U3;
     U3 -> A1;
@@ -27,4 +31,19 @@ digraph graphname {
     A1 -> A2;
     //{rank = same; A1; A2;}
 
+    subgraph cluster_setup { 
+        label="Setup";
+        style=dotted;
+        C1; C2; U2;
+    }
+    subgraph cluster_run { 
+        label="Run";
+        style=dotted;
+        C3; INVIS; U3;
+    }
+    subgraph cluster_analysis { 
+        label="Analysis";
+        style=dotted;
+        A1; A2;
+    }
 }

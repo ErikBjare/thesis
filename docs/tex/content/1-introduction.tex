@@ -1,7 +1,6 @@
 \chapter{Introduction}
 
 %\change[inline]{Change `device/computer activity' -> `task'?}
-%\change[inline]{Change `natural (istic)' -> `organic'?}
 
 % How to write an introduction: https://student.unsw.edu.au/introductions
 
@@ -95,7 +94,7 @@ Furthermore, our naturalistic experiments indicate that a consumer-grade EEG dev
 
     EEG works by measuring tiny amounts of electricity (on the order of microvolts) on the scalp to listen to the underlying firing of neurons. By placing electrodes in various configurations, information about the activity of different brain regions can be inferred. The extent of how much information can actually be decoded from the signal remains an open research question.
 
-    But EEG is not without its limitations --- among them a notably low signal-to-noise ratio~\cite{mcfarland_eeg-based_2017}, as well as being difficult to use for discerning activity deeper in the brain~\cite{fahimi_hnazaee_localization_2020} --- yet these limitations have been overcome for many applications, like \emph{Event-related Potential} (ERP) experiments, and has even turned out prove sufficient for high-speed \emph{Brain-Computer Interface} (BCI) applications through detecting visual evoked potentials (VEPs)~\cite{spuler_high-speed_2017}.
+    But EEG is not without its limitations --- among them a notably low signal-to-noise ratio~\cite{mcfarland_eeg-based_2017}, as well as being difficult to use for discerning activity deeper in the brain~\cite{fahimi_hnazaee_localization_2020} --- yet these limitations have been overcome for many applications, like \emph{Event-related Potential} (ERP) experiments, and has even proven sufficient for high-speed \emph{Brain-Computer Interface} (BCI) applications through detecting visual evoked potentials (VEPs)~\cite{spuler_high-speed_2017}.
 
     To combat the low signal-to-noise ratio, machine learning methods have been employed with varying degrees of success. Examples from previous research include Convolutional Neural Networks (CNNs), which have been successful in classifying time series in general~\cite{zhao_convolutional_2017}, and EEG data in particular~\cite{schirrmeister_deep_2017}. As well as Hierarchical Convolutional Neural Networks (HCNNs), which have been used for EEG-based emotion recognition~\cite{li_hierarchical_2018}.
 
@@ -196,7 +195,7 @@ Furthermore, our naturalistic experiments indicate that a consumer-grade EEG dev
 
     The primary aim of the thesis, as described in RQ1, is to improve upon previous attempts~\cite{fucci_replication_2019} to classify whether the user is reading code or prose using EEG data. This is to be achieved by using better EEG equipment and explore state of the art analysis methods, such as Riemannian geometry and neural networks.
 
-    The secondary aim of the thesis, as described in RQ2, is to investigate if we can generalize the results from classifying code vs prose comprehension to a wider variety of tasks engaged in during natural device use. This is to be done by using ActivityWatch to label the device activities, and then train a multi-class classifier on the different tasks.
+    The secondary aim of the thesis, as described in RQ2, is to investigate if we can generalize the results from classifying code vs prose comprehension to a wider variety of tasks engaged in during natural device use. This is to be done by using ActivityWatch to label the device activities, and then train classifiers to discern the different activities.
 
     Additional contributions of the thesis include:
 
@@ -233,10 +232,9 @@ Sen får du avsluta med ett stycka eller två där du gör någon syntes av det 
     % Here, we used functional magnetic resonance imaging to investigate two candidate brain systems: the multiple demand (MD) system, typically recruited during math, logic, problem solving, and executive tasks, and the language system, typically recruited during linguistic processing.
     Recently, it has been shown that the multiple demand (MD) system\footnote{A set of frontoparietal brain regions involved in diverse tasks} is typically recruited for code comprehension tasks, as opposed to the language system\footnote{Specialized brain regions that respond selectively during language processing} that is typically recruited during prose comprehension~\cite{ivanova_comprehension_2020}. This sheds light on the significant differences in how the brain processes code vs prose.
 
-    In addition to purely studying comprehension (reading) code and prose, an 2020 fMRI study showed that there are indeed significant neurological differences between \emph{writing} code and prose as well~\cite{noauthor_neurological_nodate}.
+    In addition to purely studying comprehension (reading) code and prose, an 2020 fMRI study showed that there are indeed significant neurological differences between \emph{writing} code and prose as well~\cite{noauthor_neurological_nodate}. This indicates that code and prose are dissimilar not only in \emph{comprehension} but also in \emph{synthesis}, as we ourselves investigate in our naturalistic device use experiments.
 
     \add[inline]{briefly summarize results of referenced paper, or integrate with section about the review?}
-    In software engineering research, low-cost biosensors such as wristbands that measure electrodermal activity and heart-related metrics have been used for emotion detection, as a tool in studying developer productivity~\cite{girardi_recognizing_2020}. 
+    In software engineering research, low-cost biosensors (such as wristbands that measure electrodermal activity and heart-related metrics) have been used for emotion detection, as a tool in studying developer productivity~\cite{girardi_recognizing_2020}. 
 
-    A systematic mapping study has also been conducted by Vieira et al.~\cite{vieira_usage_2021} which reviews the usage of psychophysiological data in software engineering.
-    \add[inline]{Ett par meningar om vad Vieiras secondary study kom fram till. De stora dragen... vilka slutsatser hade hen?}
+    A systematic mapping study has also been conducted by Vieira et al.~\cite{vieira_usage_2021} which reviews the usage of psychophysiological data in software engineering. They filtered out 27 studies and found that the most used technique was EEG (used in 8 out of 27 studies), followed by eye tracking and fMRI (each used in 5 studies). It also found that two thirds of the studies aimed to understand how developers understand source code and which strategies they use during debugging.

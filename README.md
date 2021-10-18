@@ -6,7 +6,7 @@ MSc Thesis
 [![Typechecking: Mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-My MSc thesis on "Classifying brain activity using low-cost biosensors and automated time tracking" (working title).
+My MSc thesis on "Classifying brain activity using electroencephalography and automated time tracking" (working title).
 
 It is very much a work-in-progress. Progress is tracked using the [GitHub Projects board](https://github.com/ErikBjare/thesis/projects/1).
 
@@ -71,15 +71,4 @@ See the Acknowledgements section in the [thesis][thesis].
 
 [thesis]: https://erik.bjareholt.com/thesis/thesis.pdf
 [goaldoc]: https://erik.bjareholt.com/thesis/goaldocument.pdf
-
-# Resources
-
- - MNE: https://mne.tools/
- - PsychoPy: https://www.psychopy.org/
-   - Invaluable for running experiments.
- - [eeg-notebooks][eegnb]
-   - Have examples with sklearn + riemannian geometry.
- - Overview of public EEG datasets: https://github.com/meagmohit/EEG-Datasets
- - [braindecode](https://github.com/braindecode/braindecode): A deep learning toolbox to decode raw time-domain EEG. 
-
 [eegnb]: https://github.com/NeuroTechX/eeg-notebooks

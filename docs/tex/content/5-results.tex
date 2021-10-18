@@ -40,7 +40,7 @@
                 Median & 0.5985 & 0.573 & 0.574 & 0.646 \\
                 \bottomrule
             \end{tabular}
-            \caption{The balanced accuracy for each LORO subject-fold. Excluding subjects 3 and 4. Subject 2 does not exist due to an off-by-one error during experiment setup.}\label{table:bac-all}
+            \caption{The balanced accuracy for each LORO subject-fold. Excluding subjects \#3 and \#4. Subject \#2 does not exist due to an off-by-one mistake during experiment setup (what should have been subject \#2 became \#3).}\label{table:bac-all}
         \end{table}
 
         In Table~\ref{table:bac-all} we see that performance is bad (no better than chance, i.e. $BAC \approx 0.5$) for several subjects. We investigate these and find issues with the quality and amount of data (having no predicted samples for one of the classes). Due to this we remove them from analysis, and get the improved results seen in Table~\ref{table:bac-selective}. We discuss our subject selection further in Section~\ref{section:discussion}.
@@ -144,8 +144,7 @@
 
         Our results are seen in Table~\ref{table:scores-natural}.
 
-        \add[inline]{Förklara vad kolumnerna i löptexten så får du lite textvolym.
-Kan du säga något om när data samlades in? Var det vid ett tillfälle? Flera tillfällen? Tid på dygnet? Eventuellt kan någon sådan metadata även leda till en figur som illustrerar något... Lite deskriptiv statistik kanske finns också? Hur många tillfällen spelades in? Vad var medelvärdet på inspelningstid? Hur såg signalstyrkan ut? Vad triggade dig att sluta spela in? Slut på batteri? Annat? (obekväm sensor, störd av något, eller kände dig färdig)}
+        %\add[inline]{Förklara vad kolumnerna i löptexten så får du lite textvolym. Kan du säga något om när data samlades in? Var det vid ett tillfälle? Flera tillfällen? Tid på dygnet? Eventuellt kan någon sådan metadata även leda till en figur som illustrerar något... Lite deskriptiv statistik kanske finns också? Hur många tillfällen spelades in? Vad var medelvärdet på inspelningstid? Hur såg signalstyrkan ut? Vad triggade dig att sluta spela in? Slut på batteri? Annat? (obekväm sensor, störd av något, eller kände dig färdig)}
 
         \begin{table}[h]
             \centering

@@ -7,34 +7,42 @@ We will briefly review EEG, and some of the machine learning techniques used.
 \section{Electroencephalography (EEG)}\label{eeg-theory}
 
     % Intro
-    Electroencephalography is a method used to measure the activity of neurons in the brain by recording the electrical potential of the scalp. These measurements are performed (sampled) hundreds of times per second, and are then put in sequence to form a signal of so-called ``brain waves''. 
+    Electroencephalography is a method used to measure the activity of neurons in the brain by recording the electrical potential of the scalp. These measurements are performed (sampled) hundreds of times per second, and are then put in sequence to form a signal of what can informally be referred to as ``brain waves''. 
 
     % Use in medicine & research
     As a non-invasive method it is widely used in medicine to diagnose and study a wide range of conditions, including epilepsy and sleep disorders. 
-    At has also found use in research, in particular for studying \emph{Event Related Potentials}, or ERPs, which are stereotyped responses to a stimulus. Examples of common ERPs can be seen in Table~\ref{table:erps}.
+    At has also found use in research, in particular for studying \emph{Event Related Potentials}, or ERPs, which are stereotyped responses to a stimulus, an example of which can be seen in Figure~\ref{figure:n170}. Examples of common ERPs can be seen in Table~\ref{table:erps}.
 
     \begin{table}
+        \centering
         \begin{tabular}{ll}
             \toprule
-            ERP & Description
+            ERP & Elicited by
             \\
             \midrule
-            N170 & Elicited by processing of faces, familiar objects or words.
+            N170 & Processing of faces, familiar objects or words.
             \\
-            N400 & Elicited by words and other stimuli.
+            N400 & Words and other meaningful stimuli.
             \\
-            P600 & Elicited by hearing or reading grammatical errors and other syntactic anomalies.
+            P300 & Decision making, oddball paradigm.
+            \\
+            P600 & Hearing or reading grammatical errors and other syntactic anomalies.
             \\
             \bottomrule
         \end{tabular}
         \caption{Common \emph{Event-Related Potentials} (ERPs)}\label{table:erps}
     \end{table}
 
+    \begin{figure}
+        \centering
+        \includegraphics[trim=0 0 80 0, clip, width=14cm]{img/n170_viz.png}
+        \caption{Example of an aggregated epoch-averaged ERP trials from an N170 experiment where the subject was shown either a face or a house. The vertical line marks the beginning of the epoch. The two stereotyped responses can be seen in \textcolor{red}{\textbf{red}} and \textcolor{green}{\textbf{green}}, with the difference seen in black.}\label{figure:n170}
+        \source{eeg-notebooks \href{https://neurotechx.github.io/eeg-notebooks/auto_examples/visual_n170/01r__n170_viz.html}{experiment gallery}}
+    \end{figure}
+
     One difficulty of working with EEG lies in the low signal-to-noise ratio: measurements are on the order of microvolts, and what is being measured is the electrical activity of some subset of the approximately 86 billion neurons in the human brain. This often leads to signal artifacts from neural activity which is not under study, such as eye blinks and other muscle activity.
 
     It can be contrasted with \emph{electrocorticography} (ECoG), also known as \emph{intracranial electroencephalography} (iEEG), which is an invasive method where a craniotomy (a surgical incision on the skull) is performed to implant an electrode grid directly on the cerebral cortex. The result is higher spatial resolution, and improved signal-to-noise ratio due to closer proximity to neural activity. It is almost exclusively used in patients with intractable epilepsy (not responding to anticonvulsants).
-
-    \add[inline]{Plot of aggregated ERP trials, to highlight an ERP pattern (found in eeg-notebooks examples)}
 
     Electrodes can be placed at different locations on the scalp, targeting different regions of the brain. The system used to position the electrodes is called the 10–20 system (seen in Figure~\ref{fig:1020}), and is the standard way to label electrode placements. The \emph{10} and \emph{20} come from the fact that distances between adjacent electrodes are either 10\% or 20\% of the total front–back or right–left distance of the scalp.
 
@@ -114,9 +122,9 @@ We will briefly review EEG, and some of the machine learning techniques used.
 
     The underlying ML algorithms being trained on the features are often off-the-shelf logistic regression, support vector machines, random forests, etc. Some domain adaptations are found in more complex models like neural networks.
 
-    For logistic regression, the \emph{log loss} function $L$ is defined as:
+    %For logistic regression, the \emph{log loss} function $L$ is defined as:
 
-    \[ L(x, y') = \sum_{(x,y) \in D} -y \log y' - (1 - y) \log(1 - y')\]
+    %\[ L(x, y') = \sum_{(x,y) \in D} -y \log y' - (1 - y) \log(1 - y')\]
 
     \subsection{Riemannian geometry}\label{section:riemannian-theory}
 
@@ -135,7 +143,7 @@ We will briefly review EEG, and some of the machine learning techniques used.
         \begin{figure}[h]
             \centering
             \includegraphics[width=12cm]{img/riemannian-tangent-space.png}
-            \caption{Schematic representation of the symmetric positive definite matrix manifold, the geometric mean $G$ of two points and the tangent space at $G$. The geometric mean of these points is the midpoint on the geodesic connecting $C_1$ and $C_2$, i.e.\ it minimizes the sum of the two squared distances.}\label{figure:tangent-space}
+            \caption{Schematic representation of the symmetric positive definite matrix manifold, the geometric mean $G$ of two points and the tangent space at $G$. The geometric mean of these points is the midpoint on the geodesic connecting $C_1$ and $C_2$, i.e.\ it minimizes the sum of the two squared distances. The map from the tangent space to the manifold is an exponential map. The inverse map is a logarithmic map.}\label{figure:tangent-space}
             \source{Congedo et al.~\cite{congedo_riemannian_2017}}
         \end{figure}
 
