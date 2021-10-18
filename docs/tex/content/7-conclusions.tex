@@ -10,14 +10,16 @@ We conclude by discussing future work on how the method could be improved, how t
 
 The amount of future work to do in this area is substantial, as the author has noticed during the work fighting to keep the scope under control. We will begin this section by focusing on the particular code vs prose task used in the experiment, then we will discuss our naturalistic device use classification, and finally some words on the what field as a whole holds for the future.
 
-To improve the robustness and easy of use for the code vs prose task, we suggest future authors attempting the same experiment make a few changes:
+\begin{minipage}{\textwidth}
+To improve the robustness and easy of use for the code vs prose task, we suggest that future researchers attempting the same experiment should make a few changes:
 
 \begin{itemize}
     \item As mentioned in the method, this study uses prose \emph{review} images from Floyd et al., as opposed to the prose \emph{comprehension} images (in Italian) used by Fucci et al. Ideally, one should create an English prose comprehension set of stimuli images, similar to the ones used by Fucci.
     \item Try to use even better EEG equipment. It would be interesting if performance could be improved by higher density EEG setups.
 \end{itemize}
+\end{minipage}
 
-In addition to the experiment itself, the analysis of the data from the code vs prose task should also be integrated the into \texttt{moabb}\footnote{Mother of All BCI Benchmarks, \url{https://github.com/NeuroTechX/moabb}} to make it easier to replicate the results and evaluate new analysis methods. As mentioned, the study would also benefit from more data collection, possibly through the NeuroTech Challenge Series (mentioned in Section~\ref{section:ntcs}).
+In addition to changes for experiment itself, the analysis of the data from the code vs prose task could also be integrated the into \texttt{moabb}\footnote{Mother of All BCI Benchmarks, \url{https://github.com/NeuroTechX/moabb}} to make it easier to replicate the results and evaluate new analysis methods. As mentioned, the study would also benefit from more data collection, possibly through the NeuroTech Challenge Series (mentioned in Section~\ref{section:ntcs}).
 
 % Naturalistic use
 We also encourage researchers to experiment with our naturalistic device use classification. In particular, future work could extend our method by collecting data on more subjects and activities.
@@ -25,3 +27,8 @@ We also encourage researchers to experiment with our naturalistic device use cla
 We are curious about combining device use data with EEG classifiers of emotion\footnote{Notably difficult, in part due to the subjective nature, and difficulty to consistently elicit in subjects} or other brain states, to try and monitor how we feel during different activities make us feel. This could potentially be introduced as another feature for time tracking software like ActivityWatch, which could then not only be used to see how you spent your time, but also how you felt during that time.
 
 % Note on future work generally. Mention BCIs especially.
+The work on using EEG and other forms of quantified psychophysiology in software engineering is a budding and growing field of inquiry, but methods and equipment are not yet mature for widespread use. We believe researchers would do well to publish more applications of their work, such as open source tools for monitoring the developers psychophysiology (as done in part by this study) to invite more software engineering practitioners into the field.
+
+%The scope of this study had to be restricted to the experiments at hand, and did not investigate BCIs because...
+
+In conclusion, we see a growing abundance of research opportunities in the intersection of neuroscience and software engineering. We expect the intersection of the two fields to continue to expand, and over time commercialize further to enable widespread access to reliable EEG devices and software that can support software engineers in their work.

@@ -1,8 +1,6 @@
 \chapter{Theory}
 
-This chapter serves to introduce relevant theory on which the thesis rests. 
-
-We will briefly review EEG, and some of the machine learning techniques used.
+This chapter serves to introduce relevant theory on which the thesis rests. We will briefly review EEG, it's use in research and practice. We also briefly review machine learning techniques used on EEG data, in particular Riemannian geometry.
 
 \section{Electroencephalography (EEG)}\label{eeg-theory}
 
@@ -36,8 +34,8 @@ We will briefly review EEG, and some of the machine learning techniques used.
     \begin{figure}
         \centering
         \includegraphics[trim=0 0 80 0, clip, width=14cm]{img/n170_viz.png}
-        \caption{Example of an aggregated epoch-averaged ERP trials from an N170 experiment where the subject was shown either a face or a house. The vertical line marks the beginning of the epoch. The two stereotyped responses can be seen in \textcolor{red}{\textbf{red}} and \textcolor{green}{\textbf{green}}, with the difference seen in black.}\label{figure:n170}
-        \source{eeg-notebooks \href{https://neurotechx.github.io/eeg-notebooks/auto_examples/visual_n170/01r__n170_viz.html}{experiment gallery}}
+        \caption{Example of aggregated epoch-averaged ERP trials from an N170 experiment, where the subject was shown either a face (in \textcolor{green}{\textbf{green}}) or a house (in \textcolor{red}{\textbf{red}}). The difference between the two stereotyped responses can be seen in black. The vertical line marks the beginning of the epoch.}\label{figure:n170}
+        \source{eeg-notebooks \href{https://neurotechx.github.io/eeg-notebooks/auto_examples/visual_n170/01r__n170_viz.html}{experiment gallery} (BSD 3-clause)}
     \end{figure}
 
     One difficulty of working with EEG lies in the low signal-to-noise ratio: measurements are on the order of microvolts, and what is being measured is the electrical activity of some subset of the approximately 86 billion neurons in the human brain. This often leads to signal artifacts from neural activity which is not under study, such as eye blinks and other muscle activity.

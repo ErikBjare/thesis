@@ -136,6 +136,8 @@ Furthermore, our naturalistic experiments indicate that a consumer-grade EEG dev
     %  - HEG
 
 
+\vfill
+\pagebreak
 \section{Automated time trackers}
 
     People spend more time than ever using computing devices. Work, entertainment, and services, have been steadily moving online over the last few decades and this trend is expected to continue.
@@ -172,12 +174,10 @@ Furthermore, our naturalistic experiments indicate that a consumer-grade EEG dev
 
         The free and open source automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_2020}, previously developed by the author of this thesis together with contributors, addresses aforementioned issues with other software around source availability/licensing, privacy, temporal resolution, event detail, and cross-platform support.
 
-        \change[inline]{Update screenshot to v0.11}
-
         \begin{figure}[h]
         \centering
-        \includegraphics[width=12cm]{img/screenshot-aw-activity.png}
-        \caption{ActivityWatch activity dashboard. Showing top applications, window titles, browser domains, and categories.}\label{fig:aw}
+        \includegraphics[width=14cm,frame]{img/screenshot-aw-activity.png}
+        \caption{A screenshot of the ActivityWatch activity dashboard. Showing top categories, top window titles, an hour-by-hour stacked barchart, top applications, the category tree, and a sunburst visualization of the time spent in each category.}\label{fig:aw}
         \end{figure}
 
         ActivityWatch as a project was started in 2016 by the author of this thesis, with his brother Johan joining development soon after. It has since become a popular open source alternative to other time tracking software. It has received numerous contributions from users\footnote{Contributor statistics available at \href{https://activitywatch.net/contributors/}{activitywatch.net/contributors/}} and has over 100,000 downloads\footnote{Download statistics available at \href{https://activitywatch.net/stats/}{activitywatch.net/stats/}}.
@@ -224,17 +224,17 @@ Furthermore, our naturalistic experiments indicate that a consumer-grade EEG dev
 
 \section{Related work}
 
-    \add[inline]{Lite kvar att utveckla i denna del. En sida till i omfattning känns rimligt. Det brukar vara ganska tacksamt att skriva... identifiera 5-10 relaterade artiklar och sammanfattade dem med i ett stycke var med egna ord. Eftersom du har översiktsstudien av Vieira sa kan du slipper du leta artiklar själv.
-Sen får du avsluta med ett stycka eller två där du gör någon syntes av det du har läst... finns det mönster i det som har gjorts? finns det något som har utelämnats? Kan du skapa en nisch för ditt bidrag? Sen kliver du in där och säger precis hur du bidrar med något som är både "novel" and "significant".}
+    %\add[inline]{Lite kvar att utveckla i denna del. En sida till i omfattning känns rimligt. Det brukar vara ganska tacksamt att skriva... identifiera 5-10 relaterade artiklar och sammanfattade dem med i ett stycke var med egna ord. Eftersom du har översiktsstudien av Vieira sa kan du slipper du leta artiklar själv. Sen får du avsluta med ett stycka eller två där du gör någon syntes av det du har läst... finns det mönster i det som har gjorts? finns det något som har utelämnats? Kan du skapa en nisch för ditt bidrag? Sen kliver du in där och säger precis hur du bidrar med något som är både "novel" and "significant".}
 
-    Previous research shows that fMRI (by Floyd et al.~\cite{floyd_decoding_2017}) and EEG (by Fucci et al.~\cite{fucci_replication_2019}) can be used to classify whether a subject is reading prose or code. However, accuracy with single-channel EEG has been found to be poor, and notably outperformed by a heart rate variability (HRV) monitor.
+    Previous research shows that fMRI (by Floyd et al.~\cite{floyd_decoding_2017}) and EEG (by Fucci et al.~\cite{fucci_replication_2019}) can be used to classify whether a subject is reading prose or code. However, accuracy with single-channel EEG has been found to be poor, and notably outperformed by a heart rate variability (HRV) monitor. This is a result we seek to improve upon by using better EEG equipment.
+
+    One paper in particular utilized other low-cost biosensors (such as wristbands that measure electrodermal activity and heart-related metrics) to perform emotion detection on developers at work, as a tool to study developer productivity~\cite{girardi_recognizing_2020}. In our review of the literature we find emotion detection to be a hard problem, with considerable difficulty in designing up robust experiments that reliably elicit the desired emotions in subjects. While we initially also considered attempting emotion classification, we ultimately chose not to due to the aforementioned issues around experimental design.
 
     % Here, we used functional magnetic resonance imaging to investigate two candidate brain systems: the multiple demand (MD) system, typically recruited during math, logic, problem solving, and executive tasks, and the language system, typically recruited during linguistic processing.
-    Recently, it has been shown that the multiple demand (MD) system\footnote{A set of frontoparietal brain regions involved in diverse tasks} is typically recruited for code comprehension tasks, as opposed to the language system\footnote{Specialized brain regions that respond selectively during language processing} that is typically recruited during prose comprehension~\cite{ivanova_comprehension_2020}. This sheds light on the significant differences in how the brain processes code vs prose.
+    Returning to our code vs prose task, it has recently been shown that the multiple demand (MD) system\footnote{A set of frontoparietal brain regions involved in diverse tasks} is typically recruited for code comprehension tasks, as opposed to the language system\footnote{Specialized brain regions that respond selectively during language processing} that is typically recruited during prose comprehension~\cite{ivanova_comprehension_2020}. This sheds light on the significant differences in how the brain processes code vs prose.
 
-    In addition to purely studying comprehension (reading) code and prose, an 2020 fMRI study showed that there are indeed significant neurological differences between \emph{writing} code and prose as well~\cite{noauthor_neurological_nodate}. This indicates that code and prose are dissimilar not only in \emph{comprehension} but also in \emph{synthesis}, as we ourselves investigate in our naturalistic device use experiments.
+    In addition to purely studying comprehension (reading) code and prose, an 2020 fMRI study showed that there are indeed significant neurological differences between \emph{writing} code and prose as well~\cite{noauthor_neurological_nodate}. This indicates that code and prose are dissimilar not only in \emph{comprehension} but also in \emph{synthesis}, as we also investigate in our naturalistic device use experiments.
 
-    \add[inline]{briefly summarize results of referenced paper, or integrate with section about the review?}
-    In software engineering research, low-cost biosensors (such as wristbands that measure electrodermal activity and heart-related metrics) have been used for emotion detection, as a tool in studying developer productivity~\cite{girardi_recognizing_2020}. 
+    %\add[inline]{briefly summarize results of referenced paper, or integrate with section about the review?}
 
-    A systematic mapping study has also been conducted by Vieira et al.~\cite{vieira_usage_2021} which reviews the usage of psychophysiological data in software engineering. They filtered out 27 studies and found that the most used technique was EEG (used in 8 out of 27 studies), followed by eye tracking and fMRI (each used in 5 studies). It also found that two thirds of the studies aimed to understand how developers understand source code and which strategies they use during debugging.
+    A systematic mapping study has also been conducted by Vieira et al.~\cite{vieira_usage_2021} which reviews the usage of psychophysiological data in software engineering. They filtered out 27 studies and found that the most used technique was EEG (used in 8 out of 27 studies), followed by eye tracking and fMRI (each used in 5 studies). They found that two thirds of the studies aimed to understand how developers understand source code and which strategies they use during debugging. They observe a greater number of publications in recent years, and highlight the integration between neuroscience and software engineering as a way to open up for innovative studies that make use of psychophysiology in the software development process.

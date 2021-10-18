@@ -29,6 +29,7 @@
 \usepackage{multirow}
 \usepackage{pdflscape}
 \usepackage{afterpage}
+\usepackage[export]{adjustbox}
 \usepackage[dvipsnames]{xcolor}
 \usepackage[bottom]{footmisc}
 \usepackage[colorinlistoftodos, prependcaption, textsize=tiny]{todonotes}
@@ -131,8 +132,8 @@
 
 \defbibheading{notcited}{\section*{Further Reading}}
 
-\def\mytitleen{Classifying brain activity using electroencephalography and automated time tracking}
-\def\mytitlesv{Klassificering av hjärnaktivitet med elektroencephalografi och automatiserad tidsspårning}
+\def\mytitleen{Classifying brain activity using electroencephalography and automated tracking of computer use}
+\def\mytitlesv{Klassificering av hjärnaktivitet med elektroencephalografi och automatiserad loggning av datoranvändning}
 
 \ifx\UseCSLTH\undefined
     \title{%
@@ -186,8 +187,9 @@
 \fi
 
 \listoftodos[Notes \& TODOs]
-
+\vfill
 \pagebreak
+
 \begin{refsection}
 
 \input{content/9-preface}

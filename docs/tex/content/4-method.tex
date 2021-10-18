@@ -1,6 +1,10 @@
 \chapter{Method}
 
-We start by deciding on an EEG device to use, we then collect data for both the controlled and naturalistic experiments. Once the data has been collected, we continue with our analysis by training classifiers using various machine learning methods. An overview of the process is seen in Figure~\ref{fig:method}.
+We start by deciding on an EEG device to use, we then collect data for both the controlled and naturalistic experiments. Once the data has been collected, we perform data labelling, transformation, and cleaning. 
+
+Finally, we train classifiers using various machine learning methods, in particular ones based on Riemannian geometry. We also train a classifier based on bandpower-features as a baseline reference.
+
+An overview of the process is presented in Figure~\ref{fig:method}.
 
 \begin{figure}[h]
     \centering
@@ -18,6 +22,8 @@ The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replica
         \item We have reimplemented the task in eeg-notebooks.
         \item We have used the original prose-review stimuli by Floyd et al.~\cite{floyd_decoding_2017}.
 \end{itemize}
+
+    Some of these differences are motivated and discussed further later in the report, especially in Section~\ref{section:threats}.
 \end{minipage}
 
 % Comparing to Fucci and original study
@@ -149,7 +155,7 @@ To collect data for the naturalistic use experiment, we:
                 \caption{Sample of the prose comprehension task used by Fucci et al. (translated from Italian).}\label{fig:prose-comp-fucci}
             \end{figure}
 
-            We implemented the task in eeg-notebooks~\cite{barachant_eeg-notebooks_2020}, which uses previously mentioned libraries for data collection as well as PsychoPy~\cite{peirce_psychopy2_2019} to provide the stimuli.
+            We implemented the task in eeg-notebooks~\cite{barachant_eeg-notebooks_2020}, which uses previously mentioned libraries for data collection as well as PsychoPy~\cite{peirce_psychopy2_2019} to present the stimuli.
 
             Before each run, the subject was asked about their gender, age, handedness, and software development experience (specifically experience with C/C++). For good measure, we also asked if the subject had consumed caffeine the hours prior to the experiment.
 
