@@ -6,7 +6,7 @@ dist: docs tex notebooks
 docs:
 	cd docs/sphinx && poetry run make html
 
-tex: dist/thesis.pdf dist/goaldocument.pdf
+tex: dist/thesis.pdf dist/goaldocument.pdf dist/popsci.pdf
 
 lint-tex:
 	# Check 'as seen in' should probably be just 'seen in'
