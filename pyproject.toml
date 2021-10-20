@@ -27,7 +27,7 @@ matplotlib = "*"
 pandas = "*"
 
 # ML
-scikit-learn = "^0.23.2"
+scikit-learn = "^1.0"  # 1.0 is blocked by moabb (https://github.com/NeuroTechX/moabb/pull/242)
 pyriemann = "^0.2.7"
 xgboost = "^1.2.1"
 torch = "^1.8.1"
@@ -43,7 +43,7 @@ eeg-notebooks = {git = "https://github.com/NeuroTechX/eeg-notebooks.git"}
 yasa = "^0.5"
 entropy = {git = "https://github.com/raphaelvallat/entropy.git"}
 pylsl = "1.10.5"  # required, see: https://github.com/alexandrebarachant/muse-lsl/issues/136
-Braindecode = {git = "https://github.com/braindecode/braindecode.git"}
+Braindecode = "^0.5.1"
 
 # Bluetooth
 pygatt = {version = "^4.0.5", extras = ["GATTTOOL"]}
@@ -52,14 +52,14 @@ pygatt = {version = "^4.0.5", extras = ["GATTTOOL"]}
 PyQt5 = "^5.15.1"  # required for `muselsl view` to work, due to: https://github.com/alexandrebarachant/muse-lsl/issues/111
 pyqtgraph = "^0.11.0"
 vispy = "^0.6.5"
-wxpython = {platform = "linux", url = "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04/wxPython-4.1.1-cp38-cp38-linux_x86_64.whl"}
+wxpython = {platform = "linux", url = "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04/wxPython-4.1.1-cp38-cp38-linux_x86_64.whl", python='3.8'}
 
 # Misc
 coloredlogs = "^14.0"
 bitstring = "^3.1.7"  # depended on by muse-lsl, don't know why it isn't installed
 tqdm = "^4.57.0"
 pybv = "^0.3.0"
-moabb = "^0.4.2"
+moabb = "^0.4.4"
 
 [tool.poetry.dev-dependencies]
 # Linting & formatting
