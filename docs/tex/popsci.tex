@@ -42,10 +42,17 @@
 
 Vi har använt EEG, eller elektroencefalografi som det heter, vilket är en teknik som mäter hjärnaktivitet med hjälp av elektroder som sätts på huvudet. Elektroderna mäter små spänningsskillnader över hjärnan som skapas när hjärnceller aktiveras. Dessa mätningar sker 256 gånger per sekund och bildar en EEG-signal som informellt kallas ``hjärnvågor''. Denna signal kan man sedan applicera olika tekniker och maskininlärningsmetoder på för att detektera vissa typer av hjärnaktivitet.
 
-% Hur gjorde du?
-Vi använde en billig (ca 3000kr) EEG enhet för att mäta 9 utvecklares ``hjärnvågor'' under olika datoraktiviteter. I synnerhet medans de antingen läser ett kodproblem, eller granskar en bit prosa. Vi använde sedan maskininlärningsmetoder för att lära en algoritm urskilja de två aktiviteterna med hjälp utav bara EEG-signalen.
+%\begin{figure}[!bth] % Use pictures in your pop-vet!
+%\includegraphics[angle=90, trim=200 50 250 100,clip, width=\columnwidth]{img/openbci-cyton.jpg} 
+%    \caption{Ett 3D-printat EEG headset (OpenBCI Ultracortex Mark IV) kopplat med EEG-enheten OpenBCI Cyton.}
+%\end{figure}
 
-Utöver vårat ``kod eller prosa'' experiment utförde vi även ett experiment i en naturlig miljö, där en utvecklare fritt fick använda sin dator till olika aktiviteter. Med hjälp av vårat tidigare utvecklade program ActivityWatch, som automatiskt spårar hur man spenderar sin tid vid datorn, kan vi då märka upp tidsintervallen när personen skrev kod, skrev prosa, scrollade på Twitter, eller tittade på YouTube. Vi tränade sedan igen maskininlärningsalgoritmer för dessa 4 kategorier, och visar att vissa av de enkelt kan urskiljas. Våra resultat visade att det gick bra att urskilja på aktiviteter som var arbete och inte arbete, medans det var svårare att urskilja olika arbetsaktiviteter från varandra.
+% Hur gjorde du?
+Vi använde en billig EEG enhet (ca 3000kr) för att mäta 9 utvecklares ``hjärnvågor'' under olika datoraktiviteter. I synnerhet medans de antingen läser ett kodproblem, eller granskar en bit prosa. Vi använde sedan maskininlärningsmetoder för att lära en algoritm urskilja de två aktiviteterna med hjälp utav bara EEG-signalen.
+
+Utöver vårat ``kod eller prosa'' experiment utförde vi även ett experiment i en naturlig miljö, där en utvecklare fritt fick använda sin dator till olika aktiviteter. Med hjälp av vårat tidigare utvecklade program ActivityWatch, som automatiskt spårar hur man spenderar sin tid vid datorn, kan vi då märka upp tidsintervallen när personen skrev kod, skrev prosa, scrollade på Twitter, eller tittade på YouTube. 
+
+Vi tränade sedan igen maskininlärningsalgoritmer för dessa 4 kategorier, och våra resultat visade att det gick bra att urskilja på aktiviteter som var arbete och inte arbete, medans det var svårare att urskilja olika arbets- eller rekreationsaktiviteter från varandra.
 
 % Vad har du kommit fram till?
 % Vi har kommit fram till att teknik såsom elektroencefalografi kan användas för att urskilja om en person läser kod eller prosa. Vi visar också att flera andra datoraktiviteter kan urskiljas med samma teknik.
@@ -58,13 +65,6 @@ Utöver vårat ``kod eller prosa'' experiment utförde vi även ett experiment i
 % Våran klassificering av om en programmerare tänker på kod eller prosa kan användas för att mäta utvecklarens fokus på just kod (och inte bara fokus generellt).
 
 % Varför är ditt arbete viktigt?
-Vårat arbete förbättrar tidigare studiers resultat för att urskilja om en utvecklare resonerar kring kod eller prosa. Utöver det är studien sin första av sin typ då den använder automatiserad tidsspårning av vad man gör vid datorn för att se ifall man kan klassificera datoraktiviteter i en naturlig miljö.
-
-Vi vidareutvecklar även flera av de programvarubiblioteken som används för denna typen av studier.
-
-%\begin{figure}[!bth] % Use pictures in your pop-vet!
-%\includegraphics[width=\columnwidth]{samplePic.pdf} 
-%\caption{En fin bild (TODO)}
-%\end{figure}
+Vårat arbete förbättrar tidigare studiers resultat för att urskilja om en utvecklare resonerar kring kod eller prosa. Utöver det är en del av studien den första av sin typ då den använder automatiserad tidsspårning av vad man gör vid datorn för att se ifall man kan klassificera flera olika datoraktiviteter i en naturlig miljö. Vi har även bidragit till utvecklingen av flera programvarubibliotek som används för denna typen av studier.
 
 \end{document}
