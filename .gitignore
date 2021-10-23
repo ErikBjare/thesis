@@ -19,6 +19,7 @@ other
 vendor
 prof
 .vscode
+.idea
 
 # Python
 .venv

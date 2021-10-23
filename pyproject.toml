@@ -4,11 +4,13 @@ version = "0.1.0"
 description = ""
 authors = ["Erik Bjäreholt <erik@bjareho.lt>"]
 packages = [
+    { include = "brainwatch", from = "src" },
     { include = "eegwatch", from = "src" },
     { include = "eegclassify", from = "src" },
 ]
 
 [tool.poetry.scripts]
+brainwatch = "brainwatch.main:main"
 eegwatch = "eegwatch.main:main"
 eegclassify = "eegclassify.main:main"
 
@@ -34,8 +36,8 @@ torch = "^1.8.1"
 imbalanced-learn = "*"
 
 # EEG-specific
-mne = "^0.21.0"
-mne-bids = "^0.5"
+mne = "^0.23.0"
+mne-bids = "*"
 brainflow = "*"
 muselsl = {git = "https://github.com/ErikBjare/muse-lsl.git", branch="dev/bleak"}
 #muselsl = {path = "./vendor/muse-lsl"}
@@ -52,7 +54,7 @@ pygatt = {version = "^4.0.5", extras = ["GATTTOOL"]}
 PyQt5 = "^5.15.1"  # required for `muselsl view` to work, due to: https://github.com/alexandrebarachant/muse-lsl/issues/111
 pyqtgraph = "^0.11.0"
 vispy = "^0.6.5"
-wxpython = {platform = "linux", url = "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04/wxPython-4.1.1-cp38-cp38-linux_x86_64.whl", python='3.8'}
+wxpython = {platform = "linux", url = "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-20.04/wxPython-4.1.1-cp38-cp38-linux_x86_64.whl", python="3.8"}
 
 # Misc
 coloredlogs = "^14.0"
@@ -99,7 +101,8 @@ addopts = "--cov-report=term --cov-report=xml --cov-report=html --cov=eegclassif
 testpaths = [
     "src",
     "tests",
-    "notebooks",
+    # Don't run long-running notebooks as tests.
+    #"notebooks",
 ]
 python_files = ["*.py", "*.ipynb"]
 filterwarnings = [
