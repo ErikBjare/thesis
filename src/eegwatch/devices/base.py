@@ -27,7 +27,7 @@ def _check_samples(
         chmax = dict(zip(channels, np.max(np.abs(buffer), axis=0)))
         return {ch: maxval < max_uv_abs for ch, maxval in chmax.items()}
     elif max_std:
-        chstd = dict(zip(channels, np.std(buffer), axis=0))
+        chstd = dict(zip(channels, np.std(buffer, axis=0)))
         return {ch: std < max_std for ch, std in chstd.items()}
     else:
         raise ValueError("at least one of max_uv_abs and max_std have to be specified")

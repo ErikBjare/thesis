@@ -3,7 +3,6 @@ import itertools
 
 import pandas as pd
 import numpy as np
-import yasa
 
 from eegwatch.bids import raw_to_mne
 
@@ -25,6 +24,8 @@ def bandpower(df: pd.DataFrame, ratios=False) -> pd.DataFrame:
     Computes bandpower features using the bands in BAND_NAMES, and
     optionally computes all permutations of ratios between the bands.
     """
+    import yasa
+
     df.loc[:, "bandpower"] = [[] for _ in range(len(df))]
     for i, row in df.iterrows():
         # Handle differences in input data (may be with or without timestamps)
