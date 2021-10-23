@@ -91,7 +91,7 @@ def _clean_inconsistent_sampling(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def _check_row_signal_quality(
-    s: pd.Series, max_uv_abs: float = MAX_UV_ABS_DEFAULT
+    s: pd.Series, max_uv_abs: float = None, max_std: float = None
 ) -> bool:
     """Takes a single row as input, returns true if good signal quality else false"""
     # TODO: Improve quality detection
@@ -110,12 +110,12 @@ def _row_stats(s: pd.Series):
 
 
 def _clean_signal_quality(
-    df: pd.DataFrame, max_uv_abs: float = MAX_UV_ABS_DEFAULT
+    df: pd.DataFrame, max_uv_abs: float = None, max_std: float = None
 ) -> pd.DataFrame:
     bads = []
     for i, row in df.iterrows():
         # print(_row_stats(row))
-        if not _check_row_signal_quality(row, max_uv_abs):
+        if not _check_row_signal_quality(row, max_uv_abs, max_std):
             bads.append(i)
 
     logger.warning(f"Dropping {len(bads)} bad rows due to bad signal quality")

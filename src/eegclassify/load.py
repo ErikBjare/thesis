@@ -3,7 +3,7 @@ import logging
 from pathlib import Path
 from typing import List
 from multiprocessing import Pool
-from datetime import datetime, timezone
+from datetime import datetime
 from pprint import pprint
 
 from tqdm import tqdm
@@ -33,12 +33,15 @@ TEST_EEG_FILES_MUSE = [
 memory = joblib.Memory(location=cachedir)
 
 
-def load_mne(with_annotations: bool = True) -> mne.io.Raw:
+def load_mne(files=None, with_annotations: bool = True) -> mne.io.Raw:
     # check bids.py
     # TODO: Get Raw object with all EEG data
+    if files is None:
+        files = _get_all_recording_files()[:2]
     logger.info("Loading EEG data...")
     raws = []
-    for fp in tqdm(_get_all_recording_files()[:2]):
+    for fp in tqdm(files):
+        logger.info(fp)
         raws.append(csv_to_mne(fp))
     pprint(raws)
 

@@ -42,11 +42,11 @@ def csv_to_mne(path: Path) -> mne.io.RawArray:
     data = pd.read_csv(path, delimiter=",", skiprows=1).values
     start = data[0][0]
     print(f"started at {start}")
-    # Drop first and last col (timestamp and Right AUX)
-    data = np.delete(data, 5, axis=1)
+    # Drop last col if AUX
+    if data.shape[1] > 5:
+        data = np.delete(data, 5, axis=1)
+    # Drop first col (timestamp)
     data = np.delete(data, 0, axis=1)
-    # print(data[3])
-
     return raw_to_mne(data, first_samp=start)
 
 

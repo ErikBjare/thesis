@@ -189,20 +189,24 @@ class BrainflowDevice(EEGDevice):
         # pull EEG channel data via brainflow API
         eeg_data = data[:, BoardShim.get_eeg_channels(self.brainflow_id)]
         timestamps = data[:, BoardShim.get_timestamp_channel(self.brainflow_id)]
-
-        # Create a column for the stimuli to append to the EEG data
-        stim_array = create_stim_array(timestamps, self.markers)
         timestamps = timestamps[
             ..., None
         ]  # Add an additional dimension so that shapes match
         total_data = np.append(timestamps, eeg_data, 1)
-        total_data = np.append(
-            total_data, stim_array, 1
-        )  # Append the stim array to data.
+
+        # Create a column for the stimuli to append to the EEG data
+        if self.markers:
+            stim_array = create_stim_array(timestamps, self.markers)
+            total_data = np.append(
+                total_data, stim_array, 1
+            )  # Append the stim array to data.
 
         # Subtract five seconds of settling time from beginning
         # total_data = total_data[5 * self.sfreq :]
-        df = pd.DataFrame(total_data, columns=["timestamps"] + ch_names + ["stim"])
+        df = pd.DataFrame(
+            total_data,
+            columns=["timestamps"] + ch_names + (["stim"] if self.markers else []),
+        )
         return df
 
     def _save(self) -> None:

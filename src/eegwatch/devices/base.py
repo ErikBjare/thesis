@@ -17,11 +17,20 @@ logger = logging.getLogger(__name__)
 
 
 def _check_samples(
-    buffer: np.ndarray, channels: List[str], max_uv_abs=200
+    buffer: np.ndarray,
+    channels: List[str],
+    max_uv_abs: float = None,
+    max_std: float = None,
 ) -> Dict[str, bool]:
     # TODO: Better signal quality check
-    chmax = dict(zip(channels, np.max(np.abs(buffer), axis=0)))
-    return {ch: maxval < max_uv_abs for ch, maxval in chmax.items()}
+    if max_uv_abs:
+        chmax = dict(zip(channels, np.max(np.abs(buffer), axis=0)))
+        return {ch: maxval < max_uv_abs for ch, maxval in chmax.items()}
+    elif max_std:
+        chstd = dict(zip(channels, np.std(buffer), axis=0))
+        return {ch: std < max_std for ch, std in chstd.items()}
+    else:
+        raise ValueError("at least one of max_uv_abs and max_std have to be specified")
 
 
 def test_check_samples():
