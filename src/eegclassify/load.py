@@ -72,7 +72,7 @@ def load_mne_labels() -> mne.Annotations:
 
 
 def test_load_mne():
-    raw = load_mne()
+    raw = load_mne(TEST_EEG_FILES_MUSE)
     print(raw)
 
 

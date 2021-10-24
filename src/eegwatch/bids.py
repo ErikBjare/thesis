@@ -1,3 +1,4 @@
+import random
 from pathlib import Path
 
 import pytest
@@ -68,22 +69,25 @@ def csv_to_fif(path: Path):
     return path_out
 
 
-def fif_to_bids(path: Path):
+def fif_to_bids(path: Path, root: Path = data_dir / "BIDS"):
     raw = mne.io.read_raw_fif(path)
 
+    # TODO: Fix this
     bids_path = mne_bids.BIDSPath(
         subject="01",
         session="01",
         task="testing",
         acquisition="01",
         run="01",
-        root=data_dir / "BIDS",
+        root=root,
     )
     mne_bids.write_raw_bids(raw, bids_path, overwrite=True)
+    return bids_path
 
 
 @pytest.mark.filterwarnings("ignore:Converting")
 def test_csv_to_bids():
     path_fif = csv_to_fif(PATH_TESTFILE)
-    path_bids = fif_to_bids(path_fif)
+    dest_dir = data_dir / "testing" / f"bids-{random.randint(100, 1000)}"
+    path_bids = fif_to_bids(path_fif, dest_dir)
     print(path_bids)
