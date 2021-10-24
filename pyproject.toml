@@ -59,8 +59,8 @@ wxpython = {platform = "linux", url = "https://extras.wxpython.org/wxPython4/ext
 # Misc
 coloredlogs = "^14.0"
 bitstring = "^3.1.7"  # depended on by muse-lsl, don't know why it isn't installed
-tqdm = "^4.57.0"
-pybv = "^0.3.0"
+tqdm = "*"
+pybv = "*"  # for the BrainVision format
 moabb = "^0.4.4"
 
 [tool.poetry.dev-dependencies]

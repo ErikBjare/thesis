@@ -2110,11 +2110,14 @@ pybtex = ">=0.16"
 
 [[package]]
 name = "pybv"
-version = "0.3.0"
+version = "0.6.0"
 description = "A lightweight I/O utility for the BrainVision data format."
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = "~=3.7"
+
+[package.dependencies]
+numpy = ">=1.16.0"
 
 [[package]]
 name = "pycodestyle"
@@ -2305,11 +2308,14 @@ python-versions = "*"
 
 [[package]]
 name = "pyparsing"
-version = "2.4.7"
+version = "3.0.0"
 description = "Python parsing module"
 category = "main"
 optional = false
-python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+python-versions = ">=3.6"
+
+[package.extras]
+diagrams = ["jinja2", "railroad-diagrams"]
 
 [[package]]
 name = "pypiwin32"
@@ -3615,7 +3621,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8, <3.10"  # Less than 3.10 due to numba not having support
-content-hash = "e8a12f64f04f2c1070159c5fbd0d7c9ecfbf05e3bfce848accd13b9001cea5b7"
+content-hash = "5285684ee23e403c70e556c7673ae4452947a114a76ee0ab28c5934a0c195b27"
 
 [metadata.files]
 alabaster = [
@@ -4846,8 +4852,8 @@ pybtex-docutils = [
     {file = "pybtex_docutils-1.0.1-py3-none-any.whl", hash = "sha256:42e379bd1d5473b9fd7be4b3a64ca291d4fdc9ae6c6854e52d1d0157c955bbfa"},
 ]
 pybv = [
-    {file = "pybv-0.3.0-py3-none-any.whl", hash = "sha256:22085b8f7dca90388b1fb00894a07d298ac6aed602aede84b2748ba3d3f719ea"},
-    {file = "pybv-0.3.0.tar.gz", hash = "sha256:f9060eaa7950c94e36653ee68138e4662cd840d40e5c0e981f99240aab28f48a"},
+    {file = "pybv-0.6.0-py3-none-any.whl", hash = "sha256:7bff80d3d44b088a98a7df2877b4d70595dbfbef3a200a10a67acb0c99ba7553"},
+    {file = "pybv-0.6.0.tar.gz", hash = "sha256:ef1104cfcd66dafb7383dc539fe688ebcd6822bffe0f0f743292853586e74ffa"},
 ]
 pycodestyle = [
     {file = "pycodestyle-2.8.0-py2.py3-none-any.whl", hash = "sha256:720f8b39dde8b293825e7ff02c475f3077124006db4f440dcbc9a20b76548a20"},
@@ -4961,8 +4967,8 @@ pyparallel = [
     {file = "pyparallel-0.2.2.tar.gz", hash = "sha256:b5550293af42a42d7b2e1ada1224d3c3ce2f09b80e85421820e068655908c611"},
 ]
 pyparsing = [
-    {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
-    {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
+    {file = "pyparsing-3.0.0-py3-none-any.whl", hash = "sha256:d487599e9fb0dc36bee6b5c183c6fc5bd372ce667736f3d430ab7d842a54a35a"},
+    {file = "pyparsing-3.0.0.tar.gz", hash = "sha256:001cad8d467e7a9248ef9fd513f5c0d39afcbcb9a43684101853bd0ab962e479"},
 ]
 pypiwin32 = [
     {file = "pypiwin32-223-py3-none-any.whl", hash = "sha256:67adf399debc1d5d14dffc1ab5acacb800da569754fafdc576b2a039485aa775"},
