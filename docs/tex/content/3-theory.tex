@@ -11,32 +11,9 @@ This chapter serves to introduce relevant theory on which the thesis rests. We w
     As a non-invasive method it is widely used in medicine to diagnose and study a wide range of conditions, including epilepsy and sleep disorders. 
     At has also found use in research, in particular for studying \emph{Event Related Potentials}, or ERPs, which are stereotyped responses to a stimulus, an example of which can be seen in Figure~\ref{figure:n170}. Examples of common ERPs can be seen in Table~\ref{table:erps}.
 
-    \begin{table}
-        \centering
-        \begin{tabular}{ll}
-            \toprule
-            ERP & Elicited by
-            \\
-            \midrule
-            N170 & Processing of faces, familiar objects or words.
-            \\
-            N400 & Words and other meaningful stimuli.
-            \\
-            P300 & Decision making, oddball paradigm.
-            \\
-            P600 & Hearing or reading grammatical errors and other syntactic anomalies.
-            \\
-            \bottomrule
-        \end{tabular}
-        \caption{Common \emph{Event-Related Potentials} (ERPs)}\label{table:erps}
-    \end{table}
+    \input{figures/table-erps.tex}
 
-    \begin{figure}
-        \centering
-        \includegraphics[trim=0 0 80 0, clip, width=14cm]{img/n170_viz.png}
-        \caption{Example of aggregated epoch-averaged ERP trials from an N170 experiment, where the subject was shown either a face (in \textcolor{green}{\textbf{green}}) or a house (in \textcolor{red}{\textbf{red}}). The difference between the two stereotyped responses can be seen in black. The vertical line marks the beginning of the epoch.}\label{figure:n170}
-        \source{eeg-notebooks \href{https://neurotechx.github.io/eeg-notebooks/auto_examples/visual_n170/01r__n170_viz.html}{experiment gallery} (BSD 3-clause)}
-    \end{figure}
+    \input{figures/n170-example.tex}
 
     One difficulty of working with EEG lies in the low signal-to-noise ratio: measurements are on the order of microvolts, and what is being measured is the electrical activity of some subset of the approximately 86 billion neurons in the human brain. This often leads to signal artifacts from neural activity which is not under study, such as eye blinks and other muscle activity.
 
@@ -138,12 +115,7 @@ This chapter serves to introduce relevant theory on which the thesis rests. We w
 
         To allow for use of other classification approaches in the final step, such as logistic regression and SVMs, we can project our covariance matrices onto a tangent space. Once projected onto this tangent space, our covariance matrices can be compared fairly well using the standard Euclidean distance metric, letting us use common methods which do not employ the Riemannian distance metric~\cite{congedo_riemannian_2017}.
 
-        \begin{figure}[h]
-            \centering
-            \includegraphics[width=12cm]{img/riemannian-tangent-space.png}
-            \caption{Schematic representation of the symmetric positive definite matrix manifold, the geometric mean $G$ of two points and the tangent space at $G$. The geometric mean of these points is the midpoint on the geodesic connecting $C_1$ and $C_2$, i.e.\ it minimizes the sum of the two squared distances. The map from the tangent space to the manifold is an exponential map. The inverse map is a logarithmic map.}\label{figure:tangent-space}
-            \source{Congedo et al.~\cite{congedo_riemannian_2017}}
-        \end{figure}
+        \input{figures/riemannian-tangent-space.tex}
 
     \begin{comment}
     \subsection{Neural networks}

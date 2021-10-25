@@ -5,12 +5,7 @@
 \usepackage[smartEllipses]{markdown}  % For markdown
 \def\markdownOptionOutputDir{build}  % Needed, see https://github.com/Witiko/markdown/issues/6#issuecomment-328699108
 
-\usepackage[dvipsnames]{xcolor}
-\usepackage{hyperref}
-\usepackage{comment}
-\usepackage{xargs}
-\usepackage{verbatim}
-\usepackage[colorinlistoftodos, prependcaption, textsize=tiny]{todonotes}
+\input{common-packages.tex}
 
 \usepackage[english]{datetime2}
 \DTMnewdatestyle{dashdate}{%
@@ -31,14 +26,6 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1em}
 
-% Encoding and languages
-\usepackage[T1]{fontenc}        % För svenska bokstäver
-%\usepackage[swedish]{babel}    %Svenska skrivregler och rubriker
-
-% Graphics
-\usepackage{epsfig}
-%\usepackage[dvips]{graphics}
-
 \newcommand\myshade{85}
 \colorlet{mylinkcolor}{violet}
 \colorlet{mycitecolor}{YellowOrange}
@@ -52,8 +39,6 @@
 }
 
 % References
-\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
-\usepackage{cleveref}
 \bibliography{zotero}
 \DeclareBibliographyCategory{cited}
 \AtEveryCitekey{\addtocategory{cited}{\thefield{entrykey}}}

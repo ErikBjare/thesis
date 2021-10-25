@@ -1,0 +1,42 @@
+\usepackage[smartEllipses]{markdown}  % For markdown
+\def\markdownOptionOutputDir{build}  % Needed, see https://github.com/Witiko/markdown/issues/6#issuecomment-328699108
+
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{makecell}
+\usepackage{comment}
+\usepackage{xargs}
+\usepackage{verbatim}
+\usepackage{subfig}
+\usepackage{booktabs}
+\usepackage{changepage}
+\usepackage{rotating, graphicx}
+\usepackage{multirow}
+\usepackage{pdflscape}
+\usepackage{afterpage}
+\usepackage[export]{adjustbox}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[bottom]{footmisc}
+\usepackage[colorinlistoftodos, prependcaption, textsize=tiny]{todonotes}
+
+% References
+\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
+\usepackage{cleveref}
+
+% Formatting
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
+% Encoding and languages
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}        % För svenska bokstäver
+%\usepackage[swedish]{babel}    %Svenska skrivregler och rubriker
+
+% Graphics
+\usepackage{epsfig}
+%\usepackage[dvips]{graphics}
+
+% For adding source captions to figures.
+% From: https://tex.stackexchange.com/a/246285/36302
+\newcommand{\source}[1]{\vspace{-0.3cm} \caption*{\footnotesize{Source: \textit{{#1}}}}}

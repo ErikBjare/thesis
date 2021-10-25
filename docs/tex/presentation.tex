@@ -1,0 +1,307 @@
+\documentclass[xcolor={dvipsnames,table}]{beamer}
+
+\input{common-packages.tex}
+\input{variables.tex}
+\input{beamer-colors.tex}
+\input{bibliography.tex}
+
+%Information to be included in the title page:
+\title{\mytitleen}
+\subtitle{\ \\ Master's thesis presentation}
+\author{\myauthor}
+\institute{Department of Computer Science\\Faculty of Engineering\\Lund University}
+\date{October 28, 2021}
+
+% Set font size for captions
+%\usepackage{caption}
+%\captionsetup{format=plain, font=scriptsize,labelfont=scriptsize}
+\setbeamerfont{caption}{size=\scriptsize}
+
+\newif\ifplacelogo{}  % create a new conditional
+\placelogotrue{}      % set it to true
+\logo{\ifplacelogo\includegraphics[height=1.5cm]{LUlogoRGB.png}\fi}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+    \begin{center}
+        Abstract
+    \end{center}
+    {
+        \scriptsize\input{content/0-abstract.tex}
+    }
+\end{frame}
+
+% What lead up to the thesis
+\begin{frame}{Preface}
+\framesubtitle{How it all began}
+
+\begin{itemize}
+    \item<1-> Pre-2013 --- Learning programming \& machine learning
+    \item<2-> 2013 --- Starting university
+    \item<3-> 2015 --- ActivityWatch
+    \item<4-> 2017 --- Finding the thesis project
+    \item<5-> 2018 --- First experience using EEG
+    \item<6-> 2020 --- Starting the thesis work
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Outline}
+\tableofcontents
+\end{frame}
+
+
+\section{Introduction}
+\begin{frame}{Introduction}
+    \begin{itemize}
+        \item Functional brain imaging
+            \begin{itemize}
+                \item Cost reduction
+                \item Consumer availability
+            \end{itemize}
+        \item Discerning tasks
+            \begin{itemize}
+                \item Using MRI, by Floyd et al.~\cite{floyd_decoding_2017}
+                \item Using EEG \& various biosensors, by Fucci et al.~\cite{fucci_replication_2019}
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\subsection{Background}
+\begin{frame}{Introduction}
+    \framesubtitle{Background}
+
+    Fucci bla bla bla
+\end{frame}
+
+%\subsubsection{ActivityWatch}
+\placelogofalse{}
+\begin{frame}{Introduction}
+    \framesubtitle{Background $>$ ActivityWatch}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \vspace{1em}
+
+            \begin{itemize}
+                \item{\emph{``The world's best free \& open-source automated time tracker''}}
+                \item Started in 2015 by me
+                \item My brother joined in 2016
+                \item $>100{,}000$ downloads
+                \item $>90$ contributors
+                \item Available on Windows, macOS, Linux, and Android.
+            \end{itemize}
+
+            \vspace{10em}
+        \end{column}
+        \begin{column}{0.65\textwidth}
+            \includegraphics[width=\textwidth]{img/screenshot-aw-activity.png}
+        \end{column}
+    \end{columns}
+\end{frame}
+\placelogotrue{}
+
+\section{Theory}
+\begin{frame}{Theory}
+    This thesis rests on theory within electroencephalography and machine learning.
+\end{frame}
+
+\subsection{Electroencephalography}
+\begin{frame}{Theory}
+    \framesubtitle{Electroencephalography}
+
+    EEG is\ldots
+
+    ERPs...
+
+    The 10-20 system...
+
+    Frequency bands...
+\end{frame}
+
+\placelogofalse{}
+\begin{frame}{Theory}
+    \framesubtitle{Electroencephalography}
+    \vspace*{-10mm}
+
+    \begin{figure}
+        \hspace*{-10mm}
+        \includegraphics[width=\paperwidth]{img/muselsl-signal.png}
+        \caption{Example of EEG data, viewed with muse-lsl. Three eye blinks clearly visible around $-4s$.}
+    \end{figure}
+\end{frame}
+\placelogotrue{}
+
+\subsection{Machine learning}
+\begin{frame}{Theory}
+    \framesubtitle{Machine learning}
+\end{frame}
+
+\begin{frame}{Theory}
+    \framesubtitle{Machine learning $>$ Riemannian geometry}
+    
+    Riemannian methods in EEG utilizes the spatial information encoded in covariance matrices to estimate the similarity between two signals.
+    \\
+    \vspace{1em}
+    In the simple \emph{Minimum Distance to Mean} (MDM) method, matrices for each class are averaged in Riemannian space. For a new signal's matrix, the distance to each class is calculated, and whichever class distance is smaller becomes the predicted class.
+\end{frame}
+
+\begin{frame}{Theory}
+    \framesubtitle{Machine learning $>$ Riemannian geometry}
+    
+    \small The Riemannian distance metric $\delta_G$ for two symmetric positive definite matrices $A$ and $B$ (such as covariance matrices) is~\cite{grafarend_metric_2003}:
+
+        \[ \delta_G(A, B) = \sqrt{\sum_{i=1}^N \log^2 \lambda_i (A, B) } \]
+\end{frame}
+
+\begin{frame}{Theory}
+    \framesubtitle{Machine learning $>$ Riemannian geometry}
+    {
+        \scriptsize
+        \input{figures/riemannian-tangent-space.tex}
+    }
+\end{frame}
+
+\section{Method}
+\begin{frame}{Method}
+    \includegraphics[width=\textwidth]{img/method.png}
+\end{frame}
+
+\placelogofalse{}
+\begin{frame}{Method}
+    \framesubtitle{Comparison with previous studies}
+
+    {
+        \tiny
+        \input{figures/table-compare-method.tex}
+    }
+\end{frame}
+\placelogotrue{}
+
+    \subsection{Devices}
+\begin{frame}{Method}
+    \framesubtitle{Devices}
+
+    \begin{columns}
+        \begin{column}{0.33\textwidth}
+            \centering
+            \includegraphics[trim=0 0 0 200,clip,width=\textwidth]{./img/Muse-S.jpg}
+            \\ Muse S
+        \end{column}
+
+        \begin{column}{0.33\textwidth}
+            \centering
+            \includegraphics[trim=200 100 200 100,clip,width=3cm]{./img/crown-1.png}
+            \\ Neurosity Crown
+            \vspace{8mm}
+        \end{column}
+
+        \begin{column}{0.33\textwidth}
+            \centering
+            \includegraphics[width=3cm]{./img/openbci-cyton.jpg}
+            \\ OpenBCI Cyton + Ultracortex
+            \vspace{11mm}
+        \end{column}
+    \end{columns}
+
+    {
+        \tiny
+        \input{figures/table-devices.tex}
+    }
+\end{frame}
+
+\subsection{Collection}
+\begin{frame}{Method}
+    \framesubtitle{Collection $>$ Code vs prose}
+    {
+        \small
+        \input{figures/tasks.tex}
+    }
+\end{frame}
+
+\subsection{Analysis}
+\begin{frame}{Method}
+    \framesubtitle{Analysis $>$ Performance evaluation}
+    \begin{itemize}
+        \item Studies using EEG often use \emph{balanced accuracy} (BAC).
+        \item Balanced accuracy deals with imbalanced datasets.
+    \end{itemize}
+
+    \vspace{2em}
+
+    For binary classification, BAC is defined as:
+    $$BAC = \frac{TP + TN}{2}$$
+    This implies that, for the binary case, $BAC = 0.5$ is no better than chance.
+\end{frame}
+
+\begin{frame}{Method}
+    \framesubtitle{Analysis $>$ Validation}
+    To ensure our classifier generalizes across subjects, we perform \emph{Leave-One-Run-Out} (LORO) cross validation.
+    \vspace{1em}
+    \input{figures/table-loro.tex}
+\end{frame}
+
+\section{Results}
+\begin{frame}{Results}
+    Our results are:
+    {
+        \small
+        \input{figures/table-bac-selective.tex}
+    }
+\end{frame}
+
+\begin{frame}{Results}
+    \framesubtitle{Compared to previous studies}
+    \
+    {
+        \small
+        \input{figures/table-compare-results.tex}
+    }
+\end{frame}
+
+\placelogofalse{}
+\begin{frame}{Results}
+    \framesubtitle{Data overview}
+    {
+        \tiny
+        \input{figures/timebars.tex}
+    }
+\end{frame}
+\placelogotrue{}
+
+\section{Discussion}
+\begin{frame}{Discussion}
+\end{frame}
+
+\subsection{Applications}
+\begin{frame}{Discussion}
+    \framesubtitle{Applications}
+\end{frame}
+
+\subsection{Threats to validity}
+\begin{frame}{Discussion}
+    \framesubtitle{Threats to validity}
+\end{frame}
+
+\subsection{Ethical considerations}
+\begin{frame}{Discussion}
+    \framesubtitle{Ethical considerations}
+\end{frame}
+
+\section{Conclusions}
+\begin{frame}{Conclusions}
+    We conclude that bla bla bla
+
+    \begin{itemize}
+        \item TODO
+    \end{itemize}
+\end{frame}
+
+\subsection{Future work}
+\begin{frame}{Conclusions}
+    \framesubtitle{Future work}
+\end{frame}
+
+\end{document}

@@ -1,6 +1,11 @@
+% Based on templates:
+%  - http://www.maths.lth.se/matematiklth/exjobb/exjobbarresurs/index.html
+%  - https://bitbucket.org/flavius_gruian/msccls/
+
 % Uncomment to use official LTH thesis template
 \def\UseCSLTH{true}
 
+% needed to pass table option to xcolor import in cslthse-msc template
 \PassOptionsToPackage{table}{xcolor}
 
 \ifx\UseCSLTH\undefined
@@ -9,36 +14,8 @@
     \documentclass[nofilelist]{cslthse-msc}
 \fi
 
-% Based on templates:
-%  - http://www.maths.lth.se/matematiklth/exjobb/exjobbarresurs/index.html
-%  - https://bitbucket.org/flavius_gruian/msccls/
-
-\usepackage[smartEllipses]{markdown}  % For markdown
-\def\markdownOptionOutputDir{build}  % Needed, see https://github.com/Witiko/markdown/issues/6#issuecomment-328699108
-
-\usepackage{array}
-\usepackage{hyperref}
-\usepackage{makecell}
-\usepackage{comment}
-\usepackage{xargs}
-\usepackage{verbatim}
-\usepackage{subfig}
-\usepackage{booktabs}
-\usepackage{changepage}
-\usepackage{rotating, graphicx}
-\usepackage{multirow}
-\usepackage{pdflscape}
-\usepackage{afterpage}
-\usepackage[export]{adjustbox}
-\usepackage[dvipsnames]{xcolor}
-\usepackage[bottom]{footmisc}
-\usepackage[colorinlistoftodos, prependcaption, textsize=tiny]{todonotes}
-
-% References
-\usepackage[backend=biber, style=numeric, sorting=none]{biblatex}
-\usepackage{cleveref}
-% Turn off split bibliography warning
-\BiblatexSplitbibDefernumbersWarningOff
+% Import common packages that are used in all documents, used in figures
+\input{common-packages.tex}
 
 % ignore badness warnings (not working?)
 %\vbadness=10000
@@ -85,24 +62,6 @@
 \newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum, backgroundcolor=Plum!25,bordercolor=Plum, #1]{\textbf{Improve:} #2}}
 \newcommandx{\thiswillnotshow}[2][1=]{\todo[disable, #1]{#2}}
 
-% For adding source captions to figures.
-% From: https://tex.stackexchange.com/a/246285/36302
-\newcommand{\source}[1]{\vspace{-0.3cm} \caption*{\footnotesize{Source: \textit{{#1}}}}}
-
-% Formatting
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{1em}
-
-% Encoding and languages
-\usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
-\usepackage[T1]{fontenc}        % För svenska bokstäver
-%\usepackage[swedish]{babel}    %Svenska skrivregler och rubriker
-
-% Graphics
-\usepackage{epsfig}
-%\usepackage[dvips]{graphics}
-
 \newcommandx{\orcid}[1]{\href{https://orcid.org/#1}{\includegraphics[width=0.7em]{img/orcid-icon.png}}}
 
 \newcommand\myshade{85}
@@ -111,7 +70,6 @@
 \colorlet{myurlcolor}{Aquamarine}
 
 \hypersetup{%
-  linkcolor  = black, %mylinkcolor!\myshade!black,
   citecolor  = mycitecolor!\myshade!black,
   urlcolor = myurlcolor!\myshade!black,
   colorlinks = true,
@@ -125,15 +83,18 @@
 {\end{adjustwidth}}
 
 % References
-\bibliography{zotero}
-\bibliography{misc}
+\input{bibliography.tex}
 \DeclareBibliographyCategory{cited}
 \AtEveryCitekey{\addtocategory{cited}{\thefield{entrykey}}}
 
+% Turn off split bibliography warning
+\BiblatexSplitbibDefernumbersWarningOff
+
+
 \defbibheading{notcited}{\section*{Further Reading}}
 
-\def\mytitleen{Classifying brain activity using electroencephalography and automated time tracking of computer use}
-\def\mytitlesv{Klassificering av hjärnaktivitet med elektroencephalografi och automatiserad tidsspårning av datoranvändning}
+% Import title, author, etc.
+\input{variables.tex}
 
 \ifx\UseCSLTH\undefined
     \title{%
@@ -143,7 +104,7 @@
         \large \par M.Sc. Thesis\\
         \huge \mytitleen\\
     }
-    \author{Erik Bjäreholt \orcid{0000-0003-1350-9677} \\(erik@bjareho.lt, dat13ebj@student.lu.se)}
+    \author{\myauthor\ \orcid{\myorcid} \\(\myemail)}
     \date{\today}
 \else
     \title{\mytitleen}
@@ -154,7 +115,7 @@
     \date{\today}
     %\date{January 16, 2015}
 
-    \student{Erik Bjäreholt}{erik@bjareho.lt}
+    \student{\myauthor}{\myemail}
 
     \company{RISE}
     \supervisor{Markus Borg, \texttt{markus.borg@\{\href{mailto:markus.borg@cs.lth.se}{cs.lth.se}, \href{mailto:markus.borg@ri.se}{ri.se}\}}}

@@ -1,0 +1,30 @@
+\definecolor{LTHblue}{RGB}{0,0,128}
+\definecolor{LTHbronze}{RGB}{156,97,20}
+
+\newcommand\myshade{85}
+\colorlet{mylinkcolor}{violet}
+\colorlet{mycitecolor}{YellowOrange}
+\colorlet{myurlcolor}{Aquamarine}
+
+\hypersetup{%
+  linkcolor=.,
+  citecolor  = mycitecolor!\myshade!black,
+  urlcolor = LTHblue,
+  colorlinks = true,
+}
+
+% From: https://tex.stackexchange.com/a/173862/36302
+\setbeamercolor*{structure}{bg=white,fg=LTHblue}
+
+\setbeamercolor*{palette primary}{use=structure,fg=structure.fg,bg=structure.bg}
+\setbeamercolor*{palette secondary}{use=structure,fg=white,bg=structure.fg!75}
+\setbeamercolor*{palette tertiary}{use=structure,fg=white,bg=structure.fg!50!black}
+\setbeamercolor*{palette quaternary}{fg=white,bg=black}
+
+\setbeamercolor{section in toc}{fg=LTHblue,bg=white}
+\setbeamercolor{alerted text}{use=structure,fg=structure.fg!50!black!80!black}
+
+\setbeamercolor{titlelike}{fg=structure.fg!50!black}
+\setbeamercolor{frametitle}{bg=white,fg=structure.fg}
+
+\setbeamercolor*{titlelike}{parent=palette primary}
