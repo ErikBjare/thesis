@@ -43,7 +43,7 @@
 \framesubtitle{How it all began}
 
 \begin{itemize}
-    \item<1-> Pre-2013 --- Learning programming \& machine learning
+    \item<1-> Pre-2013 --- Learning programming \& machine learning  % and Quantified Self
     \item<2-> 2013 --- Starting university
     \item<3-> 2015 --- ActivityWatch
     \item<4-> 2017 --- Finding the thesis project
@@ -55,54 +55,137 @@
 \begin{frame}{Outline}
     \begingroup
         \setlength{\parskip}{0em}
-        \tableofcontents[sections={1-10}]
+        \tableofcontents
     \endgroup
 \end{frame}
 
 \section{Introduction}
 \begin{frame}{Introduction}
+    Before we begin, we will present two technologies used:
+
     \begin{itemize}
         \item Functional brain imaging
-            \begin{itemize}
-                \item Cost reduction
-                \item Consumer availability
-            \end{itemize}
-        \item Discerning tasks
+        \item Automated time trackers
+    \end{itemize}
+\end{frame}
+
+\subsection{Functional brain imaging}
+\begin{frame}{Introduction}
+    \framesubtitle{Functional brain imaging}
+
+    Functional brain imaging is used to measure aspects of brain function.
+
+    Examples:
+    \begin{itemize}
+        \item Electroencephalography (EEG)
+        \item Magnetoencephalography (MEG)
+        \item Hemoencephalography (HEG)
+        \item Functional Magnetic Resonance Imaging (fMRI)
+        \item Functional Near-Infrared Spectroscopy (fNIRS)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Introduction}
+    \framesubtitle{Functional brain imaging}
+
+    Developments in the last $\sim$10 years:
+
+    \begin{itemize}
+        \item Cost reduction
+        \item Consumer availability
+    \end{itemize}
+
+    Rough timeline:
+
+    \begin{itemize}
+        \item 2013: OpenBCI kickstarter
+        \item 2016: InteraXon releases the Muse
+        \item 2021: Neurosity releases the Crown
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Introduction}
+    \framesubtitle{Functional brain imaging}
+
+    Applications:
+
+    \begin{itemize}
+        \item Discerning code vs prose comprehension
             \begin{itemize}
                 \item Using MRI, by Floyd et al.~\cite{floyd_decoding_2017}
                 \item Using EEG \& various biosensors, by Fucci et al.~\cite{fucci_replication_2019}
             \end{itemize}
+        \item Neurolinguistics research
+        \item Biofeedback / meditation aid
+        \item Quantified self (measuring mood, focus)
     \end{itemize}
 \end{frame}
 
-\subsection{Background}
+\subsection{Automated time trackers}
 \begin{frame}{Introduction}
-    \framesubtitle{Background}
+    \framesubtitle{Automated time trackers}
 
-    Fucci bla bla bla
+    We use an automated time tracker to track which device activity a user is engaging in.
+
+    Applications:
+    \begin{itemize}
+        \item Commercial use
+        \item Research use
+    \end{itemize}
+
+    Examples:
+    \begin{itemize}
+        \item RescueTime (commercial use)
+        \item TimeAware (research use)
+        \item Screen Time (Apple)
+        \item Digital Wellness (Android)
+    \end{itemize}
 \end{frame}
 
-%\subsubsection{ActivityWatch}
+
+\begin{frame}{Introduction}
+    \framesubtitle{Automated time trackers}
+
+    Issues with existing solutions:
+    \begin{itemize}
+        \item Data resolution
+        \item Source availability / licensing
+        \item Privacy concerns
+    \end{itemize}
+\end{frame}
+
 \placelogofalse{}
 \begin{frame}{Introduction}
-    \framesubtitle{Background $>$ ActivityWatch}
+    \framesubtitle{Automated time trackers}
 
     \begin{columns}
         \begin{column}{0.5\textwidth}
-            \vspace{1em}
+            \hspace{0.4em}
+            \begingroup
+                \scriptsize
+                Our solution:
+                \\
+            \endgroup
+            \vspace{0.2em}
+            \hspace{0.4em}
+            \begingroup
+                \large
+                ActivityWatch
+            \endgroup
+            \vspace{0.5em}
 
             \begin{itemize}
                 \item{\emph{``The world's best free \& open-source automated time tracker''}}
                 \item Started in 2015 by me
                 \item My brother joined in 2016
-                \item $>100{,}000$ downloads
-                \item $>90$ contributors
+                \item ${>}100{,}000$ downloads
+                \item ${>}90$ contributors
                 \item Available on Windows, macOS, Linux, and Android.
             \end{itemize}
 
-            \vspace{10em}
+            \vfill
         \end{column}
-        \begin{column}{0.65\textwidth}
+        \begin{column}{0.6\textwidth}
             \includegraphics[width=\textwidth]{img/screenshot-aw-activity.png}
         \end{column}
     \end{columns}
