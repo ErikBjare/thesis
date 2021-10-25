@@ -1,26 +1,24 @@
+% Keep \begin{table} outside to let it work in both thesis and presentation
 \rowcolors{4}{gray!25}{white}
-\begin{table}
-    \begin{center}
-        \begin{tabular}{llll}
-            \toprule
-            \multirow{2}{*}{\textbf{Setting}} & \multicolumn{3}{c}{\textbf{Study}} \\
-            \cmidrule(lr){2-4}
-            & \makecell[c]{\textbf{This study}} & \makecell[c]{\textbf{Fucci et al.} (2019)} & \makecell[c]{\textbf{Floyd et al.} (2017)} \\
-            \midrule
-            Experiment site & Lund Univ. (Sweden) & Univ.\ of Bari (Italy) & Univ.\ of Virginia (USA)  \\
-            \# Participants & 9 & 28 & 29 \\
-            Participants experience & Grads & Undergrads & Grads \& Undergrads \\
-            \# Tasks & Variable & 36 tasks & 27 tasks \\
-            Task type & \makecell[l]{Code comprehension \\ Prose review} & \makecell[l]{Code comprehension \\ Prose comprehension} & \makecell[l]{Code comprehension \\ Code review \\ Prose review} \\
-            Physiological signal & Neural & \Gape[0pt][2pt]{\makecell[l]{Neural \\ Skin \\ Heart}} & Neural \\
-            Physiological measure & EEG & \makecell[l]{EEG \\ EDA \\ HR, HRV, BVP} & BOLD \\
-            Device & Muse S & \Gape[0pt][2pt]{\makecell[l]{BrainLink Headset \\ Empatica wristband}} & fMRI \\
-            Classifier & Riemannian geometry & 8 algorithms & Gaussian Process \\
-            Classifier validation & LORO-CV & \Gape[0pt][2pt]{\makecell[l]{LORO-CV \\ Hold-out}} & LORO-CV \\
-            Classifier metric & Balanced accuracy (BAC) & Balanced accuracy (BAC) & Balanced accuracy (BAC) \\
-            \bottomrule
-        \end{tabular}
-        \caption{Comparison of this study's method with previous studies.}\label{table:compare-method}
-    \end{center}
-\end{table}
+\begin{tabular}{llll}
+    \toprule
+    \multirow{2}{*}{\textbf{Setting}} & \multicolumn{3}{c}{\textbf{Study}} \\
+    \cmidrule(lr){2-4}
+    & \makecell[c]{\textbf{This study}} & \makecell[c]{\textbf{Fucci et al.} (2019)} & \makecell[c]{\textbf{Floyd et al.} (2017)} \\
+    \midrule
+    Experiment site & Lund Univ. (Sweden) & Univ.\ of Bari (Italy) & Univ.\ of Virginia (USA)  \\
+    \# Participants & 9 & 28 & 29 \\
+    Participants experience & Grads & Undergrads & Grads \& Undergrads \\
+    \# Tasks & Variable & 36 tasks & 27 tasks \\
+    Task type & \makecell[l]{Code comprehension \\ Prose review} & \makecell[l]{Code comprehension \\ Prose comprehension} & \makecell[l]{Code comprehension \\ Code review \\ Prose review} \\
+    Physiological signal & Neural & \Gape[0pt][2pt]{\makecell[l]{Neural \\ Skin \\ Heart}} & Neural \\
+    Physiological measure & EEG & \makecell[l]{EEG \\ EDA \\ HR, HRV, BVP} & BOLD \\
+    Device & Muse S & \Gape[0pt][2pt]{\makecell[l]{BrainLink Headset \\ Empatica wristband}} & fMRI \\
+    Classifier & Riemannian geometry & 8 algorithms & Gaussian Process \\
+    Classifier validation & LORO-CV & \Gape[0pt][2pt]{\makecell[l]{LORO-CV \\ Hold-out}} & LORO-CV \\
+    Classifier metric & Balanced accuracy (BAC) & Balanced accuracy (BAC) & Balanced accuracy (BAC) \\
+    \bottomrule
+\end{tabular}
 \rowcolors{2}{}{}
+% Caption is kept outside due to issues with adjustbox as used in presentation
+%\caption{Comparison of this study's method with previous studies.}\label{table:compare-method}

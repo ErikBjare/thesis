@@ -1,2 +1,11 @@
 \bibliography{zotero}
 \bibliography{misc}
+
+% Add all used references to the cited category
+\DeclareBibliographyCategory{cited}
+\AtEveryCitekey{\addtocategory{cited}{\thefield{entrykey}}}
+
+% Turn off split bibliography warning
+\BiblatexSplitbibDefernumbersWarningOff
+
+\defbibheading{notcited}{\section*{Further Reading}}

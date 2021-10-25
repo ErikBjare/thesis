@@ -382,8 +382,12 @@
 			\@acknowledgements
 	\fi
 
-	\tableofcontents
-}	
+        % use a group to ensure parskip is reset after
+        \begingroup
+            \setlength{\parskip}{0.5em}
+            \tableofcontents
+        \endgroup
+}
 \makeatother
 
 

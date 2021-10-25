@@ -17,6 +17,10 @@
 % Import common packages that are used in all documents, used in figures
 \input{common-packages.tex}
 
+% Formatting
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
+
 % ignore badness warnings (not working?)
 %\vbadness=10000
 %\hbadness=10000
@@ -70,8 +74,9 @@
 \colorlet{myurlcolor}{Aquamarine}
 
 \hypersetup{%
-  citecolor  = mycitecolor!\myshade!black,
-  urlcolor = myurlcolor!\myshade!black,
+  linkcolor =.,
+  citecolor = mycitecolor!\myshade!black,
+  urlcolor  = myurlcolor!\myshade!black,
   colorlinks = true,
 }
 
@@ -84,14 +89,6 @@
 
 % References
 \input{bibliography.tex}
-\DeclareBibliographyCategory{cited}
-\AtEveryCitekey{\addtocategory{cited}{\thefield{entrykey}}}
-
-% Turn off split bibliography warning
-\BiblatexSplitbibDefernumbersWarningOff
-
-
-\defbibheading{notcited}{\section*{Further Reading}}
 
 % Import title, author, etc.
 \input{variables.tex}

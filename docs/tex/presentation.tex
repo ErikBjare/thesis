@@ -1,9 +1,13 @@
-\documentclass[xcolor={dvipsnames,table}]{beamer}
+\documentclass[xcolor={dvipsnames,table},12pt]{beamer}
 
 \input{common-packages.tex}
 \input{variables.tex}
 \input{beamer-colors.tex}
 \input{bibliography.tex}
+
+% Formatting
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1em}
 
 %Information to be included in the title page:
 \title{\mytitleen}
@@ -49,9 +53,11 @@
 \end{frame}
 
 \begin{frame}{Outline}
-\tableofcontents
+    \begingroup
+        \setlength{\parskip}{0em}
+        \tableofcontents[sections={1-10}]
+    \endgroup
 \end{frame}
-
 
 \section{Introduction}
 \begin{frame}{Introduction}
@@ -124,7 +130,7 @@
 \placelogofalse{}
 \begin{frame}{Theory}
     \framesubtitle{Electroencephalography}
-    \vspace*{-10mm}
+    \vspace*{-5mm}
 
     \begin{figure}
         \hspace*{-10mm}
@@ -172,11 +178,10 @@
 \placelogofalse{}
 \begin{frame}{Method}
     \framesubtitle{Comparison with previous studies}
-
-    {
-        \tiny
+    \vspace*{-10mm}
+    \begin{adjustbox}{width=\textwidth,center,float=table}
         \input{figures/table-compare-method.tex}
-    }
+    \end{adjustbox}
 \end{frame}
 \placelogotrue{}
 
@@ -186,30 +191,30 @@
 
     \begin{columns}
         \begin{column}{0.33\textwidth}
+            \vspace{9mm}
             \centering
-            \includegraphics[trim=0 0 0 200,clip,width=\textwidth]{./img/Muse-S.jpg}
+            \includegraphics[trim=0 -50 0 200,clip,width=\textwidth]{./img/Muse-S.jpg}
             \\ Muse S
         \end{column}
 
         \begin{column}{0.33\textwidth}
+            \vspace{4mm}
             \centering
-            \includegraphics[trim=200 100 200 100,clip,width=3cm]{./img/crown-1.png}
+            \includegraphics[trim=200 150 200 100,clip,width=3cm]{./img/crown-1.png}
             \\ Neurosity Crown
-            \vspace{8mm}
         \end{column}
 
         \begin{column}{0.33\textwidth}
             \centering
             \includegraphics[width=3cm]{./img/openbci-cyton.jpg}
             \\ OpenBCI Cyton + Ultracortex
-            \vspace{11mm}
         \end{column}
     \end{columns}
 
-    {
-        \tiny
+    \vspace{-5mm}
+    \begin{adjustbox}{width=\textwidth,center,float=table}
         \input{figures/table-devices.tex}
-    }
+    \end{adjustbox}
 \end{frame}
 
 \subsection{Collection}
@@ -275,17 +280,17 @@
 \begin{frame}{Discussion}
 \end{frame}
 
-\subsection{Applications}
+\subsection*{Applications}
 \begin{frame}{Discussion}
     \framesubtitle{Applications}
 \end{frame}
 
-\subsection{Threats to validity}
+\subsection*{Threats to validity}
 \begin{frame}{Discussion}
     \framesubtitle{Threats to validity}
 \end{frame}
 
-\subsection{Ethical considerations}
+\subsection*{Ethical considerations}
 \begin{frame}{Discussion}
     \framesubtitle{Ethical considerations}
 \end{frame}
@@ -302,6 +307,12 @@
 \subsection{Future work}
 \begin{frame}{Conclusions}
     \framesubtitle{Future work}
+\end{frame}
+
+\section*{References}
+\begin{frame}[allowframebreaks]{References}
+    \AtNextBibliography{\scriptsize}
+    \printbibliography[category=cited]
 \end{frame}
 
 \end{document}
