@@ -101,8 +101,8 @@ addopts = "--cov-report=term --cov-report=xml --cov-report=html --cov=eegclassif
 testpaths = [
     "src",
     "tests",
-    # Don't run long-running notebooks as tests.
-    #"notebooks",
+    # TODO: Don't run long-running notebooks as part of local tests, but include in CI tests
+    "notebooks",
 ]
 python_files = ["*.py", "*.ipynb"]
 filterwarnings = [
