@@ -320,7 +320,11 @@ clf = make_pipeline(
 
         We use \emph{Leave-One-Run-Out} (LORO) cross-validation, a variation of \emph{Leave-One-Group-Out} (LOGO), in order to ensure the samples used in validation are from subjects that are unseen in training. LORO validation generates $n$ folds (one for each subject), with $n-1$ subjects used for training in each fold, and $1$ subject for validation (seen in Table~\ref{table:loro}).
 
-        \input{figures/table-loro.tex}
+        \begin{table}[h]
+            \centering
+            \input{figures/table-loro.tex}
+            \caption{Example of Leave-One-Run-Out cross validation with 4 subjects. For each fold, subjects marked \textcolor{NavyBlue}{\textbf{blue}} are used for training and subjects marked \textcolor{BurntOrange}{\textbf{orange}} are used for testing.}\label{table:loro}
+        \end{table}
 
         % FIXME: Fucci uses the median, should we too?
         To aggregate performance metrics from each fold, we take the median of the performance metrics from each fold (as presented in Section~\ref{section:results}).

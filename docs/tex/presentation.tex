@@ -48,6 +48,7 @@
     \item<3-> 2015 --- ActivityWatch
     \item<4-> 2017 --- Finding the thesis project
     \item<5-> 2018 --- First experience using EEG
+    \item<5-> 2019 --- Re-finding the thesis project
     \item<6-> 2020 --- Starting the thesis work
 \end{itemize}
 \end{frame}
@@ -86,9 +87,9 @@
 \end{frame}
 
 \begin{frame}{Introduction}
-    \framesubtitle{Functional brain imaging}
+    \framesubtitle{Functional brain imaging $>$ EEG}
 
-    Developments in the last $\sim$10 years:
+    Developments in EEG the last $\sim$10 years:
 
     \begin{itemize}
         \item Cost reduction
@@ -105,17 +106,21 @@
 \end{frame}
 
 \begin{frame}{Introduction}
-    \framesubtitle{Functional brain imaging}
+    \framesubtitle{Functional brain imaging $>$ EEG}
 
     Applications:
 
     \begin{itemize}
-        \item Discerning code vs prose comprehension
-            \begin{itemize}
-                \item Using MRI, by Floyd et al.~\cite{floyd_decoding_2017}
-                \item Using EEG \& various biosensors, by Fucci et al.~\cite{fucci_replication_2019}
-            \end{itemize}
+        \item Clinical (sleep, epilepsy)
+        \item Brain-Computer Interfaces
         \item Neurolinguistics research
+        \begin{itemize}
+            \item Discerning code vs prose comprehension
+                \begin{itemize}
+                    \item Using MRI, by Floyd et al.~\cite{floyd_decoding_2017}
+                    \item Using EEG \& various biosensors, by Fucci et al.~\cite{fucci_replication_2019}
+                \end{itemize}
+        \end{itemize}
         \item Biofeedback / meditation aid
         \item Quantified self (measuring mood, focus)
     \end{itemize}
@@ -127,18 +132,12 @@
 
     We use an automated time tracker to track which device activity a user is engaging in.
 
-    Applications:
-    \begin{itemize}
-        \item Commercial use
-        \item Research use
-    \end{itemize}
-
     Examples:
     \begin{itemize}
-        \item RescueTime (commercial use)
-        \item TimeAware (research use)
         \item Screen Time (Apple)
         \item Digital Wellness (Android)
+        \item RescueTime (commercial use)
+        \item TimeAware (research use)
     \end{itemize}
 \end{frame}
 
@@ -148,7 +147,7 @@
 
     Issues with existing solutions:
     \begin{itemize}
-        \item Data resolution
+        \item Data detail \& temporal resolution
         \item Source availability / licensing
         \item Privacy concerns
     \end{itemize}
@@ -201,13 +200,18 @@
 \begin{frame}{Theory}
     \framesubtitle{Electroencephalography}
 
-    EEG is\ldots
+    Electroencephalography works by measuring tiny amounts of electrical potential (voltage) on the skull, which is caused by the activation of underlying neurons.
 
-    ERPs...
+    Measurements are taken about 256 times per second, using one or more electrodes.
+\end{frame}
 
-    The 10-20 system...
+\begin{frame}{Theory}
+    \framesubtitle{Electroencephalography}
+    The 10--20 system is a standard for electrode placements.
 
-    Frequency bands...
+    \begin{adjustbox}{width=0.8\textwidth,center,float=figure}
+        \includegraphics{img/1020system-extended-with-extra-info.png}
+    \end{adjustbox}
 \end{frame}
 
 \placelogofalse{}
@@ -223,11 +227,43 @@
 \end{frame}
 \placelogotrue{}
 
+\begin{frame}{Theory}
+    \framesubtitle{Electroencephalography}
+    ERPs, of Event-Related Potentials, are stereotyped responses to a stimulus.
+
+    \begin{adjustbox}{width=\textwidth,center,float=table}
+        \input{figures/table-erps.tex}
+    \end{adjustbox}
+\end{frame}
+
+\placelogofalse{}
+\begin{frame}{Theory}
+    \framesubtitle{Electroencephalography}
+    Example analysis of the N170 ERP:
+    
+    \begin{adjustbox}{width=\textwidth,center,float=figure}
+        \includegraphics[width=\textwidth]{img/n170_viz.png}
+    \end{adjustbox}
+\end{frame}
+\placelogotrue{}
+
+\begin{frame}{Theory}
+    \framesubtitle{Electroencephalography}
+    The signal can be broken down into constituent frequencies. They can be roughly grouped into frequency bands, which are associated with certain brain states.
+
+    {
+        \small
+        \input{figures/table-freq-bands.tex}
+    }
+\end{frame}
+
 \subsection{Machine learning}
 \begin{frame}{Theory}
     \framesubtitle{Machine learning}
 
-    The thesis rests on several open-source projects for machine learning. In particular scikit-learn and supporting libraries like pandas, matplotlib, numpy.
+    We use machine learning to classify EEG signals.
+
+    To do this we use several open-source projects for machine learning. In particular scikit-learn and supporting libraries like pandas, matplotlib, numpy.
 
     We also use some EEG-specific libraries, in particular pyriemann for Riemannian methods.
 \end{frame}
@@ -236,8 +272,7 @@
     \framesubtitle{Machine learning $>$ Riemannian geometry}
     
     Riemannian methods in EEG utilizes the spatial information encoded in covariance matrices to estimate the similarity between two signals.
-    \\
-    \vspace{1em}
+
     In the simple \emph{Minimum Distance to Mean} (MDM) method, matrices for each class are averaged in Riemannian space. For a new signal's matrix, the distance to each class is calculated, and whichever class distance is smaller becomes the predicted class.
 \end{frame}
 
@@ -269,17 +304,7 @@
     \includegraphics[width=\textwidth]{img/method.png}
 \end{frame}
 
-\placelogofalse{}
-\begin{frame}{Method}
-    \framesubtitle{Comparison with previous studies}
-    \vspace*{-10mm}
-    \begin{adjustbox}{width=\textwidth,center,float=table}
-        \input{figures/table-compare-method.tex}
-    \end{adjustbox}
-\end{frame}
-\placelogotrue{}
-
-    \subsection{Devices}
+\subsection{Devices}
 \begin{frame}{Method}
     \framesubtitle{Devices}
 
@@ -313,6 +338,12 @@
 
 \subsection{Collection}
 \begin{frame}{Method}
+    \framesubtitle{Collection}
+
+    With a device chosen, we start collecting data.
+\end{frame}
+
+\begin{frame}{Method}
     \framesubtitle{Collection $>$ Code vs prose}
     {
         \small
@@ -320,7 +351,70 @@
     }
 \end{frame}
 
+\begin{frame}{Method}
+    \framesubtitle{Collection $>$ Naturalistic}
+    A single subject (me) measured EEG while engaging in natural device use (both work and leisure). We define 4 categories of device activity.
+
+    \begin{adjustbox}{width=0.7\textwidth,center,float=table}
+        \includegraphics{img/naturalistic-dayclass-dist.png}
+    \end{adjustbox}
+\end{frame}
+
 \subsection{Analysis}
+\begin{frame}{Method}
+    \framesubtitle{Analysis}
+
+    Now, onto analysis.
+
+    We train two classifiers:
+    \begin{itemize}
+        \item Riemannian geometry
+        \item Bandpower-features (benchmark)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Method}
+    \framesubtitle{Analysis $>$ The classifiers}
+
+    Our Riemannian classifier is:
+    
+\begin{minted}[fontsize=\scriptsize]{python}
+from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import LogisticRegression
+from pyriemann.estimation import Covariances
+from pyriemann.spatialfilters import CSP
+from pyriemann.tangentspace import TangentSpace
+
+clf = make_pipeline(
+    Covariances(),
+    CSP(4, log=False),
+    TangentSpace(),
+    LogisticRegression(),
+)
+\end{minted}
+\end{frame}
+
+\begin{frame}{Method}
+    \framesubtitle{Analysis $>$ The classifiers}
+
+    Our bandpower-based classifier computes the bandpower of each frequency band, and their ratios, and then uses common ML methods for the actual classification.
+\end{frame}
+
+
+\begin{frame}{Method}
+    \framesubtitle{Analysis $>$ Windows and epochs}
+    To train on and classify the EEG signal, we first need to label it and split into fixed-size windows.
+
+    We divide the EEG-signal into epochs (according to their stimuli markers), and then break those down into 5s windows, which are used in training and classification.
+
+    We later aggregate the predictions on 5s windows back into their epochs by taking the mean window-level prediction, yielding predictions for entire epochs.
+\end{frame}
+
+\begin{frame}{Method}
+    \framesubtitle{Analysis $>$ Performance evaluation}
+    To evaluate our classifiers, we need a suitable performance metric and cross-validation method.
+\end{frame}
+
 \begin{frame}{Method}
     \framesubtitle{Analysis $>$ Performance evaluation}
     \begin{itemize}
@@ -331,19 +425,42 @@
     \vspace{2em}
 
     For binary classification, BAC is defined as:
-    $$BAC = \frac{TP + TN}{2}$$
+    \[ BAC = \frac{Sensitivity + Specificity}{2} = \frac{\frac{TP}{TP + FN} + \frac{TN}{TN + FP}}{2} \]
     This implies that, for the binary case, $BAC = 0.5$ is no better than chance.
 \end{frame}
 
 \begin{frame}{Method}
-    \framesubtitle{Analysis $>$ Validation}
+    \framesubtitle{Analysis $>$ Performance evaluation $>$ Validation}
     To ensure our classifier generalizes across subjects, we perform \emph{Leave-One-Run-Out} (LORO) cross validation.
-    \vspace{1em}
-    \input{figures/table-loro.tex}
+
+    \begin{adjustbox}{width=0.6\textwidth, center, float=table}
+        \input{figures/table-loro.tex}
+        %\captionof{figure}{Example of Leave-One-Run-Out cross validation with 4 subjects. For each fold, subjects marked \textcolor{NavyBlue}{\textbf{blue}} are used for training and subjects marked \textcolor{BurntOrange}{\textbf{orange}} are used for testing.}
+    \end{adjustbox}
+
+    For our naturalistic device use experiment we instead use Stratified K-Fold cross-validation, as there is only one subject.
 \end{frame}
+
+\placelogofalse{}
+\begin{frame}{Method}
+    \framesubtitle{Comparison with previous studies}
+    \vspace*{-10mm}
+    \begin{adjustbox}{width=\textwidth,center,float=table}
+        \input{figures/table-compare-method.tex}
+    \end{adjustbox}
+\end{frame}
+\placelogotrue{}
 
 \section{Results}
 \begin{frame}{Results}
+    \begin{itemize}
+        \item Controlled code vs prose experiment
+        \item Naturalistic device use
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Results}
+    \framesubtitle{Controlled code vs prose experiment}
     Our results are:
     {
         \small
@@ -352,12 +469,21 @@
 \end{frame}
 
 \begin{frame}{Results}
-    \framesubtitle{Compared to previous studies}
-    \
+    \framesubtitle{Controlled code vs prose experiment}
+    Compared to previous studies:
     {
         \small
         \input{figures/table-compare-results.tex}
     }
+\end{frame}
+
+\begin{frame}{Results}
+    \framesubtitle{Naturalistic device use}
+    Our naturalistic device use results:
+
+    \begin{adjustbox}{width=0.8\textwidth, float=table}
+        \input{figures/table-results-naturalistic.tex}
+    \end{adjustbox}
 \end{frame}
 
 \placelogofalse{}
@@ -370,38 +496,14 @@
 \end{frame}
 \placelogotrue{}
 
-\section{Discussion}
-\begin{frame}{Discussion}
-    We will briefly go over threats and ethical considerations.
-\end{frame}
-
-%\subsection*{Applications}
-%\begin{frame}{Discussion}
-%    \framesubtitle{Applications}
-%\end{frame}
-
-\subsection*{Threats to validity}
-\begin{frame}{Discussion}
-    \framesubtitle{Threats to validity}
-\end{frame}
-
-\subsection*{Ethical considerations}
-\begin{frame}{Discussion}
-    \framesubtitle{Ethical considerations}
-
-    \begin{itemize}
-        \item Research ethics
-        \item Commercial ethics
-    \end{itemize}
-\end{frame}
-
 \section{Conclusions}
 \begin{frame}{Conclusions}
-    We conclude that we can discern code vs prose, in both settings.
+    We conclude that we can discern code from prose using EEG, in both settings.
 
+    We also find that\ldots
     \begin{itemize}
-        \item Easier to discern work from leisure, than inter-work or inter-leisure tasks.
-        \item TODO
+        \item a Riemannian approach outperforms the use of bandpower-features.
+        \item it seems easier to discern work from leisure, than inter-work or inter-leisure tasks.
     \end{itemize}
 \end{frame}
 
@@ -419,6 +521,43 @@
         \item Develop better prose comprehension stimuli
         \item Use even better EEG devices
         \item Turn brainwatch into a proper project
+    \end{itemize}
+\end{frame}
+
+\section{Discussion}
+\begin{frame}{Discussion}
+    Time permitting, we will briefly go over threats and ethical considerations.
+\end{frame}
+
+%\subsection*{Applications}
+%\begin{frame}{Discussion}
+%    \framesubtitle{Applications}
+%\end{frame}
+
+\subsection*{Threats to validity}
+\begin{frame}{Discussion}
+    \framesubtitle{Threats to validity}
+
+    \begin{itemize}
+        \item Dataset
+        \begin{itemize}
+            \item Size
+            \item Cherry-picked subjects
+        \end{itemize}
+        \item Stimuli
+        \begin{itemize}
+            \item Prose \emph{review} (not \emph{comprehension}) stimuli
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\subsection*{Ethical considerations}
+\begin{frame}{Discussion}
+    \framesubtitle{Ethical considerations}
+
+    \begin{itemize}
+        \item Research ethics
+        \item Commercial ethics
     \end{itemize}
 \end{frame}
 

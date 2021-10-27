@@ -11,7 +11,11 @@ This chapter serves to introduce relevant theory on which the thesis rests. We w
     As a non-invasive method it is widely used in medicine to diagnose and study a wide range of conditions, including epilepsy and sleep disorders. 
     At has also found use in research, in particular for studying \emph{Event Related Potentials}, or ERPs, which are stereotyped responses to a stimulus, an example of which can be seen in Figure~\ref{figure:n170}. Examples of common ERPs can be seen in Table~\ref{table:erps}.
 
-    \input{figures/table-erps.tex}
+    \begin{table}
+        \centering
+        \input{figures/table-erps.tex}
+        \caption{Common \emph{Event-Related Potentials} (ERPs)}\label{table:erps}
+    \end{table}
 
     \input{figures/n170-example.tex}
 
@@ -45,18 +49,7 @@ This chapter serves to introduce relevant theory on which the thesis rests. We w
 
     \begin{table}
         \centering
-        \begin{tabular}{lll}
-            \toprule
-            Frequency band & Frequencies & Brain states \\
-            \midrule
-            Gamma ($\gamma$) & >35 Hz & Concentration \\
-            Beta ($\beta$) & 16--35 Hz & Active, external attention, relaxed \\
-            Sigma ($\sigma$) & 12--16 Hz & Sleep spindles \\
-            Alpha ($\alpha$) & 8--12 Hz & Very relaxed, passive attention \\
-            Theta ($\theta$) & 4--8 Hz & Deeply relaxed \\
-            Delta ($\delta$) & 0.5--4 Hz & Sleep \\
-            \bottomrule
-        \end{tabular}
+        \input{figures/table-freq-bands.tex}
         \caption{Characteristics of common frequency bands used in EEG research. Note the \emph{Sigma} band, which is usually grouped with the \emph{Beta} band, but is often used in sleep research where it targets sleep spindles during stage 2 NREM sleep. In some research, these bands are split further into slow and fast counterparts.}\label{table:freq-bands}
     \end{table}
 

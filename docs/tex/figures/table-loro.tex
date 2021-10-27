@@ -1,16 +1,12 @@
 \definecolor{train}{RGB}{163, 206, 255}
 \definecolor{test}{RGB}{255, 181, 84}
-\begin{table}[h]
-    \centering
-    \begin{tabular}{lcccc}
-        \toprule
-               & Subject 1 & Subject 2 & Subject 3 & Subject 4 \\
-        \midrule
-        Fold 1 & \cellcolor{test}     & \multicolumn{3}{c}{\cellcolor{train}} \\
-        Fold 2 & \cellcolor{train} & \cellcolor{test}     & \multicolumn{2}{c}{\cellcolor{train}     } \\
-        Fold 3 & \multicolumn{2}{c}{\cellcolor{train}     } & \cellcolor{test}     & \cellcolor{train} \\
-        Fold 4 & \multicolumn{3}{c}{\cellcolor{train}} & \cellcolor{test}     \\
-        \bottomrule
-    \end{tabular}
-    \caption{Example of Leave-One-Run-Out cross validation with 4 subjects. For each fold, subjects marked \textcolor{NavyBlue}{\textbf{blue}} are used for training and subjects marked \textcolor{BurntOrange}{\textbf{orange}} are used for testing.}\label{table:loro}
-\end{table}
+\begin{tabular}{lcccc}
+    \toprule
+           & Subject 1 & Subject 2 & Subject 3 & Subject 4 \\
+    \midrule
+    Fold 1 & \cellcolor{test}     & \multicolumn{3}{c}{\cellcolor{train}} \\
+    Fold 2 & \cellcolor{train} & \cellcolor{test}     & \multicolumn{2}{c}{\cellcolor{train}     } \\
+    Fold 3 & \multicolumn{2}{c}{\cellcolor{train}     } & \cellcolor{test}     & \cellcolor{train} \\
+    Fold 4 & \multicolumn{3}{c}{\cellcolor{train}} & \cellcolor{test}     \\
+    \bottomrule
+\end{tabular}

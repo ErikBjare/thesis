@@ -87,18 +87,7 @@
 
         \begin{table}[h]
             \centering
-            \begin{tabular}{llrr}
-                \toprule
-                \textbf{Experiment} & \textbf{Score} & \textbf{Support} & \textbf{Hours} \\
-                \midrule
-                Programming vs Writing & 0.676 & (1386, 209) & 2.22h \\
-                Programming vs Twitter & 0.695 &  (1386, 949) & 3.24h \\
-                Programming vs YouTube & 0.672 &  (1386, 266) & 2.29h \\
-                Twitter vs Writing & 0.833 &  (949, 209) & 1.61h \\
-                Twitter vs YouTube & 0.604 & (949, 266) & 1.69h \\
-                YouTube vs Writing & 0.889 &  (266, 209) & 0.66h \\
-                \bottomrule
-            \end{tabular}
+            \input{figures/table-results-naturalistic.tex}
             \caption{The scores for each label pairing. The \textit{Score} is the mean balanced accuracy of the StratifiedKFold splits. The \textit{Support} is the number of windows for each class. \textit{Hours} is the sum of both classes' duration.}\label{table:scores-natural}
         \end{table}
 
