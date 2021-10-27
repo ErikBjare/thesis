@@ -45,7 +45,7 @@ I've worked with multiple devices, but the experiments were performed using the 
 
 # Notebooks
 
-Code notebooks are built in CI and available at:
+TEMPORARILY NOT BEING BUILT ~~Code notebooks are built in CI and available at:~~
 
  - [Main][nbmain] - primary notebook for the thesis, where we train a classifier for the code vs prose comprehension task.
  - [Signal][nbsignal] - for signal filtering and quality checking.
@@ -57,13 +57,12 @@ Code notebooks are built in CI and available at:
 
 # Writing
 
-## Thesis
+The latest version of the writing can be downloaded at:
 
-The latest version of the thesis can be downloaded at [erik.bjareholt.com/thesis/thesis.pdf][thesis]
-
-## Goal Document
-
-The latest version of the goal document can be downloaded at [erik.bjareholt.com/thesis/goaldocument.pdf][goaldoc]
+ - Thesis report: [erik.bjareholt.com/thesis/thesis.pdf][thesis]
+ - Goal document: [erik.bjareholt.com/thesis/goaldoc.pdf][goaldoc]
+ - Presentation: [erik.bjareholt.com/thesis/presentation.pdf][presentation]
+ - Popular scientific article (Swedish): [erik.bjareholt.com/thesis/popsci.pdf][popsci]
 
 # Acknowledgements
 
@@ -71,4 +70,6 @@ See the Acknowledgements section in the [thesis][thesis].
 
 [thesis]: https://erik.bjareholt.com/thesis/thesis.pdf
 [goaldoc]: https://erik.bjareholt.com/thesis/goaldocument.pdf
+[presentation]: https://erik.bjareholt.com/thesis/presentation.pdf
+[popsci]: https://erik.bjareholt.com/thesis/popsci.pdf
 [eegnb]: https://github.com/NeuroTechX/eeg-notebooks
