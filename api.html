@@ -22,10 +22,8 @@
       
 
     
-    <link rel="stylesheet" href="_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e8f53015daec13862f6db5e763c41738.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     
   <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
 
@@ -34,12 +32,10 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/language_data.js"></script>
-    <script src="_static/togglebutton.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="MSc Thesis" href="README.html" />
+    <link rel="prev" title="Experiment protocol" href="experiment_protocol.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -65,45 +61,18 @@
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
-</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
         <p class="caption">
  <span class="caption-text">
-  Contents
+  Thesis
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="intro.html">
-   Intro
+  <a class="reference internal" href="bibliography.html">
+   Bibliography
   </a>
- </li>
- <li class="toctree-l1 has-children">
-  <a class="reference internal" href="notebooks.html">
-   Notebooks
-  </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
-  <label for="toctree-checkbox-1">
-   <i class="fas fa-chevron-down">
-   </i>
-  </label>
-  <ul>
-   <li class="toctree-l2">
-    <a class="reference internal" href="notebooks/Main.html">
-     Main analysis
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="notebooks/Signal.html">
-     Signal
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="notebooks/Activity.html">
-     Activity classification
-    </a>
-   </li>
-  </ul>
  </li>
 </ul>
 <p class="caption">
@@ -116,8 +85,8 @@
   <a class="reference internal" href="readme.html">
    README
   </a>
-  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
-  <label for="toctree-checkbox-2">
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
    <i class="fas fa-chevron-down">
    </i>
   </label>
@@ -128,6 +97,11 @@
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="experiment_protocol.html">
+   Experiment protocol
+  </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
@@ -203,7 +177,7 @@
             <div class="tocsection onthispage pt-5 pb-3">
                 <i class="fas fa-list"></i> Contents
             </div>
-            <nav id="bd-toc-nav">
+            <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#module-eegwatch">
@@ -246,7 +220,7 @@ timestamp (float): timestamp of stimulus onset from time.time() function.</p>
 
 <dl class="py method">
 <dt id="eegwatch.devices.EEGDevice.start">
-<em class="property">abstract </em><code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">duration</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#eegwatch.devices.EEGDevice.start" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">duration</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">extras</span><span class="p">:</span> <span class="n">dict</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#eegwatch.devices.EEGDevice.start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts the EEG device based on the defined backend.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><p>filename (str): name of the file to save the sessions data to.</p>
@@ -271,8 +245,15 @@ timestamp (float): timestamp of stimulus onset from time.time() function.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="eegwatch.devices.MuseDevice.record">
+<code class="sig-name descname">record</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sources</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">duration</span></em>, <em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="headerlink" href="#eegwatch.devices.MuseDevice.record" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a background process that will stream data from the first available Muse.</p>
+<p>If multiple sources are used, such as PPG or GYRO, it will save those to seperate files ending in, for example: ‘.PPG.csv’</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="eegwatch.devices.MuseDevice.start">
-<code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">duration</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#eegwatch.devices.MuseDevice.start" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">duration</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">extras</span><span class="p">:</span> <span class="n">dict</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#eegwatch.devices.MuseDevice.start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts the EEG device.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><p>filename (str): name of the file to save the sessions data to.</p>
@@ -298,7 +279,7 @@ timestamp (float): timestamp of stimulus onset from time.time() function.</p>
 
 <dl class="py method">
 <dt id="eegwatch.devices.BrainflowDevice.start">
-<code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">duration</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#eegwatch.devices.BrainflowDevice.start" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">duration</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">extras</span><span class="p">:</span> <span class="n">dict</span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#eegwatch.devices.BrainflowDevice.start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts the EEG device based on the defined backend.</p>
 <dl class="simple">
 <dt>Parameters:</dt><dd><p>filename (str): name of the file to save the sessions data to.</p>
@@ -326,14 +307,26 @@ timestamp (float): timestamp of stimulus onset from time.time() function.</p>
 
 <span class="target" id="module-eegclassify.clean"></span><dl class="py function">
 <dt id="eegclassify.clean.filter">
-<code class="sig-prename descclassname">eegclassify.clean.</code><code class="sig-name descname">filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">sfreq</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">250</span></em>, <em class="sig-param"><span class="n">n_chans</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">4</span></em>, <em class="sig-param"><span class="n">low</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">3</span></em>, <em class="sig-param"><span class="n">high</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">40</span></em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#eegclassify.clean.filter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">eegclassify.clean.</code><code class="sig-name descname">filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">X</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em>, <em class="sig-param"><span class="n">sfreq</span><span class="p">:</span> <span class="n">float</span></em>, <em class="sig-param"><span class="n">n_chans</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">4</span></em>, <em class="sig-param"><span class="n">low</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">3</span></em>, <em class="sig-param"><span class="n">high</span><span class="p">:</span> <span class="n">float</span> <span class="o">=</span> <span class="default_value">40</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#eegclassify.clean.filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inspired by viewer_v2.py in muse-lsl</p>
 </dd></dl>
 
-<span class="target" id="module-eegclassify.features"></span><span class="target" id="module-eegclassify.plot"></span><span class="target" id="module-eegclassify.preprocess"></span><dl class="py function">
+<span class="target" id="module-eegclassify.features"></span><dl class="py function">
+<dt id="eegclassify.features.bandpower">
+<code class="sig-prename descclassname">eegclassify.features.</code><code class="sig-name descname">bandpower</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">ratios</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="headerlink" href="#eegclassify.features.bandpower" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes bandpower features using the bands in BAND_NAMES, and
+optionally computes all permutations of ratios between the bands.</p>
+</dd></dl>
+
+<span class="target" id="module-eegclassify.plot"></span><dl class="py class">
+<dt id="eegclassify.plot.Bar">
+<em class="property">class </em><code class="sig-prename descclassname">eegclassify.plot.</code><code class="sig-name descname">Bar</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">events</span><span class="p">:</span> <span class="n">List<span class="p">[</span>Tuple<span class="p">[</span>int<span class="p">, </span>int<span class="p">, </span>Union<span class="p">[</span>str<span class="p">, </span>Tuple<span class="p">[</span>float<span class="p">, </span>float<span class="p">, </span>float<span class="p">]</span><span class="p">]</span><span class="p">, </span>str<span class="p">]</span><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">show_label</span><span class="p">:</span> <span class="n">bool</span></em><span class="sig-paren">)</span><a class="headerlink" href="#eegclassify.plot.Bar" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<span class="target" id="module-eegclassify.preprocess"></span><dl class="py function">
 <dt id="eegclassify.preprocess.split_rows">
 <code class="sig-prename descclassname">eegclassify.preprocess.</code><code class="sig-name descname">split_rows</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">min_duration</span><span class="p">:</span> <span class="n">int</span></em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="headerlink" href="#eegclassify.preprocess.split_rows" title="Permalink to this definition">¶</a></dt>
-<dd><p>Splits long-duration rows into shorter segments no shorter than <code class="docutils literal notranslate"><span class="pre">min_duration</span></code>.</p>
+<dd><p>Splits variable-duration rows (epochs) into shorter segments (windows) no shorter than <code class="docutils literal notranslate"><span class="pre">min_duration</span></code>.</p>
 <p>Note that this might not be suitable for all types of analysis, especially not
 those with a distinct start of stimuli (as opposed to continuous stimuli), like controlled experiments.</p>
 </dd></dl>
@@ -352,11 +345,23 @@ which is the format required by pyriemann Covariances etc.</p>
               </div>
               
         
-        <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="README.html" title="previous page">MSc Thesis</a>
 
-        </div>
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="experiment_protocol.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">Experiment protocol</p>
+            </div>
+        </a>
+    </div>
+
+</div>
         
         </div>
     </div>

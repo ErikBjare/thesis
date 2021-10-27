@@ -1,0 +1,410 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment protocol &#8212; thesis  documentation</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/sphinx-book-theme.e8f53015daec13862f6db5e763c41738.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="api.html" />
+    <link rel="prev" title="MSc Thesis" href="README.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      <h1 class="site-logo" id="site-title">thesis  documentation</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p class="caption">
+ <span class="caption-text">
+  Thesis
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="bibliography.html">
+   Bibliography
+  </a>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Developer
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="readme.html">
+   README
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="README.html">
+     MSc Thesis
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Experiment protocol
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="api.html">
+   API Reference
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/experiment_protocol.md.txt"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   Experiment protocol
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#setup">
+   Setup
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#eeg-device">
+     EEG device
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#activitywatch">
+     ActivityWatch
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#protocol">
+   Protocol
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#before">
+     Before
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#during">
+     During
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#after-debrief">
+     After (debrief)
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="experiment-protocol">
+<h1>Experiment protocol<a class="headerlink" href="#experiment-protocol" title="Permalink to this headline">¶</a></h1>
+<p>The experiment protocol for the controlled experiment.</p>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="setup">
+<h1>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="eeg-device">
+<h2>EEG device<a class="headerlink" href="#eeg-device" title="Permalink to this headline">¶</a></h2>
+<p>Primary device:</p>
+<ul class="simple">
+<li><p>Muse S</p></li>
+</ul>
+<p>Alternative devices (untested):</p>
+<ul class="simple">
+<li><p>OpenBCI Cyton + Ultracortex</p></li>
+<li><p>Neurosity Notion/Crown</p></li>
+</ul>
+</div>
+<div class="section" id="activitywatch">
+<h2>ActivityWatch<a class="headerlink" href="#activitywatch" title="Permalink to this headline">¶</a></h2>
+<p>(not for the controlled experiment)</p>
+<p>Watchers:</p>
+<ul class="simple">
+<li><p>Default watchers (<code class="docutils literal notranslate"><span class="pre">aw-watcher-window</span></code> and <code class="docutils literal notranslate"><span class="pre">aw-watcher-afk</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">aw-watcher-web</span></code> to collect browser data</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">aw-watcher-input</span></code> to collect detailed input data</p>
+<ul>
+<li><p>Set the poll time to something low (0.2s?)</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="protocol">
+<h1>Protocol<a class="headerlink" href="#protocol" title="Permalink to this headline">¶</a></h1>
+<p>The actual protocol to follow when performing the experiment.</p>
+<div class="section" id="before">
+<h2>Before<a class="headerlink" href="#before" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Inform about collected data and anonymization process (we won’t store names or other personally identifiable information)</p></li>
+<li><p>Ask for informed consent</p></li>
+<li><p>Take note of:</p>
+<ul>
+<li><p>gender</p></li>
+<li><p>device</p></li>
+<li><p>age</p></li>
+<li><p>handedness</p></li>
+<li><p>software dev experience, specifically C/C++</p></li>
+</ul>
+</li>
+<li><p>Ask subject how they are feeling</p>
+<ul>
+<li><p>Any standardized way?</p></li>
+<li><p>States to ask about: tired, calm, focused, happy, sad</p></li>
+</ul>
+</li>
+<li><p>Ask subject if they’ve had caffeine today</p></li>
+</ul>
+</div>
+<div class="section" id="during">
+<h2>During<a class="headerlink" href="#during" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>(optional, if Muse) optionally have a dummy meditation session using the Muse app</p></li>
+<li><p>Put on the EEG device</p></li>
+<li><p>Start eegwatch</p>
+<ul>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">--duration</span></code> to a high value to prevent recording restarting</p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">--subject</span></code> to the subject ID</p></li>
+</ul>
+</li>
+<li><p>Do a signal check</p>
+<ul>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">muselsl</span> <span class="pre">view</span> <span class="pre">-b</span> <span class="pre">Qt5Agg</span></code></p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">eegwatch</span> <span class="pre">check</span></code></p></li>
+</ul>
+</li>
+<li><p>Run codeprose task</p>
+<ul>
+<li><p>Ensure subject is correctly set</p></li>
+</ul>
+</li>
+</ul>
+<p>Extras:</p>
+<ul class="simple">
+<li><p>Run arithmetic task</p></li>
+<li><p>Other tasks</p>
+<ul>
+<li><p>10min Twitter or 10min YouTube?</p></li>
+<li><p>10min of working through email? (include input watcher)</p></li>
+<li><p>10min of programming? (include input watcher)</p></li>
+<li><p>Have them read Wikipedia articles on different subjects (lets say something technical vs historical)</p>
+<ul>
+<li><p>Has this been done before?</p></li>
+<li><p>Should probably find a set of ~5 articles/sections in each category</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="after-debrief">
+<h2>After (debrief)<a class="headerlink" href="#after-debrief" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Ask subject how they are feeling again</p>
+<ul>
+<li><p>If they answer the same, we’ll assume they’ve been feeling that way for the duration of the test</p></li>
+</ul>
+</li>
+<li><p>Ask briefly about their experience</p>
+<ul>
+<li><p>Comfort</p></li>
+<li><p>Difficulty of tasks</p></li>
+</ul>
+</li>
+<li><p>Collect data</p></li>
+</ul>
+</div>
+</div>
+
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="README.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">MSc Thesis</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="api.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">API Reference</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Erik Bjäreholt<br/>
+        
+            &copy; Copyright 2021, Erik Bjäreholt.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
