@@ -82,7 +82,7 @@
     \begin{itemize}
         \item Electroencephalography (EEG)
         \item Magnetoencephalography (MEG)
-        \item Hemoencephalography (HEG)
+        %\item Hemoencephalography (HEG)
         \item Functional Magnetic Resonance Imaging (fMRI)
         \item Functional Near-Infrared Spectroscopy (fNIRS)
     \end{itemize}
@@ -195,7 +195,7 @@
 
 \section{Theory}
 \begin{frame}{Theory}
-    This thesis rests on theory within electroencephalography and machine learning.
+    Now a very brief introduction to underlying theory within electroencephalography and machine learning.
 \end{frame}
 
 \subsection{Electroencephalography}
@@ -207,27 +207,24 @@
     Measurements are taken about 256 times per second, using one or more electrodes.
 \end{frame}
 
-\begin{frame}{Theory}
-    \framesubtitle{Electroencephalography}
-    The 10--20 system is a standard for electrode placements.
-
-    \begin{adjustbox}{width=0.8\textwidth,center,float=figure}
-        \includegraphics{img/1020system-extended-with-extra-info.png}
-    \end{adjustbox}
-\end{frame}
-
 \placelogofalse{}
 \begin{frame}{Theory}
     \framesubtitle{Electroencephalography}
     \vspace*{-5mm}
 
-    \begin{figure}
-        \hspace*{-10mm}
-        \includegraphics[width=\paperwidth]{img/muselsl-signal.png}
-        \caption{Example of EEG data, viewed with muse-lsl. Three eye blinks clearly visible around $-4s$.}
-    \end{figure}
+    \hspace*{-10mm}
+    \includegraphics[width=\paperwidth]{img/muselsl-signal.png}
 \end{frame}
 \placelogotrue{}
+
+\begin{frame}{Theory}
+    \framesubtitle{Electroencephalography}
+    The 10--20 system is a standard for electrode placements.
+
+    \begin{adjustbox}{width=0.8\textwidth,center}
+        \includegraphics{img/1020system-extended-with-extra-info.png}
+    \end{adjustbox}
+\end{frame}
 
 \begin{frame}{Theory}
     \framesubtitle{Electroencephalography}
@@ -263,11 +260,15 @@
 \begin{frame}{Theory}
     \framesubtitle{Machine learning}
 
-    We use machine learning to classify EEG signals.
+    Machine learning can be used to classify EEG signals.
 
-    To do this we use several open-source projects for machine learning. In particular scikit-learn and supporting libraries like pandas, matplotlib, numpy.
-
-    We also use some EEG-specific libraries, in particular pyriemann for Riemannian methods.
+    Common approaches: 
+    \begin{itemize}
+        \item Riemannian methods
+        \item Deep learning
+        \item Common Spatial Pattern
+        \item Bandpower-features
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{Theory}
@@ -275,7 +276,7 @@
     
     Riemannian methods in EEG utilizes the spatial information encoded in covariance matrices to estimate the similarity between two signals.
 
-    In the simple \emph{Minimum Distance to Mean} (MDM) method, matrices for each class are averaged in Riemannian space. For a new signal's matrix, the distance to each class is calculated, and whichever class distance is smaller becomes the predicted class.
+    In the simple \emph{Minimum Distance to Mean} (MDM) method, covariance matrices for each class are averaged in Riemannian space. For a new signal's matrix, the distance to each class is calculated, and whichever class distance is smaller becomes the predicted class.
 \end{frame}
 
 \begin{frame}{Theory}
@@ -296,12 +297,12 @@
 
 \section{Method}
 \begin{frame}{Method}
-    Our method is split into two settings:
+    We perform two different experiments:
 
-    \begin{itemize}
-            \item Controlled code vs prose experiment
-            \item Naturalistic device use
-    \end{itemize}
+    \begin{enumerate}
+        \item Controlled code vs prose experiment
+        \item Naturalistic device use
+    \end{enumerate}
 
     \includegraphics[width=\textwidth]{img/method.png}
 \end{frame}
@@ -342,7 +343,7 @@
 \begin{frame}{Method}
     \framesubtitle{Collection}
 
-    With a device chosen, we start collecting data.
+    Next up: Collecting data for our code vs prose experiments, followed by naturalistic use experiments.
 \end{frame}
 
 \begin{frame}{Method}
@@ -366,19 +367,21 @@
 \begin{frame}{Method}
     \framesubtitle{Analysis}
 
-    Now, onto analysis.
-
     We train two classifiers:
     \begin{itemize}
         \item Riemannian geometry
         \item Bandpower-features (benchmark)
     \end{itemize}
+
+    General software libraries used:  scikit-learn, numpy, pandas.
+
+    Domain-specific libraries used:  pyriemann, MNE, yasa.
 \end{frame}
 
 \begin{frame}[fragile]{Method}
     \framesubtitle{Analysis $>$ The classifiers}
 
-    Our Riemannian classifier is:
+    Our Riemannian classifier pipeline is constructed like this:
     
 \begin{minted}[fontsize=\scriptsize]{python}
 from sklearn.pipeline import make_pipeline
@@ -399,7 +402,9 @@ clf = make_pipeline(
 \begin{frame}{Method}
     \framesubtitle{Analysis $>$ The classifiers}
 
-    Our bandpower-based classifier computes the bandpower of each frequency band, and their ratios, and then uses common ML methods for the actual classification.
+    Our bandpower-based classifier computes the bandpower of each frequency band, and puts the values and their ratios in a feature vector. 
+
+    We then use common ML methods for the actual learning and classification.
 \end{frame}
 
 
@@ -407,9 +412,9 @@ clf = make_pipeline(
     \framesubtitle{Analysis $>$ Windows and epochs}
     To train on and classify the EEG signal, we first need to label it and split into fixed-size windows.
 
-    We divide the EEG-signal into epochs (according to their stimuli markers), and then break those down into 5s windows, which are used in training and classification.
+    We divide the EEG-signal into epochs (according to their stimuli markers), and then split those down into 5s windows which we train on.
 
-    We later aggregate the predictions on 5s windows back into their epochs by taking the mean window-level prediction, yielding predictions for entire epochs.
+    We then also aggregate the predictions back into their epochs by taking the mean prediction of each window in the epoch, yielding predictions for entire epochs.
 \end{frame}
 
 \begin{frame}{Method}
@@ -464,9 +469,8 @@ clf = make_pipeline(
 \begin{frame}{Results}
     \framesubtitle{Controlled code vs prose experiment}
     Our results are:
-    {
-        \small
-        \input{figures/table-bac-selective.tex}
+    {\scriptsize
+     \input{figures/table-bac-selective.tex}
     }
 \end{frame}
 
@@ -474,7 +478,7 @@ clf = make_pipeline(
     \framesubtitle{Controlled code vs prose experiment}
     Compared to previous studies:
     {
-        \small
+        \scriptsize
         \input{figures/table-compare-results.tex}
     }
 \end{frame}
@@ -487,16 +491,6 @@ clf = make_pipeline(
         \input{figures/table-results-naturalistic.tex}
     \end{adjustbox}
 \end{frame}
-
-\placelogofalse{}
-\begin{frame}{Results}
-    \framesubtitle{Data overview}
-    {
-        \tiny
-        \input{figures/timebars.tex}
-    }
-\end{frame}
-\placelogotrue{}
 
 \section{Conclusions}
 \begin{frame}{Conclusions}
@@ -562,6 +556,22 @@ clf = make_pipeline(
         \item Commercial ethics
     \end{itemize}
 \end{frame}
+
+\begin{frame}{Acknowledgements}
+    \
+    \\
+    {\scriptsize \input{content/99-acknowledgements.tex}}
+\end{frame}
+
+\placelogofalse{}
+\begin{frame}{Appendix I}
+    \framesubtitle{Data overview}
+    {
+        \tiny
+        \input{figures/timebars.tex}
+    }
+\end{frame}
+\placelogotrue{}
 
 \section*{References}
 \begin{frame}[allowframebreaks]{References}
