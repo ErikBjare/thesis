@@ -269,7 +269,7 @@ start,               stop,                class
 
             As a benchmark reference, we implemented classifiers which solely used bandpower features as input, to gain information of how much any improvement from classifier performance is likely due to better EEG equipment versus how much is due to from improved analysis methods.
 
-            To compute this feature, we utilized the bandpower function provided by YASA~\cite{vallat_yasa_2020}. The implementation estimates the power spectral density using Welch's method for each channel, and bins them by their associated frequency band (seen in Table~\ref{table:freq-bands}).
+            To compute this feature, we utilized the bandpower function provided by YASA~\cite{vallat_yasa_2020}. The implementation estimates the power spectral density using Welch's method for each channel, and bins them by their associated frequency band (seen in~\Vref{table:freq-bands}).
 
             To further enrich our feature vector, we can use ratios between two frequency bands. As this is what Fucci et al.\ did, we do the same.
 
@@ -310,7 +310,7 @@ clf = make_pipeline(
 
     \subsection{Performance scoring}
 
-        Previous studies have used \emph{balanced accuracy} (BAC) scoring with LORO validation to evaluate model performance. To be able to compare results to previous studies, we do the same. 
+        Previous studies have used \emph{balanced accuracy} (BAC) scoring to evaluate model performance. To be able to compare results to previous studies, we do the same. 
 
         BAC deals with imbalanced datasets by evaluating the performance of the classifier on each class and combining them into a single number. It is defined as the average of recall obtained on each class, or equivalently for a binary classifier, the average of the classifier sensitivity and specificity. 
 

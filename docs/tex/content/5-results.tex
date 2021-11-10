@@ -1,10 +1,11 @@
 \chapter{Results}\label{section:results}
 
-    We present the results from our two different experiments, and compare the results of our code vs prose experiment to the original study~\cite{floyd_decoding_2017} and the replication study~\cite{fucci_replication_2019}. 
+    In this chapter we present the results from our two different experiments.
 
-    In addition, we investigate the results from our naturalistic device use experiment to see if results from the code vs prose experiment generalizes to other types of device activity.
+    For our code vs prose experiment we present and compare our classifiers' performance scores. In particular, we compare the results from our classifier based on Riemannian geometry versus the bandpower-features approach. We also compare our results to the original study by Floyd et al.~\cite{floyd_decoding_2017} and the replication study by Fucci et al.~\cite{fucci_replication_2019}. 
 
-    \vfill
+    For our naturalistic device use experiment we present performance scores for several classifiers, one for each combination of the class labels, to see if results from the code vs prose experiment generalize to other types of device activity.
+
     \pagebreak
     \section{Code vs prose task}
         Table~\ref{table:bac-all} and~\ref{table:bac-selective} shows the performance we achieved for the code vs prose task, for two different subject selections. Figure~\ref{fig:timebars} shows a detailed overview of the data, and classification results for one example subject-fold. Finally, we compare our results to previous studies in Table~\ref{table:compare-results}.
@@ -21,7 +22,7 @@
 
         \input{figures/table-bac-all.tex}
 
-        In Table~\ref{table:bac-all} we see that performance is bad (no better than chance, i.e. $BAC \approx 0.5$) for several subjects. We investigate these and find issues with the quality and amount of data (having no predicted samples for one of the classes). Due to this we remove them from analysis, and get the improved results seen in Table~\ref{table:bac-selective}. We discuss our subject selection further in Section~\ref{section:discussion}.
+        In Table~\ref{table:bac-all} we see that performance is bad (no better than chance, i.e. $BAC \approx 0.5$) for several subjects. We investigate these and find issues with the quality and amount of data (seen in Figure~\ref{fig:timebars}). Due to this we remove them from our dataset, and get the improved results seen in Table~\ref{table:bac-selective}. We discuss our subject selection further in Section~\ref{section:discussion}.
 
         Compared to previous studies, we achieve a moderate improvement over the EEG-only classifier trained in Fucci et al., and achieve a similar performance to the fMRI study by Floyd et al. (seen in Table~\ref{table:compare-results}).
 

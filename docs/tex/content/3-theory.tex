@@ -9,7 +9,7 @@ This chapter serves to introduce relevant theory on which the thesis rests. We w
 
     % Use in medicine & research
     As a non-invasive method it is widely used in medicine to diagnose and study a wide range of conditions, including epilepsy and sleep disorders. 
-    At has also found use in research, in particular for studying \emph{Event Related Potentials}, or ERPs, which are stereotyped responses to a stimulus, an example of which can be seen in Figure~\ref{figure:n170}. Examples of common ERPs can be seen in Table~\ref{table:erps}.
+    It has also found use in research, in particular for studying \emph{Event Related Potentials}, or ERPs, which are stereotyped responses to a stimulus, an example of which can be seen in Figure~\ref{figure:n170}. Examples of common ERPs can be seen in Table~\ref{table:erps}.
 
     \begin{table}
         \centering
@@ -47,12 +47,6 @@ This chapter serves to introduce relevant theory on which the thesis rests. We w
 
     As measurements are taken on the scalp, neural activity of surface-level neurons (such as the cerebral cortex) are expected to dominate the signal, which makes it difficult to use when studying systems deeper in the brain (such as the hippocampus). As an example of this, eye blinks are easily identifiable in the signal when electrodes are placed on the frontal cortex (seen in Figure~\ref{fig:muselsl-signal}).
 
-    \begin{table}
-        \centering
-        \input{figures/table-freq-bands.tex}
-        \caption{Characteristics of common frequency bands used in EEG research. Note the \emph{Sigma} band, which is usually grouped with the \emph{Beta} band, but is often used in sleep research where it targets sleep spindles during stage 2 NREM sleep. In some research, these bands are split further into slow and fast counterparts.}\label{table:freq-bands}
-    \end{table}
-
     %\add[inline]{Plots of PSD, PCA, etc}
     %\add[inline]{Discuss some of the review articles on EEG/BCI/ML}
 
@@ -68,6 +62,13 @@ This chapter serves to introduce relevant theory on which the thesis rests. We w
         \caption{Same EEG signal as in Figure~\ref{fig:signal-unfiltered}, but with bandpass filter applied. We can see that powerline noise has been eliminated.}\label{fig:signal-filtered}
     \end{figure}
 
+    After the signal has been filtered, one can perform spectral density approximation to estimate the relative power of different frequency bands in the signal. An example of frequency bands commonly used can be seen in Table~\ref{table:freq-bands}. We will come back to this later in the method, where we use this information as features for one of our classifiers.
+
+    \begin{table}
+        \centering
+        \input{figures/table-freq-bands.tex}
+        \caption{Characteristics of common frequency bands used in EEG research. Note the \emph{Sigma} band, which is usually grouped with the \emph{Beta} band, but is often used in sleep research where it targets sleep spindles during stage 2 NREM sleep. In some research, these bands are split further into slow and fast counterparts.}\label{table:freq-bands}
+    \end{table}
 
     \begin{landscape}
         \begin{figure}
@@ -100,13 +101,15 @@ This chapter serves to introduce relevant theory on which the thesis rests. We w
 
         EEG decoding approaches based on Riemannian geometry have led to state-of-the-art classification performance on many tasks. The idea behind it is to take advantage of the spatial structure of EEG, i.e.\ the fact that there are multiple channels which co-vary in specific ways.
 
-        The Riemannian distance metric $\delta_G$ for two symmetric positive definite matrices $A$ and $B$ (such as covariance matrices) is~\cite{grafarend_metric_2003}:
+        The Riemannian distance metric $\delta_G$ for two symmetric positive definite matrices $\mathrm{A}$ and $\mathrm{B}$ (such as covariance matrices) is~\cite{grafarend_metric_2003}:
 
-        \[ \delta_G(A, B) = \sqrt{\sum_{i=1}^N \log^2 \lambda_i (A, B) } \]
+        \[ \delta_G(\mathrm{A}, \mathrm{B}) = \sqrt{\sum_{i=1}^N \ln^2 \lambda_i (\mathrm{A}, \mathrm{B}) } \]
+
+        Where $ \mathrm{\lambda}_i(\mathrm{A}, \mathrm{B}) $ are the eigenvalues from $|\mathrm{\lambda}\mathrm{A} - \mathrm{B}| = 0$.
 
         The naive Riemannian approach using \emph{Minimum Distance to Mean} (MDM) starts with computing the covariance matrix for each trial, and then estimating a mean covariance matrix for each class (the class centroid) using the Riemannian distance metric $\delta_G$. When classification is performed, the distance between the new covariance matrix and the class centroids is estimated using the Riemannian distance metric, and the new covariance matrix is classified according to which class centroid is closest.
 
-        To allow for use of other classification approaches in the final step, such as logistic regression and SVMs, we can project our covariance matrices onto a tangent space. Once projected onto this tangent space, our covariance matrices can be compared fairly well using the standard Euclidean distance metric, letting us use common methods which do not employ the Riemannian distance metric~\cite{congedo_riemannian_2017}.
+        To allow for use of other classification approaches in the final step, such as logistic regression and SVMs, we can project our covariance matrices onto a tangent space (a schematic representation of this can be seen in Figure~\ref{figure:tangent-space}). Once projected onto this tangent space, our covariance matrices can be compared fairly well using the standard Euclidean distance metric, letting us use common methods which do not employ the Riemannian distance metric~\cite{congedo_riemannian_2017}.
 
         \input{figures/riemannian-tangent-space.tex}
 

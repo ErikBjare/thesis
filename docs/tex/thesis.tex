@@ -21,6 +21,15 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{1em}
 
+% Give penalty for widows and orphans: https://en.wikipedia.org/wiki/Widows_and_orphans
+% Should prevents sections to start near the end of a page, but doesn't seem to have much effect.
+%\clubpenalty10000
+%\widowpenalty10000
+
+% This seems to do what the above was supposed to.
+% But it's a bit too aggressive, so maybe disable?
+\widowpenalties=3 10000 10000 150
+
 % ignore badness warnings (not working?)
 %\vbadness=10000
 %\hbadness=10000
@@ -139,9 +148,10 @@
     \tableofcontents
 \fi
 
-\listoftodos[Notes \& TODOs]
-\vfill
-\pagebreak
+% Don't show notes & TODOs in final version
+%\listoftodos[Notes \& TODOs]
+%\vfill
+%\pagebreak
 
 \begin{refsection}
 
