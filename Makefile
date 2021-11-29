@@ -18,6 +18,10 @@ lint-tex:
 	! git grep "it's" docs/tex/content/
 	! git grep "organic" docs/tex/  # should be 'naturalistic'
 
+lint-textidote:
+	# Textidote loads config from docs/tex/.textidote
+	cd docs/tex; textidote
+
 .PHONY: notebooks
 notebooks:
 	cd notebooks && poetry run make
@@ -29,7 +33,9 @@ dist/%.pdf: docs/tex/build/%.pdf
 %.png: %.dot
 	dot -Tpng -Gdpi=300 $< -o $@
 
-docs/tex/build/%.pdf: docs/tex/%.tex docs/tex/*.bib docs/tex/img/method.png docs/tex/img/gqm.png docs/tex/content/*.tex docs/tex/figures/*.tex
+imgs: docs/tex/img/method.png docs/tex/img/method-analysis.png docs/tex/img/gqm.png
+
+docs/tex/build/%.pdf: docs/tex/%.tex docs/tex/*.bib imgs docs/tex/content/*.tex docs/tex/figures/*.tex
 	latexmk $< -pdf -shell-escape -cd -output-directory=build -interaction=nonstopmode -file-line-error
 
 precommit:

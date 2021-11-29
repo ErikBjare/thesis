@@ -96,7 +96,7 @@ We also consider our novel idea of `mental churn', a neurally integrated alterna
 
 \section{Transfer learning}\label{section:transfer-learning}
 
-An important aspect, as highlighted earlier in this thesis, is the ability of a classifier to be able to work on subjects unseen in training. Some BCI systems employ a calibration phase to achieve greater performance, but this can be time consuming and straining for the user.
+An important aspect, as highlighted earlier in this thesis, is the ability of a classifier to be able to work on subjects unseen in training. Some BCI systems employ a calibration phase to achieve greater performance, but this can be time-consuming and straining for the user.
 
 To minimize this need for calibration is a stated research goal in Khazem et al.~\cite{khazem_minimizing_2021}, which presents what is called Riemannian Transfer Learning. They build on Riemannian geometry used in state-of-the-art classifiers, and develop a variation of MDM (explained in Section~\ref{section:riemannian-theory}) called \emph{Minimum Distance to Weighted Mean} (MDWM). The method takes a parameter $\lambda$ (where $0 \leq \lambda \leq 1$) that controls how much the algorithm should rely on the class centroids learned from past subjects versus the calibration data from a new subject. This is useful in online learning contexts, where the parameter can initially start at $0$ and then be incrementally adjusted towards $1$. The researchers found $\lambda = 0.7$ to be a reasonable value for many tasks. 
 

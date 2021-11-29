@@ -1,0 +1,6 @@
+\\chapter\{[\sa-zA-Z]+\}	Replaced.
+\\section*?\{[\sa-zA-Z]+\}	Replaced.
+\\subsection*?\{[\sa-zA-Z]+\}	Replaced.
+\\subsubsection*?\{[\sa-zA-Z]+\}	Replaced.
+\\paragraph*?\{[\sa-zA-Z]+\}	Replaced.
+[~]	\,

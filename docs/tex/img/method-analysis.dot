@@ -1,0 +1,32 @@
+digraph graphname {
+    node [margin="0.2, 0", shape=box, style=rounded];
+    rankdir=LR;
+
+    labeling[label="Labeling"];
+    labeling -> transformation;
+
+    transformation[label="Transformation"];
+    transformation -> cleaning;
+
+    cleaning[label="Cleaning"];
+    cleaning -> crossval;
+
+    // Cross validation / train-test split
+    crossval[label="Cross-validation"];
+    crossval -> trainrie;
+    crossval -> trainbp;
+
+    // Training
+    trainrie[label="Riemannian\nclassifier"];
+    trainbp[label="Bandpower-based\nclassifier"];
+    trainrie -> scoring;
+    trainbp -> scoring;
+
+    subgraph cluster_training { 
+        label="Training";
+        style=dotted;
+        trainrie; trainbp;
+    }
+
+    scoring[label="Performance scoring"];
+}

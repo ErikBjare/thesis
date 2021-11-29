@@ -37,7 +37,7 @@ Studying brain activity during computer-based tasks is of particular interest to
 
 % Brain imaging techniques such as EEG show a potential to shed light on many of these research questions, and the relationship between device usage and brain activity seems an largely unexplored area worth investigating.
 
-In addition, some communities like the Quantified Self movement have risen to the challenge of collecting and analyzing personal data for insights into our lives and health. But while some data is easily observed (such as device usage, location, and physical movement), it remains difficult to collect data about subjective attributes (like mood, focus). To collect data on these more elusive phenomena, researchers and individuals have to resort to manual data collection like questionnaires, or approximations constructed from other data, leading to significant time costs and scaling difficulties~\cite{malhi_promise_2017}. This makes low-cost brain imaging techniques like EEG a budding new frontier for the Quantified Self movement in particular, and citizen science in general.
+In addition, some communities like the Quantified Self movement have risen to the challenge of collecting and analyzing personal data for insights into our lives and health~\cite{swan_quantified_2013}. But while some data is easily observed (such as device usage, location, and physical movement), it remains difficult to collect data about subjective attributes (like mood, focus)~\cite{malhi_promise_2017}. To collect data on these more elusive phenomena, researchers and individuals have to resort to manual data collection like questionnaires, or approximations constructed from other data, leading to significant time costs and scaling difficulties~\cite{malhi_promise_2017}. This makes low-cost brain imaging techniques like EEG a budding new frontier for the Quantified Self movement in particular, and citizen science in general.
 
 % The purpose of this study is to investigate the feasibility of using low-cost biosensors...
 
@@ -59,7 +59,7 @@ We also apply similar methodology to replicate a controlled experiment reported 
 
 Our results confirm the findings of the original study, i.e., EEG data can be used to distinguish between code and prose-comprehension. Furthermore, the classifier based on Riemannian geometry outperforms the bandpass-features used by Fucci et al.~in terms of classification accuracy.
 
-Furthermore, our naturalistic experiments indicate that a consumer-grade EEG device can discern between different activities that a user performs at the computer. Among other results, we show that not only can code and prose \emph{comprehension} be distinguished, but also code and prose \emph{writing}.
+In our naturalistic experiments, our results indicate that a consumer-grade EEG device can discern between different activities that a user performs at the computer. Among other results, we show that not only can code and prose \emph{comprehension} be distinguished, but also code and prose \emph{writing}.
 
 % Kommentar från Markus:
 % 
@@ -86,7 +86,7 @@ Furthermore, our naturalistic experiments indicate that a consumer-grade EEG dev
 
 \section{Functional brain imaging}\label{section:imaging}
 
-    Functional brain imaging methods such as fMRI\footnote{Functional Magnetic Resonance Imaging}, fNIRS\footnote{Functional Near-Infrared Spectroscopy}, and EEG, have been used to study the relationship between cognitive or physical activity, and brain activity~\cite{floyd_decoding_2017}\cite{hong_classification_2015}\cite{fucci_replication_2019}. The more accurate methods, such as fMRI, are costly and inflexible/impractical for many uses. The different methods in general come with an array of trade-offs. A common obstacle is cost: operating an fMRI machine costs on the order of \$300/h~\cite{fucci_replication_2019}. 
+    Functional brain imaging methods such as fMRI\footnote{Functional Magnetic Resonance Imaging}, fNIRS\footnote{Functional Near-Infrared Spectroscopy}, and EEG, have been used to study the relationship between cognitive or physical activity, and brain activity~\cite{floyd_decoding_2017}\cite{hong_classification_2015}\cite{fucci_replication_2019}. The more accurate methods, such as fMRI, are costly and inflexible/impractical for many uses. The different methods in general come with a set of trade-offs. A common obstacle is cost: operating an fMRI machine costs on the order of \$300/h~\cite{fucci_replication_2019}. 
 
     Other considerations when picking a brain imaging method is temporal/spatial resolution. For instance, fMRI can measure activity deep in the brain (good spatial resolution), but has difficulty tracking activity over time due to relying on blood oxygenation, which is a much slower process than the underlying neural processes (bad temporal resolution)~\cite{glover_overview_2011}. EEG on the other hand, has excellent temporal resolution (usually sampled at about 256Hz), but it can not reliably discern activity deep in the brain (bad spatial resolution, partially depending on channel count).
 
@@ -100,11 +100,11 @@ Furthermore, our naturalistic experiments indicate that a consumer-grade EEG dev
 
     \subsection*{Cost reduction}
 
-    The cost-reduction of EEG devices took hold in 2013, when OpenBCI ran the founding crowdfunding round on Kickstarter. During the campaign, they offered their 16-channel Cyton + Daisy board (seen in figure~\ref{fig:cyton}) for \$549\footnote{Fun fact: I funded them at one of the lower tiers back then.}~\cite{noauthor_openbci_nodate}.
+    The cost-reduction of EEG devices took hold in 2013, when OpenBCI ran the founding crowdfunding round on Kickstarter. During the campaign, they offered their 16-channel Cyton + Daisy board (seen in~\Vref{fig:cyton}) for \$549\footnote{Fun fact: I funded them at one of the lower tiers back then.}~\cite{noauthor_openbci_nodate}.
 
-    The commercialization of EEG towards a general audience was furthered by InteraXon with the release of the original Muse in 2016. Aimed at meditation practice, it was the first consumer-oriented EEG device on the market. Later, in 2019, InteraXon released the Muse~S (seen in~\ref{fig:museS}), a headband-style EEG headset developed for sleep and longer sessions.
+    The commercialization of EEG towards a general audience was furthered by InteraXon with the release of the original Muse in 2016. Aimed at meditation practice, it was the first consumer-oriented EEG device on the market. Later, in 2019, InteraXon released the Muse~S (seen in~\Vref{fig:museS}), a headband-style EEG headset developed for sleep and longer sessions.
 
-    In 2020 and 2021, the company Neurosity has released their 8 channel Crown headset (seen in figure~\ref{fig:crown}), targeted at developers and knowledge workers to `shift into focus'.
+    In 2020 and 2021, the company Neurosity has released their 8 channel Crown headset (seen in~\Vref{fig:crown}), targeted at developers and knowledge workers to `shift into focus'.
 
     More recently, projects like the FreeEEG32 offer a 32 channel board for only \$199, expected to ship in 2022~\cite{noauthor_freeeeg32_nodate}.
 
@@ -112,7 +112,7 @@ Furthermore, our naturalistic experiments indicate that a consumer-grade EEG dev
 
     \subsection*{Applications in neurolinguistics}
 
-        Neurolinguistics is the study of how language is comprehended and produced by the brain. Within the field, many brain-imaging methods have found use to study both the where and how of language processing. The techniques chosen often depends on if researchers are asking question about \emph{where} processing happens, requiring good spatial resolution, versus \emph{how} it happens, requiring good temporal resolution (as described in~\ref{section:imaging}).
+        Neurolinguistics is the study of how language is comprehended and produced by the brain. Within the field, many brain-imaging methods have found use to study both the where and how of language processing. The techniques chosen often depend on if researchers are asking question about \emph{where} processing happens, requiring good spatial resolution, versus \emph{how} it happens, requiring good temporal resolution (as described in~\Vref{section:imaging}).
 
         EEG, due to its great temporal resolution, has found many applications in neurolinguistics, both to understand how the brain processes natural languages as well as programming languages~\cite{prat_relating_2020}.
 
@@ -120,7 +120,7 @@ Furthermore, our naturalistic experiments indicate that a consumer-grade EEG dev
         As an example it has been shown that it is possible to classify if a participant is reading code or prose using fMRI~\cite{floyd_decoding_2017}, which has been replicated using EEG and low-cost biosensors~\cite{fucci_replication_2019}. The ability to distinguish between these two tasks have been has been explained neurologically by the recruitment of different neural networks in the brain~\cite{ivanova_comprehension_2020}.
         % Markus: En mening här om vad förklaringen innebär kanske? T.ex. prose aktiverar språk, och källkod tycks aktiverar något annat.
 
-        The code vs prose comprehension task has also been modified into a writing task studied under fMRI, to further shed light to the underlying brain activity. In one study it was found that code and prose writing are significantly dissimilar tasks for the brain, where prose writing engages brain regions associated with language in the left hemisphere while while code writing engages brain regions associated with attention, working memory, planning, and spatial cognition in the right hemisphere\cite{noauthor_neurological_nodate}. To study this with MRI, the authors had to use an MRI-safe keyboard, as the powerful magnetic field prevents the use of normal electronics.
+        The code vs prose comprehension task has also been modified into a writing task studied under fMRI, to further shed light to the underlying brain activity. In one study it was found that code and prose writing are significantly dissimilar tasks for the brain, where prose writing engages brain regions associated with language in the left hemisphere while while code writing engages brain regions associated with attention, working memory, planning, and spatial cognition in the right hemisphere~\cite{noauthor_neurological_nodate}. To study this with MRI, the authors had to use an MRI-safe keyboard, as the powerful magnetic field prevents the use of normal electronics.
 
         As far as I know, code vs prose \emph{writing} has not been studied with EEG\@. However, using ActivityWatch and other tools we have developed in this thesis (like the input watcher) one can to distinguish whether the user is reading or writing, as well as whether they are working with code or prose, which enables studying the same activities in a naturalistic setting.
 
@@ -168,7 +168,7 @@ Furthermore, our naturalistic experiments indicate that a consumer-grade EEG dev
 
     \subsubsection*{Research use}
 
-        Previous research has been published which used automated time trackers, such as TimeAware~\cite{kim_timeaware_2016} and ScreenLife~\cite{rooksby_personal_2016}. However, these previous contributions are --- like the commercial services --- not open source nor permissively licensed, and therefore not available for external research use nor further development.
+        Previous research has been published which used automated time trackers, such as TimeAware~\cite{kim_timeaware_2016} (studying the impact of positive/negative nudging on device use) and ScreenLife~\cite{rooksby_personal_2016} (studying users' interest in time tracking). However, these previous contributions are --- like the commercial services --- not open source nor permissively licensed, and therefore not available for external research use nor further development.
 
     \subsubsection*{ActivityWatch}
 

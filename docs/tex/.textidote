@@ -1,0 +1,8 @@
+--output html
+--dict /home/erb/.vim/spell/en.utf-8.add
+--ignore sh:figref,sh:capperiod,lt:en:MORFOLOGIK_RULE_EN_US,lt:en:EN_UNPAIRED_BRACKETS,lt:en:UPPERCASE_SENTENCE_START
+--remove minted,table
+--remove-macros textcolor,mintinline,vfill,pagebreak,definecolor
+--replace textidote-replacement.txt
+--check en 
+thesis.tex

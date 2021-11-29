@@ -10,26 +10,39 @@ We conclude by discussing future work on how the method could be improved, how t
 
 The amount of future work to do in this area is substantial, as the author has noticed during the work fighting to keep the scope under control. We will begin this section by focusing on the particular code vs prose task used in the experiment, then we will discuss our naturalistic device use classification, and finally some words on the what field as a whole holds for the future.
 
+\subsection{Improvements to code vs prose task}
+
 \begin{minipage}{\textwidth}
 To improve the robustness and easy of use for the code vs prose task, we suggest that future researchers attempting the same experiment should make a few changes:
 
 \begin{itemize}
-    \item As mentioned in the method, this study uses prose \emph{review} images from Floyd et al., as opposed to the prose \emph{comprehension} images (in Italian) used by Fucci et al. Ideally, one should create an English prose comprehension set of stimuli images, similar to the ones used by Fucci.
-    \item Try to use even better EEG equipment. It would be interesting if performance could be improved by higher density EEG setups.
+    \item As mentioned in the Method chapter, this study uses prose \emph{review} images from Floyd et al., as opposed to the prose \emph{comprehension} images (in Italian) used by Fucci et al. Ideally, one should create an English prose comprehension set of stimuli images, similar to the ones used by Fucci.
+    \item Try to use even better EEG equipment. It would be interesting to investigate if higher density EEG setups could improve classification performance further.
 \end{itemize}
 \end{minipage}
 
-In addition to changes for experiment itself, the analysis of the data from the code vs prose task could also be integrated the into \texttt{moabb}\footnote{Mother of All BCI Benchmarks, \url{https://github.com/NeuroTechX/moabb}} to make it easier to replicate the results and evaluate new analysis methods. As mentioned, the study would also benefit from more data collection, possibly through the NeuroTech Challenge Series (mentioned in Section~\ref{section:ntcs}).
+In addition to changes for the experiment itself, the analysis of the data from the code vs prose task could also be integrated the into the BCI benchmark-suite \texttt{moabb}\footnote{Mother of All BCI Benchmarks, \url{https://github.com/NeuroTechX/moabb}} to make it easier to replicate the results and evaluate new analysis methods. As mentioned, the study would also benefit from more data collection, possibly through the NeuroTech Challenge Series (mentioned in Section~\ref{section:ntcs}).
 
-% Naturalistic use
-We also encourage researchers to experiment with our naturalistic device use classification. In particular, future work could extend our method by collecting data on more subjects and activities.
+\subsection{Improvements to naturalistic device use task}
 
-We are curious about combining device use data with EEG classifiers of emotion\footnote{Notably difficult, in part due to the subjective nature, and difficulty to consistently elicit in subjects} or other brain states, to try and monitor how we feel during different activities. This could potentially be introduced as another feature for time tracking software like ActivityWatch, which could then not only be used to see how you spent your time, but also how you felt during that time.
+For our naturalistic device use classification task, we've considered a few possible improvements that we, in the interest of time and managing scope, left out for future work. 
+
+\begin{itemize}
+    \item Collect data from multiple subjects, and use more broadly defined activities to better suit different subjects' device usage.
+    \item Make use of the input watcher we developed (mentioned in~\Vref{section:aw-watcher-input}), to separate code and prose reading/comprehension from active writing.
+    \item Combining with classifiers of emotion and other brain states, to understand associations between them and different device activities.
+\end{itemize}
+
+We are curious about combining device use data with EEG classifiers of emotion\footnote{Notably difficult, in part due to the subjective nature, and difficulty to consistently elicit in subjects} or other brain states, to try to monitor how we feel during different activities. This could potentially be introduced as another feature for time tracking software like ActivityWatch, which could then not only be used to see how you spent your time, but also how you felt during that time.
 
 It would also be of interest to implement more tasks engaging specific cognitive processes in \texttt{eeg-notebooks}. As an example, implementing working memory-intensive tasks such as n-back, or simple tasks involving basic arithmetic operations.
 
+We encourage researchers to experiment with our naturalistic device use classification method, as there is a lot of new ground to cover in that area.
+
+\subsection{Integrate with software engineering research}
+
 % Note on future work generally. Mention BCIs especially.
-The work on using EEG and other forms of quantified psychophysiology in software engineering is a budding and growing field of inquiry, but methods and equipment are not yet mature for widespread use. We believe researchers would do well to publish more applications of their work, such as open source tools for monitoring the developers psychophysiology (as done in part by this study) to invite more software engineering practitioners into the field.
+The work on using EEG and other forms of quantified psychophysiology in software engineering is a budding and growing field of inquiry, but methods and equipment are not yet mature for widespread use. We believe researchers would do well to publish more applications of their work, such as open source tools for monitoring the developers' psychophysiology (as done in part by this study) to invite more software engineering practitioners into the field.
 
 %The scope of this study had to be restricted to the experiments at hand, and did not investigate BCIs because...
 

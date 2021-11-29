@@ -4,12 +4,12 @@ We start by deciding on an EEG device to use, we then collect data for both the 
 
 Finally, we train classifiers using various machine learning methods, in particular ones based on Riemannian geometry. We also train a classifier based on bandpower-features as a baseline reference.
 
-An overview of the process is presented in Figure~\ref{fig:method}.
+An overview of the research method is presented in Figure~\ref{fig:method}. The analysis step is further broken down in~\Vref{fig:method-analysis}.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=14cm]{img/method.png}
-    \caption{Overview of the process for the two separate tasks.}\label{fig:method}
+    \caption{Overview of the research method for the two separate tasks.}\label{fig:method}
 \end{figure}
 
 \begin{minipage}{\textwidth}
@@ -23,7 +23,7 @@ The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replica
         \item We have used the original prose-review stimuli by Floyd et al.~\cite{floyd_decoding_2017}.
 \end{itemize}
 
-    Some of these differences are motivated and discussed further later in the report, especially in Section~\ref{section:threats}.
+    Some of these differences are motivated and discussed further later in the report, especially in~\Vref{section:threats}.
 \end{minipage}
 
 % Comparing to Fucci and original study
@@ -57,7 +57,7 @@ The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replica
 
     \begin{minipage}{\textwidth}
         \paragraph*{Muse S}
-        The Muse S is a 4-channel EEG headband with electrodes at TP9, AF7, AF8, and TP10 (using the modified 10--10 system, seen in Figure~\ref{fig:1010}), with the reference electrode at Fpz~\cite{krigolson_choosing_2017}. Its main advantage is its very comfortable form-factor and long battery life. It's limited by its channel count and electrode placement. It connects using Bluetooth.
+        The Muse S is a 4-channel EEG headband with electrodes at TP9, AF7, AF8, and TP10 (using the modified 10--10 system, seen in~\Vref{fig:1010}), with the reference electrode at Fpz~\cite{krigolson_choosing_2017}. Its main advantage is its very comfortable form-factor and long battery life. It's limited by its channel count and electrode placement. It connects using Bluetooth.
 
         \begin{figure}[H]
             \centering
@@ -95,13 +95,13 @@ The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replica
 \pagebreak
 \section{Collection}
 
-We need two types of data for the experiments: EEG data, and labels. For the controlled experiment, our labels are whether the stimuli is code or prose. For the naturalistic use experiment, our labels are the device usage categories.
+We need two types of data for the experiments: EEG data, and labels. For the controlled experiment, our labels are whether the stimulus is code or prose. For the naturalistic use experiment, our labels are the device usage categories.
 
 To collect data for the controlled experiment, we:
 
 \begin{enumerate}
     \item Set up the EEG equipment
-    \item Use eeg-notebooks to present the stimuli, and record the time markers of when the stimuli changed as labels.
+    \item Use eeg-notebooks to present the stimulus, and record the time markers of when the stimulus changed as labels.
 \end{enumerate}
 
 To collect data for the naturalistic use experiment, we:
@@ -115,7 +115,7 @@ To collect data for the naturalistic use experiment, we:
 
         EEG data was collected for the controlled experiment and during naturalistic device use. For both conditions, code from the open source \texttt{eeg-notebooks}~\cite{barachant_eeg-notebooks_2020} was adapted to record the raw EEG stream into a CSV file.
 
-        Depending on the device used we require certain software to connect to the devices. We used muse-lsl for the Muse S~\cite{muse-lsl} which in turn uses Lab Streaming Layer. To support OpenBCI and Neurosity devices we used brainflow~\cite{noauthor_brainflow_2020}.
+        Depending on the device used we require certain software to connect to the devices. We used muse-lsl for the Muse S~\cite{muse-lsl} which in turn uses Lab Streaming Layer. To support OpenBCI and Neurosity devices we used brainflow\,\cite{noauthor_brainflow_2020}.
 
         We have developed `brainwatch', a command-line interface tool, to help us connect to and record from EEG devices. To connect \& record from an EEG device, we can simply run:
 
@@ -148,16 +148,16 @@ To collect data for the naturalistic use experiment, we:
             \begin{figure}[H]
                 \centering
                 \includegraphics[width=90mm]{img/prose-comprehension.png}
-                \caption{Sample of the prose comprehension task used by Fucci et al. (translated from Italian).}\label{fig:prose-comp-fucci}
+                \caption{Sample of the prose comprehension task used by Fucci et al.\ (translated from Italian).}\label{fig:prose-comp-fucci}
             \end{figure}
 
-            We implemented the task in eeg-notebooks~\cite{barachant_eeg-notebooks_2020}, which uses previously mentioned libraries for data collection as well as PsychoPy~\cite{peirce_psychopy2_2019} to present the stimuli.
+            We implemented the task in eeg-notebooks~\cite{barachant_eeg-notebooks_2020}, which uses previously mentioned libraries for data collection as well as PsychoPy~\cite{peirce_psychopy2_2019} to present the stimulus.
 
             Before each run, the subject was asked about their gender, age, handedness, and software development experience (specifically experience with C/C++). For good measure, we also asked if the subject had consumed caffeine the hours prior to the experiment.
 
             After these questions we put the devices on and ensure we get good signal by inspecting it in real time with the viewer provided by muse-lsl (seen in Figure~\ref{fig:muselsl-signal}). The viewer itself does simple bandpass filtering between 3--40Hz, and the signal quality is indicated by the standard deviation of the filtered signal.
 
-            The stimuli images were presented in random order, for all subjects except subject \#1 due to experimenter error (seen in Figure~\ref{fig:timebars}). For each stimuli the subject is asked to answer True/False to the questions posed by the code comprehension stimuli, or Correct/Incorrect for the prose review images. There is a short rest period of 5s between each stimuli. Each experiment run lasted between 10--25 minutes, depending on subject tiredness (subjects were asked to stop when tired).
+            The stimulus images were presented in random order, for all subjects except subject \#1 due to experimenter error (seen in Figure~\ref{fig:timebars}). For each stimulus the subject is asked to answer True/False to the questions posed by the code comprehension stimulus, or Correct/Incorrect for the prose review images. There is a short rest period of 5s between each stimulus. Each experiment run lasted between 10--25 minutes, depending on subject tiredness (subjects were asked to stop when tired).
 
     \vfill
     \pagebreak
@@ -174,7 +174,7 @@ To collect data for the naturalistic use experiment, we:
         \end{itemize}
         \end{minipage}
 
-        We have also built a custom watcher, aw-watcher-input, to track metrics of mouse and keyboard activity. It tracks by listening to mouse and keyboard events and records the distance in pixels the mouse moves and the number of key presses (but not which key was pressed). Every second this is bundled into an event, the values are reset, and then it continues with the next event. It was inspired by similar functionality in Andrej Karpathy's ulogme~\cite{karpathy_ulogme_2016}.
+        We have also built a custom watcher, aw-watcher-input\label{section:aw-watcher-input}, to track metrics of mouse and keyboard activity. It tracks by listening to mouse and keyboard events and records the distance in pixels the mouse moves and the number of key presses (but not which key was pressed). Every second this is bundled into an event, the values are reset, and then it continues with the next event. It was inspired by similar functionality in Andrej Karpathy's ulogme~\cite{karpathy_ulogme_2016}.
 
         A limitation that we have to consider is that the window watcher uses a polling method to track the active window, with a default poll time of 1 second. This means that we can not rely on the timestamps to mark the exact time the window became active/inactive.
 
@@ -213,22 +213,30 @@ start,               stop,                class
 \pagebreak
 \section{Analysis}
 
-    For classification and analysis, we used common open source Python libraries for data analysis, like numpy~\cite{harris2020array}, pandas~\cite{reback2020pandas}, and scikit-learn~\cite{scikit-learn}. In addition, we used less common libraries tailored specifically for working with EEG data, such as MNE~\cite{noauthor_mne-python_2020}, pyriemann~\cite{alexandre_barachant_2020_3715511}, and YASA~\cite{vallat_yasa_2020}.
+    We begin our analysis by labeling our raw EEG data to yield our epochs. The epochs are then transformed into \SI{5}{\second} windows. We then perform data cleaning, by applying a bandpass-filter to our signal and rejecting windows unsuitable for analysis. The windows are then split into training and test set splits/folds, using hold-out or LORO cross-validation. The splits/folds are then used to train our classifiers, and finally we evaluate the classifier performance on the folds.
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=14cm]{img/method-analysis.png}
+        \caption{Overview of data processing pipeline used in analysis.}\label{fig:method-analysis}
+    \end{figure}
+
+    To perform our analysis, we have used common open source Python libraries for data analysis, like numpy~\cite{harris2020array}, pandas~\cite{reback2020pandas}, and scikit-learn~\cite{scikit-learn}. In addition, we used less common libraries tailored specifically for working with EEG data, such as MNE~\cite{noauthor_mne-python_2020}, pyriemann~\cite{alexandre_barachant_2020_3715511}, and YASA~\cite{vallat_yasa_2020}.
 
     \subsection{Labelling}
         When labeling our data we define two levels of granularity: epochs and windows.
 
-        An epoch is a single trial, such as a single stimuli image, which can have variable length due to the experiment setup where the subject decides when to move on to the next stimuli. We label epochs using markers from our experiments.
+        An epoch is a single trial, such as a single stimulus image, which can have variable length due to the experiment setup where the subject decides when to move on to the next stimulus. We label epochs using markers from our experiments.
 
         A window is a fixed-duration slice of an epoch, such that each window matrix has the same dimensions. This enables us to more easily compute various features which require matrices to be of the same dimension. Windows inherit the label of the epoch from which they belong.
 
         For the naturalistic device use experiment, we split the EEG data into epochs using the categories assigned by our ActivityWatch script.
 
-        For the controlled experiment, we split the EEG data into epochs using the trial markers, resulting in one epoch per stimuli.
+        For the controlled experiment, we split the EEG data into epochs using the trial markers, resulting in one epoch per stimulus.
 
     \subsection{Data transformation}\label{section:transform}
 
-        In order to classify the epochs, which have variable length due to each subject taking a different amount of time to answer each trial, we split each epoch into a fixed-duration window. After some experimentation we found \SI{5}{\second} to be a suitable window size. Once we have our fixed-duration windows, we can use them to train our model and classify new samples.
+        In order to classify the epochs, which have variable length due to each subject taking a different amount of time to answer each trial, we split each epoch into a fixed-duration window. After some experimentation, we found \SI{5}{\second} to be a suitable window size. Once we have our fixed-duration windows, we can use them to train our model and classify new samples.
 
         Dimensions of each epoch matrix: \[ (n_{\mathrm{samples}}, n_{\mathrm{channels}}) \]
 
@@ -236,7 +244,9 @@ start,               stop,                class
 
         Since the matrix has variable dimensions for each epoch, we split it into \SI{5}{\second} windows, which at the 256Hz sampling frequency of the Muse gives us 1280 samples per window.
 
-        Dimensions of the window matrix: \[ (n_{\mathrm{windows}}, n_{\mathrm{channels}}, 1280) \]
+        Dimensions of each window matrix: \[ (1280, n_{\mathrm{channels}}) \]
+
+        The matrix of all windows thus has the following dimensions: \[ (1280, n_{\mathrm{channels}}, n_{\mathrm{windows}}) \]
 
         We experimented with different windowing methods to augment the data, but we ultimately decided against using them, as the methods did not seem to contribute to the performance of trained classifiers.
 
@@ -247,7 +257,7 @@ start,               stop,                class
         \begin{enumerate}
             \item Do not have an assigned class
             \item Have a bad signal quality (as indicated by a signal variance $>40$)
-            \item Are too short due to missing samples (such that a 5s window cannot be constructed)
+            \item Are too short due to missing samples (such that a \SI{5}{\second} window cannot be constructed)
         \end{enumerate}
 
         The exact number of samples rejected by each cleaning step, as well as the exact parameters used, can be viewed in the code notebooks published alongside this report.
@@ -265,7 +275,7 @@ start,               stop,                class
 
         \subsubsection{Bandpower-based}
 
-            Bandpower features are simple and commonly used in EEG research for many tasks, including the paper by Fucci et al we seek to improve upon~\cite{fucci_replication_2019}. 
+            Bandpower features are simple and commonly used in EEG research for many tasks, including the paper by Fucci et al.\ we seek to improve upon~\cite{fucci_replication_2019}. 
 
             As a benchmark reference, we implemented classifiers which solely used bandpower features as input, to gain information of how much any improvement from classifier performance is likely due to better EEG equipment versus how much is due to from improved analysis methods.
 
@@ -281,6 +291,7 @@ start,               stop,                class
 
             Our final pipeline is defined by:
 
+% textidote: ignore begin
 \begin{minted}{python}
 from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import LogisticRegression
@@ -295,6 +306,7 @@ clf = make_pipeline(
     LogisticRegression(),
 )
 \end{minted}
+% textidote: ignore end
 
             We do not perform any hyperparameter optimization.
 
@@ -308,7 +320,7 @@ clf = make_pipeline(
         The networks provided by braindecode are convolutional\ldots
     \end{comment}
 
-    \subsection{Performance scoring}
+    \subsection{Performance scoring}\label{section:scoring}
 
         Previous studies have used \emph{balanced accuracy} (BAC) scoring to evaluate model performance. To be able to compare results to previous studies, we do the same. 
 
