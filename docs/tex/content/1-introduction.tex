@@ -21,7 +21,7 @@ Here we introduce an automated time tracker, tracking the computer activities a 
 Studying brain activity during computer-based tasks is of particular interest to software engineers. For example, research has been done on:
 
 \begin{itemize}
-    \item Studying differences in code- and prose-comprehension~\cite{floyd_decoding_2017}\cite{fucci_replication_2019}.
+    \item Studying differences in code- and prose-comprehension~\cite{floyd_decoding_2017,fucci_replication_2019}.
     \item Measuring the difficulty of a development task~\cite{fritz_using_2014}.
     \item Minimizing interruptions~\cite{zuger_reducing_2017}.
     \item Recognizing emotions during programming~\cite{girardi_recognizing_2020}.
@@ -49,9 +49,9 @@ In addition, some communities like the Quantified Self movement have risen to th
 
 % The contributions of this study are...
 
-To summarize, we have in this thesis developed a framework and tooling for studying brain activity during uncontrolled device use (\emph{naturalistic device activities}). We do so by collecting brain activity data using consumer-grade EEG devices while simultaneously tracking the device activity they're engaging in. We then use the data to train machine learning models to predict the task engaged in based on the EEG readings of brain activity.
+To summarize, we have in this thesis developed a framework and tooling for studying brain activity during uncontrolled device use (\emph{naturalistic device activities}). We do so by collecting brain activity data using consumer-grade EEG devices while simultaneously tracking the device activity they're engaging in. We then use the data to train machine learning models to discern which is the active task using the EEG readings of brain activity.
 
-We also apply similar methodology to replicate a controlled experiment reported by Fucci et al.~in 2019~\cite{fucci_replication_2019}, where we present a small number of subjects with a set of code- and prose-comprehension tasks while being monitored with EEG\@. We use the collected data to train machine learning classifiers, evaluating the feasibility of low-cost EEG equipment to distinguish between the two tasks, and use the results as an indication whether it could extend to other tasks, as in our naturalistic setting experiment.
+We also apply similar methodology to replicate a controlled experiment reported by Fucci et al.~in 2019~\cite{fucci_replication_2019}, where we present a small number of subjects with a set of code- and prose-comprehension tasks while being monitored with EEG\@. We use the collected data to train machine learning classifiers, evaluating the feasibility of low-cost EEG equipment to distinguish between the code and prose tasks, and use the results as an indication whether it could extend to other tasks, as in our naturalistic setting experiment.
 
 % Någon variation på följande stycken:
 % - "Our results indicate that a consumer-grade EEG device can provide actionable insights into what a user is doing at the computer. More specifically, we show that\ldots"
@@ -86,7 +86,7 @@ In our naturalistic experiments, our results indicate that a consumer-grade EEG 
 
 \section{Functional brain imaging}\label{section:imaging}
 
-    Functional brain imaging methods such as fMRI\footnote{Functional Magnetic Resonance Imaging}, fNIRS\footnote{Functional Near-Infrared Spectroscopy}, and EEG, have been used to study the relationship between cognitive or physical activity, and brain activity~\cite{floyd_decoding_2017}\cite{hong_classification_2015}\cite{fucci_replication_2019}. The more accurate methods, such as fMRI, are costly and inflexible/impractical for many uses. The different methods in general come with a set of trade-offs. A common obstacle is cost: operating an fMRI machine costs on the order of \$300/h~\cite{fucci_replication_2019}. 
+    Functional brain imaging methods such as fMRI\footnote{Functional Magnetic Resonance Imaging}, fNIRS\footnote{Functional Near-Infrared Spectroscopy}, and EEG, have been used to study the relationship between cognitive or physical activity, and brain activity~\cite{floyd_decoding_2017, hong_classification_2015, fucci_replication_2019}. The more accurate methods, such as fMRI, are costly and inflexible/impractical for many uses. The different methods in general come with a set of trade-offs. A common obstacle is cost: operating an fMRI machine costs on the order of \$300/h~\cite{fucci_replication_2019}. 
 
     Other considerations when picking a brain imaging method is temporal/spatial resolution. For instance, fMRI can measure activity deep in the brain (good spatial resolution), but has difficulty tracking activity over time due to relying on blood oxygenation, which is a much slower process than the underlying neural processes (bad temporal resolution)~\cite{glover_overview_2011}. EEG on the other hand, has excellent temporal resolution (usually sampled at about 256Hz), but it can not reliably discern activity deep in the brain (bad spatial resolution, partially depending on channel count).
 
@@ -146,7 +146,7 @@ In our naturalistic experiments, our results indicate that a consumer-grade EEG 
     Furthermore, how different device activities affect the user behaviorally and neurologically is of interest for many areas of research, including:
 
     \begin{itemize}
-        \item psychological well-being, such as depression and social anxiety~\cite{selfhout_different_2009}\cite{shah_nonrecursive_2002}, stress~\cite{mark_stress_2014}, self-esteem, life satisfaction, loneliness, and depression~\cite{huang_time_2017}.
+        \item psychological well-being, such as depression and social anxiety~\cite{selfhout_different_2009,shah_nonrecursive_2002}, stress~\cite{mark_stress_2014}, self-esteem, life satisfaction, loneliness, and depression~\cite{huang_time_2017}.
         \item the impact of screen time on children and adolescents~\cite{subrahmanyam_impact_2001}.
         \item attention span among media multitasking adults~\cite{mark_stress_2014}.
         \item enhancing personal productivity~\cite{kim_timeaware_2016}.

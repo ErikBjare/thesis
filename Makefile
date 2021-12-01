@@ -17,6 +17,8 @@ lint-tex:
 	! git grep "there's" docs/tex/content/
 	! git grep "it's" docs/tex/content/
 	! git grep "organic" docs/tex/  # should be 'naturalistic'
+	# Consecutive cites (should use a single \cite with all refs)
+	! git grep -E '[\]cite\{[a-zA-Z\_\0-9]+}[\]cite'
 
 lint-textidote:
 	# Textidote loads config from docs/tex/.textidote

@@ -41,7 +41,7 @@ The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replica
     
     In this section we will briefly describe the different EEG devices we have worked with, and their differences.
 
-    We experimented with several devices but eventually settled on the Muse S. The motivation for choosing the Muse S was mainly due to comfort and ease of use. 
+    We experimented with several devices but eventually settled on the Muse S for both our experiments. The motivation for choosing the Muse S was mainly due to comfort and ease of use. 
 
     The other devices considered included the OpenBCI Cyton (with the Ultracortex headset), and the Neurosity Crown.\footnote{Earlier in the work, before we received the Crown, we were also generously gifted a Neurosity Notion DK1 to get a head start.} 
 
@@ -221,7 +221,7 @@ start,               stop,                class
         \caption{Overview of data processing pipeline used in analysis.}\label{fig:method-analysis}
     \end{figure}
 
-    To perform our analysis, we have used common open source Python libraries for data analysis, like numpy~\cite{harris2020array}, pandas~\cite{reback2020pandas}, and scikit-learn~\cite{scikit-learn}. In addition, we used less common libraries tailored specifically for working with EEG data, such as MNE~\cite{noauthor_mne-python_2020}, pyriemann~\cite{alexandre_barachant_2020_3715511}, and YASA~\cite{vallat_yasa_2020}.
+    To perform our analysis, we have used common open source Python libraries for data analysis, like numpy~\cite{harris2020array}, pandas~\cite{reback2020pandas}, and scikit-learn~\cite{scikit-learn}. In addition, we used libraries tailored specifically for working with EEG data, such as MNE~\cite{noauthor_mne-python_2020}, pyriemann~\cite{alexandre_barachant_2020_3715511}, and YASA~\cite{vallat_yasa_2020}.
 
     \subsection{Labelling}
         When labeling our data we define two levels of granularity: epochs and windows.
@@ -315,7 +315,7 @@ clf = make_pipeline(
 
         \change[inline]{Future work!}
 
-        One of the classifiers we want to train is a neural network. We use braindecode~\cite{schirrmeister_deep_2017}\cite{noauthor_braindecode_2021}, a neural network library for EEG data that uses PyTorch and integrates it with scikit-learn through skorch.
+        One of the classifiers we want to train is a neural network. We use braindecode~\cite{schirrmeister_deep_2017, noauthor_braindecode_2021}, a neural network library for EEG data that uses PyTorch and integrates it with scikit-learn through skorch.
 
         The networks provided by braindecode are convolutional\ldots
     \end{comment}

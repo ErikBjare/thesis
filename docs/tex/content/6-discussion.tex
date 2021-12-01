@@ -1,24 +1,22 @@
 \chapter{Discussion}\label{section:discussion}
 
-We now move on to discussing our results. We will also discuss some threats to the validity, potential applications, ethical considerations, and a brief mention of research initiatives we've contributed to along the way.
+We now move on to discussing our results and answering our two research questions. We will also discuss some threats to the validity, potential applications, ethical considerations, and a brief mention of research initiatives we have contributed to along the way.
 
-As stated earlier in the section ``Aim of the thesis'' (\ref{section:aim}), we set out to answer two research questions:
-
-\paragraph*{RQ1. Can we improve upon previous results in classifying code vs prose comprehension with EEG\@?}
+\section{RQ1 --- Improving upon previous results in classifying code vs prose}
 
 We found that we do improve upon the best classifier performance by Fucci et al.\ in their EEG-only configuration~\cite{fucci_replication_2019}. However, we had to remove certain subjects from our sample, and our sample in general was smaller and more homogenous.\footnote{The reason for this cherry-picked subject selection is due to issues with signal quality and limited data (due to spurious device disconnects).}
 
-Our findings also show that Riemannian methods, as used in this paper, are better at distinguishing between the code and prose tasks than the bandpower-features approach, as used by Fucci et al. Our Riemannian score\footnote{Scores taken from Table~\ref{table:compare-results}} was $0.75$, which is better than both our bandpower-features score of $0.69$, as well as the Fucci et al score of $0.66$. This is in line with our expectations, as Riemannian methods are considered state-of-the-art for many EEG and BCI tasks, unlike bandpower features.
+Our findings also show that Riemannian methods, as used in this thesis, are better at distinguishing between the code and prose tasks than the bandpower-features approach, as used by Fucci et al. Our Riemannian score\footnote{Scores taken from Table~\ref{table:compare-results}} was $0.75$, which is better than both our bandpower-features score of $0.69$, as well as the Fucci et al score of $0.66$. This is in line with our expectations, as Riemannian methods are considered state-of-the-art for many EEG and BCI tasks, unlike bandpower features.
 
 We were not able to outperform the results by Floyd et al.~\cite{floyd_decoding_2017}. This is not surprising given they were using fMRI, which has far superior spatial resolution and can therefore accurately detect elevated activity in specific brain regions over the duration of an epoch. However, our method using EEG has the benefit of high temporal resolution, allowing classification using small amounts of data, enabling near real-time applications.
 
-\paragraph*{RQ2. Can we train an EEG classifier to separate software developers’ device activities?}
+\section{RQ2 --- Identify software developers' work tasks based on brain activity}
 
-We train several classifiers and achieve promising results. We were especially successful in distinguishing work (writing code) from social media (Twitter).
+We train several classifiers and achieve promising results. We were especially successful in distinguishing work (writing code) from social media (Twitter), with a BAC of $0.69$.
 
-Among the classifiers we train, we found that discerning leisure-activities from each other (such as YouTube vs Twitter) is harder than discerning work from leisure (such as writing code vs Twitter). We also find that EEG is sufficient to not only pick up differences in code vs prose \emph{comprehension} but also in \emph{writing}.
+Among the classifiers we train, we found that discerning leisure-activities from each other (such as YouTube vs Twitter, with a BAC of $0.60$) is harder than discerning work from leisure (such as writing code vs Twitter). We also find that EEG is sufficient to not only pick up differences in code vs prose \emph{comprehension} but also in \emph{writing}, as shown by our writing code vs writing prose categories (BAC of $0.68$).
 
-We conclude that our preliminary results indicate that it is possible to discern several different device activities using EEG\@. However, more data from multiple subjects are needed in future work to validate the method and results. 
+We conclude that our preliminary results indicate that it is possible to discern several different device activities using EEG\@. However, more data from multiple subjects are needed in future work to validate the method and results. We also want to note that we only try to discern two types of activity at a time, pair by pair, and do not try to identify them among all possible work activities (a much more difficult task, left for future work).
 
 \section{Threats to validity}\label{section:threats}
 
@@ -38,9 +36,7 @@ We conclude that our preliminary results indicate that it is possible to discern
 
 \section{Applications to software engineering}
 
-As we mentioned in the introduction, gaining insight into the brains of developers at work can be used to aid and enhance the productivity of developers in several ways.
-
-Some to assist in development, like helping to identify developer confusion, but other applications could be imagined where a summary of the developers' brain activity during a particular commit (such as if the developer was confused, focused, tired).
+Gaining insight into the minds of developers at work can be used to aid and enhance the productivity of developers in several ways. As an example, it could be used to assist the developer in real time, like helping to identify developer confusion, but other applications could be imagined where a summary of the developers' brain activity during a particular commit (such as if the developer was confused, focused, tired) is included in the commit message, to help identify commits prone to introducing bugs.
 
 %\add[inline]{Include mention and image of mood attached in commit message from Fucci talk?}
 
@@ -59,7 +55,7 @@ We also consider our novel idea of `mental churn', a neurally integrated alterna
     When studying EEG data a range of ethical considerations arise. 
 
     \begin{itemize}
-        \item Could the data be considered personally identifiable information (PII)? 
+        \item Could the data be considered personally identifiable information (PII) and thereby fall under GDPR's regulations concerning ``sensitive user data''? 
         \item How privacy sensitive are EEG recordings? Could they contain something the subject would rather keep private? (could have medical implications)
         \item How do we build large public datasets, while preserving participants privacy?
         %\item How can one use EEG in a work environment without unreasonable surveillance of the employee?
