@@ -139,6 +139,9 @@
     \keywords{electroencephalography, brain computer interfaces, time tracking, code comprehension, productivity, MSc}
 \fi
 
+\makeglossaries
+\input{glossary}
+
 \begin{document}
 
 
@@ -149,13 +152,13 @@
     \tableofcontents
 \fi
 
-% Don't show notes & TODOs in final version
-%\listoftodos[Notes \& TODOs]
-%\vfill
-
 % Pagebreak after ToC
 \vfill
 \pagebreak
+
+% Don't show notes & TODOs in final version
+%\listoftodos[Notes \& TODOs]
+%\vfill
 
 \begin{refsection}
 
@@ -170,6 +173,9 @@
 \input{content/6-discussion}
 \input{content/7-conclusions}
 
+% Pagebreak after glossary
+\vfill
+\pagebreak
 
 % References
 %\bibbysegment{}
@@ -187,6 +193,12 @@
   {\endlist}
   {\item}
 \printbibliography[notcategory=cited, env=bibnonum, heading=notcited]
+
+\pagebreak
+
+% Glossary
+\printglossary
+\printglossary[title=Acronyms, type=\acronymtype, toctitle=Glossary]
 
 \end{refsection}
 \end{document}

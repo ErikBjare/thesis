@@ -38,7 +38,7 @@ dist/%.pdf: docs/tex/build/%.pdf
 imgs: docs/tex/img/method.png docs/tex/img/method-analysis.png docs/tex/img/gqm.png
 
 docs/tex/build/%.pdf: docs/tex/%.tex docs/tex/*.bib imgs docs/tex/content/*.tex docs/tex/figures/*.tex
-	latexmk $< -pdf -shell-escape -cd -output-directory=build -interaction=nonstopmode -file-line-error
+	latexmk $< -pdf -shell-escape -cd -output-directory=build -interaction=nonstopmode -file-line-error -r docs/tex/.latexmkrc
 
 precommit:
 	make typecheck

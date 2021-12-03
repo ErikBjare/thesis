@@ -9,7 +9,7 @@ An overview of the research method is presented in Figure~\ref{fig:method}. The 
 \begin{figure}[h]
     \centering
     \includegraphics[width=14cm]{img/method.png}
-    \caption{Overview of the research method for the two separate tasks.}\label{fig:method}
+    \caption{Overview of the research method for the two tasks: controlled code vs prose experiment, and naturalistic use.}\label{fig:method}
 \end{figure}
 
 \begin{minipage}{\textwidth}
@@ -163,7 +163,7 @@ To collect data for the naturalistic use experiment, we:
     \pagebreak
     \subsection{Collection of device activity data}\label{section:collect-usage}
 
-        All device activity is collected using the automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_2020-1}.
+        All device activity is collected using the automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_2020}.
 
         \begin{minipage}{\textwidth}
         ActivityWatch collects data through modules called watchers which report to the ActivityWatch server. It comes with two watchers by default:
@@ -223,6 +223,8 @@ start,               stop,                class
 
     To perform our analysis, we have used common open source Python libraries for data analysis, like numpy~\cite{harris2020array}, pandas~\cite{reback2020pandas}, and scikit-learn~\cite{scikit-learn}. In addition, we used libraries tailored specifically for working with EEG data, such as MNE~\cite{noauthor_mne-python_2020}, pyriemann~\cite{alexandre_barachant_2020_3715511}, and YASA~\cite{vallat_yasa_2020}.
 
+    Source code and code notebooks for our analysis is available at: \href{https://github.com/ErikBjare/thesis}{github.com/ErikBjare/thesis}
+
     \subsection{Labelling}
         When labeling our data we define two levels of granularity: epochs and windows.
 
@@ -273,7 +275,7 @@ start,               stop,                class
             \item Use Riemannian methods to work with distances between covariance matrices by using the Riemannian metric, and then apply a common classifier algorithm.
         \end{enumerate}
 
-        \subsubsection{Bandpower-based}
+        \subsubsection{Bandpower-based}\label{section:method-bandpower}
 
             Bandpower features are simple and commonly used in EEG research for many tasks, including the paper by Fucci et al.\ we seek to improve upon~\cite{fucci_replication_2019}. 
 
@@ -285,7 +287,7 @@ start,               stop,                class
 
             Finally, the pipeline trains 3 models using either logistic regression, support vector machines, or random forests.
 
-        \subsubsection{Riemannian geometry}
+        \subsubsection{Riemannian geometry}\label{section:method-riemannian}
 
             The state of the art in many EEG classification tasks involves the use of Riemannian geometry (described in Section~\ref{section:riemannian-theory}). For this, we used the open source \texttt{pyriemann} library by Alexandre Barachant\footnote{First author of the original paper to apply Riemannian geometry to EEG~\cite{barachant_classification_2013}}.
 
@@ -322,7 +324,7 @@ clf = make_pipeline(
 
     \subsection{Performance scoring}\label{section:scoring}
 
-        Previous studies have used \emph{balanced accuracy} (BAC) scoring to evaluate model performance. To be able to compare results to previous studies, we do the same. 
+        Previous studies have used \acrfull{bac} scoring to evaluate model performance. To be able to compare results to previous studies, we do the same. 
 
         BAC deals with imbalanced datasets by evaluating the performance of the classifier on each class and combining them into a single number. It is defined as the average of recall obtained on each class, or equivalently for a binary classifier, the average of the classifier sensitivity and specificity. 
 

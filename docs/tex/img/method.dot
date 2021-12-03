@@ -6,7 +6,7 @@ digraph graphname {
     // Controlled
     C2[label="Experiment setup"];
     C1[label="EEG setup"];
-    C3[label="Experiment run"];
+    C3[label="Code vs prose task\n(RQ1)"];
     C1 -> C3;
     C2 -> C3;
     C3 -> A1;
@@ -19,7 +19,7 @@ digraph graphname {
     // Uncontrolled
     //U1[label="EEG setup"];
     U2[label="ActivityWatch setup"];
-    U3[label="Natural device use"];
+    U3[label="Natural device use\n(RQ2)"];
     C1 -> U3;
     U2 -> U3;
     U3 -> A1;

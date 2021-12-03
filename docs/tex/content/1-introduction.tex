@@ -8,7 +8,7 @@
 
 The rise of computing over the last half century has led to an unprecedented rise in new methods for data acquisition and analysis. However, our ability to quantify and analyse brain function is still limited. With advanced and expensive equipment, such as \emph{magnetic resonance imaging} (MRI) scanners and high-density \emph{electroencephalography} (EEG) headsets, we can record brain activity at an adequate resolution to draw conclusions about neural activation patterns under different behaviours.
 
-While this professional-grade equipment is still unavailable to the general public, in recent years some brain imaging techniques have become commercialized for various purposes (such as meditation aids, biofeedback) and sold as consumer devices. Consequently, the cost of EEG devices has fallen sharply, offering a feasible solution to monitor brain activity in a wide range of situations to answer a range of scientific questions relating to brain activity during different tasks.
+While this professional-grade equipment is still unavailable to the general public, in recent years some brain imaging techniques have become commercialized for various purposes (such as meditation aids, biofeedback) and sold as consumer devices~\cite{sawangjai_consumer_2020}. Consequently, the cost of EEG devices has fallen sharply, offering a feasible solution to monitor brain activity in a wide range of situations to answer a range of scientific questions relating to brain activity during different tasks.
 
 % Move 2 establish a niche (show why there needs to be further research on your topic)
 % Niche 1: using automated time tracking
@@ -49,7 +49,7 @@ In addition, some communities like the Quantified Self movement have risen to th
 
 % The contributions of this study are...
 
-To summarize, we have in this thesis developed a framework and tooling for studying brain activity during uncontrolled device use (\emph{naturalistic device activities}). We do so by collecting brain activity data using consumer-grade EEG devices while simultaneously tracking the device activity they're engaging in. We then use the data to train machine learning models to discern which is the active task using the EEG readings of brain activity.
+To summarize, we have in this thesis developed a framework and tooling for studying brain activity during uncontrolled device use (\emph{naturalistic device activities}). Using our previously developed time-tracking application ActivityWatch~\cite{bjareholt_activitywatch_2020}, we can track the subject's device activity while simultaneously collecting their brain activity data using consumer-grade EEG devices. We then use the EEG and device use data to train machine learning models to discern which task the subject is engaged in.
 
 We also apply similar methodology to replicate a controlled experiment reported by Fucci et al.~in 2019~\cite{fucci_replication_2019}, where we present a small number of subjects with a set of code- and prose-comprehension tasks while being monitored with EEG\@. We use the collected data to train machine learning classifiers, evaluating the feasibility of low-cost EEG equipment to distinguish between the code and prose tasks, and use the results as an indication whether it could extend to other tasks, as in our naturalistic setting experiment.
 
