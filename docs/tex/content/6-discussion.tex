@@ -77,9 +77,7 @@ We also consider our novel idea of `mental churn', a neurally integrated alterna
 
 \subsection{Crowdsourcing data}
 
-    Collecting data is a significant time sink for researchers, and efforts to crowdsource data from the general public are difficult for EEG as it still requires access to the equipment, the knowledge to operate it, as well as considerations like signal quality, electrode placement, and other factors that might invalidate the data.
-
-    Crowdsourcing data comes with new challenges. One of them is that data is now recorded by many different devices, with differences in channel count, sampling rate, electrode placement, and so on, that are difficult to combine in the same dataset. 
+    Collecting data is a significant time sink for researchers, and efforts to crowdsource data from the general public are difficult for EEG as it still requires access to the equipment and the knowledge to operate it. Crowdsourcing data also comes with new challenges. One such challenge is that the data might now be recorded by different devices, with differences in channel count, sampling rate, electrode placement, and so on. These differences can make it difficult to combine several datasets into one. 
 
     A potential solution to the problem of learning new variations from a small additional sample is to attempt cross-task or cross-subject transfer learning. In such a setup, a model is already trained on a group of subjects, or a similar task, and through a small amount of new data for a particular subject or task, the model can adapt to learn those previously unseen subjects or tasks. This is discussed further in Section~\ref{section:transfer-learning}.
 

@@ -1,19 +1,19 @@
 \chapter{Method}
 
-We start by deciding on an EEG device to use, we then collect data for both the controlled and naturalistic experiments. Once the data has been collected, we perform data labelling, transformation, and cleaning. 
+We start by deciding on an EEG device to use, we then collect data for both the controlled and naturalistic experiments. For the controlled experiment, we collect stimuli labels. For the uncontrolled experiment, we collect labels using ActivityWatch. Once the data has been collected, we perform data labelling, transformation, and cleaning, before we finally train our classifiers. 
 
-Finally, we train classifiers using various machine learning methods, in particular ones based on Riemannian geometry. We also train a classifier based on bandpower-features as a baseline reference.
+Our main classifier is based on Riemannian geometry. For our controlled experiment, we also train a classifier based on bandpower-features as a baseline reference. We evaluate the performance of our classifiers using the balanced accuracy metric and LORO cross-validation.
 
 An overview of the research method is presented in Figure~\ref{fig:method}. The analysis step is further broken down in~\Vref{fig:method-analysis}.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=14cm]{img/method.png}
+    \includegraphics[width=12cm]{img/method.png}
     \caption{Overview of the research method for the two tasks: controlled code vs prose experiment, and naturalistic use.}\label{fig:method}
 \end{figure}
 
 \begin{minipage}{\textwidth}
-The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replication_2019} with some differences (seen in Table~\ref{table:compare-method}): 
+The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replication_2019} with some differences (seen in \Vref{table:compare-method}): 
 
 \begin{itemize}
         \item We use EEG exclusively.
@@ -41,9 +41,7 @@ The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replica
     
     In this section we will briefly describe the different EEG devices we have worked with, and their differences.
 
-    We experimented with several devices but eventually settled on the Muse S for both our experiments. The motivation for choosing the Muse S was mainly due to comfort and ease of use. 
-
-    The other devices considered included the OpenBCI Cyton (with the Ultracortex headset), and the Neurosity Crown.\footnote{Earlier in the work, before we received the Crown, we were also generously gifted a Neurosity Notion DK1 to get a head start.} 
+    We experimented with several devices but eventually settled on the Muse S for both our experiments. The motivation for choosing the Muse S was mainly due to comfort and ease of use. The other devices considered included the OpenBCI Cyton (with the Ultracortex headset), and the Neurosity Crown.\footnote{Earlier in the work, before we received the Crown, we were also generously gifted a Neurosity Notion DK1 to get a head start.} 
 
     In our framework, we have implemented support all of the headsets mentioned (and more), such that future work can use whichever device is desired.
 
@@ -93,7 +91,7 @@ The method for our controlled experiment mimics Fucci et al.~\cite{fucci_replica
     \end{minipage}
 
 \pagebreak
-\section{Collection}
+\section{Data collection}
 
 We need two types of data for the experiments: EEG data, and labels. For the controlled experiment, our labels are whether the stimulus is code or prose. For the naturalistic use experiment, our labels are the device usage categories.
 
@@ -135,9 +133,7 @@ To collect data for the naturalistic use experiment, we:
 
         \subsubsection*{During code vs prose comprehension task}
 
-            For the controlled condition, we ended up using the Muse S as well due to the comfort and ease of setup.
-
-            We have 9 subjects, sampled by convenience. The subjects were 8 males and one female. Most are in their late 20s or early 30s, except two who are in their 40s.
+            For the controlled condition, we ended up using the Muse S as well due to the comfort and ease of setup. We have 9 subjects, sampled by convenience from software engineers. The subjects were 8 males and one female. Most are in their late 20s or early 30s, except two who are in their 40s.
 
             The experiment consists of presenting images with code or prose comprehension tasks, seen in Figure~\ref{fig:tasks}. These images are from previous studies on code vs prose comprehension by Floyd et al.~\cite{floyd_decoding_2017} and Fucci et al.~\cite{fucci_replication_2019}. 
 
@@ -163,7 +159,7 @@ To collect data for the naturalistic use experiment, we:
     \pagebreak
     \subsection{Collection of device activity data}\label{section:collect-usage}
 
-        All device activity is collected using the automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_2020}.
+        Device activity data is collected using our automated time-tracker ActivityWatch~\cite{bjareholt_activitywatch_2020} (introduced in \Vref{section:aw}).
 
         \begin{minipage}{\textwidth}
         ActivityWatch collects data through modules called watchers which report to the ActivityWatch server. It comes with two watchers by default:
@@ -174,9 +170,9 @@ To collect data for the naturalistic use experiment, we:
         \end{itemize}
         \end{minipage}
 
-        We have also built a custom watcher, aw-watcher-input\label{section:aw-watcher-input}, to track metrics of mouse and keyboard activity. It tracks by listening to mouse and keyboard events and records the distance in pixels the mouse moves and the number of key presses (but not which key was pressed). Every second this is bundled into an event, the values are reset, and then it continues with the next event. It was inspired by similar functionality in Andrej Karpathy's ulogme~\cite{karpathy_ulogme_2016}.
+        We have also built a custom watcher, aw-watcher-input\label{section:aw-watcher-input}, to track metrics of mouse and keyboard activity. It tracks by listening to mouse and keyboard events and records the distance in pixels the mouse moves and the number of key presses (but not which key was pressed). Every second this is bundled into an event, the values are reset, and then it continues with the next event. It was inspired by similar functionality in Andrej Karpathy's ulogme~\cite{karpathy_ulogme_2016}. However, we did not have time to include it in analysis, and leave the integration of it for future work.
 
-        A limitation that we have to consider is that the window watcher uses a polling method to track the active window, with a default poll time of 1 second. This means that we can not rely on the timestamps to mark the exact time the window became active/inactive.
+        % A limitation that we have to consider is that the window watcher uses a polling method to track the active window, with a default poll time of 1 second. This means that we can not rely on the timestamps to mark the exact time the window became active/inactive.
 
         The data from ActivityWatch is processed and categorized such that the resulting data has the 3 columns \mintinline{text}{start, stop, class}. The class is determined by a regular expression that matches on window titles and URLs. For example, the regular expression \mintinline{text}{GitHub|github.com} could be used to match GitHub use.
 
@@ -244,9 +240,7 @@ start,               stop,                class
 
         Where $n_{\mathrm{samples}}$ is the total number of samples for the epoch (variable-length), and $n_{\mathrm{channels}}$ is the number of channels (4 for the Muse S).
 
-        Since the matrix has variable dimensions for each epoch, we split it into \SI{5}{\second} windows, which at the 256Hz sampling frequency of the Muse gives us 1280 samples per window.
-
-        Dimensions of each window matrix: \[ (1280, n_{\mathrm{channels}}) \]
+        Since the matrix has variable dimensions for each epoch, we split it into \SI{5}{\second} windows, which at the 256Hz sampling frequency of the Muse gives us 1280 samples per window. The dimensions of each window matrix is then $(1280, n_{\mathrm{channels}})$.
 
         The matrix of all windows thus has the following dimensions: \[ (n_{\mathrm{windows}}, 1280, n_{\mathrm{channels}}) \]
 
