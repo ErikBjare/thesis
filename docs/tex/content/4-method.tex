@@ -213,7 +213,7 @@ start,               stop,                class
 \pagebreak
 \section{Analysis}
 
-    We begin our analysis by labeling our raw EEG data to yield our epochs. The epochs are then transformed into \SI{5}{\second} windows. We then perform data cleaning, by applying a bandpass-filter to our signal and rejecting windows unsuitable for analysis. The windows are then split into training and test set splits/folds, using hold-out or LORO cross-validation. The splits/folds are then used to train our classifiers, and finally we evaluate the classifier performance on the folds.
+    We begin our analysis by labeling our raw EEG data to yield our epochs. The epochs are then transformed into \SI{5}{\second} windows. We then perform data cleaning, by applying a bandpass-filter to our signal and rejecting windows unsuitable for analysis. The windows are then split into training and test set splits/folds, using hold-out or LORO\footnote{\gls{loro}} cross-validation. The splits/folds are then used to train our classifiers, and finally we evaluate the classifier performance on the folds.
 
     \begin{figure}[h]
         \centering
@@ -248,9 +248,11 @@ start,               stop,                class
 
         Dimensions of each window matrix: \[ (1280, n_{\mathrm{channels}}) \]
 
-        The matrix of all windows thus has the following dimensions: \[ (1280, n_{\mathrm{channels}}, n_{\mathrm{windows}}) \]
+        The matrix of all windows thus has the following dimensions: \[ (n_{\mathrm{windows}}, 1280, n_{\mathrm{channels}}) \]
 
-        We experimented with different windowing methods to augment the data, but we ultimately decided against using them, as the methods did not seem to contribute to the performance of trained classifiers.
+        To aggregate these window-level predictions back into the epoch-level, we will take the mean of the prediction probabilities for each window in the epoch.
+
+        We also experimented with different windowing methods to augment the data, but we ultimately decided against using them, as the methods did not seem to contribute significantly to the performance of trained classifiers.
 
     \subsection{Data cleaning}
 
@@ -324,7 +326,7 @@ clf = make_pipeline(
 
     \subsection{Performance scoring}\label{section:scoring}
 
-        Previous studies have used \acrfull{bac} scoring to evaluate model performance. To be able to compare results to previous studies, we do the same. 
+        Previous studies have used \glsxtrfull{bac} scoring to evaluate model performance. To be able to compare results to previous studies, we do the same. 
 
         BAC deals with imbalanced datasets by evaluating the performance of the classifier on each class and combining them into a single number. It is defined as the average of recall obtained on each class, or equivalently for a binary classifier, the average of the classifier sensitivity and specificity. 
 
@@ -332,7 +334,7 @@ clf = make_pipeline(
 
     \subsection{Cross Validation}
 
-        We use \emph{Leave-One-Run-Out} (LORO) cross-validation, a variation of \emph{Leave-One-Group-Out} (LOGO), in order to ensure the samples used in validation are from subjects that are unseen in training. LORO validation generates $n$ folds (one for each subject), with $n-1$ subjects used for training in each fold, and $1$ subject for validation (seen in Table~\ref{table:loro}).
+        We use \glsxtrfull{loro} cross-validation, a variation of \gls{logo}, in order to ensure the samples used in validation are from subjects that are unseen in training. LORO validation generates $n$ folds (one for each subject), with $n-1$ subjects used for training in each fold, and $1$ subject for validation (seen in Table~\ref{table:loro}).
 
         \begin{table}[h]
             \centering

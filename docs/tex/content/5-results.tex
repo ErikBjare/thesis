@@ -2,7 +2,7 @@
 
     In this chapter we present the results from our two different experiments.
 
-    For our code vs prose experiment we present and compare our main classifier, based on Riemannian geometry (described in~\Vref{section:method-riemannian}), versus our reference classifier, which uses the bandpower-features approach (described in~\Vref{section:method-bandpower}, similar to that used by Fucci et al). We also compare our results to the original fMRI study by Floyd et al.~\cite{floyd_decoding_2017} and the EEG replication study by Fucci et al.~\cite{fucci_replication_2019}. 
+    For our code vs prose experiment we present and compare our main classifier, based on Riemannian geometry (described in~\Vref{section:method-riemannian}), versus our reference classifier, which uses the bandpower-features approach (described in~\Vref{section:method-bandpower}, similar to that used by Fucci et al). We also compare our results to the original \gls{fmri} study by Floyd et al.~\cite{floyd_decoding_2017} and the EEG replication study by Fucci et al.~\cite{fucci_replication_2019}. 
 
     For our naturalistic device use experiment we present performance scores for six classifiers using our Riemannian classifier (one for each pairing of our chosen class labels) to see if results from the code vs prose experiment generalize to other types of device activity.
 
@@ -10,25 +10,21 @@
     \section{Code vs prose task (controlled)}
         Table~\ref{table:bac-all} and~\ref{table:bac-selective} show the performance we achieved for the code vs prose task, for two different subject selections. Figure~\ref{fig:timebars} shows a detailed overview of the data, and classification results for one example subject-fold. Finally, we compare our results to previous studies in Table~\ref{table:compare-results}.
 
-        
-
-        Our top-performing classifier, using Riemannian methods and cross-validated using LORO, yields a median balanced accuracy of $0.749$  for window-level classification and $0.9$ for epoch-level classification (seen in Table~\ref{table:bac-selective}).
+        Our top-performing classifier, using Riemannian methods and cross-validated using \gls{loro}, yields a median \gls{bac} of $0.749$  for window-level classification and $0.9$ for epoch-level classification (seen in Table~\ref{table:bac-selective}).
 
         The \textbf{Bandpower} columns show the results for each subject-fold using the bandpower benchmark for window-level data and epoch-level data, respectively. Correspondingly, the \textbf{Riemannian} columns show the results using Riemannian geometry. The classifier using Riemann geometry tends to outperform the baseline in each fold.
 
-        We do window-level classification by training on \SI{5}{\second} windows (as described in Section~\ref{section:transform}).
-
-        We achieve epoch-level classification by training a window-level classifier just as for the \SI{5}{\second} windows, we then make a classification for the entire epoch by taking the mean of the prediction probabilities from the windows in that epoch.
+        We perform window-level classification by training on \SI{5}{\second} windows. We then achieve epoch-level classification by taking the mean of the prediction probabilities from the windows in each epoch (as described in Section~\ref{section:transform}).
 
         \input{figures/table-bac-all.tex}
 
-        In Table~\ref{table:bac-all} we see that performance is bad (no better than chance, i.e. $BAC \approx 0.5$ as described in \Vref{section:scoring}) for several subjects. We investigate these and find issues with the quality and amount of data (seen in Figure~\ref{fig:timebars}). Due to this we remove them from our dataset, and get the improved results seen in Table~\ref{table:bac-selective}. We discuss our subject selection further in Section~\ref{section:discussion}.
+        In Table~\ref{table:bac-all} we see that performance is bad (no better than chance, i.e. $BAC \approx 0.5$ as described in \Vref{section:scoring}) for several subjects. We investigate these and find issues with the quality and amount of data (seen in \Vref{fig:timebars}). Due to this we remove them from our dataset, and get the improved results seen in \Vref{table:bac-selective}. We discuss our subject selection further in \Vref{section:discussion}.
 
-        Compared to previous studies, we achieve a moderate improvement over the EEG-only classifier trained in Fucci et al., and achieve a similar performance to the fMRI study by Floyd et al. (seen in Table~\ref{table:compare-results}).
+        Compared to previous studies, we achieve a moderate improvement over the EEG-only classifier trained in Fucci et al., and achieve a similar performance to the fMRI study by Floyd et al. (seen in \Vref{table:compare-results}).
 
         \input{figures/table-bac-selective.tex}
 
-        It should be noted that the epoch-level numbers are highly variable due to the small number of subjects (for the median) and total trials (for each subject). Therefore, we only present our best window-level results in Table~\ref{table:compare-results}.
+        It should be noted that the epoch-level numbers are highly variable due to the small number of subjects (for the median) and total trials (for each subject). Therefore, we only present our best window-level results in~\Vref{table:compare-results}.
 
         \input{figures/table-compare-results.tex}
 
@@ -78,9 +74,9 @@
 
     \section{Naturalistic device activity}
 
-        As described in Section~\ref{section:collect-eeg-naturalistic}, we collected approximately \SI{5}{hours} of labeled EEG data using our labels described in Section~\ref{section:collect-usage}. The data was collected on several different days, with a breakdown of the date and class distribution shown in Figure~\ref{figure:dayclass-dist}. Using that data, we trained classifiers for each pair of label combinations. 
+        As described in Section~\ref{section:collect-eeg-naturalistic}, we collected approximately \SI{5}{hours} of labeled EEG data using our labels described in Section~\ref{section:collect-usage}. The data was collected on several different days, with a breakdown of the date and class distribution shown in Figure~\ref{figure:dayclass-dist}. 
 
-        Our results are seen in Table~\ref{table:scores-natural}.
+        Using that data, we trained our classifiers based on Riemannian geometry for each pair of label combinations. The results for each pairing are seen in Table~\ref{table:scores-natural}.
 
         %\add[inline]{Förklara vad kolumnerna i löptexten så får du lite textvolym. Kan du säga något om när data samlades in? Var det vid ett tillfälle? Flera tillfällen? Tid på dygnet? Eventuellt kan någon sådan metadata även leda till en figur som illustrerar något... Lite deskriptiv statistik kanske finns också? Hur många tillfällen spelades in? Vad var medelvärdet på inspelningstid? Hur såg signalstyrkan ut? Vad triggade dig att sluta spela in? Slut på batteri? Annat? (obekväm sensor, störd av något, eller kände dig färdig)}
 
@@ -89,6 +85,8 @@
             \input{figures/table-results-naturalistic.tex}
             \caption{The scores for each label pairing. The \textit{Score} is the mean balanced accuracy of the StratifiedKFold splits. The \textit{Support} is the number of windows for each class. \textit{Hours} is the sum of both classes' duration.}\label{table:scores-natural}
         \end{table}
+
+        We can see that our balanced accuracy scores are roughly in the same range as the scores achieved in our controlled code vs prose experiment. We note that our naturalistic ``Programming vs Writing'' classifier achieves a \gls{bac} of 0.68, which is slightly worse than the $0.75$ BAC from our controlled experiment. We discuss the results further in \Vref{section:results}.
 
         \begin{figure}[h]
             \centering

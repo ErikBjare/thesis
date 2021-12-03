@@ -6,19 +6,20 @@
 
 % Move 1 establish your territory (say what the topic is about)
 
-The rise of computing over the last half century has led to an unprecedented rise in new methods for data acquisition and analysis. However, our ability to quantify and analyse brain function is still limited. With advanced and expensive equipment, such as \emph{magnetic resonance imaging} (MRI) scanners and high-density \emph{electroencephalography} (EEG) headsets, we can record brain activity at an adequate resolution to draw conclusions about neural activation patterns under different behaviours.
+The rise of computing over the last half century has led to an unprecedented rise in new methods for data acquisition and analysis. However, our ability to quantify and analyse brain function is still limited. With advanced and expensive equipment, such as \glsxtrfull{mri} scanners and high-density \glsxtrfull{eeg} headsets, we can record brain activity at an adequate resolution to draw conclusions about neural activation patterns under different behaviours.
 
-While this professional-grade equipment is still unavailable to the general public, in recent years some brain imaging techniques have become commercialized for various purposes (such as meditation aids, biofeedback) and sold as consumer devices~\cite{sawangjai_consumer_2020}. Consequently, the cost of EEG devices has fallen sharply, offering a feasible solution to monitor brain activity in a wide range of situations to answer a range of scientific questions relating to brain activity during different tasks.
+While this professional-grade equipment is still unavailable to the general public, in recent years some brain imaging techniques have become commercialized for various purposes (such as meditation aids, biofeedback) and sold as consumer devices~\cite{sawangjai_consumer_2020}. Consequently, the cost of \gls{eeg} devices has fallen sharply, offering an affordable solution to monitoring brain activity.
 
 % Move 2 establish a niche (show why there needs to be further research on your topic)
 % Niche 1: using automated time tracking
 % Niche 2: code vs prose comprehension
 
-Here we introduce an automated time tracker, tracking the computer activities a subject engages in, to study brain activity during a wide variety of computer-based tasks.
+Although many different tasks have already been studied with EEG, each task to be studied requires a time-consuming controlled experiment. To increase the diversity of tasks under study without needing to create task-specific experiments, we introduce our previously developed time-tracking application \gls{aw}~\cite{bjareholt_activitywatch_2020} to track and categorize the computer activities a subject engages in during natural device use. Using ActivityWatch and EEG we can therefore collect both device use data and brain activity data, letting us study brain activity during particular device activities.
+
+% Our goal here is to reduce the amount of time needed to study a particular task,
 
 \begin{minipage}{\textwidth}
-
-Studying brain activity during computer-based tasks is of particular interest to software engineers. For example, research has been done on:
+Studying brain activity during computer-based tasks is of particular interest to software engineers and knowledge workers. For example, research has been done on:
 
 \begin{itemize}
     \item Studying differences in code- and prose-comprehension~\cite{floyd_decoding_2017,fucci_replication_2019}.
@@ -26,7 +27,6 @@ Studying brain activity during computer-based tasks is of particular interest to
     \item Minimizing interruptions~\cite{zuger_reducing_2017}.
     \item Recognizing emotions during programming~\cite{girardi_recognizing_2020}.
 \end{itemize}
-
 \end{minipage}
 
 % other formulation of goals: profits, productivity, sustainability
@@ -37,7 +37,7 @@ Studying brain activity during computer-based tasks is of particular interest to
 
 % Brain imaging techniques such as EEG show a potential to shed light on many of these research questions, and the relationship between device usage and brain activity seems an largely unexplored area worth investigating.
 
-In addition, some communities like the Quantified Self movement have risen to the challenge of collecting and analyzing personal data for insights into our lives and health~\cite{swan_quantified_2013}. But while some data is easily observed (such as device usage, location, and physical movement), it remains difficult to collect data about subjective attributes (like mood, focus)~\cite{malhi_promise_2017}. To collect data on these more elusive phenomena, researchers and individuals have to resort to manual data collection like questionnaires, or approximations constructed from other data, leading to significant time costs and scaling difficulties~\cite{malhi_promise_2017}. This makes low-cost brain imaging techniques like EEG a budding new frontier for the Quantified Self movement in particular, and citizen science in general.
+In addition to academic research, some communities like the \gls{qs} movement have risen to the challenge of collecting and analyzing personal data for insights into our lives and health~\cite{swan_quantified_2013}. But while some data is easily observed (such as device usage, location, and physical movement), it remains difficult to collect data about subjective attributes (like mood, focus)~\cite{malhi_promise_2017}. To collect data on these more elusive phenomena, researchers and individuals have to resort to manual data collection like questionnaires, or approximations constructed from other data, leading to significant time costs and scaling difficulties~\cite{malhi_promise_2017}. This makes low-cost brain imaging techniques like EEG a budding new frontier for the Quantified Self movement in particular, and citizen science in general.
 
 % The purpose of this study is to investigate the feasibility of using low-cost biosensors...
 
@@ -49,7 +49,7 @@ In addition, some communities like the Quantified Self movement have risen to th
 
 % The contributions of this study are...
 
-To summarize, we have in this thesis developed a framework and tooling for studying brain activity during uncontrolled device use (\emph{naturalistic device activities}). Using our previously developed time-tracking application ActivityWatch~\cite{bjareholt_activitywatch_2020}, we can track the subject's device activity while simultaneously collecting their brain activity data using consumer-grade EEG devices. We then use the EEG and device use data to train machine learning models to discern which task the subject is engaged in.
+In this thesis we have developed a framework and tooling for studying brain activity during uncontrolled device use (\emph{naturalistic device activities}). Using our previously developed time-tracking application \gls{aw}~\cite{bjareholt_activitywatch_2020}, we can track the subject's device activity while simultaneously collecting their brain activity data using consumer-grade EEG devices. We then use the EEG and device usage data to train machine learning models to discern which task the subject is engaged in.
 
 We also apply similar methodology to replicate a controlled experiment reported by Fucci et al.~in 2019~\cite{fucci_replication_2019}, where we present a small number of subjects with a set of code- and prose-comprehension tasks while being monitored with EEG\@. We use the collected data to train machine learning classifiers, evaluating the feasibility of low-cost EEG equipment to distinguish between the code and prose tasks, and use the results as an indication whether it could extend to other tasks, as in our naturalistic setting experiment.
 
@@ -86,17 +86,17 @@ In our naturalistic experiments, our results indicate that a consumer-grade EEG 
 
 \section{Functional brain imaging}\label{section:imaging}
 
-    Functional brain imaging methods such as fMRI\footnote{Functional Magnetic Resonance Imaging}, fNIRS\footnote{Functional Near-Infrared Spectroscopy}, and EEG, have been used to study the relationship between cognitive or physical activity, and brain activity~\cite{floyd_decoding_2017, hong_classification_2015, fucci_replication_2019}. The more accurate methods, such as fMRI, are costly and inflexible/impractical for many uses. The different methods in general come with a set of trade-offs. A common obstacle is cost: operating an fMRI machine costs on the order of \$300/h~\cite{fucci_replication_2019}. 
+    Functional brain imaging methods such as \glsxtrfull{fmri}, \glsxtrfull{fnirs}, and \gls{eeg}, have been used to study the relationship between cognitive or physical activity, and brain activity~\cite{floyd_decoding_2017, hong_classification_2015, fucci_replication_2019}. The more accurate methods, such as fMRI, are costly and inflexible/impractical for many uses. The different methods in general come with a set of trade-offs. A common obstacle is cost: operating an fMRI machine costs on the order of \$300/h~\cite{fucci_replication_2019}. 
 
     Other considerations when picking a brain imaging method is temporal/spatial resolution. For instance, fMRI can measure activity deep in the brain (good spatial resolution), but has difficulty tracking activity over time due to relying on blood oxygenation, which is a much slower process than the underlying neural processes (bad temporal resolution)~\cite{glover_overview_2011}. EEG on the other hand, has excellent temporal resolution (usually sampled at about 256Hz), but it can not reliably discern activity deep in the brain (bad spatial resolution, partially depending on channel count).
 
-    Recently, the availability and cost reduction of biosensors such as EEG, HEG\footnote{Hemoencephalography}, and fNIRS, has enabled studying brain activity during real-life tasks. This is the opportunity we seek to take advantage of, and as EEG is the most well developed of the three, we choose it for our investigation.
+    Recently, the availability and cost reduction of biosensors such as \gls{eeg}, \glsxtrfull{heg}, and \gls{fnirs}, has enabled studying brain activity during real-life tasks. This is the opportunity we seek to take advantage of, and as EEG is the most well developed of the three, we choose it for our investigation.
 
     EEG works by measuring tiny amounts of electricity (on the order of microvolts) on the scalp to listen to the underlying firing of neurons. By placing electrodes in various configurations, information about the activity of different brain regions can be inferred. The extent of how much information can actually be decoded from the signal remains an open research question.
 
-    But EEG is not without its limitations --- among them a notably low signal-to-noise ratio~\cite{mcfarland_eeg-based_2017}, as well as being difficult to use for discerning activity deeper in the brain~\cite{fahimi_hnazaee_localization_2020} --- yet these limitations have been overcome for many applications, like \emph{Event-related Potential} (ERP) experiments, and has even proven sufficient for high-speed \emph{Brain-Computer Interface} (BCI) applications through detecting visual evoked potentials (VEPs)~\cite{spuler_high-speed_2017}.
+    But EEG is not without its limitations --- among them a notably low signal-to-noise ratio~\cite{mcfarland_eeg-based_2017}, as well as being difficult to use for discerning activity deeper in the brain~\cite{fahimi_hnazaee_localization_2020} --- yet these limitations have been overcome for many applications, like \glsxtrfull{erp} experiments, and has even proven sufficient for high-speed \glsxtrfull{bci} applications through detecting \glsxtrfullpl{vep}~\cite{spuler_high-speed_2017}.
 
-    To combat the low signal-to-noise ratio, machine learning methods have been employed with varying degrees of success. Examples from previous research include Convolutional Neural Networks (CNNs), which have been successful in classifying time series in general~\cite{zhao_convolutional_2017}, and EEG data in particular~\cite{schirrmeister_deep_2017}. As well as Hierarchical Convolutional Neural Networks (HCNNs), which have been used for EEG-based emotion recognition~\cite{li_hierarchical_2018}.
+    To combat the low signal-to-noise ratio, machine learning methods have been employed with varying degrees of success. Examples from previous research include \glsxtrfullpl{cnn}, which have been successful in classifying time series in general~\cite{zhao_convolutional_2017}, and EEG data in particular~\cite{schirrmeister_deep_2017}. As well as \glsxtrfullpl{hcnn}, which have been used for EEG-based emotion recognition~\cite{li_hierarchical_2018}.
 
     \subsection*{Cost reduction}
 
@@ -104,9 +104,7 @@ In our naturalistic experiments, our results indicate that a consumer-grade EEG 
 
     The commercialization of EEG towards a general audience was furthered by InteraXon with the release of the original Muse in 2016. Aimed at meditation practice, it was the first consumer-oriented EEG device on the market. Later, in 2019, InteraXon released the Muse~S (seen in~\Vref{fig:museS}), a headband-style EEG headset developed for sleep and longer sessions.
 
-    In 2020 and 2021, the company Neurosity has released their 8 channel Crown headset (seen in~\Vref{fig:crown}), targeted at developers and knowledge workers to `shift into focus'.
-
-    More recently, projects like the FreeEEG32 offer a 32 channel board for only \$199, expected to ship in 2022~\cite{noauthor_freeeeg32_nodate}.
+    In 2020 and 2021, the company Neurosity has released their 8 channel Crown headset (seen in~\Vref{fig:crown}), targeted at developers and knowledge workers to `shift into focus'. Looking forward, projects like the FreeEEG32 offer a 32 channel board for only \$199, expected to ship in 2022~\cite{noauthor_freeeeg32_nodate}.
 
     In our experiments we have chosen the Muse as our primary device, but our code also supports OpenBCI-devices, the Neurosity Crown, and other devices compatible with the \emph{brainflow} library.
 
@@ -140,8 +138,7 @@ In our naturalistic experiments, our results indicate that a consumer-grade EEG 
 \pagebreak
 \section{Automated time trackers}
 
-    People spend more time than ever using computing devices. Work, entertainment, and services, have been steadily moving online over the last few decades and this trend is expected to continue.
-    While several studies have been tracking how people spend time on their devices, a wider study of how people's app usage is changing over time, and how it varies with demographics, is not publicly available.
+    People spend more time than ever using computing devices. Work, entertainment, and services, have been steadily moving online over the last few decades and this trend is expected to continue. While several studies have been tracking how people spend time on their devices, a wider study of how people's app usage is changing over time, and how it varies with demographics, is not publicly available.
 
     Furthermore, how different device activities affect the user behaviorally and neurologically is of interest for many areas of research, including:
 
@@ -152,11 +149,13 @@ In our naturalistic experiments, our results indicate that a consumer-grade EEG 
         \item enhancing personal productivity~\cite{kim_timeaware_2016}.
     \end{itemize}
 
-    Understanding device use and the underlying cognitive processes are essential when designing for motivation, engagement and wellbeing in digital experiences~\cite{peters_designing_2018}.
+    To study the effects of device use, much of the older literature uses surveys as their primary means of data collection. However, these surveys are time-consuming and prone to self-reporting bias. To address these issues, more recent research has employed the use of automated time-trackers to gain detailed and objective data about subjects' device activities.
 
-    Automated time-trackers have been developed for computing devices, with various applications such as tracking hours worked, personal productivity, managing excessive use of social networking sites (SNSs), and studying human behavior.
+    These automated time-trackers have been developed for many types of devices (computers, phones, TVs), with various applications such as tracking hours worked (and on what), personal productivity, lifelogging, and managing excessive use of social media.
 
-    This section introduces how such devices are used in commercial services and in research. Finally, we present the open source solution ActivityWatch.
+    Understanding device use and the underlying cognitive processes are essential when designing for motivation, engagement and well-being in digital experiences~\cite{peters_designing_2018}. As such, studying device activity together with brain activity seems a promising endeavor.
+
+    This section introduces how such devices are used in commercial services and in research. Finally, we present our own automated time-tracker ActivityWatch, used in this thesis.
 
     \subsubsection*{Commercial use}
 
@@ -172,15 +171,15 @@ In our naturalistic experiments, our results indicate that a consumer-grade EEG 
 
     \subsubsection*{ActivityWatch}
 
-        The free and open source automated time tracker ActivityWatch~\cite{bjareholt_activitywatch_2020}, previously developed by the author of this thesis together with contributors, addresses aforementioned issues with other software around source availability/licensing, privacy, temporal resolution, event detail, and cross-platform support.
+        The free and open source automated time-tracker ActivityWatch~\cite{bjareholt_activitywatch_2020}, previously developed by the author of this thesis together with contributors. It addresses all the aforementioned issues around source availability/licensing, privacy, temporal resolution, event detail, and cross-platform support.
+
+    ActivityWatch works by tracking the active application, its window title, and whether the user is active or not. That data is then analyzed to show how much time was spent on different applications, websites, or projects (as shown in \Vref{fig:aw}). The project was started in 2016 by the author of this thesis, with his brother Johan joining development soon after. It has since become a popular open source alternative to other time tracking software. It has received numerous contributions from users\footnote{Contributor statistics available at \href{https://activitywatch.net/contributors/}{activitywatch.net/contributors/}} and has over 100,000 downloads\footnote{Download statistics available at \href{https://activitywatch.net/stats/}{activitywatch.net/stats/}}.
 
         \begin{figure}[h]
         \centering
         \includegraphics[width=14cm,frame]{img/screenshot-aw-activity.png}
         \caption{A screenshot of the ActivityWatch activity dashboard. Showing top categories, top window titles, an hour-by-hour stacked barchart, top applications, the category tree, and a sunburst visualization of the time spent in each category.}\label{fig:aw}
         \end{figure}
-
-        ActivityWatch as a project was started in 2016 by the author of this thesis, with his brother Johan joining development soon after. It has since become a popular open source alternative to other time tracking software. It has received numerous contributions from users\footnote{Contributor statistics available at \href{https://activitywatch.net/contributors/}{activitywatch.net/contributors/}} and has over 100,000 downloads\footnote{Download statistics available at \href{https://activitywatch.net/stats/}{activitywatch.net/stats/}}.
 
         %\add[inline]{What more could I add about ActivityWatch? There should be relevant stuff in the docs, and in the slides I made way back.}
 

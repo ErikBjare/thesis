@@ -2,26 +2,26 @@
 
 This chapter serves to introduce relevant theory on which the thesis rests. We will briefly review EEG, its use in research and practice. We also briefly review machine learning techniques used on EEG data, in particular Riemannian geometry.
 
-\section{Electroencephalography (EEG)}\label{eeg-theory}
+\section{Electroencephalography (\gls{eeg})}\label{eeg-theory}
 
     % Intro
     Electroencephalography is a method used to measure the activity of neurons in the brain by recording the electrical potential of the scalp. These measurements are performed (sampled) hundreds of times per second, and are then put in sequence to form a signal of what can informally be referred to as ``brain waves''. 
 
     % Use in medicine & research
     As a non-invasive method it is widely used in medicine to diagnose and study a wide range of conditions, including epilepsy and sleep disorders. 
-    It has also found use in research, in particular for studying \emph{Event Related Potentials}, or ERPs, which are stereotyped responses to a stimulus, an example of which can be seen in Figure~\ref{figure:n170}. Examples of common ERPs can be seen in Table~\ref{table:erps}.
+    It has also found use in research, in particular for studying \glsxtrfullpl{erp}, which are stereotyped responses to a stimulus, an example of which can be seen in Figure~\ref{figure:n170}. Examples of common ERPs can be seen in Table~\ref{table:erps}.
 
     \begin{table}
         \centering
         \input{figures/table-erps.tex}
-        \caption{Common \emph{Event-Related Potentials} (ERPs)}\label{table:erps}
+        \caption{Common \glsxtrfullpl{erp}}\label{table:erps}
     \end{table}
 
     \input{figures/n170-example.tex}
 
-    One difficulty of working with EEG lies in the low signal-to-noise ratio: measurements are on the order of microvolts, and what is being measured is the electrical activity of some subset of the approximately 86 billion neurons in the human brain. This often leads to signal artifacts from neural activity which is not under study, such as eye blinks and other muscle activity.
+    One difficulty of working with EEG lies in the low signal-to-noise ratio: measurements are on the order of microvolts, and what is being measured is the electrical activity of some subset of the approximately 86 billion neurons in the human brain. This often leads to signal artifacts from other, non-neural, electrical activity near the scalp, such as that caused by muscle activity from e.g.\ eye blinks (as seen in \Vref{fig:muselsl-signal}).
 
-    It can be contrasted with \emph{electrocorticography} (ECoG), also known as \emph{intracranial electroencephalography} (iEEG), which is an invasive method where a craniotomy (a surgical incision on the skull) is performed to implant an electrode grid directly on the cerebral cortex. The result is higher spatial resolution, and improved signal-to-noise ratio due to closer proximity to neural activity. It is almost exclusively used in patients with intractable epilepsy (not responding to anticonvulsants).
+    The non-invasive nature of EEG can be contrasted with \glsxtrfull{ecog}, a form of \glsxtrfull{ieeg}, which is an invasive method where a craniotomy (a surgical incision on the skull) is performed to implant an electrode grid directly on the cerebral cortex. The result is higher spatial resolution, and improved signal-to-noise ratio due to closer proximity to neural activity. It is almost exclusively used in patients with intractable epilepsy (not responding to anticonvulsants).
 
     Electrodes can be placed at different locations on the scalp, targeting different regions of the brain. The system used to position the electrodes is called the 10–20 system (seen in Figure~\ref{fig:1020}), and is the standard way to label electrode placements. The \emph{10} and \emph{20} come from the fact that distances between adjacent electrodes are either 10\% or 20\% of the total front–back or right–left distance of the scalp.
 
@@ -33,7 +33,7 @@ This chapter serves to introduce relevant theory on which the thesis rests. We w
         \source{\href{https://commons.wikimedia.org/wiki/File:21_electrodes_of_International_10-20_system_for_EEG.svg}{Wikimedia Commons} (public domain)}
     \end{figure}
 
-    For configurations with high-density or more specific electrode placement there is also the extended 10--10 system, using \emph{Modified Combinatorial Nomenclature} (MCN). In this system, the electrode placements are divided by 10\% increments instead of the usual 20\% (seen in Figure~\ref{fig:1010}).
+    For configurations with high-density or more specific electrode placement there is also the extended 10--10 system, using \gls{mcn}. In this system, the electrode placements are divided by 10\% increments instead of the usual 20\% (seen in Figure~\ref{fig:1010}).
 
     \begin{landscape}
         \begin{figure}
@@ -81,15 +81,13 @@ This chapter serves to introduce relevant theory on which the thesis rests. We w
 
 \section{Machine Learning}
 
-    Machine learning on EEG data utilizes several domain-specific methods, often similar to other methods for time-series data in general. However, some methods differ by taking advantage of the spatial information that is available through the analysis of interdependence between multiple EEG channels.
+    Machine learning on EEG data utilizes several domain-specific methods, often similar to other methods for time-series data in general. However, some methods differ by taking advantage of the spatial information that is available through the analysis of interdependence between multiple EEG channels~\cite{lotte_review_2018}.
 
-    Methods used in analysis and classification of EEG data include Linear Discriminant Analysis (LDA), Common Spatial Pattern (CSP) filters~\cite{barachant_common_2010}, spectral density estimation (bandpower features), and the computation of covariance matrices to estimate interdependencies between channels. 
+    Methods used in analysis and classification of EEG data include Linear Discriminant Analysis (LDA), Common Spatial Pattern (CSP) filters~\cite{barachant_common_2010}, spectral density estimation (bandpower features), and the computation of covariance matrices to estimate interdependencies between channels. The underlying ML algorithms being trained on the features are often off-the-shelf logistic regression, support vector machines, random forests, etc. Some domain adaptations are found in more complex models like neural networks.
 
-    Furthermore, preprocessing methods include bandpass filtering, windowing, and various tricks for channel selection (in high-density setups). 
+    Furthermore, preprocessing methods include bandpass filtering, windowing, and various tricks for channel selection (in high-density setups). With the use of these methods, we can preprocess the data, compute features, and train our classifiers.
 
-    With the use of these methods, we can preprocess the data, compute features, and train our classifiers.
-
-    The underlying ML algorithms being trained on the features are often off-the-shelf logistic regression, support vector machines, random forests, etc. Some domain adaptations are found in more complex models like neural networks.
+    In our study, we will primarily be using Riemannian methods, and compare them to a common bandpower-features approach (used by Fucci et al.) as our baseline.
 
     %For logistic regression, the \emph{log loss} function $L$ is defined as:
 
@@ -99,7 +97,7 @@ This chapter serves to introduce relevant theory on which the thesis rests. We w
 
         %\add[inline]{Explanation of Riemannian geometry, from \href{https://colab.research.google.com/drive/1y9tq7-lJwusxtVgpB38y-p1pYw7hg0iu}{this tutorial we're working on}}
 
-        EEG decoding approaches based on Riemannian geometry have led to state-of-the-art classification performance on many tasks. The idea behind it is to take advantage of the spatial structure of EEG, i.e.\ the fact that there are multiple channels which co-vary in specific ways.
+        EEG decoding approaches based on Riemannian geometry have led to state-of-the-art classification performance on many tasks~\cite{lotte_review_2018}. The idea behind it is to take advantage of the spatial structure of EEG, i.e.\ the fact that there are multiple channels which co-vary in specific ways.
 
         The Riemannian distance metric $\delta_G$ for two symmetric positive definite matrices $\mathrm{A}$ and $\mathrm{B}$ (such as covariance matrices) is~\cite{grafarend_metric_2003}:
 

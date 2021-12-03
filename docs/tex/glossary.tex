@@ -1,11 +1,39 @@
-\newglossaryentry{latex}{
-    name=latex,
-    description={Is a markup language specially suited for 
-scientific documents}
+\newglossaryentry{aw}{
+    name={ActivityWatch},
+    description={A free and open-source automated time tracker, that tracks what you do on your computer.}
 }
 
-\newacronym{eeg}{EEG}{Electroencephalography}
-\newacronym{fmri}{fMRI}{Functional Magnetic Resonance Imaging}
+\newglossaryentry{qs}{
+    name={Quantified Self},
+    description={A cultural phenomenon of self-tracking with technology to achieve ``self-knowledge through numbers''. Also a particular community of the same name.}
+}
 
-\newacronym{bac}{BAC}{Balanced Accuracy}
+% EEG/MRI/BCI types
+\newacronym{eeg}{EEG}{Electroencephalography}
+\newacronym{ieeg}{iEEG}{Intracranial Electroencephalography}
+\newacronym{ecog}{ECoG}{Electrocorticography}
+\newacronym{mri}{MRI}{Magnetic Resonance Imaging}
+\newacronym{fmri}{fMRI}{Functional Magnetic Resonance Imaging}
+\newacronym{heg}{HEG}{Hemoencephalography}
+\newacronym{fnirs}{fNIRS}{Functional Near-Infrared Spectroscopy}
+
+% General BCI terms
+\newacronym{bci}{BCI}{Brain-Computer Interface}
+\newacronym{erp}{ERP}{Event-Related Potential}
+\newacronym{vep}{VEP}{Visual Evoked Potential}
+\newacronym{mcn}{MCN}{Modified Combinatorial Nomenclature}
+
+% ML terms
+\newacronym{cnn}{CNN}{Convolutional Neural Network}
+\newacronym{hcnn}{HCNN}{Hierarchical Convolutional Neural Network}
+
+% Scoring & cross-validation terms
+\newacronym{bac}{BAC}{balanced accuracy}
 \newacronym{loro}{LORO}{Leave-One-Run-Out}
+\newacronym{logo}{LOGO}{Leave-One-Group-Out}
+
+% From:
+% - https://www.dickimaw-books.com/gallery/index.php?label=mixed-glossary-emph
+% - https://tex.stackexchange.com/a/359561/36302
+\renewcommand{\glsfirstlongdefaultfont}[1]{\emph{#1}}
+\setabbreviationstyle[acronym]{long-short}
