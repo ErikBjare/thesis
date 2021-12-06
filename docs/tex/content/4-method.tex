@@ -1,6 +1,6 @@
 \chapter{Method}
 
-We start by deciding on an EEG device to use, we then collect data for both the controlled and naturalistic experiments. For the controlled experiment, we collect stimuli labels. For the uncontrolled experiment, we collect labels using ActivityWatch. Once the data has been collected, we perform data labelling, transformation, and cleaning, before we finally train our classifiers. 
+We start by deciding on an EEG device to use, we then collect data for both the controlled and naturalistic experiments. For the controlled experiment (RQ1), we collect our labels from the presented stimulus. For the uncontrolled experiment (RQ2), we collect device activity labels during natural device use using ActivityWatch. Once the data has been collected, we perform data labelling, transformation, and cleaning, before we finally train our classifiers.
 
 Our main classifier is based on Riemannian geometry. For our controlled experiment, we also train a classifier based on bandpower-features as a baseline reference. We evaluate the performance of our classifiers using the balanced accuracy metric and LORO cross-validation.
 
