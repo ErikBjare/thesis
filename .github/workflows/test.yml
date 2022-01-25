@@ -40,7 +40,8 @@ jobs:
 
     - name: Install APT dependencies
       run: |
-        sudo apt-get install -y git build-essential bluez apt-utils wget libfreetype6 libpng-dev libopenblas-dev gcc gfortran libsnappy-dev texlive-latex-extra cm-super
+        sudo apt-get install -y git build-essential bluez apt-utils wget libfreetype6 libpng-dev libopenblas-dev gcc gfortran libsnappy-dev \
+                                texlive-latex-extra cm-super dvipng  # latex stuff
     - name: Install dependencies
       run: |
         poetry install
