@@ -45,15 +45,17 @@ I've worked with multiple devices, but the experiments were performed using the 
 
 # Notebooks
 
-TEMPORARILY NOT BEING BUILT ~~Code notebooks are built in CI and available at:~~
+Code notebooks are built in CI and available at:
 
  - [Main][nbmain] - primary notebook for the thesis, where we train a classifier for the code vs prose comprehension task.
  - [Signal][nbsignal] - for signal filtering and quality checking.
  - [Activity][nbactivity] - for classification of device activities.
+ - [PPG][nbppg] - for a basic PPG analysis.
 
 [nbmain]:       https://erik.bjareholt.com/thesis/Main.html
 [nbsignal]:     https://erik.bjareholt.com/thesis/Signal.html
 [nbactivity]:   https://erik.bjareholt.com/thesis/Activity.html
+[nbppg]:        https://erik.bjareholt.com/thesis/PPG.html
 
 # Writing
 
