@@ -127,7 +127,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [tex, docs]  # notebooks
+    needs: [tex, docs, notebooks]
     steps:
       - uses: actions/download-artifact@v2
         with:
@@ -137,10 +137,10 @@ jobs:
         with:
           name: docs
           path: dist
-      #- uses: actions/download-artifact@v2
-      #  with:
-      #    name: notebooks
-      #    path: dist
+      - uses: actions/download-artifact@v2
+        with:
+          name: notebooks
+          path: dist
 
       - name: Display structure of downloaded files
         run: ls -R
