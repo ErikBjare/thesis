@@ -96,6 +96,9 @@
 % Import title, author, etc.
 \input{variables.tex}
 
+% Date of final version
+\date{December 22, 2021}
+
 \ifx\UseCSLTH\undefined
     \title{%
         \small DRAFT \today \\
@@ -105,15 +108,11 @@
         \huge \mytitleen\\
     }
     \author{\myauthor\ \orcid{\myorcid} \\(\myemail)}
-    \date{\today}
 \else
     \title{\mytitleen}
     \svensktitel{\mytitlesv}
     % TODO: Add a subtitle?
     %\subtitle{Discerning reading code vs prose and other device activities, using consumer EEG devices and the open source automated time tracker ActivityWatch}
-
-    \date{\today}
-    %\date{January 16, 2015}
 
     \student{\myauthor}{\myemail}
 
@@ -123,7 +122,7 @@
 
     %\geometry{showframe}
 
-    \thesisnumber{LU-CS-EX: 2023-79} % Magic Number! Do not change unless Birger Swahn asks you to do so!
+    \thesisnumber{LU-CS-EX: 2021-49} % Magic Number! Do not change unless Birger Swahn asks you to do so!
     % default is Master. Uncomment the following for "kandidatarbete"/Bachelor's thesis
     %\thesistype{Bachelor}{Kandidatarbete}
 
@@ -197,7 +196,7 @@
 \pagebreak
 
 % Glossary
-\printglossary
+\printglossary{}
 \printglossary[title=Acronyms, type=\acronymtype, toctitle=Glossary]
 
 \end{refsection}
