@@ -91,6 +91,7 @@ def load_labels() -> pd.DataFrame:
 
     if "PYTEST_CURRENT_TEST" in os.environ:
         # In a test, use testing data
+        logger.info("Using testing labels due to PYTEST_CURRENT_TEST being set")
         path_labels = path_labels_test
     elif path_labels_prod.exists():
         path_labels = path_labels_prod
@@ -124,6 +125,7 @@ def load_eeg(files: List[Path] = None) -> pd.DataFrame:
     if not files:
         # Load all files
         if "PYTEST_CURRENT_TEST" in os.environ:
+            logger.info("Using testing data due to PYTEST_CURRENT_TEST being set")
             files = TEST_EEG_FILES_MUSE
         else:
             files = _get_all_recording_files()
@@ -140,7 +142,8 @@ def _read_csv(fn: Path) -> pd.DataFrame:
 
 # @memory.cache
 def _load_eeg(files: List[Path]) -> pd.DataFrame:
-    logger.info("Loading EEG recordings...")
+    logger.info(f"Loading EEG recordings... (from {len(files)} files)")
+    logger.debug(f"Loading files: {files}")
     with Pool(4) as p:
         dfs: List[pd.DataFrame] = p.map(_read_csv, files)
 
