@@ -112,11 +112,11 @@ def _row_stats(s: pd.Series):
 def _clean_signal_quality(
     df: pd.DataFrame, max_uv_abs: float = None, max_std: float = None
 ) -> pd.DataFrame:
-    bads = []
-    for i, row in df.iterrows():
-        # print(_row_stats(row))
-        if not _check_row_signal_quality(row, max_uv_abs, max_std):
-            bads.append(i)
+    bads = [
+        i
+        for i, row in df.iterrows()
+        if not _check_row_signal_quality(row, max_uv_abs, max_std)
+    ]
 
     logger.warning(f"Dropping {len(bads)} bad rows due to bad signal quality")
     return df.drop(bads)

@@ -18,7 +18,7 @@ def test_unison_shuffled_copies():
     b = np.array(range(1, 11))
     c = np.array(range(2, 12))
     sa, sb, sc = unison_shuffled_copies(a, b, c)
-    assert all([v1 == v2 - 1 == v3 - 2 for v1, v2, v3 in zip(sa, sb, sc)])
+    assert all(v1 == v2 - 1 == v3 - 2 for v1, v2, v3 in zip(sa, sb, sc))
     assert all(a == np.array(range(10))), "input array was mutated"
     assert all(c == np.array(range(2, 12))), "input array was mutated"
 
@@ -114,10 +114,8 @@ def aggregate_windows_to_epochs(
                 map(lambda v: map_cls[v], predicted[test][i_start : i_stop + 1])
             )
             vote = sum(y_preds) / len(y_preds)
-            votes.append(vote > 0.5)
         else:
             # Use the mean probability
             vote = np.mean(predicted_proba[test][i_start : i_stop + 1, 1])
-            votes.append(vote > 0.5)
-
+        votes.append(vote > 0.5)
     return np.array(ys_epoch), np.array(votes)

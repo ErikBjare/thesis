@@ -45,9 +45,7 @@ class MuseDevice(EEGDevice):
 
     @property
     def started(self) -> bool:
-        if self.stream_process:
-            return self.stream_process.exitcode is None
-        return False
+        return self.stream_process.exitcode is None if self.stream_process else False
 
     def start(self, filename: str = None, duration=None, extras: dict = None):
         """
@@ -123,15 +121,14 @@ class MuseDevice(EEGDevice):
 
         inlets = _get_inlets(verbose=False)
 
-        for i in range(5):
+        for _ in range(5):
             for inlet in inlets:
                 inlet.pull(timeout=0.5)  # type: ignore
             inlets = [inlet for inlet in inlets if inlet.buffer.any()]  # type: ignore
             if inlets:
                 break
-            else:
-                logger.info("No inlets with data, trying again in a second...")
-                sleep(1)
+            logger.info("No inlets with data, trying again in a second...")
+            sleep(1)
 
         if not inlets:
             raise Exception("No inlets found")
@@ -149,5 +146,4 @@ class MuseDevice(EEGDevice):
             channels=["TP9", "AF7", "AF8", "TP10"],
             max_uv_abs=max_uv_abs,
         )
-        bads = [ch for ch, ok in checked.items() if not ok]
-        return bads
+        return [ch for ch, ok in checked.items() if not ok]
