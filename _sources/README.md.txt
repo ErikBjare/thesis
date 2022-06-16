@@ -6,9 +6,27 @@ MSc Thesis
 [![Typechecking: Mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-My MSc thesis on "Classifying brain activity using electroencephalography and automated time tracking" (working title).
+My MSc thesis on "Classifying brain activity using electroencephalography and automated time tracking of computer use".
 
-It is very much a work-in-progress. Progress is tracked using the [GitHub Projects board](https://github.com/ErikBjare/thesis/projects/1).
+Progress was tracked using GitHub issues and the [GitHub Projects board](https://github.com/ErikBjare/thesis/projects/1).
+
+
+# Abstract
+
+> We investigate the ability of EEG to distinguish between different activities users engage in on their devices, building on previous research which showed a considerable difference in brain activity between code- and prose-comprehension, as well as differences during code- and prose-synthesis. We perform a replication study and improve upon past results using state-of-the-art machine learning classifiers based on Riemannian geometry.
+>
+> Furthermore, we extend the scope of previous work by introducing the automated time tracking application ActivityWatch, to track the device activities that the user is engaging in. This lets us label EEG data with naturalistic device activity, which we then use to train classifiers to discern activities such as code writing vs prose writing, or work vs media consumption. Our results indicate that a consumer-grade EEG device can discern between different activities that a user performs at the computer. Among other results, we show that not only can code and prose *comprehension* be distinguished, but also code and prose *writing*.
+
+
+# Writing
+
+The latest version of the writing can be downloaded at:
+
+ - Thesis report: [erik.bjareholt.com/thesis/thesis.pdf][thesis]
+ - Goal document: [erik.bjareholt.com/thesis/goaldoc.pdf][goaldoc]
+ - Presentation: [erik.bjareholt.com/thesis/presentation.pdf][presentation]
+ - Popular scientific article (Swedish): [erik.bjareholt.com/thesis/popsci.pdf][popsci]
+
 
 # Usage
 
@@ -31,6 +49,7 @@ Running classifier:
    - You probably want to adjust the categorization rules embedded in the file
  - (TODO) Run `eegclassify --help` for instructions on how to train and run the classifier
 
+
 # Devices
 
 I've worked with multiple devices, but the experiments were performed using the Muse S, which is therefore the best-supported device.
@@ -42,6 +61,7 @@ I've worked with multiple devices, but the experiments were performed using the 
  - Neurosity Crown
  - OpenBCI Cyton
  - In theory: any device supported by Brainflow or muse-lsl
+
 
 # Notebooks
 
@@ -57,14 +77,6 @@ Code notebooks are built in CI and available at:
 [nbactivity]:   https://erik.bjareholt.com/thesis/Activity.html
 [nbppg]:        https://erik.bjareholt.com/thesis/PPG.html
 
-# Writing
-
-The latest version of the writing can be downloaded at:
-
- - Thesis report: [erik.bjareholt.com/thesis/thesis.pdf][thesis]
- - Goal document: [erik.bjareholt.com/thesis/goaldoc.pdf][goaldoc]
- - Presentation: [erik.bjareholt.com/thesis/presentation.pdf][presentation]
- - Popular scientific article (Swedish): [erik.bjareholt.com/thesis/popsci.pdf][popsci]
 
 # Acknowledgements
 
