@@ -144,7 +144,11 @@
 \begin{document}
 
 
-\makefrontmatter
+\ifx\UseCSLTH\undefined
+  \maketitle
+\else
+  \makefrontmatter
+\fi
 
 % CS template inserts ToC as part of frontmatter
 \ifx\UseCSLTH\undefined
