@@ -101,15 +101,14 @@ def connect(
             sleep(5)
             continue
         except Exception as e:
-            if "No Muses found" in str(e):
-                msg = "No Muses found, trying again in 5s..."
-                logger.warning(msg)
-                notify("Couldn't connect", msg)
-                sleep(5)
-                continue
-            else:
+            if "No Muses found" not in str(e):
                 raise
 
+            msg = "No Muses found, trying again in 5s..."
+            logger.warning(msg)
+            notify("Couldn't connect", msg)
+            sleep(5)
+            continue
         loud = True
         started = time()
         stop = started + duration
@@ -169,11 +168,10 @@ def check(device_name: str):
             if all_good:
                 if not last_good:
                     logger.info("All channels good!")
-            else:
-                if bads != last_bads:
-                    logger.warning(
-                        "Warning, bad signal for channels: " + ", ".join(bads)
-                    )
+            elif bads != last_bads:
+                logger.warning(
+                    "Warning, bad signal for channels: " + ", ".join(bads)
+                )
             last_good = all_good
             last_check = time()
             last_bads = bads

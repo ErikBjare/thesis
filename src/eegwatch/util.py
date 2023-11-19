@@ -32,12 +32,10 @@ def generate_save_fn(
     # create the directory if it doesn't exist
     recording_dir.mkdir(parents=True, exist_ok=True)
 
-    # generate filename based on recording date-and-timestamp and then append to recording_dir
-    save_fp = recording_dir / (
-        "recording_%s" % time.strftime("%Y-%m-%d-%H.%M.%S", time.gmtime()) + ".csv"
+    return recording_dir / (
+        f'recording_{time.strftime("%Y-%m-%d-%H.%M.%S", time.gmtime())}'
+        + ".csv"
     )
-
-    return save_fp
 
 
 def print_statusline(msg: str):

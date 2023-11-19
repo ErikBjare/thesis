@@ -56,7 +56,7 @@ class BrainflowDevice(EEGDevice):
         def record():
             # NOTE: This runs in a seperate process/thread
             self.board.start_stream()
-            for i in range(duration):
+            for _ in range(duration):
                 sleep(1)
                 self._save()
             self._stop_brainflow()
@@ -87,8 +87,7 @@ class BrainflowDevice(EEGDevice):
         channel_names = BoardShim.get_eeg_names(self.brainflow_id)
         # FIXME: _check_samples expects different (Muse) inputs
         checked = _check_samples(data.T, channel_names, max_uv_abs=max_uv_abs)  # type: ignore
-        bads = [ch for ch, ok in checked.items() if not ok]
-        return bads
+        return [ch for ch, ok in checked.items() if not ok]
 
     def _init_brainflow(self) -> None:
         """
@@ -201,13 +200,10 @@ class BrainflowDevice(EEGDevice):
                 total_data, stim_array, 1
             )  # Append the stim array to data.
 
-        # Subtract five seconds of settling time from beginning
-        # total_data = total_data[5 * self.sfreq :]
-        df = pd.DataFrame(
+        return pd.DataFrame(
             total_data,
             columns=["timestamps"] + ch_names + (["stim"] if self.markers else []),
         )
-        return df
 
     def _save(self) -> None:
         """Saves the data to a CSV file."""

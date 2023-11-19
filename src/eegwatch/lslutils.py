@@ -38,9 +38,9 @@ def _get_inlets(plt=None, verbose=True) -> List["Inlet"]:
                 info.nominal_srate() != pylsl.IRREGULAR_RATE
                 or info.channel_format() != pylsl.cf_string
             ):
-                logger.warning("Invalid marker stream " + info.name())
+                logger.warning(f"Invalid marker stream {info.name()}")
             if verbose:
-                logger.info("Adding marker inlet: " + info.name())
+                logger.info(f"Adding marker inlet: {info.name()}")
             inlets.append(MarkerInlet(info))
         elif (
             info.nominal_srate() != pylsl.IRREGULAR_RATE
